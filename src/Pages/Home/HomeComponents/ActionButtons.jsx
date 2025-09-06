@@ -1,11 +1,15 @@
 import { FaWallet } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 export default function ActionButtons() {
+  const navigate=useNavigate()
   return (
     <div className=" pb-2">
       <div className="flex gap-4 bg-white p-4 rounded-[15px] w-fit mx-auto">
         {/* Withdraw Button */}
-        <button className="flex items-center gap-2 bg-gradient-to-r from-red-800 to-red-500 text-white px-6 py-2 rounded-lg font-medium shadow-md hover:opacity-90 transition">
+        <button
+          className="flex items-center gap-2 bg-gradient-to-r from-red-800 to-red-500 text-white px-6 py-2 rounded-[8px] font-medium shadow-md hover:opacity-90 transition"
+          onClick={() => navigate("/withdraw")}
+        >
           <svg
             width="24"
             height="27"
@@ -45,7 +49,10 @@ export default function ActionButtons() {
         </button>
 
         {/* Deposit Button */}
-        <button className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-800 text-white px-6 py-2 rounded-lg font-medium shadow-md hover:opacity-90 transition">
+        <button
+          className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-800 text-white px-6 py-2 rounded-[8px] font-medium shadow-md hover:opacity-90 transition"
+          onClick={() => navigate("/deposit")}
+        >
           <svg
             width="24"
             height="27"

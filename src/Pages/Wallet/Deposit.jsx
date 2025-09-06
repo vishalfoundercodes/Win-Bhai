@@ -3,10 +3,11 @@ import { Clipboard } from "lucide-react";
 import { Upload } from "lucide-react";
 import phonePay from "../../assets/Wallet/phone pay.png";
 import googlePay from "../../assets/Wallet/google pay.png";
+import { useNavigate } from "react-router-dom";
 export default function DepositPage() {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [amount, setAmount] = useState("");
-
+const navigate = useNavigate()
   const quickAmounts = [300, 500, 800, 1000, 2000, 5000];
     const [copied, setCopied] = useState("");
 
@@ -848,7 +849,10 @@ export default function DepositPage() {
                 <p className="text-ssm font-medium text-green-700 -mb-2">
                   5% extra on this deposit
                 </p>
-                <button className="text-xs text-lightGray">
+                <button
+                  className="text-xs text-lightGray"
+                  onClick={() => navigate("/cuppon")}
+                >
                   View all coupons &gt;
                 </button>
               </div>

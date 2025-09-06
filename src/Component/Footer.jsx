@@ -1,12 +1,17 @@
 /* Footer.jsx */
 import { Home, Trophy, BookOpen, Dice5, CircleDot } from "lucide-react"; // temp icons, replace with your SVGs
-
+import { useState } from "react";
+import DepositBonusModal from "../Pages/ReusableComponent/FirstDepositBonus";
 export default function Footer() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="sticky bottom-0 z-50 left-0 w-full">
       <div className="relative bg-gradient-to-l from-[#C10932] to-[#5B0418] rounded-t-2xl px-6 py-2 flex justify-between items-center gap-2">
         {/* Sports */}
-        <div className="flex flex-col items-center text-white text-sm">
+        <div
+          className="flex flex-col items-center text-white text-sm"
+          onClick={() => setIsOpen(true)}
+        >
           {/* <CircleDot className="w-6 h-6" /> */}
           <svg
             width="29"
@@ -110,6 +115,8 @@ export default function Footer() {
           <span className="text-ssm">Learn</span>
         </div>
       </div>
+      {/* Show modal if open */}
+      {isOpen && <DepositBonusModal onClose={() => setIsOpen(false)} />}
     </div>
   );
 }

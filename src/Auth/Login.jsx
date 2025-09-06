@@ -39,7 +39,7 @@ export default function Login() {
               </label>
               <select
                 id="loginWith"
-                className="w-full px-1 py-2 rounded border border-gray-300 bg-white text-gray-900 text-xsm focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                className="w-full px-1 py-2 rounded border border-gray-300 bg-white text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
                 defaultValue="username"
               >
                 <option value="username">Username</option>
