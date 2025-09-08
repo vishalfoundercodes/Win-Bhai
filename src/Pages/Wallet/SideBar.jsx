@@ -108,8 +108,10 @@ export default function Sidebar({ isOpen, onClose }) {
               <div
                 className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)]
  rounded-[8px] p-1 w-20 h-20"
-             onClick={()=>{onClose(),navigate("/deposit")}}
-             >
+                onClick={() => {
+                  onClose(), navigate("/deposit");
+                }}
+              >
                 <svg
                   width="24"
                   height="27"
@@ -154,7 +156,9 @@ export default function Sidebar({ isOpen, onClose }) {
               <div
                 className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)]
  rounded-[8px] p-1 w-20 h-20"
-                onClick={() =>{onClose(), navigate("/withdraw");}}
+                onClick={() => {
+                  onClose(), navigate("/withdraw");
+                }}
               >
                 <svg
                   width="24"
@@ -228,7 +232,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Chat With Us
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/downloadAPK");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -461,7 +471,13 @@ export default function Sidebar({ isOpen, onClose }) {
             Account Actions
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3 cursor-pointer"
+              onClick={() => {
+                onClose();
+                navigate("/changePassword");
+              }}
+            >
               <svg
                 width="24"
                 height="24"

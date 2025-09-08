@@ -16,6 +16,8 @@ export default function Layout({ children }) {
     "/Bonus",
     "/Notification",
     "/Info",
+    "/changePassword",
+    "/downloadAPK",
   ];
 
   const hideHeaderAll = ["/signup","/login"];

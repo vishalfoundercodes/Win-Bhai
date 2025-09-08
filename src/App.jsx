@@ -18,6 +18,9 @@ import PersonalInfo from "./Pages/ReusableComponent/PrsonalInfo"
 import DepositHistory from "./Pages/Wallet/Deposithistory"
 import BetHistory from "./Pages/Wallet/BetHistory"
 import ProfitLoss from "./Pages/Wallet/ProfitLoss"
+import ChangePassword from "./Auth/ChangePassword"
+import DownloadApkPage from "./Pages/ReusableComponent/DownloadApk"
+import AccountStatement from "./Pages/Wallet/AccountStatement"
 function App() {
 
 
@@ -43,6 +46,9 @@ function App() {
             <Route path="/depositHistory" element={<DepositHistory />} />
             <Route path="/betHistory" element={<BetHistory />} />
             <Route path="/profitLoss" element={<ProfitLoss />} />
+            <Route path="/accountStatement" element={<AccountStatement />} />
+            <Route path="/changePassword" element={<ChangePassword />} />
+            <Route path="/downloadAPK" element={<DownloadApkPage />} />
           </Routes>
         </Layout>
       </Router>

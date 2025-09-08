@@ -14,6 +14,8 @@ export default function Header2() {
     "/Bonus": "Bonus",
     "/Notification": "Notification",
     "/Info": "Personal Info",
+    "/changePassword": "Change Password",
+    "/downloadAPK": "Download APK",
   };
 
   // Default title if path not found
