@@ -21,6 +21,9 @@ import ProfitLoss from "./Pages/Wallet/ProfitLoss"
 import ChangePassword from "./Auth/ChangePassword"
 import DownloadApkPage from "./Pages/ReusableComponent/DownloadApk"
 import AccountStatement from "./Pages/Wallet/AccountStatement"
+import AvitatorLayout from "./Pages//InhouseGames/AviatorGame/AvitatorLayout"
+import WinGo from "./Pages//InhouseGames/Lottery/WinGo";
+import ChickenRoadLayout from "./Pages//InhouseGames/ChickenRoadGame/GameComponent/ChickenRoadLayout";
 function App() {
 
 
@@ -49,6 +52,9 @@ function App() {
             <Route path="/accountStatement" element={<AccountStatement />} />
             <Route path="/changePassword" element={<ChangePassword />} />
             <Route path="/downloadAPK" element={<DownloadApkPage />} />
+            <Route path="/aviator" element={<AvitatorLayout />} />,
+            <Route path="/lottery/wingo" element={<WinGo />} />,
+            <Route path="/chickenRoadGame" element={<ChickenRoadLayout />} />,
           </Routes>
         </Layout>
       </Router>

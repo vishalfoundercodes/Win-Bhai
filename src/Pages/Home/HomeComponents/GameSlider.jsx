@@ -10,22 +10,29 @@ import sidebarImage7 from "../../../assets/GameIcons/sports.png";
 import sidebarImage8 from "../../../assets/GameIcons/live cassino.png";
 import sidebarImage9 from "../../../assets/GameIcons/aviator.png";
 import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
+import { useNavigate } from "react-router-dom";
 
 export default function GameSlider({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const games = [
-    { id: 1, name: "Cricket", image: sidebarImage1 },
-    { id: 2, name: "Aviator", image: sidebarImage2 },
-    { id: 3, name: "Card Games", image: sidebarImage3 },
-    { id: 4, name: "Live Casino", image: sidebarImage4 },
-    { id: 5, name: "Trending Games", image: sidebarImage5 },
-    { id: 6, name: "Football", image: sidebarImage6 },
-    { id: 7, name: "Tennis", image: sidebarImage7 },
-    { id: 8, name: "Slot Games", image: sidebarImage8 },
-    { id: 9, name: "Affiliate", image: sidebarImage9 },
-    { id: 10, name: "Profile", image: sidebarImage10 },
-    { id: 11, name: "Language Change", image: sidebarImage1 },
-    { id: 12, name: "Download APK", image: sidebarImage1 },
-    { id: 13, name: "Logout", image: sidebarImage3 },
+    { id: 1, name: "Cricket", image: sidebarImage1, route: "" },
+    { id: 2, name: "Aviator", image: sidebarImage2, route: "" },
+    { id: 3, name: "Card Games", image: sidebarImage3, route: "" },
+    { id: 4, name: "Live Casino", image: sidebarImage4, route: "" },
+    { id: 5, name: "Trending Games", image: sidebarImage5, route: "" },
+    { id: 6, name: "Football", image: sidebarImage6, route: "" },
+    { id: 7, name: "Tennis", image: sidebarImage7, route: "" },
+    { id: 8, name: "Slot Games", image: sidebarImage8, route: "" },
+    { id: 9, name: "Affiliate", image: sidebarImage9, route: "" },
+    { id: 10, name: "Profile", image: sidebarImage10, route: "/Info" },
+    { id: 11, name: "Language Change", image: sidebarImage1, route: "" },
+    {
+      id: 12,
+      name: "Download APK",
+      image: sidebarImage1,
+      route: "/downloadAPK",
+    },
+    { id: 13, name: "Logout", image: sidebarImage3, route: "" },
   ];
 
   return (
@@ -68,6 +75,7 @@ export default function GameSlider({ isOpen, onClose }) {
             <li
               key={game.id}
               className="flex items-center gap-3 px-4 py-3 border-b cursor-pointer hover:bg-gray-100"
+              onClick={() => navigate(game.route)}
             >
               <img
                 src={game.image}

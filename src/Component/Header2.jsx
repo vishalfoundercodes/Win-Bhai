@@ -16,6 +16,7 @@ export default function Header2() {
     "/Info": "Personal Info",
     "/changePassword": "Change Password",
     "/downloadAPK": "Download APK",
+    "/lottery/wingo": "Wingo",
   };
 
   // Default title if path not found
@@ -30,7 +31,7 @@ export default function Header2() {
       <div className="flex items-center px-4 py-3 shadow">
         <button
           onClick={() => navigate(-1)}
-          className={`text-lg font-bold mr-3 ${
+          className={`text-lg font-bold mr-3 cursor-pointer ${
             isCoupon ? "text-black" : "text-white"
           }`}
         >
@@ -47,7 +48,12 @@ export default function Header2() {
             />
           </svg>
         </button>
-        <h2 className="text-base font-semibold uppercase">{headerTitle}</h2>
+        <h2
+          className="text-base font-semibold uppercase cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          {headerTitle}
+        </h2>
       </div>
     </div>
   );

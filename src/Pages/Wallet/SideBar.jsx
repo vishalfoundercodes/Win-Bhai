@@ -26,12 +26,12 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Overlay */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/5 backdrop-blur-[2px]"
       />
 
       {/* Sidebar */}
       <div
-        className={`relative bg-white w-[80%] md:w-[50%] lg:w-[23%] h-full shadow-lg overflow-y-auto z-50 transition-transform duration-300 ${
+        className={`relative bg-white w-[70%] md:w-[35%] lg:w-[23%] h-full shadow-lg overflow-y-auto z-50 transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -253,7 +253,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Download APK
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/Notification");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -278,7 +284,13 @@ export default function Sidebar({ isOpen, onClose }) {
             Statement
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/betHistory");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -293,7 +305,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Transactions
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/profitLoss");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -308,7 +326,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Betting Profit & Loss
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/accountStatement");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -323,7 +347,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Account Statement
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/depositHistory");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -338,7 +368,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Deposit History
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/RedeemBonus");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -353,7 +389,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Withdrawal History
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/Bonus");
+              }}
+            >
               <svg
                 width="24"
                 height="24"
@@ -368,7 +410,13 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>
               Pending Bets
             </li>
-            <li className="flex items-center gap-3 p-3">
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/betHistory");
+              }}
+            >
               <svg
                 width="24"
                 height="24"

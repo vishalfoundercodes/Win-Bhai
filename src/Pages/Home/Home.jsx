@@ -156,7 +156,11 @@ import sidebarImage8 from "../../assets/GameIcons/live cassino.png"
 import sidebarImage9 from "../../assets/GameIcons/aviator.png"
 import sidebarImage10 from "../../assets/GameIcons/slotGames.png"
 import Footer2 from "../../Component/Footer2";
-
+import chickenRoadImage from "../../assets/GameIcons/chicken favicon.png";
+import aviatornew from "../../assets/GameIcons/avaitorimagenew.png";
+import lotterycategorywingo from "../../assets/GameIcons/lotterycategorywingo.png";
+// import alllotterybg from "../../assets/GameIcons/alllotterybg.png";
+import alllotterybg from "../../assets/GameIcons/wingoLogo.png";
 export default function Home() {
   const games = [
     { id: 1, name: "AviaFly", image: aviaFly },
@@ -169,6 +173,38 @@ export default function Home() {
     { id: 8, name: "Aviator", image: aviator1 },
     { id: 9, name: "AviaFly", image: aviaFly },
     { id: 10, name: "Aviator", image: aviator1 },
+  ];
+  const trendingGames = [
+    {
+      id: 1,
+      name: "Win Go",
+      bgimage: alllotterybg,
+      image: alllotterybg,
+      route: "/lottery/wingo",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
+    {
+      id: 2,
+      name: "Avaitor",
+      bgimage: aviatornew,
+      image: aviatornew,
+      route: "/aviator",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
+    {
+      id: 3,
+      name: "Chicken Road Game",
+      bgimage: chickenRoadImage,
+      image: chickenRoadImage,
+      route: "/chickenRoadGame",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
   ];
 
 const games2 = [
@@ -328,7 +364,7 @@ const games2 = [
                 />
               </svg>
             }
-            games={games}
+            games={trendingGames}
             onSeeAll={() => alert("See All clicked")}
           />
         </div>
@@ -412,7 +448,7 @@ const games2 = [
               />
             </svg>
           }
-          games={games}
+          games={trendingGames}
           onSeeAll={() => alert("See All clicked")}
         />
       </div>

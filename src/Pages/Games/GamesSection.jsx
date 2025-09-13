@@ -94,8 +94,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 const GameSection = ({ title, games, icon }) => {
+  const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 
   const scrollRow = (rowId, direction) => {
@@ -158,10 +159,9 @@ const GameSection = ({ title, games, icon }) => {
           <div
             key={game.id}
             className={`${
-              expanded
-                ? "w-full h-[150px]"
-                : "min-w-[120px] h-[150px]"
-            } bg-white rounded-lg shadow overflow-hidden`}
+              expanded ? "w-full h-[150px]" : "min-w-[120px] h-[150px]"
+            } bg-re rounded-[8px] shadow overflow-hidden`}
+            onClick={() => navigate(game.route)}
           >
             <img
               src={game.image}

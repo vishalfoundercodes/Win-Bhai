@@ -13,10 +13,41 @@
   --color-grayBorder: #8F9398;
   --color-black: #3B3B3B;
   --color-red: #C10932;
+  --color-red2: #242424;
   --color-grayBg: #E7E7E7;
   --color-lightGray: #969696;
   --color-lightGreen: #AFEE9A;
+  --color-bg1: #F7F8FF;
+  --color-bg2: #FC7C76;
+  --color-bg3: #6EA8F4;
+  --color-bg4: #333332;
+  --color-yellow: #DD9138;
+  --color-green: #17B15E;
+  --color-voilet: #9B48DB;
+  --color-redLight: #333332;
+  --color-blackLight: #707070;
+  --color-gray: #666666;
+  --color-lightGray2: #768096;
+  --color-gold: #ff8310;
+  --color-chocolate: #B1835A;
+  --color-border1: #eaeaea;
+  --color-inputBg: #F0F0F5;
+  --color-gray2: #CDCFDD;
 
+  --color-customred: #FF0000;
+  --color-customlightBlue: #D9AC4F;
+  --color-customdarkBlue: #333332;
+ 
+  --color-customlightbtn: #29A3F3;
+  --color-customdarkBluebtn: #D9AC4F;
+  --color-blackAviator1: #0E0E0E;
+  --color-blackAviator2: #1B1C1D;
+  --color-blackAviator3: #0C0C0C;
+  --color-blackAviator4: #2C2D30;
+  --color-blackAviatorText: #6D6F78;
+  --color-redAviator: #CF2030;
+  --color-greenAviator: #29AA09;
+  --color-greenBorderAviator: #B1F1A4;
   /* Typography */
 
   --text-vsm: 10px;
@@ -36,8 +67,8 @@
   --spacing-md: 16px;
   --spacing-lg: 32px;
 
-  /* radius */
-  --radius-lg:16px
+  /* 🔲 Radius */
+  --radius-lg: 16px;
 
   /* Animation */
   --animation-bounce: bounce 1s infinite;
@@ -50,6 +81,7 @@
 --breakpoint-xsm: 500px;
 --breakpoint-md: 720px;
 --breakpoint-sm: 900px;
+--breakpoint-lg2: 1024px;
 --breakpoint-lg: 1200px;
 --breakpoint-xlg: 1280px;
 --breakpoint-2lg: 1500px;
