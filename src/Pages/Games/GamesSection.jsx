@@ -113,7 +113,7 @@ const GameSection = ({ title, games, icon }) => {
   return (
     <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-2">
       {/* Header */}
-      <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[15px] shadow-md mb-3">
+      <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[8px] shadow-md mb-3">
         <div className="flex items-center gap-2">
           {<span className="w-6 h-6">{icon || "ff"}</span>}
           <h2 className="text-lg font-semibold">{title || "dcdhb"}</h2>

@@ -7,23 +7,38 @@ export default function SignUp() {
       const [showNewPassword, setShowNewPassword] = useState(false);
       const [showConfirmPassword, setShowConfirmPassword] = useState(false);
        const [countryCode, setCountryCode] = useState("+91");
+       const countries = [
+         { code: "+91", name: "INDIA", flag: "🇮🇳" },
+         { code: "+971", name: "UAE", flag: "🇦🇪" },
+         { code: "+92", name: "PAKISTAN", flag: "🇵🇰" },
+         { code: "+977", name: "NEPAL", flag: "🇳🇵" },
+         { code: "+880", name: "BANGLADESH", flag: "🇧🇩" },
+         { code: "+94", name: "SRILANKA", flag: "🇱🇰" },
+         { code: "+1", name: "UNITED STATES", flag: "🇺🇸" },
+         { code: "+1", name: "CANADA", flag: "🇨🇦" },
+         { code: "+44", name: "UNITED KINGDOM", flag: "🇬🇧" },
+       ];
+         const [isOpen, setIsOpen] = useState(false);
+         const [selected, setSelected] = useState(countries[0]);
   return (
     <div
-      className=" w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
+      className=" w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative "
       style={{ backgroundImage: `url(${signupbg})` }}
     >
       {/* Background overlay with blur */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0" />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0 " />
 
       {/* Form Container */}
-      <div className="relative z-10 w-80 xxs:w-96 max-w-[448px] bg-white rounded-xl shadow-lg px-4 py-1 xxs:p-6 sm:pt-0 md:mt-10 md:mb-10">
+      <div className="relative z-10 w-80 xxs:w-96 max-w-[448px] mt-10 mb-4  bg-white rounded-xl shadow-lg px-4 py-1 xxs:p-6 sm:pt-0 md:mt-10 md:mb-10">
         {/* Logo */}
         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md p-0">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 
         {/* Form Content */}
-        <form className="mt-3 sm:mt-8  space-y-1 xxs:space-y-2 gap-2">
+        <form className="mt-3 sm:mt-8  space-y-1 xxs:space-y-2 gap-2"
+        onSubmit={()=>{localStorage.setItem("userId",2),navigate("/")}}
+        >
           {/* Phone Number with Get OTP - Styled Like Image */}
           {/* Phone Number with Get OTP - Styled Like Image */}
           <div>
@@ -38,22 +53,49 @@ export default function SignUp() {
               Phone Number
             </label>
             <div className="relative w-full">
-              {/* Country Code Select */}
-              <select
-                value={countryCode}
-                onChange={(e) => setCountryCode(e.target.value)}
-                className="absolute top-1/2 left-4 -translate-y-1/2 bg-transparent border-none text-[16px] font-medium text-gray-700 focus:outline-none pr-0 appearance-none cursor-pointer"
+              {/* Selected Country Code (Trigger button instead of <select>) */}
+              <div
+                onClick={() => setIsOpen(!isOpen)}
+                className="absolute top-1/2 left-4 -translate-y-1/2 flex items-center gap-2 cursor-pointer"
               >
-                <option value="+91">+91</option>
-                <option value="+880">+880</option>
-                <option value="+977">+977</option>
-              </select>
+                {/* <span>{selected.flag}</span> */}
+                <span className="text-[16px] font-medium text-gray-700">
+                  {selected.code}
+                </span>
+              </div>
+
+              {/* Dropdown Modal */}
+              {isOpen && (
+                <div className="absolute left-0 top-12 z-50 w-64 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                  {countries.map((country, idx) => (
+                    <div
+                      key={idx}
+                      className={`flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-100 ${
+                        selected.code === country.code ? "bg-red-50" : ""
+                      }`}
+                      onClick={() => {
+                        setSelected(country);
+                        setCountryCode(country.code);
+                        setIsOpen(false);
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span>{country.flag}</span>
+                        <span className="font-medium text-gray-700">
+                          {country.name}
+                        </span>
+                      </div>
+                      <span className="text-gray-600">{country.code}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Input Field */}
               <input
                 type="text"
                 placeholder="Phone Number"
-                className="w-full pl-15 pr-28 py-2 border-2 border-inputBorder rounded-xl text-[18px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
+                className="w-full pl-14 pr-24 py-2 border-2 border-inputBorder rounded-xl text-[18px] font-medium focus:outline-none bg-inputBoxBg text-inputText text-center"
                 style={{ fontFamily: "Roboto, sans-serif" }}
               />
 
@@ -293,6 +335,7 @@ export default function SignUp() {
           <button
             type="submit"
             className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 mt-2"
+            
           >
             Register
           </button>

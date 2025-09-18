@@ -577,56 +577,68 @@ export default function Withdraw() {
         </div>
 
         {/* account detail */}
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={20}
-          slidesPerView={1}
-          loop={true}
-          navigation
-          pagination={{ clickable: true }}
-          className="w-full"
-        >
-          {cards.map((card, idx) => (
-            <SwiperSlide key={idx}>
-              <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
-                {/* Background image */}
-                <img
-                  src={card.image}
-                  alt="Bank Card"
-                  className="w-full h-full object-cover rounded-xl"
-                />
+        <container className="mb-2">
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={20}
+            slidesPerView={1}
+            loop={true}
+            grabCursor={true}
+            touchEventsTarget="container"
+            className="w-full"
+            mousewheel={{ forceToAxis: true }}
+          >
+            {cards.map((card, idx) => (
+              <SwiperSlide key={idx}>
+                <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                  {/* Background image */}
+                  <img
+                    src={card.image}
+                    alt="Bank Card"
+                    className="w-full h-full object-cover rounded-xl"
+                  />
 
-                {/* Overlay details */}
-                <div className="absolute inset-0 flex flex-col py-2 px-6 justify-between">
-                  {/* Top row */}
-                  <div className="flex justify-between items-start">
-                    <p className="text-sm font-semibold text-gray-800">
-                      {card.ifsc}
-                    </p>
-                    <div className="flex gap-2">
-                      <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
-                        <Trash2 className="w-4 h-4 text-gray-600" />
-                      </button>
-                      <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
-                        <Pencil className="w-4 h-4 text-gray-600" />
-                      </button>
+                  {/* Overlay details */}
+                  <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
+                    {/* Top row (IFSC + Buttons) */}
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="text-sm font-semibold text-gray-800 ml-2">
+                        {card.ifsc}
+                      </p>
+                      <div className="flex gap-2">
+                        <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                          <Trash2 className="w-4 h-4 text-gray-600" />
+                        </button>
+                        <button
+                          className="p-1 bg-white rounded shadow hover:bg-gray-100"
+                          onClick={() =>
+                            navigate("/updateAccount", {
+                              state: { mode: "update" },
+                            })
+                          }
+                        >
+                          <Pencil className="w-4 h-4 text-gray-600" />
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Account number */}
+                    <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
+                      {card.account}
+                    </p>
+
+                    {/* Name */}
+                    <p className="font-medium text-gray-800 text-right">
+                      {card.name}
+                    </p>
                   </div>
-
-                  {/* Middle (Account number) */}
-                  <p className="text-lg font-bold tracking-wide text-gray-900">
-                    {card.account}
-                  </p>
-
-                  {/* Bottom (Name) */}
-                  <p className="font-medium text-gray-800">{card.name}</p>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </container>
         {/* add account */}
-        <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm ">
+        <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm mt-2">
           {/* Left Text */}
           <span className="text-gray-900 font-medium">Add Account</span>
 
@@ -673,54 +685,6 @@ export default function Withdraw() {
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Bank Details */}
-        <div className="space-y-2 text-sm bg-white rounded-[8px] p-4">
-          {/* Account */}
-
-          <h1 className="text-black font-medium">Bank Details</h1>
-          {/* Account Name */}
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <span className="font-medium text-ssm">Customer Name:</span>
-              <div className="flex items-center gap-2">
-                <span className="text-lightGray font-medium text-ssm">
-                  Dummy
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <span className="font-medium text-ssm">Account Number:</span>
-              <div className="flex items-center gap-2">
-                <span className="text-lightGray font-medium text-ssm">
-                  98765432100529637538
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* IFSC */}
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <span className="font-medium text-ssm">IFSC :</span>
-              <div className="flex items-center gap-2">
-                <span className="text-lightGray font-medium text-ssm">
-                  HDFC875422
-                </span>
-              </div>
-            </div>
-          </div>
-          <button
-            className="text-red text-ssm font-medium"
-            onClick={() =>
-              navigate("/updateAccount", { state: { mode: "update" } })
-            }
-          >
-            Edit Bank Details
-          </button>
         </div>
 
         {/* Terms Checkbox */}

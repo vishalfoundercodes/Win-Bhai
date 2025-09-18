@@ -29,6 +29,9 @@ import ProfilePage2 from "./Pages/ReusableComponent/ProfilePage2"
 import ForgetUserName from "./Auth/ForgetUserName"
 import PendingBets from "./Pages/Wallet/PendingBets"
 import CreateCampaign from "./Pages/ReusableComponent/CreateCampaign"
+import Statistics from "./Pages/ReusableComponent/Statistics"
+import WithdrawAffilation from "./Pages/ReusableComponent/WithdrawAffilation"
+import WithdrawFunds from "./Pages/ReusableComponent/WithdrawFunds"
 function App() {
 
 
@@ -65,6 +68,13 @@ function App() {
             <Route path="/ForgetUserName" element={<ForgetUserName />} />,
             <Route path="/PendingBets" element={<PendingBets />} />,
             <Route path="/CreateCampaign" element={<CreateCampaign />} />,
+            <Route path="/Statistics" element={<Statistics />} />,
+            <Route path="/WithdrawFunds" element={<WithdrawFunds />} />,
+            <Route
+              path="/WithdrawAffilation"
+              element={<WithdrawAffilation />}
+            />
+            ,
           </Routes>
         </Layout>
       </Router>

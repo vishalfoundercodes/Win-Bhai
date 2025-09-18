@@ -1,9 +1,9 @@
 import React from "react";
 import { LogOut } from "lucide-react";
-
+import { useNavigate } from "react-router-dom";
 export default function SignOutModal({ isOpen, onClose }) {
   if (!isOpen) return null;
-
+const navigate=useNavigate()
   return (
     <div
       className="fixed bg-black/5 backdrop-blur-[2px] inset-0 flex items-center justify-center z-50"
@@ -28,7 +28,10 @@ export default function SignOutModal({ isOpen, onClose }) {
           <button
             onClick={() => {
               onClose();
-              alert("Signed out!"); // yaha tumhara signout logic ayega
+              localStorage.removeItem("userId");
+              navigate("/");
+              window.location.reload();
+              // alert("Signed out!"); // yaha tumhara signout logic ayega
             }}
             className="w-full bg-red hover:bg-red text-white font-medium py-2 rounded-md"
           >

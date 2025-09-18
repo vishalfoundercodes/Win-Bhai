@@ -136,12 +136,16 @@ export default function Layout({ children }) {
           }`}
         >
           <div
-            className={`flex flex-col min-h-screen overflow-hidden 
+            className={`flex flex-col min-h-screen hide-scrollbar
           w-full ${isWingoPath ? "xsm:w-[400px] bg-red2" : ""}`}
           >
             {/* {shouldShowHeader2 ? <Header2 /> : <Header />} */}
             {!shouldHideHeader &&
-              (shouldShowHeader2 ? <Header2 /> : <Header />)}
+              (shouldShowHeader2 ? (
+                <Header2 className="sticky top-0 z-50" />
+              ) : (
+                <Header className="sticky top-0 z-50" />
+              ))}
             {/* <Header /> */}
             {children}
             {!shouldHideFooter && (

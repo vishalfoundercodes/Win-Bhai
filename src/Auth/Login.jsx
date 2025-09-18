@@ -21,7 +21,13 @@ export default function Login() {
         </div>
 
         {/* Form Content */}
-        <form className="space-y-4">
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault(); // ❌ Prevents page reload
+            console.log("Form Submitted");
+          }}
+        >
           {/* Login with + User ID */}
           <div className="flex flex-col sm:flex-row sm:space-x-2">
             {/* Login With */}
@@ -174,6 +180,7 @@ export default function Login() {
               fontWeight: 500,
               fontSize: "18px",
             }}
+            onClick={()=>{localStorage.setItem("userId",1),navigate("/")}}
           >
             Login
           </button>

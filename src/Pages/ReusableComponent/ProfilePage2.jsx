@@ -119,7 +119,10 @@ export default function ProfilePage2() {
           </p>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-8">
+        <div
+          className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-8"
+          onClick={() => navigate("/Statistics")}
+        >
           {/* <BarChart2 className="w-8 h-8 text-red-600 mb-2" /> */}
           <svg
             width="57"
@@ -137,7 +140,10 @@ export default function ProfilePage2() {
           <p className="font-bold  text-sm text-gray-700 pt-4">Statics</p>
         </div>
 
-        <div className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-6">
+        <div
+          className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-6"
+          onClick={() => navigate("/WithdrawAffilation")}
+        >
           {/* <LogOut className="w-8 h-8 text-red-600 mb-2" /> */}
           <svg
             width="57"
