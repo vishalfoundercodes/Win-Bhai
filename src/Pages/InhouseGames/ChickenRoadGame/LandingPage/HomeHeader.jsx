@@ -6,7 +6,7 @@ const HomeHeader = () => {
       {/* Logo */}
       <div className="flex items-center">
         <img
-          src="/logo.png" // 🔁 Replace with actual logo path
+          src="/logo-winbhai.png" // 🔁 Replace with actual logo path
           alt="Chicken Road Logo"
           className="w-10 h-10 rounded-full object-cover"
         />

@@ -113,7 +113,7 @@ const GameSection = ({ title, games, icon }) => {
   return (
     <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-2">
       {/* Header */}
-      <div className="flex justify-between items-center px-3 py-2 bg-white rounded-[15px] shadow-md mb-3">
+      <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[15px] shadow-md mb-3">
         <div className="flex items-center gap-2">
           {<span className="w-6 h-6">{icon || "ff"}</span>}
           <h2 className="text-lg font-semibold">{title || "dcdhb"}</h2>
@@ -131,13 +131,13 @@ const GameSection = ({ title, games, icon }) => {
             <>
               <button
                 onClick={() => scrollRow(title + "-row", "left")}
-                className="p-1 bg-grayBg rounded-full shadow text-red"
+                className="p-1 border border-red rounded-[8px] shadow text-red"
               >
                 <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => scrollRow(title + "-row", "right")}
-                className="p-1 bg-grayBg rounded-full shadow text-red"
+                className="p-1 border border-red rounded-[8px] shadow text-red"
               >
                 <ChevronRight size={18} />
               </button>
@@ -166,7 +166,7 @@ const GameSection = ({ title, games, icon }) => {
             <img
               src={game.image}
               alt={game.name}
-              className="w-full h-full object-cover rounded-[15px]"
+              className="w-40 h-full object-cover rounded-[15px]"
             />
           </div>
         ))}

@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import signupbg from "../assets/Images/signup-bg.jpg";
-import logo from "../assets/logo/logo-b.png";
+import logo from "../assets/logo-winbhai.png";
 import { useNavigate } from "react-router-dom";
 export default function Login() {
     const navigate=useNavigate()
@@ -16,7 +16,7 @@ export default function Login() {
       {/* Form Container */}
       <div className="relative z-10 w-80 sm:w-96 max-w-[448px] bg-white rounded-xl shadow-lg p-6 pt-12 sm:pt-14">
         {/* Logo */}
-        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-md p-0">
+        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md p-0">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 
@@ -39,7 +39,7 @@ export default function Login() {
               </label>
               <select
                 id="loginWith"
-                className="w-full px-1 py-2 rounded border border-gray-300 bg-white text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600"
+                className="w-full px-1 py-2 rounded border border-gray-300 bg-white text-gray-900 text-sm focus:outline-none focus:ring-0"
                 defaultValue="username"
               >
                 <option value="username">Username</option>
@@ -146,14 +146,22 @@ export default function Login() {
           </div>
 
           {/* Forgot Password/Username Link */}
-          <div>
+          <div className="flex justify-between">
             <a
               href="#"
-              className="text-red-600 text-sm font-medium hover:underline"
+              className="text-red text-ssm font-medium hover:underline"
               style={{ fontFamily: "Roboto, sans-serif" }}
               onClick={() => navigate("/forgetPassword")}
             >
-              Forgot Password/Username
+              Forgot Password?
+            </a>
+            <a
+              href="#"
+              className="text-red text-ssm font-medium hover:underline"
+              style={{ fontFamily: "Roboto, sans-serif" }}
+              onClick={() => navigate("/ForgetUserName")}
+            >
+              Forgot Username?
             </a>
           </div>
 
@@ -185,7 +193,7 @@ export default function Login() {
 
           {/* New User Link */}
           <p
-            className="text-center text-gray-600 text-sm"
+            className="text-center text-gray text-sm"
             style={{
               fontFamily: "Roboto, sans-serif",
               fontWeight: 400,

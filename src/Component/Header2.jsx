@@ -17,13 +17,14 @@ export default function Header2() {
     "/changePassword": "Change Password",
     "/downloadAPK": "Download APK",
     "/lottery/wingo": "Wingo",
+    "/needhelp":"Chat With Us"
   };
 
   // Default title if path not found
   const headerTitle = titles[location.pathname] || "HEADER";
 
   // Conditional styles based on path
-  const isCoupon = location.pathname === "/cuppon";
+  const isCoupon = location.pathname === "/cuppon111";
   const headerBg = isCoupon ? "bg-white text-black" : "bg-red text-white";
 
   return (

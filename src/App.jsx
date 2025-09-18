@@ -24,6 +24,11 @@ import AccountStatement from "./Pages/Wallet/AccountStatement"
 import AvitatorLayout from "./Pages//InhouseGames/AviatorGame/AvitatorLayout"
 import WinGo from "./Pages//InhouseGames/Lottery/WinGo";
 import ChickenRoadLayout from "./Pages//InhouseGames/ChickenRoadGame/GameComponent/ChickenRoadLayout";
+import AffiliatePage from "./Pages/ReusableComponent/Affilation"
+import ProfilePage2 from "./Pages/ReusableComponent/ProfilePage2"
+import ForgetUserName from "./Auth/ForgetUserName"
+import PendingBets from "./Pages/Wallet/PendingBets"
+import CreateCampaign from "./Pages/ReusableComponent/CreateCampaign"
 function App() {
 
 
@@ -55,6 +60,11 @@ function App() {
             <Route path="/aviator" element={<AvitatorLayout />} />,
             <Route path="/lottery/wingo" element={<WinGo />} />,
             <Route path="/chickenRoadGame" element={<ChickenRoadLayout />} />,
+            <Route path="/affilationDashboard" element={<AffiliatePage />} />,
+            <Route path="/affilation" element={<ProfilePage2 />} />,
+            <Route path="/ForgetUserName" element={<ForgetUserName />} />,
+            <Route path="/PendingBets" element={<PendingBets />} />,
+            <Route path="/CreateCampaign" element={<CreateCampaign />} />,
           </Routes>
         </Layout>
       </Router>

@@ -3,11 +3,11 @@ import signupbg from "../assets/Images/signup-bg.jpg";
 import logo from "../assets/logo-winbhai.png";
 import { useNavigate } from "react-router-dom";
 
-export default function ForgotPassword() {
-    const navigate=useNavigate()
+export default function ForgetUserName() {
+  const navigate = useNavigate();
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-   const [countryCode, setCountryCode] = useState("+91");
+       const [countryCode, setCountryCode] = useState("+91");
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
@@ -76,7 +76,7 @@ export default function ForgotPassword() {
           {/* New Password */}
           <div>
             <label className="block mb-1 text-[16px] font-semibold">
-              New Password
+              New UserName
             </label>
             <div className="relative">
               <input
@@ -141,7 +141,7 @@ export default function ForgotPassword() {
           {/* Confirm Password */}
           <div>
             <label className="block mb-1 text-[16px] font-semibold">
-              Confirm Password
+              Confirm Username
             </label>
             <div className="relative">
               <input
@@ -204,7 +204,7 @@ export default function ForgotPassword() {
           {/* Confirm Button */}
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded-md text-sm font-semibold hover:bg-gray-800 transition"
+            className="w-full bg-black text-white py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition"
           >
             Confirm
           </button>

@@ -14,9 +14,12 @@ import {
   FaHistory,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import SignOutModal from "../../Auth/SignOut";
+import { useState } from "react";
 
 export default function Sidebar({ isOpen, onClose }) {
   const navigate= useNavigate()
+  const [openSignOutModal, setOpenSignOutModal] = useState(false);
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-end transition-all duration-300 ${
@@ -46,8 +49,11 @@ export default function Sidebar({ isOpen, onClose }) {
         {/* Content */}
         <div className="p-0">
           {/* Balance Info */}
-          <div className="bg-white  p-4">
-            <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2 ">
+          <div className="bg-white py-1">
+            <h2
+              className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4 "
+              onClick={() => navigate("/Info")}
+            >
               <svg
                 width="20"
                 height="20"
@@ -70,7 +76,7 @@ export default function Sidebar({ isOpen, onClose }) {
               User
             </h2>
             <div className="w-full mb-2 border-b border-grayBorder"></div>
-            <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2">
+            <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4">
               <svg
                 width="24"
                 height="24"
@@ -85,14 +91,17 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Balance Information
             </h2>
+            <div className="w-full mb-2 border-b border-grayBorder"></div>
             {/* <div className="w-full mb-2 border-b border-grayBorder"></div> */}
-            <div className="border border-grayBorder  bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start">
+            <div className="border border-grayBorder mx-4 bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start ">
               <p className="text-xs font-medium text-darkGray">Total Balance</p>
               <p className="text-green-600 font-bold">₹ 1,500</p>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+            <div className="grid grid-cols-2 gap-2 text-sm mb-3 px-4">
               <div className="border rounded-[10px] p-2  col-span-1 border-grayBorder bg-grayBg">
-                <p className="text-xs text-darkGray font-medium">Free Cash</p>
+                <p className="text-xs text-darkGray font-medium uppercase">
+                  Free Cash
+                </p>
                 <p className="font-bold">₹ 0.00</p>
               </div>
               <div className="border rounded-[10px] p-2  border-grayBorder bg-grayBg">
@@ -104,7 +113,7 @@ export default function Sidebar({ isOpen, onClose }) {
             </div>
 
             {/* Deposit / Withdraw */}
-            <div className="flex gap-3 mb-3">
+            <div className="flex gap-3 mb-3 px-4">
               <div
                 className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)]
  rounded-[8px] p-1 w-20 h-20"
@@ -148,7 +157,7 @@ export default function Sidebar({ isOpen, onClose }) {
                     fill="white"
                   />
                 </svg>
-                <span className="text-white text-sm font-semibold">
+                <span className="text-white text-ssm font-semibold">
                   Deposit
                 </span>
               </div>
@@ -195,18 +204,23 @@ export default function Sidebar({ isOpen, onClose }) {
                     fill="white"
                   />
                 </svg>
-                <span className="text-white text-sm font-semibold">
+                <span className="text-white text-ssm font-semibold">
                   Withdraw
                 </span>
               </div>
             </div>
-            <button className="w-full bg-red text-white py-2 rounded-[5px] font-semibold">
-              Claim Bonus
-            </button>
+            <div className="mx-4">
+              <button
+                className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 "
+                onClick={() => navigate("/RedeemBonus")}
+              >
+                Claim Bonus
+              </button>
+            </div>
           </div>
 
           {/* Help Section */}
-          <div className="bg-grayBg border border-grayBorder px-4 py-2  font-bold text-black text-xsm">
+          <div className="bg-grayBg border border-grayBorder px-4 py-2  font-bold text-black text-sm">
             Help & Support
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
@@ -280,11 +294,11 @@ export default function Sidebar({ isOpen, onClose }) {
           </ul>
 
           {/* Statement */}
-          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-xsm font-bold text-black ">
+          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-sm font-bold text-black ">
             Statement
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
-            <li
+            {/* <li
               className="flex items-center gap-3 p-3"
               onClick={() => {
                 onClose();
@@ -304,7 +318,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 />
               </svg>{" "}
               Transactions
-            </li>
+            </li> */}
             <li
               className="flex items-center gap-3 p-3"
               onClick={() => {
@@ -393,7 +407,7 @@ export default function Sidebar({ isOpen, onClose }) {
               className="flex items-center gap-3 p-3"
               onClick={() => {
                 onClose();
-                navigate("/Bonus");
+                navigate("/PendingBets");
               }}
             >
               <svg
@@ -431,10 +445,33 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Bet History
             </li>
+            <li
+              className="flex items-center gap-3 p-3"
+              onClick={() => {
+                onClose();
+                navigate("/betHistory");
+              }}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24 6.58536C23.9947 5.94838 23.758 5.33473 23.3335 4.85726C22.909 4.37979 22.3252 4.07062 21.6895 3.98662V1.54536C21.6904 1.30756 21.631 1.07335 21.5169 0.864298C21.4027 0.65525 21.2375 0.478085 21.0363 0.349115C20.7112 0.151773 20.3437 0.0336143 19.9637 0.00428659C19.5838 -0.0250411 19.2023 0.0352939 18.8504 0.180365L10.9221 3.30412C10.7815 3.06823 10.5816 2.87267 10.3421 2.7366C10.1025 2.60052 9.83143 2.5286 9.55545 2.52786H5.90845C5.69791 2.52836 5.48955 2.57009 5.29528 2.65069C5.10101 2.73128 4.92465 2.84915 4.77631 2.99754C4.62796 3.14593 4.51055 3.32193 4.43078 3.51546C4.35102 3.70899 4.31047 3.91625 4.31147 4.12537V4.45162H3.13355C2.97161 4.44963 2.81086 4.47942 2.66053 4.53927C2.5102 4.59911 2.37324 4.68784 2.25749 4.80037C2.14175 4.91289 2.04951 5.047 1.98605 5.19501C1.92259 5.34301 1.88916 5.502 1.88768 5.66287V8.07036C1.88767 8.23218 1.92 8.39238 1.98279 8.54169C2.04559 8.69099 2.1376 8.82643 2.25349 8.94015C2.36938 9.05387 2.50685 9.1436 2.65792 9.20415C2.80899 9.2647 2.97066 9.29485 3.13355 9.29286H4.30769V9.72787C4.31211 10.0806 4.43478 10.4218 4.65632 10.6976C4.87785 10.9733 5.18561 11.1678 5.53091 11.2504V13.0579L4.86267 13.2866C4.65125 13.3654 4.46248 13.4291 4.29259 13.4854C3.53752 13.7366 3.12223 13.9166 2.90703 14.4491H0.868334C0.755022 14.4471 0.642445 14.4676 0.537177 14.5093C0.431908 14.551 0.336058 14.6131 0.255221 14.692C0.174385 14.7709 0.110182 14.865 0.0663623 14.9688C0.0225421 15.0726 -1.77418e-05 15.184 1.04687e-08 15.2966V20.8091C0.0019657 20.9204 0.0259871 21.0302 0.0706922 21.1323C0.115397 21.2344 0.17991 21.3267 0.260546 21.404C0.341182 21.4813 0.436361 21.5421 0.540646 21.5829C0.644932 21.6236 0.756281 21.6436 0.868334 21.6416H3.04294C3.26932 21.9106 3.54764 22.1318 3.86147 22.2921C4.17531 22.4525 4.5183 22.5488 4.87022 22.5754H5.53091V23.6254C5.53091 23.7248 5.57069 23.8202 5.64149 23.8905C5.71229 23.9609 5.80832 24.0004 5.90845 24.0004H9.43841C9.53854 24.0004 9.63457 23.9609 9.70537 23.8905C9.77617 23.8202 9.81595 23.7248 9.81595 23.6254V22.5754H10.7673C10.9379 22.5846 11.1085 22.559 11.2686 22.5C11.4287 22.441 11.5749 22.35 11.6981 22.2325C11.8213 22.1151 11.9189 21.9737 11.9848 21.8172C12.0507 21.6607 12.0835 21.4925 12.0812 21.3229C12.0861 21.0144 11.9951 20.7119 11.8207 20.4566C11.9993 20.3188 12.1434 20.1418 12.2416 19.9395C12.3399 19.7372 12.3896 19.515 12.387 19.2904C12.396 18.95 12.2881 18.6168 12.0812 18.3454C12.2365 18.2314 12.3652 18.0856 12.4587 17.9179C12.5937 17.6818 12.6647 17.415 12.6647 17.1435C12.6647 16.872 12.5937 16.6052 12.4587 16.3691C12.4149 16.2947 12.3643 16.2244 12.3077 16.1591C12.4821 16.0456 12.627 15.8927 12.7305 15.7129C12.8654 15.472 12.9362 15.201 12.9362 14.9254C12.9362 14.6498 12.8654 14.3787 12.7305 14.1379C12.608 13.9323 12.4325 13.7628 12.2222 13.6468C12.0119 13.5308 11.7742 13.4725 11.5337 13.4779L9.81595 13.5004V11.2879C10.1253 11.2322 10.4112 11.0873 10.6381 10.8712C10.8651 10.6551 11.0229 10.3775 11.092 10.0729L18.8919 13.0916C19.2449 13.2212 19.618 13.2885 19.9943 13.2904C20.3741 13.3039 20.7491 13.2032 21.0703 13.0016C21.2752 12.856 21.439 12.6605 21.5461 12.434C21.6532 12.2075 21.6999 11.9575 21.6819 11.7079V9.18786C22.3196 9.10543 22.9058 8.79644 23.3319 8.31803C23.758 7.83961 23.9953 7.22412 24 6.58536ZM18.0047 1.33537C18.0047 3.36411 18.0047 10.0016 18.0047 11.9516L11.1373 9.28161V4.12537C11.1373 4.09537 11.1373 4.06537 11.1373 4.03537L18.0047 1.33537ZM3.13355 8.54286C3.06983 8.54488 3.00634 8.53414 2.94687 8.5113C2.8874 8.48845 2.83316 8.45397 2.78738 8.40989C2.7416 8.36581 2.7052 8.31304 2.68035 8.25472C2.65551 8.19639 2.64272 8.1337 2.64276 8.07036V5.66287C2.64323 5.59985 2.65638 5.53756 2.68145 5.47967C2.70652 5.42178 2.743 5.36946 2.78873 5.32578C2.83446 5.2821 2.88853 5.24795 2.94775 5.22534C3.00697 5.20273 3.07014 5.19211 3.13355 5.19412H4.30769V8.54286H3.13355ZM0.755073 20.8091V15.2966C0.755073 15.2591 0.804153 15.2141 0.868334 15.2141H2.75602C2.75602 15.3791 2.73714 15.5666 2.73714 15.7766V20.8916H0.868334C0.804153 20.8916 0.755073 20.8504 0.755073 20.8091ZM4.87022 21.8254C4.25484 21.8254 3.48844 21.1579 3.48844 20.9066V15.7766C3.48844 14.5654 3.56772 14.5354 4.53421 14.2091C4.70788 14.1491 4.91175 14.0854 5.11562 14.0066L6.04059 13.6841L6.68617 13.4629C7.03823 13.3063 7.43799 13.2929 7.79991 13.4254C7.94802 13.5022 8.07871 13.6085 8.1839 13.7375C8.28909 13.8664 8.36656 14.0155 8.41152 14.1754L8.84946 16.0129C8.7755 16.022 8.70067 16.022 8.62671 16.0129C7.7546 15.9904 7.27135 15.7016 7.06748 15.0866C7.03924 15.0005 6.98058 14.9275 6.90234 14.881C6.8241 14.8345 6.73156 14.8177 6.64182 14.8337C6.55208 14.8497 6.4712 14.8974 6.41412 14.968C6.35704 15.0386 6.32762 15.1274 6.33129 15.2179C6.33129 15.5291 6.2218 16.2566 5.78009 16.4029C5.75489 16.4128 5.73084 16.4253 5.70835 16.4404C5.66673 16.4619 5.63073 16.4928 5.6032 16.5305C5.57568 16.5683 5.55739 16.6119 5.54979 16.6579C5.547 16.684 5.547 16.7104 5.54979 16.7366V21.8291L4.87022 21.8254ZM11.1298 16.3841C11.2679 16.3742 11.4061 16.4021 11.5293 16.465C11.6525 16.5278 11.7559 16.6231 11.8282 16.7404C11.8963 16.8619 11.9321 16.9987 11.9321 17.1379C11.9321 17.277 11.8963 17.4138 11.8282 17.5354C11.7687 17.6356 11.6817 17.717 11.5775 17.7701C11.4732 17.8232 11.356 17.8458 11.2393 17.8354L9.52525 17.8129C9.37189 17.8166 9.2208 17.7756 9.09064 17.6949C8.96048 17.6143 8.85695 17.4975 8.79283 17.3591C8.75083 17.2664 8.73264 17.1647 8.73989 17.0633C8.74713 16.9619 8.77959 16.8638 8.83436 16.7779C8.96589 16.7766 9.09568 16.7478 9.21534 16.6936C9.335 16.6393 9.44186 16.5607 9.52902 16.4629C9.54598 16.439 9.56112 16.4139 9.57433 16.3879L11.1298 16.3841ZM10.9788 19.9691H9.51392C9.38117 19.9797 9.2481 19.9529 9.12994 19.8919C9.01177 19.8309 8.91326 19.7381 8.84568 19.6241C8.77941 19.5101 8.74452 19.3808 8.74452 19.2491C8.74452 19.1175 8.77941 18.9881 8.84568 18.8741C8.9177 18.7658 9.01774 18.6787 9.13531 18.6219C9.25288 18.5652 9.38365 18.5409 9.51392 18.5516L10.9523 18.5704C11.046 18.5654 11.1397 18.5802 11.2272 18.6138C11.3147 18.6474 11.3941 18.699 11.46 18.7653C11.526 18.8315 11.5771 18.9109 11.61 18.9981C11.6429 19.0854 11.6568 19.1786 11.6508 19.2716C11.6596 19.3633 11.6484 19.4558 11.618 19.5428C11.5875 19.6298 11.5386 19.7093 11.4745 19.7759C11.4103 19.8424 11.3325 19.8945 11.2463 19.9284C11.1602 19.9624 11.0676 19.9776 10.975 19.9729L10.9788 19.9691ZM6.28598 23.2504V17.0179C6.58122 16.8318 6.8057 16.5534 6.92402 16.2266C7.24121 16.4904 7.62508 16.6629 8.03398 16.7254C7.94371 17.0341 7.96508 17.3644 8.09438 17.6591C8.18108 17.8556 8.30993 18.031 8.47192 18.1729C8.36104 18.2682 8.26666 18.3809 8.19254 18.5066C8.06 18.7346 7.99022 18.9933 7.99022 19.2566C7.99022 19.5199 8.06 19.7786 8.19254 20.0066C8.25303 20.1105 8.32661 20.2063 8.41152 20.2916C8.32345 20.3658 8.24598 20.4516 8.18122 20.5466C8.04751 20.7547 7.97243 20.9945 7.9638 21.2412C7.95516 21.4879 8.0133 21.7323 8.13214 21.9491C8.22266 22.121 8.35507 22.2677 8.51729 22.3758C8.67951 22.4839 8.86639 22.5499 9.06088 22.5679V23.2504H6.28598ZM10.7673 21.8216H9.18924C9.11019 21.8199 9.03313 21.7966 8.96653 21.7543C8.89994 21.7119 8.84636 21.6522 8.8117 21.5816C8.75643 21.485 8.72737 21.3758 8.72737 21.2647C8.72737 21.1536 8.75643 21.0445 8.8117 20.9479C8.89279 20.8522 8.99841 20.7801 9.11737 20.7392C9.23633 20.6983 9.36421 20.69 9.48749 20.7154H10.9486C11.1864 20.7154 11.3261 21.0266 11.3261 21.3004C11.3261 21.4954 11.2581 21.8179 10.7673 21.8216ZM11.5526 14.2279C11.661 14.2194 11.7696 14.2422 11.8653 14.2934C11.961 14.3446 12.0399 14.4221 12.0925 14.5166C12.1622 14.6431 12.1988 14.7849 12.1988 14.9291C12.1988 15.0733 12.1622 15.2152 12.0925 15.3416C12.0378 15.4362 11.9575 15.5138 11.8608 15.5654C11.7641 15.6171 11.6547 15.6409 11.5451 15.6341H9.5479L9.21567 14.2504L11.5526 14.2279ZM8.93252 13.5004C8.75164 13.1731 8.47161 12.9107 8.13214 12.7504C7.86162 12.634 7.56994 12.5739 7.27513 12.5739C6.98032 12.5739 6.68864 12.634 6.41812 12.7504L6.27088 12.8029V11.3029H9.06088V13.5004H8.93252ZM10.3823 9.72787C10.3823 9.95065 10.2932 10.1643 10.1346 10.3218C9.97597 10.4794 9.76086 10.5679 9.53657 10.5679H5.90845C5.79739 10.5679 5.68742 10.5461 5.58482 10.5039C5.48222 10.4617 5.38899 10.3998 5.31046 10.3218C5.23193 10.2438 5.16964 10.1512 5.12714 10.0493C5.08464 9.9474 5.06277 9.83818 5.06277 9.72787V4.12537C5.06277 3.90258 5.15186 3.68893 5.31046 3.5314C5.46906 3.37386 5.68416 3.28537 5.90845 3.28537H9.53657C9.76086 3.28537 9.97597 3.37386 10.1346 3.5314C10.2932 3.68893 10.3823 3.90258 10.3823 4.12537V9.72787ZM20.9306 11.7116C20.9438 11.8366 20.9251 11.963 20.8763 12.0789C20.8275 12.1949 20.7501 12.2968 20.6513 12.3754C20.2737 12.6304 19.5488 12.5291 19.1751 12.3754L18.7522 12.2141C18.7522 10.6579 18.7787 2.72661 18.7522 1.00912L19.1298 0.862865C19.3677 0.764916 19.625 0.722113 19.8821 0.737708C20.1392 0.753303 20.3893 0.826885 20.6135 0.952865C20.7125 1.01355 20.7941 1.09859 20.8503 1.19976C20.9065 1.30093 20.9355 1.41481 20.9344 1.53036L20.9306 11.7116ZM21.6857 8.43036V4.74787C22.1166 4.83018 22.5051 5.05903 22.7846 5.39505C23.064 5.73107 23.2168 6.15329 23.2168 6.58911C23.2168 7.02494 23.064 7.44716 22.7846 7.78318C22.5051 8.1192 22.1166 8.34805 21.6857 8.43036Z"
+                  fill="#C10932"
+                  stroke="#C10932"
+                  stroke-width="0.6"
+                />
+              </svg>
+              Promote & Earn
+            </li>
           </ul>
 
           {/* Legal */}
-          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-xsm font-bold text-black ">
+          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-sm font-bold text-black ">
             Legal & Compliance
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
@@ -457,7 +494,7 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>
               Rules & Regulations
             </li>
-            <li className="flex items-center gap-3 p-3">
+            {/* <li className="flex items-center gap-3 p-3">
               <svg
                 width="24"
                 height="24"
@@ -473,7 +510,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 />
               </svg>{" "}
               Exclusion Policy
-            </li>
+            </li> */}
             <li className="flex items-center gap-3 p-3">
               <svg
                 width="24"
@@ -515,7 +552,7 @@ export default function Sidebar({ isOpen, onClose }) {
           </ul>
 
           {/* Account */}
-          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-xsm font-bold text-black ">
+          <div className="bg-grayBg border border-grayBorder px-4 py-2 text-sm font-bold text-black ">
             Account Actions
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
@@ -540,7 +577,10 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>{" "}
               Change Password
             </li>
-            <li className="flex items-center gap-3 p-3  font-semibold">
+            <li
+              className="flex items-center gap-3 p-3  font-semibold"
+              onClick={() => setOpenSignOutModal(true)}
+            >
               <svg
                 width="24"
                 height="24"
@@ -584,6 +624,11 @@ export default function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
       </div>
+      {/* Sign out Modal */}
+      <SignOutModal
+        isOpen={openSignOutModal}
+        onClose={() => setOpenSignOutModal(false)}
+      />
     </div>
   );
 }

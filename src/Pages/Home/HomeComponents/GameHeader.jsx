@@ -1,5 +1,5 @@
 import React from 'react'
-import Aviator from "../../../assets/Home/Aviator.png";
+import Aviator from "../../../assets/Home/homePge.png";
 export default function GameHeader() {
   return (
     <div className='p-2 lg:p-0 flex justify-center lg:justify-start'>

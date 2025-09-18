@@ -11,8 +11,11 @@ import sidebarImage8 from "../../../assets/GameIcons/live cassino.png";
 import sidebarImage9 from "../../../assets/GameIcons/aviator.png";
 import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function GameSlider({ isOpen, onClose }) {
+    const [selected, setSelected] = useState(null);
+
   const navigate = useNavigate();
   const games = [
     { id: 1, name: "Cricket", image: sidebarImage1, route: "" },
@@ -63,7 +66,7 @@ export default function GameSlider({ isOpen, onClose }) {
 
         {/* User Info */}
         <div className="flex items-center gap-3 px-4 py-3 border-b">
-          <div className="w-8 h-8 flex items-center justify-center rounded-full bg-[#A21518] text-white font-bold">
+          <div className="w-8 h-8 flex items-center justify-center rounded-[8px] bg-[#A21518] text-white font-bold">
             V
           </div>
           <span className="text-gray-800 font-medium">Vikas Sharma</span>
@@ -74,22 +77,43 @@ export default function GameSlider({ isOpen, onClose }) {
           {games.map((game) => (
             <li
               key={game.id}
-              className="flex items-center gap-3 px-4 py-3 border-b cursor-pointer hover:bg-gray-100"
-              onClick={() => navigate(game.route)}
+              className={`flex items-center gap-2 px-3 py-3 cursor-pointer rounded-md mx-2 mt-1
+        ${
+          selected === game.id
+            ? "bg-red-100 text-red" // active row background
+            : "hover:bg-gray-100 text-darkGray" // default row background
+        }`}
+              onClick={() => {
+                setSelected(game.id);
+                navigate(game.route);
+              }}
             >
-              <img
-                src={game.image}
-                alt={game.name}
-                className="w-8 h-8 bg-[#A21518] p-1 rounded-full"
-              />
-              <span className="text-sm font-medium">{game.name}</span>
+              {/* Keep same circle size always */}
+              <div
+                className={`w-8 h-8 p-1 rounded-full flex items-center justify-center
+          ${selected === game.id ? "bg-red" : "bg-black"}`}
+              >
+                <img
+                  src={game.image}
+                  alt={game.name}
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+
+              <span
+                className={`text-sm font-semibold ${
+                  selected === game.id ? "text-red" : "text-darkGray"
+                }`}
+              >
+                {game.name}
+              </span>
             </li>
           ))}
         </ul>
 
         {/* Contact Section */}
         <div className="mt-4 bg-[#E7E7E7] px-4 py-3 rounded-t-[15px]">
-          <p className="text-sm font-semibold text-[#A21518] mb-2">
+          <p className="text-sm font-semibold text-black mb-2">
             Contact with us :
           </p>
           <div className="flex flex-col gap-2">
@@ -111,7 +135,7 @@ export default function GameSlider({ isOpen, onClose }) {
               </div>
 
               {/* Right Text Section */}
-              <div className="relative bg-gray-200 text-black px-1 py-3 text-sm font-medium  whitespace-nowrap ">
+              <div className="relative bg-gray-200 text-black pr-4 py-3 text-[15px] font-medium  whitespace-nowrap ">
                 <span>@Whatsapp now</span>
 
                 {/* Gradient underline effect */}

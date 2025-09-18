@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
 import { useProfile } from "../../resuable_component/gameApi";
-import usawinlogo from "../../../assets/logo.png";
+import usawinlogo from "../../../assets/logo-winbhai.png";
 import { motion } from "framer-motion";
 import { AiTwotoneSound } from "react-icons/ai";
 import { IoToggleSharp, IoWallet } from "react-icons/io5";

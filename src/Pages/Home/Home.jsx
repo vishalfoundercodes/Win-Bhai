@@ -328,7 +328,7 @@ const games2 = [
           <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} />
         </div>
         <SlidingCompany />
-        <div className="py-2 space-y-4">
+        <div className="py-2 px-2 space-y-4">
           <GameSection
             title="Hot Games"
             icon={

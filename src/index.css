@@ -13,8 +13,11 @@
   --color-grayBorder: #8F9398;
   --color-black: #3B3B3B;
   --color-red: #C10932;
+  --color-blue: #342988;
   --color-red2: #242424;
+  --color-red3: #F30B3D;
   --color-grayBg: #E7E7E7;
+  --color-lightgrayBg: #C4C4C4;
   --color-lightGray: #969696;
   --color-lightGreen: #AFEE9A;
   --color-bg1: #F7F8FF;
@@ -74,7 +77,7 @@
   --animation-bounce: bounce 1s infinite;
 
   /* Breakpoints */
-  --breakpoint-xsm3: 374px;
+  --breakpoint-xsm3: 375px;
 --breakpoint-xxs: 400px;
 --breakpoint-xsm2: 400px;
 --breakpoint-xs: 480px;       

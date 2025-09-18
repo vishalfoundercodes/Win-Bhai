@@ -66,7 +66,7 @@ export default function CouponPage() {
           />
           <button
             type="button"
-            className="absolute top-1/2 right-1.5 -translate-y-1/2  text-inputText px-2 py-1 text-[10px] rounded hover:bg-red-600"
+            className="absolute top-1/2 right-1.5 -translate-y-1/2  text-white px-2 py-1 text-[10px] rounded bg-red hover:bg-red-600"
           >
             APPLY
           </button>
@@ -76,21 +76,26 @@ export default function CouponPage() {
       {/* Coupons Grid */}
       <div className="p-4 grid grid-cols-2 gap-3 overflow-y-auto">
         {coupons.map((coupon) => (
-          <div
-            key={coupon.id}
-            className="bg-white p-3 rounded-md shadow-sm  text-center"
-          >
-            <h3 className="text-red text-md font-bold">COUPON</h3>
-            <div className="border-t border-dashed border-gray-400 my-2"></div>
-            <p className="text-red font-semibold text-sm text-start">
-              {coupon.title}
-            </p>
-            <p className="text-ssm text-bold text-gray-800 text-start">
-              {coupon.desc}
-            </p>
-            <p className="text-xs text-bold text-gray-500 text-start">
-              {coupon.details}
-            </p>
+          <div key={coupon.id} className=" text-center overflow-hidden">
+            {/* Top header with side cuts */}
+            <div className="relative bg-red-700 text-white py-5 rounded-t-2xl border-none">
+              <h3 className="text-lg font-bold">{coupon.title}</h3>
+
+              {/* Side cuts */}
+              <span className="absolute -left-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full"></span>
+              <span className="absolute -right-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full"></span>
+            </div>
+
+            {/* Coupon content */}
+            <div className="px-6 py-2 space-y-1 bg-white shadow-sm text-left">
+              <p className="text-red-700 font-bold text-sm">{coupon.desc}</p>
+              <p className="text-gray-700 text-xs">{coupon.details}</p>
+            </div>
+
+            {/* Apply Code section */}
+            <div className="border-t text-gray-600 text-xs py-2 bg-white rounded-b-2xl">
+              Apply Code
+            </div>
           </div>
         ))}
       </div>

@@ -194,10 +194,10 @@ const handleCopy = (id) => {
 };
 
   return (
-    <div className="w-full max-w-m mx-auto min-h-screen p-4">
+    <div className="w-full max-w-m mx-auto min-h-screen px-4 py-2">
       {/* Header */}
       <div className="flex justify-between items-center pb-0 mb-0">
-        <h1 className="text-lg font-semibold">Deposits</h1>
+        <h1 className="text-lg font-bold">Deposits</h1>
         <button className="p-2 rounded-full hover:bg-gray-200">
           <RefreshCcw size={20} />
         </button>
@@ -209,7 +209,7 @@ const handleCopy = (id) => {
           {/* Start Date */}
           <div className="relative">
             <label className="text-black text-[12px] font-medium">
-              Start Date
+              Form Date
             </label>
             <input
               type="text"
@@ -230,7 +230,7 @@ const handleCopy = (id) => {
           {/* End Date */}
           <div className="relative">
             <label className="text-black text-[12px] font-medium">
-              End Date
+              To Date
             </label>
             <input
               type="text"
@@ -262,19 +262,19 @@ const handleCopy = (id) => {
       </div>
 
       {/* tabs */}
-      <div className="flex gap-3 mb-3 pl-3 ">
+      <div className="flex gap-2 mb-3 pl-3 ">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-2 py-1 text-ssm font-normal rounded-md border 
+            className={`px-0 py-1 text-ssm font-normal rounded-md border 
             ${
               activeTab === tab
                 ? "bg-red-700 text-white border-red-700"
                 : "bg-white text-lightGray border-grayBorder"
             }`}
           >
-            {tab}
+            <span className="px-4">{tab}</span>
           </button>
         ))}
       </div>
@@ -287,7 +287,7 @@ const handleCopy = (id) => {
           >
             <div>
               <div className="flex items-center gap-2 relative">
-                <p className="text-sm font-semibold">{deposit.id}</p>
+                <p className="text-ssm font-semibold">{deposit.id}</p>
                 <svg
                   //   onClick={() => navigator.clipboard.writeText(deposit.id)}
                   onClick={() => handleCopy(deposit.id)}
@@ -332,7 +332,7 @@ const handleCopy = (id) => {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-500">{deposit.date}</p>
+              <p className="text-xs text-gray-500 mt-2">{deposit.date}</p>
             </div>
             <div className="text-right">
               <span

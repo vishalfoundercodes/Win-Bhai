@@ -1,9 +1,19 @@
 import { useState } from "react";
-import { Clipboard } from "lucide-react";
+import { ArrowRight, Clipboard } from "lucide-react";
 import { Upload } from "lucide-react";
 import phonePay from "../../assets/Wallet/phone pay.png";
 import googlePay from "../../assets/Wallet/google pay.png";
 import { useNavigate } from "react-router-dom";
+import { Plus } from "lucide-react";
+import image1 from "../../assets/Account/image1.png";
+import image2 from "../../assets/Account/image2.png";
+import image3 from "../../assets/Account/image3.png";
+import { Trash2, Pencil } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 export default function Withdraw() {
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [amount, setAmount] = useState("");
@@ -18,15 +28,39 @@ export default function Withdraw() {
     setTimeout(() => setCopied(""), 2000);
   };
 
+  const cards = [
+    {
+      ifsc: "SBIN0030089",
+      account: "39227182111",
+      name: "Vikas Sharma",
+      image: image1,
+    },
+    {
+      ifsc: "HDFC875422",
+      account: "98765432100529637538",
+      name: "Dummy User",
+      image: image2,
+    },
+    {
+      ifsc: "ICIC004421",
+      account: "123456789012",
+      name: "Rahul Singh",
+      image: image3,
+    },
+  ];
+
   return (
     <div className="min-h-screen  flex justify-center items-start py-6 px-1 ">
-      <div className="w-full px-5 space-y-5">
+      <div className="w-full px-5 space-y-2">
+        <div className="bg-black text-white rounded-[8px] p-2 text-ssm font-medium">
+          <p>Cashable Amount: 0</p>
+        </div>
         {/* Payment Options */}
         <div className=" px-4 py-4 bg-white  rounded-[8px] shadow">
           <h2 className="text-gray-800 font-semibold mb-4">
             Withdraw Options :
           </h2>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-3">
             <button
               className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
                 selectedPayment === "manual"
@@ -50,7 +84,50 @@ export default function Withdraw() {
 
               <span className="text-ssm font-medium">Bank Payment</span>
             </button>
+            {/* crypto */}
+            <button
+              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+                selectedPayment === "crypto"
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300"
+              }`}
+              onClick={() => setSelectedPayment("crypto")}
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M38.3334 25.3667C37.6501 25.3667 37.0834 25.9334 37.0834 26.6167C37.0834 31.55 33.6501 35.6834 29.0334 36.7667L29.4834 36.0167C29.8334 35.4167 29.6501 34.65 29.0501 34.3C28.4667 33.95 27.6834 34.1334 27.3334 34.7334L25.5834 37.65C25.3501 38.0334 25.3501 38.5167 25.5667 38.9C25.7834 39.3 26.2001 39.5334 26.6501 39.5334C33.7667 39.5334 39.5667 33.7334 39.5667 26.6167C39.5834 25.9334 39.0167 25.3667 38.3334 25.3667Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M13.3337 0.366699C6.21699 0.366699 0.416992 6.1667 0.416992 13.2834C0.416992 13.9667 0.983659 14.5334 1.66699 14.5334C2.35033 14.5334 2.91699 13.9667 2.91699 13.2834C2.91699 8.35003 6.35033 4.2167 10.967 3.13337L10.517 3.88337C10.167 4.48337 10.3503 5.25003 10.9503 5.60003C11.5337 5.95003 12.317 5.7667 12.667 5.1667L14.417 2.25003C14.6337 1.8667 14.6503 1.40003 14.417 1.00003C14.2003 0.616699 13.7837 0.366699 13.3337 0.366699Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M35.8337 14.4498C35.8337 19.5832 32.1004 23.8165 27.2171 24.5998C27.2171 24.5832 27.2171 24.5832 27.2171 24.5665C26.7337 18.3498 21.7004 13.2832 15.4004 12.7832C16.1837 7.89984 20.4171 4.1665 25.5504 4.1665C31.2337 4.1665 35.8337 8.7665 35.8337 14.4498Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M16.3501 23.6665C16.3501 23.4165 16.0668 23.0332 15.7168 23.0332H12.2834V24.2832H15.7168C16.0668 24.2999 16.3501 24.0165 16.3501 23.6665Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M16.3834 26.7998H15.7168H12.2834V28.0498H16.4001C16.9334 28.0498 17.3001 27.7165 17.3001 27.4165C17.3001 27.1165 16.9168 26.7998 16.3834 26.7998Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M24.717 24.75C24.3337 19.7 20.3003 15.6667 15.2503 15.2833C14.9837 15.2667 14.7337 15.25 14.4503 15.25C8.76699 15.25 4.16699 19.85 4.16699 25.55C4.16699 31.2333 8.76699 35.8333 14.4503 35.8333C20.1337 35.8333 24.7503 31.2333 24.7503 25.55C24.7503 25.2667 24.7337 25.0167 24.717 24.75ZM16.3837 30.55H15.2837V31.1833C15.2837 31.8667 14.717 32.4333 14.0337 32.4333C13.3503 32.4333 12.7837 31.8667 12.7837 31.1833V30.55H11.0337C10.3503 30.55 9.78366 29.9833 9.78366 29.3V25.55V21.8C9.78366 21.1167 10.3503 20.55 11.0337 20.55H12.7837V19.9167C12.7837 19.2333 13.3503 18.6667 14.0337 18.6667C14.717 18.6667 15.2837 19.2333 15.2837 19.9167V20.55H15.717C17.3837 20.55 18.8503 22.0167 18.8503 23.6833C18.8503 24.1667 18.7337 24.6167 18.5337 25.0333C19.3003 25.6 19.7837 26.4667 19.7837 27.4333C19.7837 29.15 18.267 30.55 16.3837 30.55Z"
+                  fill="#C10932"
+                />
+              </svg>
 
+              <span className="text-ssm font-medium">Crypto</span>
+            </button>
             <button
               className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
                 selectedPayment === "indianpay"
@@ -499,8 +576,70 @@ export default function Withdraw() {
           </div>
         </div>
 
-        {/* indian payment */}
- 
+        {/* account detail */}
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={20}
+          slidesPerView={1}
+          loop={true}
+          navigation
+          pagination={{ clickable: true }}
+          className="w-full"
+        >
+          {cards.map((card, idx) => (
+            <SwiperSlide key={idx}>
+              <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                {/* Background image */}
+                <img
+                  src={card.image}
+                  alt="Bank Card"
+                  className="w-full h-full object-cover rounded-xl"
+                />
+
+                {/* Overlay details */}
+                <div className="absolute inset-0 flex flex-col py-2 px-6 justify-between">
+                  {/* Top row */}
+                  <div className="flex justify-between items-start">
+                    <p className="text-sm font-semibold text-gray-800">
+                      {card.ifsc}
+                    </p>
+                    <div className="flex gap-2">
+                      <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                        <Trash2 className="w-4 h-4 text-gray-600" />
+                      </button>
+                      <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                        <Pencil className="w-4 h-4 text-gray-600" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Middle (Account number) */}
+                  <p className="text-lg font-bold tracking-wide text-gray-900">
+                    {card.account}
+                  </p>
+
+                  {/* Bottom (Name) */}
+                  <p className="font-medium text-gray-800">{card.name}</p>
+                </div>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* add account */}
+        <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm ">
+          {/* Left Text */}
+          <span className="text-gray-900 font-medium">Add Account</span>
+
+          {/* Plus Button */}
+          <button
+            className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
+            onClick={() =>
+              navigate("/updateAccount", { state: { mode: "add" } })
+            }
+          >
+            <Plus className="w-5 h-5 text-red" />
+          </button>
+        </div>
 
         {/* Amount Section */}
         <div className="rounded-[8px] shadow p-4 bg-white">
@@ -576,16 +715,16 @@ export default function Withdraw() {
           </div>
           <button
             className="text-red text-ssm font-medium"
-            onClick={() => navigate("/updateAccount")}
+            onClick={() =>
+              navigate("/updateAccount", { state: { mode: "update" } })
+            }
           >
             Edit Bank Details
           </button>
         </div>
 
-
-
         {/* Terms Checkbox */}
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <input
             type="checkbox"
             id="terms"
@@ -597,6 +736,41 @@ export default function Withdraw() {
               the terms of payment and withdrawal policy.
             </p>
           </label>
+        </div> */}
+        {/* reminder */}
+        <p className="text-red-600 text-ssm">
+          Reminder: A maximum of 5 withdrawals are allowed per day, With no
+          withdrawals permitted below ₹200.
+        </p>
+        {/* Chat on WhatsApp */}
+        <div className="w-full  mt-4 hide-scrollbar">
+          <button className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16.0013 2.66675C23.3653 2.66675 29.3347 8.63608 29.3347 16.0001C29.3347 23.3641 23.3653 29.3334 16.0013 29.3334C13.645 29.3375 11.3301 28.7139 9.29466 27.5267L2.67332 29.3334L4.47599 22.7094C3.28793 20.6733 2.66386 18.3574 2.66799 16.0001C2.66799 8.63608 8.63732 2.66675 16.0013 2.66675ZM11.4573 9.73342L11.1907 9.74408C11.0182 9.75596 10.8498 9.80125 10.6947 9.87741C10.5501 9.95943 10.4181 10.0618 10.3027 10.1814C10.1427 10.3321 10.052 10.4627 9.95466 10.5894C9.46148 11.2306 9.19595 12.0178 9.19999 12.8267C9.20266 13.4801 9.37332 14.1161 9.63999 14.7107C10.1853 15.9134 11.0827 17.1867 12.2667 18.3667C12.552 18.6507 12.832 18.9361 13.1333 19.2014C14.6046 20.4966 16.3577 21.4307 18.2533 21.9294L19.0107 22.0454C19.2573 22.0587 19.504 22.0401 19.752 22.0281C20.1402 22.0076 20.5193 21.9025 20.8627 21.7201C21.0371 21.6299 21.2075 21.532 21.3733 21.4267C21.3733 21.4267 21.4298 21.3885 21.54 21.3067C21.72 21.1734 21.8307 21.0787 21.98 20.9227C22.092 20.8072 22.1853 20.673 22.26 20.5201C22.364 20.3027 22.468 19.8881 22.5107 19.5427C22.5427 19.2787 22.5333 19.1347 22.5293 19.0454C22.524 18.9027 22.4053 18.7547 22.276 18.6921L21.5 18.3441C21.5 18.3441 20.34 17.8387 19.6307 17.5161C19.5564 17.4838 19.4769 17.4652 19.396 17.4614C19.3048 17.4519 19.2125 17.4621 19.1256 17.4913C19.0386 17.5205 18.959 17.5681 18.892 17.6307C18.8853 17.6281 18.796 17.7041 17.832 18.8721C17.7767 18.9464 17.7004 19.0026 17.6131 19.0335C17.5257 19.0644 17.4311 19.0685 17.3413 19.0454C17.2544 19.0223 17.1693 18.9928 17.0867 18.9574C16.9213 18.8881 16.864 18.8614 16.7507 18.8134C15.9852 18.48 15.2766 18.0287 14.6507 17.4761C14.4827 17.3294 14.3267 17.1694 14.1667 17.0147C13.6421 16.5124 13.185 15.9441 12.8067 15.3241L12.728 15.1974C12.6723 15.1118 12.6267 15.0201 12.592 14.9241C12.5413 14.7281 12.6733 14.5707 12.6733 14.5707C12.6733 14.5707 12.9973 14.2161 13.148 14.0241C13.2947 13.8374 13.4187 13.6561 13.4987 13.5267C13.656 13.2734 13.7053 13.0134 13.6227 12.8121C13.2493 11.9001 12.8635 10.993 12.4653 10.0907C12.3867 9.91208 12.1533 9.78408 11.9413 9.75875C11.8693 9.74986 11.7973 9.74275 11.7253 9.73741C11.5463 9.72715 11.3668 9.72893 11.188 9.74275L11.4573 9.73342Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div className="text-left">
+                <p className="font-medium text-sm text-gray-900">
+                  Chat on WhatsApp
+                </p>
+                <p className="text-ssm text-gray-500">
+                  Reach out to us on WhatsApp for personalized support
+                </p>
+              </div>
+            </div>
+            <ArrowRight className="w-14 h-5 text-darkGray" />
+          </button>
         </div>
       </div>
     </div>

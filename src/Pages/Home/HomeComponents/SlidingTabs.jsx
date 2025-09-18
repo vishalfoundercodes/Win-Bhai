@@ -512,19 +512,19 @@ naviagte(`/game/${id}`);
             <button
               key={cat.id}
               onClick={() => {
-                handleClick(cat.id)
+                handleClick(cat.id);
               }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-[10px] border 
+              className={`flex items-center gap-1 px-2 py-1 rounded-[10px] border 
                 transition-all duration-200
                 ${
                   active === cat.id
                     ? "bg-[#c8102e] text-white border-[#c8102e]"
-                    : "bg-white text-[#c8102e] border-gray-300"
+                    : "bg-white text-darkGray border-gray-300"
                 }`}
             >
               {/* ✅ Render icon only if exists */}
               {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap">{cat.label}</span>
+              <span className="whitespace-nowrap text-ssm">{cat.label}</span>
             </button>
           );
         })}

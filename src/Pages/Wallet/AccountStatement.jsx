@@ -60,7 +60,7 @@ const formatDate = (value) => {
 
   return (
     <div className="min-h-screen">
-      <div className="p-4 ">
+      <div className="py-2">
         <SlidingTabs />
       </div>
       <div
@@ -78,12 +78,12 @@ const formatDate = (value) => {
       <div className="p-2 px-4">
         {/* Date Filter */}
         <div className="mb-3">
-          <div className=" p-0 rounded-md ">
+          {/* <div className=" p-0 rounded-md ">
             <label className="block text-gray-600 text-ssm mb-1">Sport:</label>
             <div className="bg-white  rounded-md px-3 py-2 text-gray-900">
               Casino Vivo
             </div>
-          </div>
+          </div> */}
 
           <div className="flex justify-between mb-3 gap-2">
             {/* Start Date */}
@@ -134,7 +134,7 @@ const formatDate = (value) => {
             <div className="relative w-full">
               <label className="text-black text-[12px] font-medium">Type</label>
               <button
-                className="w-full flex items-center justify-between rounded-xl px-3 py-2 bg-white shadow-sm"
+                className="w-full flex items-center justify-between rounded-xl px-3 py-2 bg-white shadow-sm text-ssm font-medium"
                 onClick={() =>
                   setDropdownModal(dropdownModal === "report" ? null : "report")
                 }
@@ -149,7 +149,7 @@ const formatDate = (value) => {
                     (option, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-100 text-[12px] font-medium"
                         onClick={() => {
                           setReportType(option);
                           setDropdownModal(null);
@@ -171,11 +171,9 @@ const formatDate = (value) => {
 
             {/* Second Dropdown: Date Range */}
             <div className="relative w-full">
-              <label className="text-black text-[12px] font-medium">
-                Range
-              </label>
+              <label className="text-black text-[12px] font-medium">Type</label>
               <button
-                className="w-full flex items-center justify-between rounded-xl px-3 py-2 bg-white shadow-sm"
+                className="w-full flex items-center justify-between rounded-xl px-3 py-2 bg-white shadow-sm text-ssm font-medium"
                 onClick={() =>
                   setDropdownModal(dropdownModal === "range" ? null : "range")
                 }
@@ -185,12 +183,12 @@ const formatDate = (value) => {
               </button>
 
               {dropdownModal === "range" && (
-                <div className="absolute mt-1 w-full bg-white rounded-xl shadow-lg z-10">
+                <div className="absolute mt-1 w-full bg-white rounded-xl shadow-lg z-10 text-[12px] font-medium">
                   {["Today", "Yesterday", "Last 7 Days", "Last 30 Days"].map(
                     (option, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        className="flex items-center justify-between px-4 py-2 cursor-pointer hover:bg-gray-100 text-[12px] font-medium"
                         onClick={() => {
                           setDateRange(option);
                           setDropdownModal(null);

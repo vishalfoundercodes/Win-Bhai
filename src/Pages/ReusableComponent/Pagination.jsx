@@ -18,9 +18,9 @@ export default function Pagination({
       <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="px-3 py-1 rounded-md border bg-gray-100 disabled:opacity-50"
+        className="px-3 py-1 rounded-md  bg-[#DBDBDB] "
       >
-        Prev
+        <span className="text-[#222222] font-semibold">Prev</span>
       </button>
 
       {/* Page numbers */}
@@ -42,7 +42,7 @@ export default function Pagination({
       <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="px-3 py-1 rounded-md border bg-gray-100 disabled:opacity-50"
+        className="px-3 py-1 rounded-md  bg-[#DBDBDB] text-[#222222] font-semibold"
       >
         Next
       </button>
@@ -51,7 +51,7 @@ export default function Pagination({
       <select
         value={rowsPerPage}
         onChange={(e) => onRowsPerPageChange(Number(e.target.value))}
-        className="ml-3 px-2 py-1 border rounded-md"
+        className="ml-3 px-2 py-1  rounded-md bg-[#DBDBDB] text-[#222222] font-semibold"
       >
         {[10, 20, 50, 100].map((num) => (
           <option key={num} value={num}>

@@ -7,7 +7,8 @@ import CalendarModal from "../ReusableComponent/Calender";
 import ProfitLossTable from "./ProfitLossTable";
 
 import { ChevronDown, ChevronUp } from "lucide-react";
-export default function ProfitLoss() {
+import PendingBetsTable from "./PendingBetsTable";
+export default function PendingBets() {
       const startRef = useRef(null);
       const endRef = useRef(null);
   const [startDate, setStartDate] = useState("");
@@ -72,7 +73,7 @@ const handleSelect = (option) => {
           fontSize: "16px",
         }}
       >
-        <h2> Profit Loss</h2>
+        <h2> Pending Bets</h2>
       </div>
 
       <div className="p-2 px-4">
@@ -154,13 +155,14 @@ const handleSelect = (option) => {
             </div>
           </div>
           <button className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm">
-            Search
+            Apply Filter
           </button>
         </div>
       </div>
       <div className="">
         {" "}
-        <ProfitLossTable />
+        {/* <ProfitLossTable /> */}
+        <PendingBetsTable></PendingBetsTable>
       </div>
 
       {/* Calendar Modal */}

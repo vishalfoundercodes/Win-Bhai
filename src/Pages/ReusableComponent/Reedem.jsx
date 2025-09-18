@@ -7,20 +7,20 @@ export default function RedeemBonus() {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4 pt-0">
       {/* Coupon Section */}
       <div className="w-full  p-4">
-        <h2 className="text-xsm font-semibold text-center text-gray-800">
+        <h2 className="text-sm font-bold text-center text-gray-800">
           Redeem bonus with coupon code
         </h2>
         <p className="text-ssm text-gray-500 text-center">
           Enter your coupon code to claim exciting bonuses
         </p>
 
-        <div className="flex items-center gap-2 mt-4 bg-white rounded-xl shadow p-4">
+        <div className=" flex mt-4 bg-white rounded-xl shadow p-4 gap-2">
           <input
             type="text"
             placeholder="Enter Coupon Code"
-            className="flex-1 border border-red placeholder:text-red rounded-md px-3 py-2 text-sm focus:outline-none"
+            className="w-full border border-red placeholder:text-red rounded-md px-2 py-2 text-sm focus:outline-none text-ssm "
           />
-          <button className="bg-red hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold">
+          <button className="w-full  bg-red hover:bg-red-600 text-white px-2 py-1 rounded-md text-ssm font-semibold flex-1">
             APPLY
           </button>
         </div>

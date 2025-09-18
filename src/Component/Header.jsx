@@ -5,6 +5,7 @@ import { FaBars, FaSearch, FaUser, FaFilter } from "react-icons/fa";
 import Sidebar from "../Pages/Wallet/SideBar";
 import GameSlider from "../Pages/Home/HomeComponents/GameSlider";
 import { useNavigate } from "react-router-dom";
+import headerImage from "../assets/Home/headerImage.png";
 const Header = () => {
   const navigate=useNavigate()
   const [searchOpen, setSearchOpen] = useState(false);
@@ -20,8 +21,8 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-[#c8102e] text-white px-2 py-2 flex items-center justify-between md:px-16 sm:px-28 lg:px-44 3xl:px-60 sticky top-0 z-50">
-        <div className="flex items-center gap-2">
+      <header className="bg-[#c8102e] text-white px-2 py-2 flex items-center justify-between md:px-16 sm:px-28 lg:px-44 3xl:px-60  top-0 z-50">
+        <div className="flex items-center gap-0">
           <button
             className="text-red text-xl bg-[#e0e0e0] rounded-full px-2 py-2 border border-inputBorder "
             // onClick={toggleSidebar}
@@ -34,7 +35,7 @@ const Header = () => {
             className="font-bold text-sm md:text-md"
             onClick={() => navigate("/")}
           >
-            WINBHAI
+            <img src={headerImage} alt="" className="w-20 xsm3:w-28 xxs:w-36" />
           </span>
         </div>
 
@@ -107,7 +108,7 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <button
             className="bg-white text-red text-[14px] font-medium px-3 py-1 rounded-full md:hidden"
-            onClick={()=>navigate("/deposit")}
+            onClick={() => navigate("/deposit")}
           >
             Deposit
           </button>

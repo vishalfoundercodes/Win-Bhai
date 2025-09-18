@@ -1,0 +1,176 @@
+
+import React from "react";
+import { Calendar, Clock, ChevronDown } from "lucide-react";
+import { useState } from "react";
+
+export default function AffiliatePage() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState("For all time");
+  const options = ["For all time", "Month", "Week", "Today"];
+
+  const handleSelect = (option) => {
+    setSelected(option);
+    setOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen flex justify-center p-4">
+      <div className="w-full max-w-s  overflow-hidden ">
+        {/* Profile Section */}
+        <div className="w-full max-w-s bg-white rounded-lg shadow mb-5">
+          <div className="p-3 flex items-center justify-between">
+            {/* Left side - Avatar + Name */}
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                <span className="text-pink-600 font-semibold">S</span>
+              </div>
+              <span className="text-gray-800 font-medium">shivamtrakwin</span>
+            </div>
+
+            {/* Right arrow */}
+            <span className="text-gray-400 text-lg">{">"}</span>
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div className="p-4 border-b bg-white rounded-t-2xl ">
+          {/* Dropdown Header */}
+          <div className="relative mb-3">
+            <button
+              onClick={() => setOpen(!open)}
+              className="w-full flex items-center focus:outline-none"
+            >
+              <div className="flex items-center space-x-2">
+                <Clock className="w-5 h-5 text-red" />
+                <span className="font-semibold text-black text-xsm">
+                  {selected}
+                </span>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 text-gray-600 transform transition-transform ${
+                  open ? "rotate-180" : "rotate-0"
+                }`}
+              />
+            </button>
+
+            {/* Red underline */}
+            {open && <div className="h-0.5 bg-red w-50"></div>}
+
+            {/* Dropdown Options */}
+            {open && (
+              <div className="absolute z-20 mt-1 w-50 bg-white rounded shadow">
+                {options.map((option, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => handleSelect(option)}
+                    className={`px-3 py-2 text-sm cursor-pointer font-semibold ${
+                      option === selected ? "text-gray-500" : "text-black"
+                    } hover:bg-gray-100`}
+                  >
+                    {option}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Stats */}
+          <div className="space-y-2 text-ssm font-semibold text-gray-700 ">
+            <div className="flex justify-between border-b pb-1 border-[#DBDBDB]">
+              <span>Transition:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Registration:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>First Deposits:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Number Deposits:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Ratio on registrations:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Ratio on deposits:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Amount Deposits:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
+              <span>Cost Transition:</span>
+              <span>0</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Average player income:</span>
+              <span>0</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Income Section */}
+        <div className="p-4 bg-gradient-to-l from-[#C10932] to-[#5B0418] text-white text-center font-semibold rounded-b-2xl">
+          Income: ₹0
+        </div>
+
+        {/* Filters Section */}
+        <div className="py-4 px-0 space-y-3 text-ssm font-medium">
+          {/* Date Range */}
+          <div className="flex items-center justify-center rounded px-1 py-2 text-gray  bg-white ">
+            <span>08/08/2025 - 08/09/2025</span>
+            <Calendar className="w-4 h-4" />
+          </div>
+
+          {/* Dropdowns */}
+          <select className="w-full rounded px-3 py-2  text-gray bg-white">
+            <option>All sources</option>
+          </select>
+
+          <select className="w-full rounded px-3 py-2  text-gray bg-white">
+            <option>All Links</option>
+          </select>
+
+          <select className="w-full rounded px-3 py-2  text-gray bg-white">
+            <option>All Countries</option>
+          </select>
+
+          {/* Apply Button */}
+          <button className="w-full bg-red text-white rounded py-2 font-medium ">
+            Apply
+          </button>
+        </div>
+
+        {/* Legend Section */}
+        <div className="p-4 flex flex-wrap gap-2 text-xs bg-white rounded-2xl">
+          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+            <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
+            <span>Referrals</span>
+          </span>
+          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+            <span className="w-2 h-2 bg-red rounded-full border-2 border-white"></span>
+            <span>Registrations</span>
+          </span>
+          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+            <span className="w-2 h-2 bg-blue rounded-full border-2 border-white"></span>
+            <span>Income</span>
+          </span>
+          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+            <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
+            <span>First Deposits</span>
+          </span>
+          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+            <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
+            <span>Amount of Deposits</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}

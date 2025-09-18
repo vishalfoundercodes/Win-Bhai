@@ -81,7 +81,25 @@ export default function Layout({ children }) {
   //   return <ChickenRoadLayout component={<ChickenRoadGame />} />;
   // }
   // List of paths where Footer should be hidden
-  const hideFooterPaths = ["/wallet", "/signup", "/login", "/lottery/wingo"];
+  const hideFooterPaths = [
+    "/wallet",
+    "/signup",
+    "/login",
+    "/lottery/wingo",
+    "/forgetPassword",
+    "/ForgetUserName",
+    "/needhelp",
+    "/downloadAPK",
+    "/Notification",
+    "/profitLoss",
+    "/accountStatement",
+    "/depositHistory",
+    "/betHistory",
+    "/PendingBets",
+    "/changePassword",
+    "/cuppon",
+    "/RedeemBonus",
+  ];
   const hideHeaderPaths = [
     "/cuppon",
     "/RedeemBonus",
@@ -91,9 +109,16 @@ export default function Layout({ children }) {
     "/changePassword",
     "/downloadAPK",
     "/lottery/wingo",
+    "/needhelp",
+  
   ];
 
-  const hideHeaderAll = ["/signup", "/login"];
+  const hideHeaderAll = [
+    "/signup",
+    "/login",
+    "/forgetPassword",
+    "/ForgetUserName",
+  ];
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
   const shouldShowHeader2 = hideHeaderPaths.includes(location.pathname);
   const shouldHideHeader = hideHeaderAll.includes(location.pathname);

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Clipboard } from "lucide-react";
+import { ArrowRight, Clipboard } from "lucide-react";
 import { Upload } from "lucide-react";
 import phonePay from "../../assets/Wallet/phone pay.png";
 import googlePay from "../../assets/Wallet/google pay.png";
@@ -16,16 +16,18 @@ const navigate = useNavigate()
       setCopied(label);
       setTimeout(() => setCopied(""), 2000);
     };
+  const [active, setActive] = useState("Option 1");
 
+  const options = ["Option 1", "Option 2", "Option 3"];
   return (
     <div className="min-h-screen  flex justify-center items-start py-6 px-1">
-      <div className="w-full px-5 space-y-5">
+      <div className="w-full px-3 space-y-2">
         {/* Payment Options */}
         <div className=" px-4 py-4 bg-white  rounded-[8px] shadow">
           <h2 className="text-gray-800 font-semibold mb-4">
             Payment Options :
           </h2>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-3">
             <button
               className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
                 selectedPayment === "manual"
@@ -495,220 +497,302 @@ const navigate = useNavigate()
               </svg>
               <span className="text-ssm font-medium">Indianpay Payment</span>
             </button>
+            <button
+              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+                selectedPayment === "crypto"
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300"
+              }`}
+              onClick={() => setSelectedPayment("crypto")}
+            >
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M38.3334 25.3667C37.6501 25.3667 37.0834 25.9334 37.0834 26.6167C37.0834 31.55 33.6501 35.6834 29.0334 36.7667L29.4834 36.0167C29.8334 35.4167 29.6501 34.65 29.0501 34.3C28.4667 33.95 27.6834 34.1334 27.3334 34.7334L25.5834 37.65C25.3501 38.0334 25.3501 38.5167 25.5667 38.9C25.7834 39.3 26.2001 39.5334 26.6501 39.5334C33.7667 39.5334 39.5667 33.7334 39.5667 26.6167C39.5834 25.9334 39.0167 25.3667 38.3334 25.3667Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M13.3337 0.366699C6.21699 0.366699 0.416992 6.1667 0.416992 13.2834C0.416992 13.9667 0.983659 14.5334 1.66699 14.5334C2.35033 14.5334 2.91699 13.9667 2.91699 13.2834C2.91699 8.35003 6.35033 4.2167 10.967 3.13337L10.517 3.88337C10.167 4.48337 10.3503 5.25003 10.9503 5.60003C11.5337 5.95003 12.317 5.7667 12.667 5.1667L14.417 2.25003C14.6337 1.8667 14.6503 1.40003 14.417 1.00003C14.2003 0.616699 13.7837 0.366699 13.3337 0.366699Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M35.8337 14.4498C35.8337 19.5832 32.1004 23.8165 27.2171 24.5998C27.2171 24.5832 27.2171 24.5832 27.2171 24.5665C26.7337 18.3498 21.7004 13.2832 15.4004 12.7832C16.1837 7.89984 20.4171 4.1665 25.5504 4.1665C31.2337 4.1665 35.8337 8.7665 35.8337 14.4498Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M16.3501 23.6665C16.3501 23.4165 16.0668 23.0332 15.7168 23.0332H12.2834V24.2832H15.7168C16.0668 24.2999 16.3501 24.0165 16.3501 23.6665Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M16.3834 26.7998H15.7168H12.2834V28.0498H16.4001C16.9334 28.0498 17.3001 27.7165 17.3001 27.4165C17.3001 27.1165 16.9168 26.7998 16.3834 26.7998Z"
+                  fill="#C10932"
+                />
+                <path
+                  d="M24.717 24.75C24.3337 19.7 20.3003 15.6667 15.2503 15.2833C14.9837 15.2667 14.7337 15.25 14.4503 15.25C8.76699 15.25 4.16699 19.85 4.16699 25.55C4.16699 31.2333 8.76699 35.8333 14.4503 35.8333C20.1337 35.8333 24.7503 31.2333 24.7503 25.55C24.7503 25.2667 24.7337 25.0167 24.717 24.75ZM16.3837 30.55H15.2837V31.1833C15.2837 31.8667 14.717 32.4333 14.0337 32.4333C13.3503 32.4333 12.7837 31.8667 12.7837 31.1833V30.55H11.0337C10.3503 30.55 9.78366 29.9833 9.78366 29.3V25.55V21.8C9.78366 21.1167 10.3503 20.55 11.0337 20.55H12.7837V19.9167C12.7837 19.2333 13.3503 18.6667 14.0337 18.6667C14.717 18.6667 15.2837 19.2333 15.2837 19.9167V20.55H15.717C17.3837 20.55 18.8503 22.0167 18.8503 23.6833C18.8503 24.1667 18.7337 24.6167 18.5337 25.0333C19.3003 25.6 19.7837 26.4667 19.7837 27.4333C19.7837 29.15 18.267 30.55 16.3837 30.55Z"
+                  fill="#C10932"
+                />
+              </svg>
+
+              <span className="text-ssm font-medium">Crypto</span>
+            </button>
+          </div>
+          <div className="grid grid-cols-3 gap-3 mt-2">
+            <button
+              className={`px-2 py-2 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+                selectedPayment === "whatsup"
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300"
+              }`}
+              onClick={() => setSelectedPayment("whatsup")}
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)] p-1 rounded-[5px]"
+              >
+                <path
+                  d="M12.0018 2.64307C17.1695 2.64307 21.3585 6.83207 21.3585 11.9998C21.3585 17.1675 17.1695 21.3565 12.0018 21.3565C10.3482 21.3594 8.72371 20.9218 7.29533 20.0887L2.64878 21.3565L3.91381 16.7081C3.08008 15.2793 2.64214 13.6541 2.64503 11.9998C2.64503 6.83207 6.83404 2.64307 12.0018 2.64307ZM8.81299 7.60213L8.62585 7.60962C8.50486 7.61795 8.38665 7.64973 8.27778 7.70318C8.17633 7.76074 8.08369 7.83258 8.0027 7.91652C7.89041 8.02225 7.82679 8.11394 7.75848 8.20283C7.4124 8.6528 7.22606 9.20523 7.22889 9.77289C7.23076 10.2314 7.35053 10.6777 7.53767 11.095C7.92036 11.939 8.55006 12.8325 9.38094 13.6606C9.58117 13.8599 9.77767 14.0601 9.98913 14.2463C11.0216 15.1553 12.2518 15.8108 13.5821 16.1607L14.1136 16.2421C14.2867 16.2515 14.4598 16.2384 14.6338 16.23C14.9063 16.2156 15.1723 16.1418 15.4132 16.0138C15.5357 15.9505 15.6552 15.8818 15.7716 15.808C15.7716 15.808 15.8112 15.7812 15.8885 15.7238C16.0149 15.6302 16.0925 15.5638 16.1973 15.4543C16.2759 15.3732 16.3414 15.279 16.3938 15.1717C16.4668 15.0192 16.5398 14.7282 16.5697 14.4859C16.5922 14.3006 16.5856 14.1996 16.5828 14.1369C16.5791 14.0368 16.4958 13.9329 16.405 13.8889L15.8605 13.6447C15.8605 13.6447 15.0464 13.2901 14.5487 13.0637C14.4966 13.041 14.4407 13.028 14.384 13.0253C14.32 13.0186 14.2552 13.0257 14.1942 13.0462C14.1332 13.0667 14.0773 13.1001 14.0303 13.1441C14.0256 13.1422 13.9629 13.1956 13.2864 14.0152C13.2476 14.0674 13.1941 14.1068 13.1328 14.1285C13.0715 14.1502 13.0051 14.1531 12.9421 14.1369C12.8811 14.1206 12.8214 14.1 12.7634 14.0751C12.6474 14.0265 12.6071 14.0077 12.5276 13.9741C11.9904 13.7401 11.4932 13.4234 11.0539 13.0356C10.936 12.9327 10.8266 12.8204 10.7143 12.7118C10.3462 12.3593 10.0254 11.9605 9.75989 11.5254L9.70468 11.4365C9.66563 11.3764 9.63361 11.3121 9.60924 11.2447C9.57369 11.1072 9.66632 10.9968 9.66632 10.9968C9.66632 10.9968 9.89369 10.7479 9.99942 10.6131C10.1023 10.4821 10.1894 10.3549 10.2455 10.2641C10.3559 10.0863 10.3905 9.90389 10.3325 9.7626C10.0705 9.1226 9.79981 8.48603 9.52036 7.85289C9.46515 7.72751 9.30141 7.63769 9.15264 7.61991C9.10211 7.61367 9.05158 7.60868 9.00106 7.60494C8.87542 7.59773 8.74945 7.59898 8.62398 7.60868L8.81299 7.60213Z"
+                  fill="white"
+                />
+              </svg>
+
+              <span className="text-ssm font-medium">WhatsApp Deposit</span>
+            </button>
           </div>
         </div>
 
-        {/* indian payment */}
-        {/* Show Indianpay Wallets (only if selected) */}
-        {selectedPayment === "indianpay" && (
-          <div className="bg-white rounded-[8px] shadow px-4 py-4">
-            {/* <p className="text-ssm font-semibold mb-3">Choose Wallet :</p> */}
-            <div className="flex gap-4">
-              {/* PhonePe */}
-              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
-                <img src={phonePay} alt="PhonePe" className="w-10 h-10" />
-                <p className="text-xs mt-1">PhonePe</p>
-              </div>
-
-              {/* GPay */}
-              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
-                <img src={googlePay} alt="GPay" className="w-10 h-10" />
-                <p className="text-xs mt-1">G Pay</p>
-              </div>
-            </div>
+        {/* manual payment options */}
+        {selectedPayment === "manual" && (
+          <div className="flex space-x-2 p-2 ">
+            {options.map((option) => (
+              <button
+                key={option}
+                onClick={() => setActive(option)}
+                className={`px-4 py-1 rounded-md font-medium transition ${
+                  active === option
+                    ? "bg-red text-white"
+                    : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                {option}
+              </button>
+            ))}
           </div>
         )}
+
         {/* manual payment */}
         {/* Show manual Wallets (only if selected) */}
         {selectedPayment === "manual" && (
           <div className="space-y-4">
             {/* QR Payment Card */}
-            <div className="bg-white rounded-[8px] shadow p-4">
-              {/* Red Balance Strip */}
-              <div className="bg-red text-white text-xs px-3 py-1 rounded-md inline-block mb-1">
-                Current Available Balance: ₹ 1,500
-              </div>
-
-              <h2 className="text-black font-semibold mb-2">Payment Details</h2>
-
-              {/* QR + UPI */}
-              <div className="flex flex-col items-center rounded-lg p-3">
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=987654321@upi"
-                  alt="QR Code"
-                  className="w-40 h-40"
-                />
-              </div>
-              <p className="mt-2 text-sm text-black">UPI ID</p>
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-black font-medium">987654321@upi</span>
-                <button
-                  onClick={() => copyToClipboard("987654321@upi", "UPI ID")}
-                  className="text-gray-500 hover:text-red-600"
-                >
-                  {/* <Clipboard size={16} /> */}
-                  <svg
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
-                      stroke="#C10932"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
-                      stroke="#C10932"
-                      stroke-width="2"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              {copied === "UPI ID" && (
-                <span className="text-green-600 text-xs mt-1">Copied!</span>
-              )}
-            </div>
 
             {/* Bank Details Card */}
-            <div className="bg-white rounded-[8px] shadow p-4">
-              {/* Red Balance Strip */}
-              <div className="bg-red text-white text-xs px-3 py-1 rounded-[8px]  inline-block mb-1">
-                Current Available Balance: ₹ 1,500
-              </div>
+            {active === "Option 1" && (
+              <div className="bg-white rounded-[8px] shadow p-4">
+                {/* Red Balance Strip */}
+                <div className="bg-red text-white text-xs px-3 py-1 rounded-[8px]  inline-block mb-1">
+                  Current Available Balance: ₹ 1,500
+                </div>
 
-              <h2 className="text-black font-semibold mb-1">Payment Details</h2>
+                <h2 className="text-black font-semibold mb-1">
+                  Payment Details
+                </h2>
 
-              <div className="space-y-3 text-sm">
-                {/* Account */}
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <span className="text-black font-medium text-ssm">
-                      Account
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-black font-medium">
-                        98765432100529637538
+                <div className="space-y-3 text-sm">
+                  {/* Account */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <span className="text-black font-medium text-ssm">
+                        Account
                       </span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-black font-medium">
+                          98765432100529637538
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <button
-                    onClick={() =>
-                      copyToClipboard("98765432100529637538", "Account")
-                    }
-                    className="text-gray-500 hover:text-red-600"
-                  >
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      onClick={() =>
+                        copyToClipboard("98765432100529637538", "Account")
+                      }
+                      className="text-gray-500 hover:text-red-600"
                     >
-                      <path
-                        d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* IFSC */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <span className="text-ssm font-medium">IFSC</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-black font-medium">
+                          HDFC875422
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard("HDFC875422", "IFSC")}
+                      className="text-gray-500 hover:text-red-600"
+                    >
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Account Name */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-ssm">Account Name</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-700 font-medium">Dummy</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard("Dummy", "Account Name")}
+                      className="text-gray-500 hover:text-red-600"
+                    >
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Account Type */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                      <span className="font-medium text-ssm">Account Type</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-700 font-medium">
+                          Saving
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => copyToClipboard("Saving", "Account Type")}
+                      className="text-gray-500 hover:text-red-600"
+                    >
+                      {/* <Clipboard size={16} /> */}
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 22 22"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                          stroke="#C10932"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                {copied && (
+                  <span className="text-green-600 text-xs mt-1">Copied!</span>
+                )}
+              </div>
+            )}
+
+            {/* manual payment options */}
+            {active === "Option 2" && (
+              <div className="bg-white rounded-[8px] shadow p-4">
+                {/* Red Balance Strip */}
+                <div className="bg-red text-white text-xs px-3 py-1 rounded-md inline-block mb-1">
+                  Current Available Balance: ₹ 1,500
                 </div>
 
-                {/* IFSC */}
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <span className="text-ssm font-medium">IFSC</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-black font-medium">HDFC875422</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard("HDFC875422", "IFSC")}
-                    className="text-gray-500 hover:text-red-600"
-                  >
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
-                </div>
+                <h2 className="text-black font-semibold mb-2">
+                  Payment Details
+                </h2>
 
-                {/* Account Name */}
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <span className="font-medium text-ssm">Account Name</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-700 font-medium">Dummy</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => copyToClipboard("Dummy", "Account Name")}
-                    className="text-gray-500 hover:text-red-600"
-                  >
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 22 22"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
-                        stroke="#C10932"
-                        stroke-width="2"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
+                {/* QR + UPI */}
+                <div className="flex flex-col items-center rounded-lg p-3">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=987654321@upi"
+                    alt="QR Code"
+                    className="w-40 h-40"
+                  />
                 </div>
-
-                {/* Account Type */}
-                <div className="flex justify-between items-center">
-                  <div className="flex flex-col">
-                    <span className="font-medium text-ssm">Account Type</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-gray-700 font-medium">Saving</span>
-                    </div>
-                  </div>
+                <p className="mt-2 text-sm text-black">UPI ID</p>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-black font-medium">987654321@upi</span>
                   <button
-                    onClick={() => copyToClipboard("Saving", "Account Type")}
+                    onClick={() => copyToClipboard("987654321@upi", "UPI ID")}
                     className="text-gray-500 hover:text-red-600"
                   >
                     {/* <Clipboard size={16} /> */}
@@ -735,11 +819,66 @@ const navigate = useNavigate()
                     </svg>
                   </button>
                 </div>
+                {copied === "UPI ID" && (
+                  <span className="text-green-600 text-xs mt-1">Copied!</span>
+                )}
               </div>
-              {copied && (
-                <span className="text-green-600 text-xs mt-1">Copied!</span>
-              )}
-            </div>
+            )}
+            {active === "Option 3" && (
+              <div className="bg-white rounded-[8px] shadow p-4">
+                {/* Red Balance Strip */}
+                <div className="bg-red text-white text-xs px-3 py-1 rounded-md inline-block mb-1">
+                  Current Available Balance: ₹ 1,500
+                </div>
+
+                <h2 className="text-black font-semibold mb-2">
+                  Payment Details
+                </h2>
+
+                {/* QR + UPI */}
+                <div className="flex flex-col items-center rounded-lg p-3">
+                  <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=987654321@upi"
+                    alt="QR Code"
+                    className="w-40 h-40"
+                  />
+                </div>
+                <p className="mt-2 text-sm text-black">UPI ID</p>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-black font-medium">987654321@upi</span>
+                  <button
+                    onClick={() => copyToClipboard("987654321@upi", "UPI ID")}
+                    className="text-gray-500 hover:text-red-600"
+                  >
+                    {/* <Clipboard size={16} /> */}
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 22 22"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                        stroke="#C10932"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                        stroke="#C10932"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                {copied === "UPI ID" && (
+                  <span className="text-green-600 text-xs mt-1">Copied!</span>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -863,8 +1002,136 @@ const navigate = useNavigate()
           </div>
         </div>
 
+        {selectedPayment === "crypto" && (
+          <div className="bg-white rounded-[8px] shadow p-4">
+            {/* Red Balance Strip */}
+            <div className="bg-red text-white text-xs px-3 py-1 rounded-md inline-block mb-1">
+              Current Available Balance: 53.191 489 USDT
+            </div>
+
+            <h2 className="text-black font-semibold mb-2">Payment Details</h2>
+
+            {/* QR + UPI */}
+            <div className="flex flex-col items-center rounded-lg p-3">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=987654321@upi"
+                alt="QR Code"
+                className="w-40 h-40"
+              />
+            </div>
+            <p className="mt-2 text-sm text-black">Amount</p>
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-black font-medium">53.191 489 USDT</span>
+            </div>
+            <p className="mt-2 text-sm text-black">Wallet Address</p>
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-black font-medium">987654321@upi</span>
+              <button
+                onClick={() => copyToClipboard("987654321@upi", "UPI ID")}
+                className="text-gray-500 hover:text-red-600"
+              >
+                {/* <Clipboard size={16} /> */}
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                    stroke="#C10932"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                    stroke="#C10932"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            {copied === "UPI ID" && (
+              <span className="text-green-600 text-xs mt-1">Copied!</span>
+            )}
+            <div className="flex justify-center mt-2">
+              <button className="bg-red text-white rounded-[8px] text-ssm font-semibold hover:bg-red px-6 py-2">
+                Download QR
+              </button>
+            </div>
+          </div>
+        )}
+        {/* Upload Slip Section */}
+        {selectedPayment === "crypto" && (
+          <div className="bg-white rounded-[8px] shadow p-4">
+            <label className="block font-medium text-black mb-2 text-sm">
+              Enter Transaction Hash
+            </label>
+
+            <div className="border-2 border-dashed border-darkGray rounded-[8px] px-1 py-2 flex items-center  text-gray-500 cursor-pointer hover:border-red-500 transition gap-2">
+              {/* <Upload className="text-red-600 w-6 h-6 mb-2" /> */}
+
+              <p className="text-ssm font-medium text-darkGray">
+                Enter Transaction Hash
+              </p>
+              <input type="text" className="hidden" />
+            </div>
+          </div>
+        )}
+        {selectedPayment === "crypto" && (
+          <div className="bg-white rounded-[8px] shadow p-4">
+            <label className="block font-medium text-black mb-2 text-sm">
+              Upload your payment slip below
+              <span className="text-red-500">*</span>
+            </label>
+
+            <div className="border-2 border-dashed border-darkGray rounded-[8px] px-1 py-2 flex items-center  text-gray-500 cursor-pointer hover:border-red-500 transition gap-2">
+              {/* <Upload className="text-red-600 w-6 h-6 mb-2" /> */}
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M23.625 4.375H4.375C3.91087 4.375 3.46575 4.55937 3.13756 4.88756C2.80937 5.21575 2.625 5.66087 2.625 6.125V21.875C2.625 22.3391 2.80937 22.7842 3.13756 23.1124C3.46575 23.4406 3.91087 23.625 4.375 23.625H23.625C24.0891 23.625 24.5342 23.4406 24.8624 23.1124C25.1906 22.7842 25.375 22.3391 25.375 21.875V6.125C25.375 5.66087 25.1906 5.21575 24.8624 4.88756C24.5342 4.55937 24.0891 4.375 23.625 4.375ZM17.0625 9.625C17.3221 9.625 17.5758 9.70198 17.7917 9.8462C18.0075 9.99042 18.1758 10.1954 18.2751 10.4352C18.3744 10.6751 18.4004 10.939 18.3498 11.1936C18.2991 11.4482 18.1741 11.682 17.9906 11.8656C17.807 12.0491 17.5732 12.1741 17.3186 12.2248C17.064 12.2754 16.8001 12.2494 16.5602 12.1501C16.3204 12.0508 16.1154 11.8825 15.9712 11.6667C15.827 11.4508 15.75 11.1971 15.75 10.9375C15.75 10.5894 15.8883 10.2556 16.1344 10.0094C16.3806 9.76328 16.7144 9.625 17.0625 9.625ZM23.625 21.875H4.375V17.5755L9.44344 12.5059C9.5247 12.4246 9.6212 12.36 9.72743 12.316C9.83365 12.272 9.94751 12.2493 10.0625 12.2493C10.1775 12.2493 10.2913 12.272 10.3976 12.316C10.5038 12.36 10.6003 12.4246 10.6816 12.5059L18.0469 19.8691C18.2111 20.0332 18.4337 20.1255 18.6659 20.1255C18.8981 20.1255 19.1208 20.0332 19.285 19.8691C19.4492 19.7049 19.5414 19.4822 19.5414 19.25C19.5414 19.0178 19.4492 18.7951 19.285 18.6309L17.3534 16.7005L18.9219 15.1309C19.086 14.967 19.3084 14.8749 19.5404 14.8749C19.7724 14.8749 19.9948 14.967 20.1589 15.1309L23.625 18.6014V21.875Z"
+                  fill="#C10932"
+                />
+              </svg>
+
+              <p className="text-ssm font-medium text-darkGray">
+                Upload or drop a file right here
+              </p>
+              <input type="file" className="hidden" />
+            </div>
+          </div>
+        )}
+        {/* indian payment */}
+        {/* Show Indianpay Wallets (only if selected) */}
+        {selectedPayment === "indianpay" && (
+          <div className="bg-white rounded-[8px] shadow px-4 py-4">
+            {/* <p className="text-ssm font-semibold mb-3">Choose Wallet :</p> */}
+            <div className="flex gap-4">
+              {/* PhonePe */}
+              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
+                <img src={phonePay} alt="PhonePe" className="w-10 h-10" />
+                <p className="text-xs mt-1">PhonePe</p>
+              </div>
+
+              {/* GPay */}
+              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
+                <img src={googlePay} alt="GPay" className="w-10 h-10" />
+                <p className="text-xs mt-1">G Pay</p>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Terms Checkbox */}
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <input
             type="checkbox"
             id="terms"
@@ -876,7 +1143,7 @@ const navigate = useNavigate()
               the terms of payment and withdrawal policy.
             </p>
           </label>
-        </div>
+        </div> */}
 
         {selectedPayment === "manual" && (
           <button
@@ -886,6 +1153,37 @@ const navigate = useNavigate()
             SUBMIT
           </button>
         )}
+
+           {/* Chat on WhatsApp */}
+                <div className="w-full  mt-4 hide-scrollbar">
+                  <button className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
+                        <svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M16.0013 2.66675C23.3653 2.66675 29.3347 8.63608 29.3347 16.0001C29.3347 23.3641 23.3653 29.3334 16.0013 29.3334C13.645 29.3375 11.3301 28.7139 9.29466 27.5267L2.67332 29.3334L4.47599 22.7094C3.28793 20.6733 2.66386 18.3574 2.66799 16.0001C2.66799 8.63608 8.63732 2.66675 16.0013 2.66675ZM11.4573 9.73342L11.1907 9.74408C11.0182 9.75596 10.8498 9.80125 10.6947 9.87741C10.5501 9.95943 10.4181 10.0618 10.3027 10.1814C10.1427 10.3321 10.052 10.4627 9.95466 10.5894C9.46148 11.2306 9.19595 12.0178 9.19999 12.8267C9.20266 13.4801 9.37332 14.1161 9.63999 14.7107C10.1853 15.9134 11.0827 17.1867 12.2667 18.3667C12.552 18.6507 12.832 18.9361 13.1333 19.2014C14.6046 20.4966 16.3577 21.4307 18.2533 21.9294L19.0107 22.0454C19.2573 22.0587 19.504 22.0401 19.752 22.0281C20.1402 22.0076 20.5193 21.9025 20.8627 21.7201C21.0371 21.6299 21.2075 21.532 21.3733 21.4267C21.3733 21.4267 21.4298 21.3885 21.54 21.3067C21.72 21.1734 21.8307 21.0787 21.98 20.9227C22.092 20.8072 22.1853 20.673 22.26 20.5201C22.364 20.3027 22.468 19.8881 22.5107 19.5427C22.5427 19.2787 22.5333 19.1347 22.5293 19.0454C22.524 18.9027 22.4053 18.7547 22.276 18.6921L21.5 18.3441C21.5 18.3441 20.34 17.8387 19.6307 17.5161C19.5564 17.4838 19.4769 17.4652 19.396 17.4614C19.3048 17.4519 19.2125 17.4621 19.1256 17.4913C19.0386 17.5205 18.959 17.5681 18.892 17.6307C18.8853 17.6281 18.796 17.7041 17.832 18.8721C17.7767 18.9464 17.7004 19.0026 17.6131 19.0335C17.5257 19.0644 17.4311 19.0685 17.3413 19.0454C17.2544 19.0223 17.1693 18.9928 17.0867 18.9574C16.9213 18.8881 16.864 18.8614 16.7507 18.8134C15.9852 18.48 15.2766 18.0287 14.6507 17.4761C14.4827 17.3294 14.3267 17.1694 14.1667 17.0147C13.6421 16.5124 13.185 15.9441 12.8067 15.3241L12.728 15.1974C12.6723 15.1118 12.6267 15.0201 12.592 14.9241C12.5413 14.7281 12.6733 14.5707 12.6733 14.5707C12.6733 14.5707 12.9973 14.2161 13.148 14.0241C13.2947 13.8374 13.4187 13.6561 13.4987 13.5267C13.656 13.2734 13.7053 13.0134 13.6227 12.8121C13.2493 11.9001 12.8635 10.993 12.4653 10.0907C12.3867 9.91208 12.1533 9.78408 11.9413 9.75875C11.8693 9.74986 11.7973 9.74275 11.7253 9.73741C11.5463 9.72715 11.3668 9.72893 11.188 9.74275L11.4573 9.73342Z"
+                            fill="white"
+                          />
+                        </svg>
+                      </div>
+                      <div className="text-left">
+                        <p className="font-medium text-sm text-gray-900">
+                          Chat on WhatsApp
+                        </p>
+                        <p className="text-ssm text-gray-500">
+                          Reach out to us on WhatsApp for personalized support
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-14 h-5 text-darkGray" />
+                  </button>
+                </div>
       </div>
     </div>
   );

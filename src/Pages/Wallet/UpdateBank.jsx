@@ -1,12 +1,17 @@
 import React,{useState} from 'react'
+import { useLocation } from "react-router-dom";
 
 export default function UpdateBankAccount() {
-      const [selectedPayment, setSelectedPayment] = useState(null);
+  const location = useLocation();
+  const mode = location.state?.mode || "update"; // default update
+const [selectedPayment, setSelectedPayment] = useState(null);
+  const headingText =
+    mode === "add" ? "Add Bank Account" : "Update Bank Account";
   return (
     <div className=" mx-auto  p-6 rounded-md shadow">
       {/* Title */}
       <h2 className="text-xl font-semibold text-center mb-6 text-gray-800">
-        Update Bank Account
+         {headingText}
       </h2>
 
       <form className="space-y-4">

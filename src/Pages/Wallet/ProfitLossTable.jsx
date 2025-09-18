@@ -49,14 +49,14 @@ export default function ProfitLossTable() {
             <div className="w-2/3">Grand Total</div>
             <div className="w-1/3 flex justify-between">
               <div className="text-center w-1/2 text-red">-377</div>
-              <div className="text-center w-1/2">-</div>
+              <div className="text-center w-1/2"></div>
             </div>
           </div>
           <div className="flex justify-between items-center p-3 ">
             <div className="w-2/3">Page Total</div>
             <div className="w-1/3 flex justify-between">
-              <div className="text-center w-1/2 text-red">-377</div>
-              <div className="text-center w-1/2">-</div>
+              <div className="text-center w-1/2 text-green">-377</div>
+              <div className="text-center w-1/2"></div>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Loader.css";
-import usawinlogo from "../../../assets/logo.png";
+import usawinlogo from "../../../assets/logo-winbhai.png";
 
 const Loader = () => {
   return (

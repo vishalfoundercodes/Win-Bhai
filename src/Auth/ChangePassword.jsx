@@ -32,7 +32,7 @@ const ChangePassword = () => {
   });
 
   return (
-    <div className="max-w-m mx-auto bg-gray-100 p-6 rounded-lg shadow-md min-h-screen">
+    <div className="py-4 px-2">
       <form onSubmit={formik.handleSubmit} className="space-y-4 font-semibold">
         {/* Current Password */}
         <div>
@@ -47,12 +47,12 @@ const ChangePassword = () => {
               value={formik.values.currentPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none"
+              className="w-full px-4 py-2 rounded-[8px] bg-white border border-gray-300 focus:outline-none "
             />
             <button
               type="button"
               onClick={() => setShowCurrent(!showCurrent)}
-              className="absolute right-3 top-2 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500"
             >
               {showCurrent ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -66,9 +66,7 @@ const ChangePassword = () => {
 
         {/* New Password */}
         <div>
-          <label className="block text-ssm mb-1 text-red">
-            New Password
-          </label>
+          <label className="block text-ssm mb-1 text-red">New Password</label>
           <div className="relative">
             <input
               type={showNew ? "text" : "password"}
@@ -77,20 +75,18 @@ const ChangePassword = () => {
               value={formik.values.newPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none"
+              className="w-full px-4 py-2  rounded-[8px] bg-white border border-gray-300 focus:outline-none"
             />
             <button
               type="button"
               onClick={() => setShowNew(!showNew)}
-              className="absolute right-3 top-2 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500"
             >
               {showNew ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
           {formik.touched.newPassword && formik.errors.newPassword && (
-            <p className="text-red text-xs mt-1">
-              {formik.errors.newPassword}
-            </p>
+            <p className="text-red text-xs mt-1">{formik.errors.newPassword}</p>
           )}
         </div>
 
@@ -107,12 +103,12 @@ const ChangePassword = () => {
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none"
+              className="w-full px-4 py-2  rounded-[8px] bg-white border border-gray-300 focus:outline-none"
             />
             <button
               type="button"
               onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-3 top-2 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500"
             >
               {showConfirm ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -126,7 +122,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="w-full bg-red text-white py-2 rounded-xl font-bold hover:bg-red"
+          className="w-full bg-red text-white py-2 rounded-[8px] font-semibold text-ssm hover:bg-red"
         >
           Update Password
         </button>
