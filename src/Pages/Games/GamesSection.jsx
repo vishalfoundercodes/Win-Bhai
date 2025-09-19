@@ -116,13 +116,13 @@ const GameSection = ({ title, games, icon }) => {
       <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[8px] shadow-md mb-3">
         <div className="flex items-center gap-2">
           {<span className="w-6 h-6">{icon || "ff"}</span>}
-          <h2 className="text-lg font-semibold">{title || "dcdhb"}</h2>
+          <h2 className="text-sm font-semibold">{title || "dcdhb"}</h2>
         </div>
 
         <div className="flex items-center gap-2">
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-red font-medium text-sm"
+            className="text-red font-medium text-ssm"
           >
             {expanded ? "Collapse" : "See All"}
           </button>
@@ -159,15 +159,24 @@ const GameSection = ({ title, games, icon }) => {
           <div
             key={game.id}
             className={`${
-              expanded ? "w-full h-[150px]" : "min-w-[120px] h-[150px]"
-            } bg-re rounded-[8px] shadow overflow-hidden`}
-            onClick={() => navigate(game.route)}
+              expanded ? "w-full h-[150px]" : "min-w-[120px] h-[150px] "
+            } rounded-[12px] overflow-hidden cursor-pointer`}
+            onClick={() => navigate(game.route || "#")}
           >
-            <img
-              src={game.image}
-              alt={game.name}
-              className="w-40 h-full object-cover rounded-[15px]"
-            />
+            {game.image ? (
+              <img
+                src={game.image}
+                alt={game.name}
+                className="w-full h-full object-cover rounded-[12px]"
+              />
+            ) : (
+              // Placeholder box when no image
+              <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">
+                <span className="text-gray-400 text-sm font-medium">
+                  {/* {game.name} */}
+                </span>
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -364,7 +364,9 @@ const Spribe = ({ active }) => (
 
 // ✅ Categories
 const categories = [
-  { id: "home", label: "Home", type: "text" }, // no icon
+  { id: "home" || "sports" || "maincassino", label: "Home", type: "text" }, // no icon
+  // { id: "sports", label: "Home", type: "text" },
+  // { id: "maincassino", label: "Home", type: "text" },
   { id: "casino", label: "Casino", type: "custom", icon: Cassino },
   { id: "slot", label: "Slot Games", type: "custom", icon: SlotIcon },
   { id: "aviator", label: "Aviator", type: "custom", icon: AviatorIcon },
@@ -491,6 +493,9 @@ export default function SlidingTabs({ withHeader = false }) {
     if (location.pathname.startsWith("/game") && tabName) {
       setActive(tabName);
     }
+      if (tabName === "maincassino" || tabName === "sports") {
+        setActive("home"); // force home tab
+      }
   }, [tabName, location.pathname]);
 
   const handleClick=(id)=>{
@@ -514,17 +519,19 @@ naviagte(`/game/${id}`);
               onClick={() => {
                 handleClick(cat.id);
               }}
-              className={`flex items-center gap-1 px-2 py-1 rounded-[10px] border 
+              className={`flex items-center gap-1 px-2 py-1 rounded-[8px] border
                 transition-all duration-200
                 ${
                   active === cat.id
                     ? "bg-[#c8102e] text-white border-[#c8102e]"
-                    : "bg-white text-darkGray border-gray-300"
+                    : "bg-white text-darkGray  border-darkGray"
                 }`}
             >
               {/* ✅ Render icon only if exists */}
               {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap text-ssm">{cat.label}</span>
+              <span className="whitespace-nowrap text-ssm font-normal">
+                {cat.label}
+              </span>
             </button>
           );
         })}

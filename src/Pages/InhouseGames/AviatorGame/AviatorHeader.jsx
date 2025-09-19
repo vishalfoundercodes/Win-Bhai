@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
 import { useProfile } from "../../resuable_component/gameApi";
-import usawinlogo from "../../../assets/logo-winbhai.png";
+// import usawinlogo from "../../../assets/logo-winbhai.png";
+import usawinlogo from "../../../assets/Home/headerImage.png";
 import { motion } from "framer-motion";
 import { AiTwotoneSound } from "react-icons/ai";
 import { IoToggleSharp, IoWallet } from "react-icons/io5";
@@ -148,7 +149,7 @@ function AviatorHeader({
         <audio ref={audioRefCrash} src={crashmusic} preload="auto" />
         <audio ref={audioRef} src={backgroundMusic} preload="auto" />
         <img
-          className="w-16 h-8 object-fill cursor-pointer"
+          className="w-32 h-8 object-fill cursor-pointer"
           src={usawinlogo}
           alt="Logo"
           onClick={()=>navigate("/")}

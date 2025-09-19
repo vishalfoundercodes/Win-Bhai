@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Overlay */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-black/5 backdrop-blur-[2px]"
+        className="fixed inset-0 bg-black/80 backdrop-blur-[0px]"
       />
 
       {/* Sidebar */}

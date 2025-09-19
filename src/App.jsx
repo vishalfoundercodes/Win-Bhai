@@ -32,6 +32,7 @@ import CreateCampaign from "./Pages/ReusableComponent/CreateCampaign"
 import Statistics from "./Pages/ReusableComponent/Statistics"
 import WithdrawAffilation from "./Pages/ReusableComponent/WithdrawAffilation"
 import WithdrawFunds from "./Pages/ReusableComponent/WithdrawFunds"
+import Learn from "./Pages/ReusableComponent/Learn"
 function App() {
 
 
@@ -45,6 +46,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/forgetPassword" element={<FrogetPassword />} />
             <Route path="/needhelp" element={<NeedHelp />} />
+            <Route path="/game" element={<Game />} />
             <Route path="/game/:tabName" element={<Game />} />
             <Route path="/deposit" element={<Deposit />} />
             <Route path="/withdraw" element={<Withdraw />} />
@@ -70,6 +72,7 @@ function App() {
             <Route path="/CreateCampaign" element={<CreateCampaign />} />,
             <Route path="/Statistics" element={<Statistics />} />,
             <Route path="/WithdrawFunds" element={<WithdrawFunds />} />,
+            <Route path="/Learn" element={<Learn />} />,
             <Route
               path="/WithdrawAffilation"
               element={<WithdrawAffilation />}

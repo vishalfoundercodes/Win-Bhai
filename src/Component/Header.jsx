@@ -25,24 +25,40 @@ const Header = () => {
       <header className="sticky top-0 z-50 bg-[#c8102e] text-white px-2 py-2 flex items-center justify-between md:px-16 sm:px-28 lg:px-44 3xl:px-60">
         <div className="flex items-center gap-0">
           <button
-            className="text-red text-xl bg-[#e0e0e0] rounded-full px-2 py-2 border border-inputBorder "
+            className="text-red text-sm bg-[#e0e0e0] rounded-full p-2 border border-inputBorder "
             // onClick={toggleSidebar}
             onClick={toggleLeftSidebar}
           >
-            <FaBars />
+            {/* <FaBars /> */}
+            <svg
+              width="14"
+              height="12"
+              viewBox="0 0 18 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 12V10H18V12H0ZM0 7V5H18V7H0ZM0 2V0H18V2H0Z"
+                fill="#C10932"
+              />
+            </svg>
           </button>
 
           <span
             className="font-bold text-sm md:text-md"
             onClick={() => navigate("/")}
           >
-            <img src={headerImage} alt="" className="w-20 xsm3:w-28 xxs:w-36" />
+            <img
+              src={headerImage}
+              alt=""
+              className="w-32 xsm3:w-28 xxs:w-40 -mt-2"
+            />
           </span>
         </div>
 
         {!userId ? (
           <>
-            <div className="flex gap-2">
+            <div className="flex gap-1 xxs:gap-2">
               <button
                 className="border border-white px-6 py-1 rounded-[8px] bg-[linear-gradient(99.61deg,#C10932_0.52%,#5B0418_99.48%)] text-ssm font-medium
 "
@@ -61,7 +77,7 @@ const Header = () => {
         ) : (
           <>
             <div className="flex-0.5 flex justify-center ">
-              <div className="flex items-center gap-2 md:hidden bg-[#e0e0e0] rounded-full px-2 py-2 text-[#525252]">
+              {/* <div className="flex items-center gap-1 md:hidden bg-white rounded-full px-2 py-2 text-[#525252]">
                 <button onClick={() => setSearchOpen(!searchOpen)}>
                   <svg
                     width="15"
@@ -76,9 +92,9 @@ const Header = () => {
                     />
                   </svg>
                 </button>
-              </div>
+              </div> */}
 
-              <div className="hidden md:flex items-center bg-[#e0e0e0] rounded-full px-3 py-1  w-[248px] lg:w-[348px]">
+              <div className="hidden md:flex items-center bg-white rounded-full px-2 py-2  w-[248px] lg:w-[348px]">
                 <FaSearch className="text-[#525252] mr-2" />
 
                 <input
@@ -88,7 +104,7 @@ const Header = () => {
                 />
               </div>
 
-              <div className="hidden md:block ml-2 p-0 bg-[#F2F2F2] rounded-full">
+              <div className="hidden md:block ml-2 p-0 bg-white rounded-full">
                 {/* <FaFilter className="text-white bg-black  p-1 rounded-full w-7 h-7" /> */}
                 <svg
                   width="20"
@@ -127,15 +143,31 @@ const Header = () => {
             </div>
 
             <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 md:hidden bg-white rounded-full p-2 text-[#525252]">
+                <button onClick={() => setSearchOpen(!searchOpen)}>
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.8873 9.59827C11.6163 8.6058 12.0469 7.38053 12.0469 6.05469C12.0469 2.74529 9.36408 0.0625 6.05469 0.0625C2.74529 0.0625 0.0625 2.74529 0.0625 6.05469C0.0625 9.36408 2.74529 12.0469 6.05469 12.0469C7.38088 12.0469 8.60645 11.616 9.59907 10.8867L9.59827 10.8873C9.62546 10.9242 9.65574 10.9595 9.68912 10.9928L13.2388 14.5425C13.5988 14.9025 14.1825 14.9025 14.5425 14.5425C14.9025 14.1825 14.9025 13.5988 14.5425 13.2388L10.9928 9.68912C10.9595 9.65574 10.9242 9.62546 10.8873 9.59827ZM11.125 6.05469C11.125 8.85495 8.85495 11.125 6.05469 11.125C3.25443 11.125 0.984375 8.85495 0.984375 6.05469C0.984375 3.25443 3.25443 0.984375 6.05469 0.984375C8.85495 0.984375 11.125 3.25443 11.125 6.05469Z"
+                      fill="#525252"
+                    />
+                  </svg>
+                </button>
+              </div>
               <button
-                className="bg-white text-red text-[14px] font-medium px-3 py-1 rounded-full md:hidden"
+                className="bg-white text-red text-[14px] font-medium px-2 py-2 rounded-full md:hidden"
                 onClick={() => navigate("/deposit")}
               >
                 Deposit
               </button>
 
               <div
-                className="flex items-center bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] text-white px-4 py-1 rounded-full gap-3"
+                className="flex items-center bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] text-white px-2 py-1 rounded-full gap-3"
                 onClick={toggleSidebar}
               >
                 <span className="text-sm">₹ 0</span>

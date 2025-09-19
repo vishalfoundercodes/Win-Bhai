@@ -8,11 +8,20 @@ export default function Footer() {
   const navigate=useNavigate()
   return (
     <div className="sticky bottom-0 z-50 left-0 w-full">
-      <div className="relative bg-gradient-to-l from-[#C10932] to-[#5B0418] rounded-t-2xl px-6 py-2 flex justify-between items-center gap-2">
+      <div
+        className="relative bg-gradient-to-l from-[#C10932] to-[#5B0418] rounded-t-2xl px-6 py-2 flex justify-between items-center gap-2 "
+        style={{
+          fontFamily: "Poppins",
+          fontWeight: "500",
+          fontStyle: "medium",
+          fontSize: "14px",
+        }}
+      >
         {/* Sports */}
         <div
           className="flex flex-col items-center text-white text-sm"
-          onClick={() => setIsOpen(true)}
+          // onClick={() => setIsOpen(true)}
+          onClick={() => navigate("/game/sports")}
         >
           {/* <CircleDot className="w-6 h-6" /> */}
           <svg
@@ -32,7 +41,10 @@ export default function Footer() {
         </div>
 
         {/* Casino */}
-        <div className="flex flex-col items-center text-white text-sm">
+        <div
+          className="flex flex-col items-center text-white text-sm"
+          onClick={() => navigate("/game/maincassino")}
+        >
           {/* <Dice5 className="w-6 h-6" /> */}
           <svg
             width="29"
@@ -88,7 +100,7 @@ export default function Footer() {
         {/* Learn */}
         <div
           className="flex flex-col items-center text-white text-sm"
-          // onClick={() => navigate("/profilePage2")}
+          onClick={() => navigate("/Learn")}
         >
           {/* <BookOpen className="w-6 h-6" /> */}
           <svg

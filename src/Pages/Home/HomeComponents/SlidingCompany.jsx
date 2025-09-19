@@ -1,40 +1,41 @@
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa"; // search icon
-import Company1 from "../../../assets/Company/company1.png";
+import Company1 from "../../../assets/Company/pgs.png";
 import Company2 from "../../../assets/Company/company2.png";
 import Company3 from "../../../assets/Company/company3.png";
+import Company4 from "../../../assets/Company/company4.png";
 
 // ✅ Categories
 const categories = [
   { id: "casino", type: "custom", icon: Company1 },
   { id: "slot", type: "custom", icon: Company2 },
   { id: "aviator", type: "custom", icon: Company3 },
-  { id: "aviator2", type: "custom", icon: Company3 },
+  { id: "aviator2", type: "custom", icon: Company4 },
 ];
 
 export default function SlidingCompany() {
-  const [active, setActive] = useState("casino");
+  const [active, setActive] = useState("");
 
   return (
     <div className="relative w-full">
       {/* ✅ Scrollable Categories */}
       <div className="w-full overflow-x-auto hide-scrollbar px-2">
-        <div className="flex gap-2 min-w-max pr-[70px]">
+        <div className="flex gap-2 min-w-max pr-[36px]">
           {categories.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
-              className={`flex items-center justify-center w-[96px] h-[40px] rounded-[8px] border transition-all duration-200
+              className={`flex items-center justify-center w-[96px] h-[40px] rounded-[8px] border transition-all duration-200 p-2
                 ${
                   active === cat.id
-                    ? "bg-[#c8102e] border-[#c8102e]"
-                    : "bg-white border-[#c8102e]/40"
+                    ? "bg- border-maroon"
+                    : "bg-white border-maroon"
                 }`}
             >
               <img
                 src={cat.icon}
                 alt={cat.id}
-                className="max-h-[24px] object-contain"
+                className="max-h-[24px] w-full object-contain"
               />
             </button>
           ))}

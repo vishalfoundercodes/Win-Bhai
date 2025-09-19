@@ -15,6 +15,7 @@ export default function Game() {
       height="24"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      className="-pb-2"
     >
       <g clipPath="url(#clip0_367_521)">
         <path
@@ -64,6 +65,8 @@ export default function Game() {
   // Map tabName to display text
   const tabLabels = {
     home: "Home",
+    sports: "Sports",
+    maincassino: "Cassino",
     casino: "Casino",
     slot: "Slot",
     aviator: "Aviator",
@@ -90,6 +93,8 @@ export default function Game() {
   // ✅ Categories
   const categories = [
     { id: "home", label: "Home", type: "text" }, // no icon
+    { id: "sports", label: "Casino", type: "custom", icon: Cassino },
+    { id: "maincassino", label: "Casino", type: "custom", icon: Cassino },
     { id: "casino", label: "Casino", type: "custom", icon: Cassino },
     { id: "slot", label: "Slot Games", type: "custom", icon: SlotIcon },
     { id: "aviator", label: "Aviator", type: "custom", icon: AviatorIcon },
@@ -123,9 +128,14 @@ export default function Game() {
     <div className="">
       {/* Header */}
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 px-4 py-2">
-          {IconComp && <IconComp active={false} />} {/* red version */}
-          <h2 className="text-lg font-semibold text-gray-700">
+        <div className="flex items-center gap-1 px-4 py-2 pt-4">
+          {IconComp && (
+            <IconComp
+              active={false}
+              className="w-6 h-6 text-gray-700" // give explicit size for consistent alignment
+            />
+          )}
+          <h2 className="text-xl font-semibold text-gray-700 -pt-1">
             {selectedTab} Games
           </h2>
         </div>
