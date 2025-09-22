@@ -116,7 +116,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <div className="flex gap-3 mb-3 px-4">
               <div
                 className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)]
- rounded-[8px] p-1 w-20 h-20"
+ rounded-[8px] p-0 w-20 h-18"
                 onClick={() => {
                   onClose(), navigate("/deposit");
                 }}
@@ -164,7 +164,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
               <div
                 className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)]
- rounded-[8px] p-1 w-20 h-20"
+ rounded-[8px] p-1 w-20 h-18"
                 onClick={() => {
                   onClose(), navigate("/withdraw");
                 }}
@@ -386,7 +386,7 @@ export default function Sidebar({ isOpen, onClose }) {
               className="flex items-center gap-3 p-3"
               onClick={() => {
                 onClose();
-                navigate("/RedeemBonus");
+                navigate("/withdrawHistory");
               }}
             >
               <svg

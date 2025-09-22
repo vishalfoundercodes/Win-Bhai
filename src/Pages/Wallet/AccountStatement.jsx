@@ -64,7 +64,7 @@ const formatDate = (value) => {
         <SlidingTabs />
       </div>
       <div
-        className="w-full bg-red text-white p-2 font-medium text-sm"
+        className="w-full bg-red text-white py-2 px-5 font-medium text-sm"
         style={{
           fontFamily: "Roboto",
           fontWeight: "400",
@@ -214,7 +214,7 @@ const formatDate = (value) => {
           </button>
         </div>
       </div>
-      <div className="">
+      <div className="pl-4">
         {" "}
         {/* Account statment table  */}
         <AccountStatementTable data={sampleData} />

@@ -1,100 +1,3 @@
-// import React, { useState } from "react";
-// import { RefreshCcw } from "lucide-react";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import calender from "../../assets/Wallet/calender.png";
-
-// export default function DepositHistory() {
-//       const [startDate, setStartDate] = useState(null);
-//       const [endDate, setEndDate] = useState(null);
-//   const [deposits] = useState([
-//     {
-//       id: "ORD12345675",
-//       date: "20 Jun 2023, 9:22 AM",
-//       amount: 1000,
-//       status: "Failed",
-//     },
-//     {
-//       id: "ORD12345675",
-//       date: "20 Jun 2023, 9:22 AM",
-//       amount: 1000,
-//       status: "Processing",
-//     },
-//   ]);
-
-//   return (
-//     <div className="w-full max-w-m mx-auto  min-h-screen p-4">
-//       {/* Header */}
-//       <div className="flex justify-between items-center pb-0 mb-0">
-//         <h1 className="text-lg font-semibold">Deposits</h1>
-//         <button className="p-2 rounded-full hover:bg-gray-200">
-//           <RefreshCcw size={20} />
-//         </button>
-//       </div>
-
-//       {/* Date Filter */}
-//       <div className=" mb-3">
-//         <div className="flex justify-between mb-3 gap-2">
-//           <div>
-//             <label className="text-vsm font-medium text-black">
-//               Start Date
-//             </label>
-//             <input
-//               type="date"
-//               className="p-2 text-ssm w-full bg-white rounded-[8px] shadow"
-//               placeholder="mm/dd/yyyy"
-//             />
-//           </div>
-//           <div>
-//             {" "}
-//             <label className="text-vsm font-medium text-black">End Date</label>
-//             <input
-//               type="date"
-//               className="  p-2 text-ssm w-full bg-white rounded-[8px] shadow"
-//               placeholder="mm/dd/yyyy"
-//             />
-//           </div>
-//         </div>
-//         <button className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm">
-//           Apply Filter
-//         </button>
-//       </div>
-
-//       {/* Deposit List */}
-//       <div className="space-y-3">
-//         {deposits.map((deposit, index) => (
-//           <div
-//             key={index}
-//             className="bg-white rounded-xl shadow p-4 flex justify-between items-center"
-//           >
-//             <div>
-//               <p className="text-sm font-semibold">{deposit.id}</p>
-//               <p className="text-xs text-gray-500">{deposit.date}</p>
-//             </div>
-//             <div className="text-right">
-//               {/* Status Badge */}
-//               <span
-//                 className={`px-2 py-1 text-xs rounded-lg font-medium inline-block mb-1 ${
-//                   deposit.status === "Failed"
-//                     ? "bg-red-100 text-red-600"
-//                     : deposit.status === "Processing"
-//                     ? "bg-green-100 text-green-600"
-//                     : "bg-gray-100 text-gray-600"
-//                 }`}
-//               >
-//                 {deposit.status}
-//               </span>
-//               <p className="text-red-600 font-bold">
-//                 ₹{deposit.amount.toLocaleString()}
-//               </p>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useRef, useState } from "react";
 import { RefreshCcw } from "lucide-react";
 import calender from "../../assets/Wallet/calender.png";
@@ -102,7 +5,7 @@ import "./DateInput.css";
 import CalendarModal from "../ReusableComponent/Calender";
 
 
-export default function DepositHistory() {
+export default function WithdrawHistory() {
   const [deposits] = useState([
     {
       id: "ORD12345675",
@@ -159,23 +62,23 @@ export default function DepositHistory() {
       status: "Completed",
     },
   ]);
-    const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState("All");
 
-    const tabs = ["All", "Failed", "Processing", "Success"];
+  const tabs = ["All", "Failed", "Processing", "Success"];
 
   // const [startDate, setStartDate] = useState("");
   // const [endDate, setEndDate] = useState("");
 
   const startRef = useRef(null);
   const endRef = useRef(null);
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
 
-    const formatDate = (date) => {
-      if (!date) return "";
-      return new Date(date).toLocaleDateString("en-US");
-    };
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toLocaleDateString("en-US");
+  };
 
   // helper to format yyyy-mm-dd -> mm/dd/yyyy
   // const formatDate = (value) => {
@@ -184,24 +87,26 @@ export default function DepositHistory() {
   //   return `${month}/${day}/${year}`;
   // };
 
-const [copiedId, setCopiedId] = useState(null);
+  const [copiedId, setCopiedId] = useState(null);
 
-const handleCopy = (id) => {
-  navigator.clipboard.writeText(id);
-  setCopiedId(id);
-//   console.log("hii1")
-  setTimeout(() => {setCopiedId(null)}, 2000);
-};
+  const handleCopy = (id) => {
+    navigator.clipboard.writeText(id);
+    setCopiedId(id);
+    //   console.log("hii1")
+    setTimeout(() => {
+      setCopiedId(null);
+    }, 2000);
+  };
 
   return (
     <div className="w-full max-w-m mx-auto min-h-screen px-4 py-2"
     style={{
-      fontFamily:"Inter"
+        fontFamily:"Inter"
     }}
     >
       {/* Header */}
       <div className="flex justify-between items-center pb-0 mb-0">
-        <h1 className="text-[20px] font-bold">Deposits</h1>
+        <h1 className="text-lg font-bold">Withdrawl</h1>
         <button className="p-2 rounded-full hover:bg-gray-200">
           <RefreshCcw size={20} />
         </button>
@@ -274,7 +179,7 @@ const handleCopy = (id) => {
             className={`px-0 py-1 text-ssm font-normal rounded-md border 
             ${
               activeTab === tab
-                ? "bg-red-700 text-white border-red-700"
+                ? "bg-red text-white border-red"
                 : "bg-white text-lightGray border-grayBorder"
             }`}
           >
@@ -350,8 +255,9 @@ const handleCopy = (id) => {
               >
                 {deposit.status}
               </span>
-              <p className="text-red-600 font-bold">
-                ₹{deposit.amount.toLocaleString()}
+              <p className="text-black2 font-bold">
+                <span className="text-red-600">₹</span>{" "}
+                {deposit.amount.toLocaleString()}
               </p>
             </div>
           </div>
@@ -369,6 +275,3 @@ const handleCopy = (id) => {
     </div>
   );
 }
-
-
-

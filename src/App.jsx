@@ -35,6 +35,7 @@ import WithdrawFunds from "./Pages/ReusableComponent/WithdrawFunds"
 import Learn from "./Pages/ReusableComponent/Learn"
 import CryptoAddAccount from "./Pages/Wallet/CryptoAddAccount"
 import CryptoDeposit from "./Pages/Wallet/CryptoDeposit"
+import WithdrawHistory from "./Pages/Wallet/WithdrawHistory"
 function App() {
 
 
@@ -60,6 +61,7 @@ function App() {
             <Route path="/Notification" element={<Notification />} />
             <Route path="/Info" element={<PersonalInfo />} />
             <Route path="/depositHistory" element={<DepositHistory />} />
+            <Route path="/withdrawHistory" element={<WithdrawHistory />} />
             <Route path="/betHistory" element={<BetHistory />} />
             <Route path="/profitLoss" element={<ProfitLoss />} />
             <Route path="/accountStatement" element={<AccountStatement />} />

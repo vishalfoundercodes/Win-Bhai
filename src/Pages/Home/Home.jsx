@@ -161,6 +161,7 @@ import aviatornew from "../../assets/GameIcons/avaitorimagenew.png";
 import lotterycategorywingo from "../../assets/GameIcons/lotterycategorywingo.png";
 // import alllotterybg from "../../assets/GameIcons/alllotterybg.png";
 import alllotterybg from "../../assets/GameIcons/wingoLogo.png";
+import TrendingGames from "../Games/TrendingGames";
 export default function Home() {
   const games = [
     { id: 1, name: "AviaFly", image: aviaFly },
@@ -328,7 +329,7 @@ const games2 = [
     <div className="flex flex-col justify-center bg-grayBg">
       {/* ------------------ Mobile + Tablet ------------------ */}
       <div className="xsm:hidden pt-2 pb-2">
-        <div>{userId && (<ActionButtons />)}</div>
+        <div>{userId && <ActionButtons />}</div>
 
         <SlidingTabs />
       </div>
@@ -338,7 +339,7 @@ const games2 = [
           <GameHeader />
         </div>
 
-        <div className="md:hidden">
+        <div className="md:hidden mb-3">
           <GameCategories />
         </div>
         <div className="hidden md:block lg:hidden">
@@ -368,7 +369,7 @@ const games2 = [
             games={games}
             onSeeAll={() => alert("See All clicked")}
           />
-          <GameSection
+          <TrendingGames
             title="Trending Games"
             icon={
               <svg
@@ -388,7 +389,7 @@ const games2 = [
             onSeeAll={() => alert("See All clicked")}
           />
 
-          <div className="w-full h-36 bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
+          <div className="h-[170px] xsm:h-full w-full' bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
             <span className="text-gray-400 text-sm font-medium">
               {/* {game.name} */}
             </span>
@@ -545,7 +546,7 @@ const games2 = [
             games={games4}
             onSeeAll={() => alert("See All clicked")}
           />
-          <GameSection
+          <TrendingGames
             title="Casino Lobby"
             icon={
               <svg

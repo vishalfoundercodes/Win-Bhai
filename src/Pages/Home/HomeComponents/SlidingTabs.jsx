@@ -4,8 +4,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 // Custom SVG component so we can control its color with props
 const Cassino = ({ active }) => (
   <svg
-    width="24"
-    height="24"
+    width="20"
+    height="20"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -509,7 +509,11 @@ naviagte(`/game/${id}`);
 
   }
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar px-4">
+    <div className="w-full overflow-x-auto hide-scrollbar px-4"
+    style={{
+      fontFamily:"Roboto"
+    }}
+    >
       <div className="flex gap-2 min-w-max">
         {categories.map((cat) => {
           const IconComp = cat.icon;
@@ -519,7 +523,7 @@ naviagte(`/game/${id}`);
               onClick={() => {
                 handleClick(cat.id);
               }}
-              className={`flex items-center gap-1 px-2 py-1 rounded-[8px] border
+              className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
                 transition-all duration-200
                 ${
                   active === cat.id
@@ -529,7 +533,7 @@ naviagte(`/game/${id}`);
             >
               {/* ✅ Render icon only if exists */}
               {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap text-ssm font-normal">
+              <span className="whitespace-nowrap text-[12px] font-normal">
                 {cat.label}
               </span>
             </button>
