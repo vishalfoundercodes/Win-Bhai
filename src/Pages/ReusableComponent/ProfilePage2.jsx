@@ -3,7 +3,12 @@ import { useNavigate } from "react-router-dom";
 export default function ProfilePage2() {
   const navigate=useNavigate()
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
+    <div
+      className="min-h-screen bg-[#E7E7E7] flex flex-col items-center p-4"
+      style={{
+        fontFamily: "Roboto"
+      }}
+    >
       {/* Profile Section */}
       <div className="flex flex-col items-center mb-4">
         <div className="w-16 h-16 rounded-full  flex items-center justify-center text-white text-xl font-bold relative">
@@ -28,13 +33,13 @@ export default function ProfilePage2() {
 
           <span className="absolute top-1 left-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
         </div>
-        <h2 className="mt-2 text-lg font-semibold text-gray-800">Shivam</h2>
+        <h2 className="mt-2 text-lg font-semibold text-red">Shivam</h2>
       </div>
 
       {/* Revenue Section */}
-      <div className="flex w-full  rounded-lg overflow-hidden mb-4 gap-1">
+      <div className="flex w-full  rounded-[8px] overflow-hidden mb-4 gap-1">
         {/* Left Side */}
-        <div className="flex items-center gap-3 bg-red text-white flex-1 p-4">
+        <div className="flex items-center gap-3 bg-red text-white flex-1 px-4 py-2">
           {/* <Wallet className="w-8 h-8" /> */}
           <svg
             width="37"
@@ -75,27 +80,7 @@ export default function ProfilePage2() {
 
       {/* Dashboard Cards */}
       <div className="grid grid-cols-2 gap-4 w-full  mb-4">
-        <div
-          className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-8"
-          onClick={() => navigate("/affilationDashboard")}
-        >
-          {/* <Wallet className="w-8 h-8 text-red-600 mb-2" /> */}
-          <svg
-            width="54"
-            height="53"
-            viewBox="0 0 54 53"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M29.9167 14.8333V3.16667C29.9167 2.34028 30.1967 1.64806 30.7567 1.09C31.3167 0.531945 32.0089 0.251944 32.8333 0.25H50.3333C51.1597 0.25 51.8529 0.53 52.4129 1.09C52.9729 1.65 53.2519 2.34222 53.25 3.16667V14.8333C53.25 15.6597 52.97 16.3529 52.41 16.9129C51.85 17.4729 51.1578 17.7519 50.3333 17.75H32.8333C32.0069 17.75 31.3147 17.47 30.7567 16.91C30.1986 16.35 29.9186 15.6578 29.9167 14.8333ZM0.75 26.5V3.16667C0.75 2.34028 1.03 1.64806 1.59 1.09C2.15 0.531945 2.84222 0.251944 3.66667 0.25H21.1667C21.9931 0.25 22.6863 0.53 23.2463 1.09C23.8063 1.65 24.0853 2.34222 24.0833 3.16667V26.5C24.0833 27.3264 23.8033 28.0196 23.2433 28.5796C22.6833 29.1396 21.9911 29.4186 21.1667 29.4167H3.66667C2.84028 29.4167 2.14806 29.1367 1.59 28.5767C1.03194 28.0167 0.751944 27.3244 0.75 26.5ZM29.9167 49.8333V26.5C29.9167 25.6736 30.1967 24.9814 30.7567 24.4233C31.3167 23.8653 32.0089 23.5853 32.8333 23.5833H50.3333C51.1597 23.5833 51.8529 23.8633 52.4129 24.4233C52.9729 24.9833 53.2519 25.6756 53.25 26.5V49.8333C53.25 50.6597 52.97 51.3529 52.41 51.9129C51.85 52.4729 51.1578 52.7519 50.3333 52.75H32.8333C32.0069 52.75 31.3147 52.47 30.7567 51.91C30.1986 51.35 29.9186 50.6578 29.9167 49.8333ZM0.75 49.8333V38.1667C0.75 37.3403 1.03 36.6481 1.59 36.09C2.15 35.5319 2.84222 35.2519 3.66667 35.25H21.1667C21.9931 35.25 22.6863 35.53 23.2463 36.09C23.8063 36.65 24.0853 37.3422 24.0833 38.1667V49.8333C24.0833 50.6597 23.8033 51.3529 23.2433 51.9129C22.6833 52.4729 21.9911 52.7519 21.1667 52.75H3.66667C2.84028 52.75 2.14806 52.47 1.59 51.91C1.03194 51.35 0.751944 50.6578 0.75 49.8333ZM6.58333 23.5833H18.25V6.08333H6.58333V23.5833ZM35.75 46.9167H47.4167V29.4167H35.75V46.9167ZM35.75 11.9167H47.4167V6.08333H35.75V11.9167ZM6.58333 46.9167H18.25V41.0833H6.58333V46.9167Z"
-              fill="#C10932"
-            />
-          </svg>
-
-          <p className="font-bold  text-sm text-gray-700 pt-4">Dashboard</p>
-        </div>
-
+        {/* creatre campaign */}
         <div
           className="bg-[#F2F2F2] rounded-lg shadow-sm flex flex-col items-center justify-center py-6"
           onClick={() => navigate("/CreateCampaign")}
@@ -117,6 +102,26 @@ export default function ProfilePage2() {
           <p className="font-bold  text-sm text-gray-700 pt-4">
             Create Campaign
           </p>
+        </div>
+        <div
+          className="bg-[#F2F2F2] rounded-lg shadow-sm  flex flex-col items-center justify-center py-8"
+          onClick={() => navigate("/affilationDashboard")}
+        >
+          {/* <Wallet className="w-8 h-8 text-red-600 mb-2" /> */}
+          <svg
+            width="54"
+            height="53"
+            viewBox="0 0 54 53"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M29.9167 14.8333V3.16667C29.9167 2.34028 30.1967 1.64806 30.7567 1.09C31.3167 0.531945 32.0089 0.251944 32.8333 0.25H50.3333C51.1597 0.25 51.8529 0.53 52.4129 1.09C52.9729 1.65 53.2519 2.34222 53.25 3.16667V14.8333C53.25 15.6597 52.97 16.3529 52.41 16.9129C51.85 17.4729 51.1578 17.7519 50.3333 17.75H32.8333C32.0069 17.75 31.3147 17.47 30.7567 16.91C30.1986 16.35 29.9186 15.6578 29.9167 14.8333ZM0.75 26.5V3.16667C0.75 2.34028 1.03 1.64806 1.59 1.09C2.15 0.531945 2.84222 0.251944 3.66667 0.25H21.1667C21.9931 0.25 22.6863 0.53 23.2463 1.09C23.8063 1.65 24.0853 2.34222 24.0833 3.16667V26.5C24.0833 27.3264 23.8033 28.0196 23.2433 28.5796C22.6833 29.1396 21.9911 29.4186 21.1667 29.4167H3.66667C2.84028 29.4167 2.14806 29.1367 1.59 28.5767C1.03194 28.0167 0.751944 27.3244 0.75 26.5ZM29.9167 49.8333V26.5C29.9167 25.6736 30.1967 24.9814 30.7567 24.4233C31.3167 23.8653 32.0089 23.5853 32.8333 23.5833H50.3333C51.1597 23.5833 51.8529 23.8633 52.4129 24.4233C52.9729 24.9833 53.2519 25.6756 53.25 26.5V49.8333C53.25 50.6597 52.97 51.3529 52.41 51.9129C51.85 52.4729 51.1578 52.7519 50.3333 52.75H32.8333C32.0069 52.75 31.3147 52.47 30.7567 51.91C30.1986 51.35 29.9186 50.6578 29.9167 49.8333ZM0.75 49.8333V38.1667C0.75 37.3403 1.03 36.6481 1.59 36.09C2.15 35.5319 2.84222 35.2519 3.66667 35.25H21.1667C21.9931 35.25 22.6863 35.53 23.2463 36.09C23.8063 36.65 24.0853 37.3422 24.0833 38.1667V49.8333C24.0833 50.6597 23.8033 51.3529 23.2433 51.9129C22.6833 52.4729 21.9911 52.7519 21.1667 52.75H3.66667C2.84028 52.75 2.14806 52.47 1.59 51.91C1.03194 51.35 0.751944 50.6578 0.75 49.8333ZM6.58333 23.5833H18.25V6.08333H6.58333V23.5833ZM35.75 46.9167H47.4167V29.4167H35.75V46.9167ZM35.75 11.9167H47.4167V6.08333H35.75V11.9167ZM6.58333 46.9167H18.25V41.0833H6.58333V46.9167Z"
+              fill="#C10932"
+            />
+          </svg>
+
+          <p className="font-bold  text-sm text-gray-700 pt-4">Dashboard</p>
         </div>
 
         <div

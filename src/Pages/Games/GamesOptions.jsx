@@ -126,32 +126,70 @@ setActive(id)
 // }
 
   }
-  return (
-    <div className="w-full overflow-x-auto hide-scrollbar px-2">
-      <div className="flex gap-2 min-w-max">
-        {categories.map((cat) => {
-          const IconComp = cat.icon;
-          return (
-            <button
-              key={cat.id}
-              onClick={() => {
-                handleClick(cat.id);
-              }}
-              className={`flex flex-col items-center justify-center gap2 px-4 py-1 rounded-[10px] border 
-                transition-all duration-200
-                ${
-                  active === cat.id
-                    ? "bg-[#969696] text-white border-[#969696]"
-                    : "bg-[#969696] text-white border-gray-300"
-                }`}
+  // return (
+  //   <div className="w-full overflow-x-auto hide-scrollbar px-0">
+  //     <div className="flex gap-2 min-w-max">
+  //       {categories.map((cat) => {
+  //         const IconComp = cat.icon;
+  //         return (
+  //           <button
+  //             key={cat.id}
+  //             onClick={() => {
+  //               handleClick(cat.id);
+  //             }}
+  //             className={`flex flex-col items-center justify-center py-1 rounded-[10px] border 
+  //               transition-all duration-200
+  //               ${
+  //                 active === cat.id
+  //                   ? "bg-[#969696] text-white border-[#969696]"
+  //                   : "bg-[#969696] text-white border-gray-300"
+  //               }`}
+  //           >
+  //             {/* ✅ Render icon only if exists */}
+  //             {cat.icon && <IconComp active={active === cat.id} />}
+  //             <span className="whitespace-nowrap text-center px-1">
+  //               {cat.label}
+  //             </span>
+  //           </button>
+  //         );
+  //       })}
+  //     </div>
+  //   </div>
+  // );
+
+return (
+  <div className="w-full overflow-x-auto hide-scrollbar px-0">
+    <div className="flex gap-3 min-w-max">
+      {categories.map((cat) => {
+        const IconComp = cat.icon;
+        return (
+          <button
+            key={cat.id}
+            onClick={() => handleClick(cat.id)}
+            className={`flex flex-col items-center justify-center
+              w-[95px] h-[66px] px-2 py-1
+              rounded-[10px] border text-white
+              transition-all duration-200
+              ${
+                active === cat.id
+                  ? "bg-[#969696] border-[#969696]"
+                  : "bg-[#969696] border-gray-300"
+              }`}
+          >
+            {/* ✅ Render icon only if exists */}
+            {cat.icon && <IconComp active={active === cat.id} />}
+
+            <span
+              className="text-center leading-tight mt-1 text-[12px] font-medium truncate"
+              title={cat.label} // tooltip on hover
             >
-              {/* ✅ Render icon only if exists */}
-              {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap">{cat.label}</span>
-            </button>
-          );
-        })}
-      </div>
+              {cat.label}
+            </span>
+          </button>
+        );
+      })}
     </div>
-  );
+  </div>
+);
+
 }

@@ -48,7 +48,7 @@ export default function Learn() {
             <div
               className={` ${openDropdown === "category" ? "ring-none" : ""}`}
               style={{
-                fontFamily: "Robot",
+                fontFamily: "Roboto",
                 fontSize: "16px",
                 fontWeight: "400px",
               }}
@@ -111,7 +111,7 @@ export default function Learn() {
             <div
               className={` ${openDropdown === "language" ? "ring-none" : ""}`}
               style={{
-                fontFamily: "Robot",
+                fontFamily: "Roboto",
                 fontSize: "16px",
                 fontWeight: "400px",
               }}

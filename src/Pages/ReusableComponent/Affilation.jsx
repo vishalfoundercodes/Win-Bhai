@@ -28,7 +28,22 @@ export default function AffiliatePage() {
             </div>
 
             {/* Right arrow */}
-            <span className="text-gray-400 text-lg">{">"}</span>
+            {/* <span className="text-gray-400 text-lg">{">"}</span> */}
+            <svg
+              width="8"
+              height="13"
+              viewBox="0 0 8 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.69922 11.8008L6.69922 6.80078L1.69922 1.80078"
+                stroke="#9CA3AF"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
           </div>
         </div>
 
@@ -42,15 +57,28 @@ export default function AffiliatePage() {
             >
               <div className="flex items-center space-x-2">
                 <Clock className="w-5 h-5 text-red" />
-                <span className="font-semibold text-black text-xsm">
+                <span className="font-semibold text-black text-lg">
                   {selected}
                 </span>
               </div>
-              <ChevronDown
+              {/* <ChevronDown
                 className={`w-4 h-4 text-gray-600 transform transition-transform ${
                   open ? "rotate-180" : "rotate-0"
                 }`}
-              />
+              /> */}
+              <svg
+                width="12"
+                height="7"
+                viewBox="0 0 12 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="ml-6"
+              >
+                <path
+                  d="M0.166016 0.666016L5.99935 6.49935L11.8327 0.666016H0.166016Z"
+                  fill="#222222"
+                />
+              </svg>
             </button>
 
             {/* Red underline */}
@@ -64,7 +92,7 @@ export default function AffiliatePage() {
                     key={idx}
                     onClick={() => handleSelect(option)}
                     className={`px-3 py-2 text-sm cursor-pointer font-semibold ${
-                      option === selected ? "text-gray-500" : "text-black"
+                      option === selected ? "text-black" : "text-gray-500"
                     } hover:bg-gray-100`}
                   >
                     {option}
@@ -117,7 +145,7 @@ export default function AffiliatePage() {
 
         {/* Income Section */}
         <div className="p-4 bg-gradient-to-l from-[#C10932] to-[#5B0418] text-white text-center font-semibold rounded-b-2xl">
-          Income: ₹0
+          Income: 0 $
         </div>
 
         {/* Filters Section */}

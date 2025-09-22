@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen, onClose }) {
       {/* Overlay */}
       <div
         onClick={onClose}
-        className="fixed inset-0 bg-black/80 backdrop-blur-[0px]"
+        className="fixed inset-0 bg-black/84 "
       />
 
       {/* Sidebar */}
@@ -209,7 +209,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 </span>
               </div>
             </div>
-            <div className="mx-4">
+            <div className="mx-4 mb-2">
               <button
                 className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 "
                 onClick={() => navigate("/RedeemBonus")}

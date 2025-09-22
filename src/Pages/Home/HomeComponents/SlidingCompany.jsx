@@ -17,10 +17,10 @@ export default function SlidingCompany() {
   const [active, setActive] = useState("");
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full overflow-x-auto hide-scrollbar ">
       {/* ✅ Scrollable Categories */}
-      <div className="w-full overflow-x-auto hide-scrollbar px-2">
-        <div className="flex gap-2 min-w-max pr-[36px]">
+      <div className="w-full overflow-x-auto hide-scrollbar ">
+        <div className="flex gap-2 min-w-max mr-[36px]">
           {categories.map((cat) => (
             <button
               key={cat.id}

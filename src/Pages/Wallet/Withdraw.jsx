@@ -15,11 +15,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 export default function Withdraw() {
-  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState("manual");
   const [amount, setAmount] = useState("");
   const navigate = useNavigate()
 
-  const quickAmounts = [300, 500, 800, 1000, 2000, 5000];
+  const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
   const [copied, setCopied] = useState("");
 
   const copyToClipboard = (text, label) => {
@@ -576,82 +576,162 @@ export default function Withdraw() {
           </div>
         </div>
 
-        {/* account detail */}
-        <container className="mb-2">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={20}
-            slidesPerView={1}
-            loop={true}
-            grabCursor={true}
-            touchEventsTarget="container"
-            className="w-full"
-            mousewheel={{ forceToAxis: true }}
-          >
-            {cards.map((card, idx) => (
-              <SwiperSlide key={idx}>
-                <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
-                  {/* Background image */}
-                  <img
-                    src={card.image}
-                    alt="Bank Card"
-                    className="w-full h-full object-cover rounded-xl"
-                  />
+        {/* account detail manual */}
+        {selectedPayment === "manual" && (
+          <container className="mb-2">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={20}
+              slidesPerView={1}
+              loop={true}
+              grabCursor={true}
+              touchEventsTarget="container"
+              className="w-full"
+              mousewheel={{ forceToAxis: true }}
+            >
+              {cards.map((card, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                    {/* Background image */}
+                    <img
+                      src={card.image}
+                      alt="Bank Card"
+                      className="w-full h-full object-cover rounded-xl"
+                    />
 
-                  {/* Overlay details */}
-                  <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
-                    {/* Top row (IFSC + Buttons) */}
-                    <div className="flex justify-between items-center mb-2">
-                      <p className="text-sm font-semibold text-gray-800 ml-2">
-                        {card.ifsc}
-                      </p>
-                      <div className="flex gap-2">
-                        <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
-                          <Trash2 className="w-4 h-4 text-gray-600" />
-                        </button>
-                        <button
-                          className="p-1 bg-white rounded shadow hover:bg-gray-100"
-                          onClick={() =>
-                            navigate("/updateAccount", {
-                              state: { mode: "update" },
-                            })
-                          }
-                        >
-                          <Pencil className="w-4 h-4 text-gray-600" />
-                        </button>
+                    {/* Overlay details */}
+                    <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
+                      {/* Top row (IFSC + Buttons) */}
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-semibold text-gray-800 ml-2">
+                          {card.ifsc}
+                        </p>
+                        <div className="flex gap-2">
+                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                            <Trash2 className="w-4 h-4 text-gray-600" />
+                          </button>
+                          <button
+                            className="p-1 bg-white rounded shadow hover:bg-gray-100"
+                            onClick={() =>
+                              navigate("/updateAccount", {
+                                state: { mode: "update" },
+                              })
+                            }
+                          >
+                            <Pencil className="w-4 h-4 text-gray-600" />
+                          </button>
+                        </div>
                       </div>
+
+                      {/* Account number */}
+                      <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
+                        {card.account}
+                      </p>
+
+                      {/* Name */}
+                      <p className="font-medium text-gray-800 text-right">
+                        {card.name}
+                      </p>
                     </div>
-
-                    {/* Account number */}
-                    <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
-                      {card.account}
-                    </p>
-
-                    {/* Name */}
-                    <p className="font-medium text-gray-800 text-right">
-                      {card.name}
-                    </p>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </container>
-        {/* add account */}
-        <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm mt-2">
-          {/* Left Text */}
-          <span className="text-gray-900 font-medium">Add Account</span>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </container>
+        )}
+        {selectedPayment === "crypto" && (
+          <container className="mb-2">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={20}
+              slidesPerView={1}
+              loop={true}
+              grabCursor={true}
+              touchEventsTarget="container"
+              className="w-full"
+              mousewheel={{ forceToAxis: true }}
+            >
+              {cards.map((card, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                    {/* Background image */}
+                    <img
+                      src={card.image}
+                      alt="Bank Card"
+                      className="w-full h-full object-cover rounded-xl"
+                    />
 
-          {/* Plus Button */}
-          <button
-            className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
-            onClick={() =>
-              navigate("/updateAccount", { state: { mode: "add" } })
-            }
-          >
-            <Plus className="w-5 h-5 text-red" />
-          </button>
-        </div>
+                    {/* Overlay details */}
+                    <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
+                      {/* Top row (IFSC + Buttons) */}
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-sm font-semibold text-gray-800 ml-2">
+                          {card.ifsc}
+                        </p>
+                        <div className="flex gap-2">
+                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                            <Trash2 className="w-4 h-4 text-gray-600" />
+                          </button>
+                          <button
+                            className="p-1 bg-white rounded shadow hover:bg-gray-100"
+                            onClick={() =>
+                              navigate("/CryptoAdd", {
+                                state: { mode: "update" },
+                              })
+                            }
+                          >
+                            <Pencil className="w-4 h-4 text-gray-600" />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Account number */}
+                      <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
+                        {card.account}
+                      </p>
+
+                      {/* Name */}
+                      <p className="font-medium text-gray-800 text-right">
+                        {card.name}
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </container>
+        )}
+        {/* add account */}
+        {selectedPayment === "manual" && (
+          <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm mt-2">
+            {/* Left Text */}
+            <span className="text-gray-900 font-medium">Add Account</span>
+
+            {/* Plus Button */}
+            <button
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
+              onClick={() =>
+                navigate("/updateAccount", { state: { mode: "add" } })
+              }
+            >
+              <Plus className="w-5 h-5 text-red" />
+            </button>
+          </div>
+        )}
+        {selectedPayment === "crypto" && (
+          <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm mt-2">
+            {/* Left Text */}
+            <span className="text-gray-900 font-medium">Add Account</span>
+
+            {/* Plus Button */}
+            <button
+              className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
+              onClick={() => navigate("/CryptoAdd", { state: { mode: "add" } })}
+            >
+              <Plus className="w-5 h-5 text-red" />
+            </button>
+          </div>
+        )}
 
         {/* Amount Section */}
         <div className="rounded-[8px] shadow p-4 bg-white">
@@ -707,7 +787,7 @@ export default function Withdraw() {
           withdrawals permitted below ₹200.
         </p>
         {/* Chat on WhatsApp */}
-        <div className="w-full  mt-4 hide-scrollbar">
+        {/* <div className="w-full  mt-4 hide-scrollbar">
           <button className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
@@ -734,6 +814,19 @@ export default function Withdraw() {
               </div>
             </div>
             <ArrowRight className="w-14 h-5 text-darkGray" />
+          </button>
+        </div> */}
+        {/* submit */}
+        <div className="flex w-full items-center justify-center">
+          <button
+            type="submit"
+            className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
+            style={{
+              fontFamily: "Roboto",
+              fontSize: "13.5px",
+            }}
+          >
+            SUBMIT
           </button>
         </div>
       </div>

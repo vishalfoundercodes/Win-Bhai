@@ -5,7 +5,12 @@ import AffiliateModal from "./AddAffiliation";
 const CreateCampaign = () => {
       const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="p-4 space-y-4 min-h-screen">
+    <div
+      className="p-4 space-y-4 min-h-screen"
+      style={{
+        fontFamily: "Roboto",
+      }}
+    >
       <div className="bg-red text-white rounded-lg p-3 flex items-center justify-between mx-auto">
         <div>
           <h2 className="text-lg font-bold">Refer & Earn</h2>
@@ -24,48 +29,98 @@ const CreateCampaign = () => {
       >
         <button>Add New Affiliate</button>
       </div>
-      <div className="w-full space-y-1.5">
+      <div className="w-full space-y-2">
         <h1 className="text-ssm font-semibold">Featured</h1>
-        <div className="w-full max-w-s bg-white rounded-lg shadow">
-          <div className="p-3 flex items-center justify-between">
-            {/* Left side - Avatar + Name */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-                <span className="text-pink-600 font-semibold">S</span>
+        <div className="space-y-3">
+          <div className="w-full max-w-s bg-white rounded-[8px]  shadow ">
+            <div className="p-3 flex items-center justify-between">
+              {/* Left side - Avatar + Name */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                  <span className="text-pink-600 font-semibold">S</span>
+                </div>
+                <span className="text-gray-800 font-medium">shivamtrakwin</span>
               </div>
-              <span className="text-gray-800 font-medium">shivamtrakwin</span>
-            </div>
 
-            {/* Right arrow */}
-            <span className="text-gray-400 text-lg">{">"}</span>
+              {/* Right arrow */}
+              <span className="text-gray-400 text-lg">
+                <svg
+                  width="8"
+                  height="13"
+                  viewBox="0 0 8 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.69922 11.8008L6.69922 6.80078L1.69922 1.80078"
+                    stroke="#9CA3AF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="w-full max-w-s bg-white rounded-lg shadow ">
-          <div className="p-3 flex items-center justify-between">
-            {/* Left side - Avatar + Name */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-                <span className="text-pink-600 font-semibold">S</span>
+          <div className="w-full max-w-s bg-white rounded-[8px] shadow ">
+            <div className="p-3 flex items-center justify-between">
+              {/* Left side - Avatar + Name */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                  <span className="text-pink-600 font-semibold">S</span>
+                </div>
+                <span className="text-gray-800 font-medium">shivamtrakwin</span>
               </div>
-              <span className="text-gray-800 font-medium">shivamtrakwin</span>
-            </div>
 
-            {/* Right arrow */}
-            <span className="text-gray-400 text-lg">{">"}</span>
+              {/* Right arrow */}
+              <span className="text-gray-400 text-lg">
+                <svg
+                  width="8"
+                  height="13"
+                  viewBox="0 0 8 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.69922 11.8008L6.69922 6.80078L1.69922 1.80078"
+                    stroke="#9CA3AF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="w-full max-w-s bg-white rounded-lg shadow ">
-          <div className="p-3 flex items-center justify-between">
-            {/* Left side - Avatar + Name */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-                <span className="text-pink-600 font-semibold">S</span>
+          <div className="w-full max-w-s bg-white rounded-[8px]  shadow ">
+            <div className="p-3 flex items-center justify-between">
+              {/* Left side - Avatar + Name */}
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                  <span className="text-pink-600 font-semibold">S</span>
+                </div>
+                <span className="text-gray-800 font-medium">shivamtrakwin</span>
               </div>
-              <span className="text-gray-800 font-medium">shivamtrakwin</span>
-            </div>
 
-            {/* Right arrow */}
-            <span className="text-gray-400 text-lg">{">"}</span>
+              {/* Right arrow */}
+              <span className="text-gray-400 text-lg">
+                <svg
+                  width="8"
+                  height="13"
+                  viewBox="0 0 8 13"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.69922 11.8008L6.69922 6.80078L1.69922 1.80078"
+                    stroke="#9CA3AF"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <>
       <header className="sticky top-0 z-50 bg-[#c8102e] text-white px-2 py-2 flex items-center justify-between md:px-16 sm:px-28 lg:px-44 3xl:px-60">
-        <div className="flex items-center gap-0">
+        <div className="flex items-center gap-0 justify-center">
           <button
             className="text-red text-sm bg-[#e0e0e0] rounded-full p-2 border border-inputBorder "
             // onClick={toggleSidebar}
@@ -44,16 +44,16 @@ const Header = () => {
             </svg>
           </button>
 
-          <span
-            className="font-bold text-sm md:text-md"
+          <div
+            className="font-bold text-sm md:text-md items-center justify-center w-full left-1/2 right-1/2 mx-auto"
             onClick={() => navigate("/")}
           >
             <img
               src={headerImage}
               alt=""
-              className="w-32 xsm3:w-28 xxs:w-40 -mt-2"
+              className="w-28 xsm3:w-32 xxs:w-40 -mt-2 ml-2 xxs:ml-2"
             />
-          </span>
+          </div>
         </div>
 
         {!userId ? (

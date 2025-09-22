@@ -33,6 +33,8 @@ import Statistics from "./Pages/ReusableComponent/Statistics"
 import WithdrawAffilation from "./Pages/ReusableComponent/WithdrawAffilation"
 import WithdrawFunds from "./Pages/ReusableComponent/WithdrawFunds"
 import Learn from "./Pages/ReusableComponent/Learn"
+import CryptoAddAccount from "./Pages/Wallet/CryptoAddAccount"
+import CryptoDeposit from "./Pages/Wallet/CryptoDeposit"
 function App() {
 
 
@@ -51,6 +53,7 @@ function App() {
             <Route path="/deposit" element={<Deposit />} />
             <Route path="/withdraw" element={<Withdraw />} />
             <Route path="/updateAccount" element={<UpdateBankAccount />} />
+            <Route path="/CryptoAdd" element={<CryptoAddAccount />} />
             <Route path="/cuppon" element={<Cuppons />} />
             <Route path="/RedeemBonus" element={<RedeemBonus />} />
             <Route path="/Bonus" element={<Bonus />} />
@@ -72,6 +75,7 @@ function App() {
             <Route path="/CreateCampaign" element={<CreateCampaign />} />,
             <Route path="/Statistics" element={<Statistics />} />,
             <Route path="/WithdrawFunds" element={<WithdrawFunds />} />,
+            <Route path="/CryptoDeposit" element={<CryptoDeposit />} />,
             <Route path="/Learn" element={<Learn />} />,
             <Route
               path="/WithdrawAffilation"

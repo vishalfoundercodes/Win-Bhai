@@ -323,24 +323,32 @@ const games2 = [
     }
   ];
 
+   const userId = localStorage.getItem("userId");
   return (
     <div className="flex flex-col justify-center bg-grayBg">
       {/* ------------------ Mobile + Tablet ------------------ */}
       <div className="xsm:hidden pt-2 pb-2">
-        <ActionButtons />
+        <div>{userId && (<ActionButtons />)}</div>
+
         <SlidingTabs />
       </div>
 
       <div className="md:px-24 lg:hidden">
-        <GameHeader />
+        <div className=" px-2">
+          <GameHeader />
+        </div>
+
         <div className="md:hidden">
           <GameCategories />
         </div>
         <div className="hidden md:block lg:hidden">
           <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} />
         </div>
-        <SlidingCompany />
-        <div className="py-2 px-2 space-y-4">
+        <div className="flex px-3">
+          <SlidingCompany />
+        </div>
+
+        <div className="py-2 px-3 space-y-4">
           <GameSection
             title="Hot Games"
             icon={
@@ -380,7 +388,7 @@ const games2 = [
             onSeeAll={() => alert("See All clicked")}
           />
 
-          <div className="w-full h-36 bg-[#9c9999] flex items-center justify-center rounded-[12px] ">
+          <div className="w-full h-36 bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
             <span className="text-gray-400 text-sm font-medium">
               {/* {game.name} */}
             </span>

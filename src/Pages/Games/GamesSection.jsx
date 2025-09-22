@@ -151,7 +151,7 @@ const GameSection = ({ title, games, icon }) => {
         id={title + "-row"}
         className={`transition-all duration-500 ease-in-out ${
           expanded
-            ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
+            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
             : "flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px]"
         }`}
       >
@@ -159,7 +159,7 @@ const GameSection = ({ title, games, icon }) => {
           <div
             key={game.id}
             className={`${
-              expanded ? "w-full h-[150px]" : "min-w-[120px] h-[150px] "
+              expanded ? "w-full h-[150px]" : "min-w-[100px] h-[120px] "
             } rounded-[12px] overflow-hidden cursor-pointer`}
             onClick={() => navigate(game.route || "#")}
           >
@@ -167,7 +167,7 @@ const GameSection = ({ title, games, icon }) => {
               <img
                 src={game.image}
                 alt={game.name}
-                className="w-full h-full object-cover rounded-[12px]"
+                className="w-full h-full object-cover rounded-[8px]"
               />
             ) : (
               // Placeholder box when no image

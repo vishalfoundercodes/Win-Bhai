@@ -31,14 +31,20 @@ export default function SignUp() {
          const [selected, setSelected] = useState(countries[0]);
   return (
     <div
-      className=" w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative "
-      style={{ backgroundImage: `url(${signupbg})` }}
+      className=" w-full min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center relative "
+      style={{
+        backgroundImage: `url(${signupbg})`,
+        fontFamily: "Roboto",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover", // or "contain", depending on the effect you want
+        backgroundPosition: "center",
+      }}
     >
       {/* Background overlay with blur */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0 " />
+      <div className="absolute inset-0 bg-black/40 z-0 " />
 
       {/* Form Container */}
-      <div className="relative z-10 w-80 xxs:w-96 max-w-[448px] mt-10 mb-4  bg-white rounded-xl shadow-lg px-4 py-1 xxs:p-6 sm:pt-0 md:mt-10 md:mb-10">
+      <div className="relative z-10 w-80 xxs:w-96 max-w-[448px]  bg-white rounded-xl shadow-lg px-4 py-1 xxs:p-6 sm:pt-0 md:mt-10 mt-10 mb-4  md:mb-10">
         {/* Logo */}
         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md p-0">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
@@ -207,11 +213,12 @@ export default function SignUp() {
             <div className="relative">
               <input
                 //   type="password"
-                type={showNewPassword ? "text" : "password"}
+                // type={showNewPassword ? "text" : "password"}
+                type="text"
                 placeholder="Enter Password"
                 className="w-full px-4 py-2 border  rounded-md text-ssm bg-inputBoxBg text-inputText border-inputBorder"
               />
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setShowNewPassword(!showNewPassword)}
                 aria-label="Toggle Password Visibility"
@@ -261,7 +268,7 @@ export default function SignUp() {
                     />
                   </svg>
                 )}
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -280,11 +287,12 @@ export default function SignUp() {
             <div className="relative">
               <input
                 //   type="password"
-                type={showConfirmPassword ? "text" : "password"}
+                // type={showConfirmPassword ? "text" : "password"}
+                type="text"
                 placeholder="Enter Password"
                 className="w-full px-4 py-2 border  rounded-md text-ssm bg-inputBoxBg text-inputText border-inputBorder"
               />
-              <button
+              {/* <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 aria-label="Toggle Password Visibility"
@@ -334,7 +342,7 @@ export default function SignUp() {
                     />
                   </svg>
                 )}
-              </button>
+              </button> */}
             </div>
           </div>
 

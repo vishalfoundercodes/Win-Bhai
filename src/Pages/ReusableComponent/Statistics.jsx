@@ -10,7 +10,7 @@ export default function Statistics() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-3xl mx-auto px-4 py-6">
+      <div className="relative z-1 max-w-3xl mx-auto px-4 py-6">
         {/* Header Section */}
         <div className="flex flex-col justify-between  mb-6 gap-2">
           <h2 className="text-white font-medium text-sm"
@@ -47,7 +47,7 @@ export default function Statistics() {
 
         {/* Table */}
         {/* Table Wrapper */}
-        <div className="bg-white rounded-lg shadow p-2 overflow-x-auto hide-scrollbar">
+        <div className="bg-white rounded-lg shadow p-2 overflow-x-auto hide-scrollbar z-1">
           <table className="w-full min-w-max text-left border-collapse">
             <thead>
               <tr className="border-b border-lightBorder text-ssm font-semibold text-gray-600 whitespace-nowrap">
@@ -209,21 +209,8 @@ export default function Statistics() {
                 </td>
                 <td className="py-2 px-2">0</td>
               </tr>
-              <tr className="">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-              </tr>
+  
+            
              
             </tbody>
           </table>

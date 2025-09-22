@@ -32,9 +32,9 @@ export default function ForgetUserName() {
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
-      style={{ backgroundImage: `url(${signupbg})`, fontFamily:"Inter" }}
+      style={{ backgroundImage: `url(${signupbg})`, fontFamily: "Inter" }}
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0" />
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
       <div className="relative z-10 w-80 sm:w-96 max-w-[448px] bg-white rounded-2xl shadow-lg px-6 py-4 pt-3">
         <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md">
@@ -45,7 +45,7 @@ export default function ForgetUserName() {
           ×
         </div>
 
-        <form className="space-y-4 mt-4">
+        <form className="space-y-4 mt-4 mb-2">
           {/* Phone Number */}
           {/* Phone Number */}
           <div className="flex mt-2 gap-2">

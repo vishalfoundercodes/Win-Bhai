@@ -509,7 +509,7 @@ naviagte(`/game/${id}`);
 
   }
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar px-2">
+    <div className="w-full overflow-x-auto hide-scrollbar px-4">
       <div className="flex gap-2 min-w-max">
         {categories.map((cat) => {
           const IconComp = cat.icon;

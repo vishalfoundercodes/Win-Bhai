@@ -48,7 +48,7 @@ const WingoChart = ({ handlehistorybox, gameHistoryData }) => {
     return (
       <div key={item?.games_no} className="w-full flex items-center justify-between relative">
         <div className="w-[35%] flex justify-start text-center">
-          <p className="text-xsm">{item?.games_no}</p>
+          <p className="text-sm">{item?.games_no}</p>
         </div>
         <div className="flex gap-1 w-[65%] justify-end px-1 h-12 items-center">
           {["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].map((num, numIndex) => {
@@ -124,9 +124,13 @@ const WingoChart = ({ handlehistorybox, gameHistoryData }) => {
       <svg className="absolute mt-48 left-[42vw] xsm:left-[37%] h-full w-full pointer-events-none">
         {renderLines()}
       </svg>
-      <div className="flex w-full bg-redLight rounded-t-lg py-2 font-semibold">
-        <p className="text-xsm w-[35%] flex justify-center items-center">Period</p>
-        <p className="text-xsm w-[65%] flex justify-center items-center">Number</p>
+      <div className="flex w-full bg-[#3A3947] rounded-t-lg py-2 font-semibold">
+        <p className="text-xsm w-[35%] flex justify-center items-center">
+          Period
+        </p>
+        <p className="text-xsm w-[65%] flex justify-center items-center">
+          Number
+        </p>
       </div>
       <div className="text-xs xsm:text-xsm w-full bg-customdarkBlue text-white py-3 px-2">
         <div className="h-36">
@@ -134,76 +138,176 @@ const WingoChart = ({ handlehistorybox, gameHistoryData }) => {
           <div className="flex items-center justify-between mt-1">
             <div className="text-nowrap">Winning number</div>
             <div className="flex items-center gap-0.5">
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">0</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">1</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">2</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">3</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">4</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">5</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">6</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">7</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">8</p>
-              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">9</p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                0
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                1
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                2
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                3
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                4
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                5
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                6
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                7
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                8
+              </p>
+              <p className="text-customred border-[1px] rounded-full w-5 h-5 flex items-center justify-center border-customred">
+                9
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-between mt-1">
             <div>Missing</div>
             <div className="flex items-center gap-0.5 text-[#9da7b3]">
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">5</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">13</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">0</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">14</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">4</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">23</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">3</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">1</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">7</p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                5
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                13
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                0
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                14
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                4
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                23
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                3
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                1
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                7
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-between mt-1">
             <div>Avg missing</div>
             <div className="flex items-center gap-0.5 text-[#9da7b3]">
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">9</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">5</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">8</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">11</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">10</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">10</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">13</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">11</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">7</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">5</p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                9
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                5
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                8
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                11
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                10
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                10
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                13
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                11
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                7
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                5
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-between mt-1">
             <div>Frequency</div>
             <div className="flex items-center gap-0.5 text-[#9da7b3]">
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">9</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">19</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">11</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">7</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">10</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">9</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">8</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">8</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">13</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">6</p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                9
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                19
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                11
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                7
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                10
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                9
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                8
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                8
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                13
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                6
+              </p>
             </div>
           </div>
           <div className="flex items-center justify-between mt-1">
             <div>Max consecutive</div>
             <div className="flex items-center gap-0.5 text-[#9da7b3]">
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">1</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">3</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">1</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">1</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">3</p>
-              <p className="rounded-full w-5 h-5 flex items-center justify-center">2</p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                1
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                3
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                1
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                1
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                3
+              </p>
+              <p className="rounded-full w-5 h-5 flex items-center justify-center">
+                2
+              </p>
             </div>
           </div>
         </div>

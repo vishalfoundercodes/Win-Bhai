@@ -131,7 +131,7 @@ export default function GameCategories() {
 
   return (
     <div className="overflow-x-auto hide-scrollbar">
-      <div className="flex flex-col space-y-2 min-w-max p-2">
+      <div className="flex flex-col space-y-2 min-w-max px-4 py-2">
         {renderRow(firstRow)}
         {renderRow(secondRow)}
       </div>

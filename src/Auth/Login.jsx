@@ -2,20 +2,51 @@ import React,{useState} from "react";
 import signupbg from "../assets/Images/signup-bg.jpg";
 import logo from "../assets/logo-winbhai.png";
 import { useNavigate } from "react-router-dom";
+import indiaFlag from "../assets/Country/india.png";
+import bangladeshFlag from "../assets/Country/bangladesh.png";
+import canadaFlag from "../assets/Country/canada.png";
+import nepalFlag from "../assets/Country/nepal.png";
+import pakistanFlag from "../assets/Country/pakistan.png";
+import srilankaFlag from "../assets/Country/srilanka.png";
+import uaeFlag from "../assets/Country/uae.png";
+import ukFlag from "../assets/Country/uk.png";
+import usFlag from "../assets/Country/us.png";
 export default function Login() {
     const navigate=useNavigate()
     const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showUserName, setShowUserName] = useState(false);
      const [isOpen, setIsOpen] = useState(false);
      const [selected, setSelected] = useState("Username");
 
-     const options = ["Username", "Id"];
+     const options = ["Username", " Phone No."];
+        const [countryCode, setCountryCode] = useState("+91");
+            const countries = [
+              { code: "+91", name: "INDIA", flag: indiaFlag },
+              { code: "+971", name: "UAE", flag: uaeFlag },
+              { code: "+92", name: "PAKISTAN", flag: pakistanFlag },
+              { code: "+977", name: "NEPAL", flag: nepalFlag },
+              { code: "+880", name: "BANGLADESH", flag: bangladeshFlag },
+              { code: "+94", name: "SRILANKA", flag: srilankaFlag },
+              { code: "+1", name: "UNITED STATES", flag: usFlag },
+              { code: "+1", name: "CANADA", flag: canadaFlag },
+              { code: "+44", name: "UNITED KINGDOM", flag: ukFlag },
+            ];
+              const [isOpenCountry, setIsOpenCountry] = useState(false);
+              const [selectedCountry, setSelectedcountry] = useState(countries[0]);
+    
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
-      style={{ backgroundImage: `url(${signupbg})` }}
+      style={{
+        backgroundImage: `url(${signupbg})`,
+        fontFamily: "Roboto",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover", // or "contain", depending on the effect you want
+        backgroundPosition: "center",
+      }}
     >
       {/* Background overlay with blur */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-0" />
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
       {/* Form Container */}
       <div className="relative z-10 w-80 sm:w-96 max-w-[448px] bg-white rounded-xl shadow-lg p-6 pt-6 xxs:pt-12 sm:pt-14">
@@ -38,7 +69,7 @@ export default function Login() {
             <div className="sm:w-1/3">
               <label
                 htmlFor="loginWith"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-black2 mb-1"
                 style={{
                   fontFamily: "Roboto, sans-serif",
                   fontWeight: 500,
@@ -54,19 +85,16 @@ export default function Login() {
               >
                 <span>{selected}</span>
                 <svg
-                  className={`w-4 h-4 transform transition-transform ${
+                  width="10"
+                  height="5"
+                  viewBox="0 0 10 5"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`transform transition-transform ${
                     isOpen ? "rotate-180" : ""
                   }`}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
+                  <path d="M0 0L5 5L10 0H0Z" fill="#222222" />
                 </svg>
               </button>
               {/* Dropdown */}
@@ -94,33 +122,192 @@ export default function Login() {
               )}
             </div>
 
-            {/* User ID */}
-            <div className="sm:w-2/3 mt-4 sm:mt-0">
+            {/* Phone Number with Get OTP - Styled Like Image */}
+            {selected !== "Username" && (
+              <div className="flex mt-2 gap-2">
+                {/* Country Code Box */}
+                <div>
+                  <label
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "Roboto, sans-serif",
+                      fontWeight: 500,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Country
+                  </label>
+                  <div
+                    onClick={() => setIsOpenCountry(!isOpenCountry)}
+                    className=" border-2 border-gray-300 rounded-xl px-1 py-2 flex items-center justify-between cursor-pointer bg-inputBoxBg"
+                  >
+                    <span className="text-black font-medium bg-inputBoxBg">
+                      {selectedCountry.code}
+                    </span>
+                    <span className="text-sm">
+                      <svg
+                        width="13"
+                        height="8"
+                        viewBox="0 0 13 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11.91 0.433066L12.97 1.49407L7.193 7.27307C7.10043 7.36622 6.99036 7.44015 6.86911 7.4906C6.74786 7.54105 6.61783 7.56702 6.4865 7.56702C6.35517 7.56702 6.22514 7.54105 6.10389 7.4906C5.98264 7.44015 5.87257 7.36622 5.78 7.27307L0 1.49407L1.06 0.434066L6.485 5.85807L11.91 0.433066Z"
+                          fill="#8F9398"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+
+                  {/* Dropdown */}
+                  {isOpenCountry && (
+                    <div className="absolute mt-2 left-0 right-0 mx-[16px] z-50">
+                      <div className="px-3 py-2 max-h-80 bg-white border border-gray-300 rounded-[6px] shadow-lg overflow-y-auto  hide-scrollbar">
+                        {countries.map((country, idx) => (
+                          <div
+                            key={idx}
+                            className={`flex items-center justify-between px-4 py-3 cursor-pointer rounded-[6px]
+            hover:bg-gray-100 ${
+              selectedCountry.code === country.code ? "bg-red-100" : ""
+            }`}
+                            onClick={() => {
+                              setSelectedcountry(country);
+                              setIsOpenCountry(false);
+                            }}
+                          >
+                            {/* Left side: flag + name */}
+                            <div className="flex items-center gap-3">
+                              <img src={country.flag} alt="" className="w-5" />
+                              <span className="text-inputText font-medium">
+                                {country.name}
+                              </span>
+                            </div>
+
+                            {/* Right side: code */}
+                            <span className="text-inputText font-medium">
+                              {country.code}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <label
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "Roboto, sans-serif",
+                      fontWeight: 500,
+                      fontSize: "18px",
+                    }}
+                  >
+                    Phone Number
+                  </label>
+                  <div className="relative w-full">
+                    {/* Input Field */}
+                    <input
+                      type="text"
+                      placeholder="Phone Number"
+                      className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                    />
+
+                    {/* OTP Button */}
+                    {/* <button
+                      type="button"
+                      className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600"
+                    >
+                      Get OTP
+                    </button> */}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Username */}
+          {selected == "Username" && (
+            <div>
               <label
-                htmlFor="userId"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                htmlFor="username"
+                className="block text-sm font-medium text-black2 mb-1"
                 style={{
                   fontFamily: "Roboto, sans-serif",
                   fontWeight: 500,
                   fontSize: "18px",
                 }}
               >
-                User ID
+                Username
               </label>
-              <input
-                id="userId"
-                type="text"
-                placeholder="Enter Username"
-                className="w-full px-4 py-2 border rounded-md bg-inputBoxBg text-inputText border-inputBorder text-sm focus:outline-none "
-              />
+              <div className="relative">
+                <input
+                  id="username"
+                  // type="password"
+                  type={showUserName ? "text" : "password"}
+                  placeholder="Enter username"
+                  className="w-full px-4 py-2 border rounded-md bg-inputBoxBg text-inputText border-inputBorder text-sm focus:outline-none "
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowUserName(!showUserName)}
+                  aria-label="Toggle Password Visibility"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                >
+                  {showUserName ? (
+                    // Eye off icon
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a10.05 10.05 0 012.79-4.246M6.15 6.144A9.964 9.964 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.969 9.969 0 01-4.393 5.206M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 3l18 18"
+                      />
+                    </svg>
+                  ) : (
+                    // Eye icon (show)
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
             </div>
-          </div>
-
+          )}
           {/* Password */}
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 mb-1"
+              className="block text-sm font-medium text-black2 mb-1"
               style={{
                 fontFamily: "Roboto, sans-serif",
                 fontWeight: 500,

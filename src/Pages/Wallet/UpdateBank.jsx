@@ -8,22 +8,27 @@ const [selectedPayment, setSelectedPayment] = useState(null);
   const headingText =
     mode === "add" ? "Add Bank Account" : "Update Bank Account";
   return (
-    <div className=" mx-auto  p-6 rounded-md shadow">
+    <div
+      className="min-h-screen  p-6 rounded-md "
+      style={{
+        fontFamily: "Roboto",
+      }}
+    >
       {/* Title */}
-      <h2 className="text-xl font-semibold text-center mb-6 text-gray-800">
-         {headingText}
+      <h2 className="text-[22px] font-semibold text-center mb-6 text-gray-800">
+        {headingText}
       </h2>
 
       <form className="space-y-4">
         {/* Full Name */}
         <div>
           <label className="block text-sm font-medium text-red mb-1">
-            Full Name
+            Account Holder Name
           </label>
           <input
             type="text"
             placeholder="Enter account holder’s name"
-            className="w-full border bg-inputBoxBg border-grayBorder placeholder:text-sm  text-lightGray rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-grayBorder"
+            className="w-full border bg-white  placeholder:text-sm  text-lightGray rounded-md px-3 py-2 text-sm "
           />
         </div>
 
@@ -35,7 +40,7 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           <input
             type="text"
             placeholder="Enter bank account number"
-            className="w-full border bg-inputBoxBg border-grayBorder text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-grayBorder"
+            className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm "
           />
         </div>
 
@@ -47,7 +52,7 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           <input
             type="text"
             placeholder="Re-enter bank account number"
-            className="w-full border bg-inputBoxBg border-grayBorder text-lightGray rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-grayBorder placeholder:text-sm"
+            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
           />
         </div>
 
@@ -59,20 +64,24 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           <input
             type="text"
             placeholder="Enter IFSC code"
-            className="w-full border bg-inputBoxBg border-grayBorder text-lightGray rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-grayBorder placeholder:text-sm "
+            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm  placeholder:text-sm "
           />
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-red text-white font-medium py-3 rounded-md hover:bg-red transition"
+          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
+          style={{
+            fontFamily: "Roboto",
+            fontSize: "13.5px",
+          }}
         >
           SUBMIT
         </button>
       </form>
       {/* Payment Options */}
-      <div className=" px-4 py-4 bg-white  rounded-[8px] shadow mt-5">
+      {/* <div className=" px-4 py-4 bg-white  rounded-[8px] shadow mt-5">
         <h2 className="text-gray-800 font-semibold mb-4">Withdraw Options :</h2>
         <div className="grid grid-cols-2 gap-6">
           <button
@@ -545,7 +554,7 @@ const [selectedPayment, setSelectedPayment] = useState(null);
             <span className="text-ssm font-medium">Indianpay Payment</span>
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

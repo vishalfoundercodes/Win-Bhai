@@ -63,7 +63,9 @@ export default function Footer() {
         </div>
 
         {/* Home (now inside flex flow, lifted with negative margin) */}
-        <div className="flex flex-col items-center -mt-6">
+        <div className="flex flex-col items-center -mt-6"
+        onClick={()=>navigate("/")}
+        >
           <div className="bg-white rounded-full p-3 shadow-lg">
             <Home className="w-10 h-10 text-[#C10932]" />
           </div>
