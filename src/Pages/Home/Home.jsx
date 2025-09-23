@@ -389,7 +389,7 @@ const games2 = [
             onSeeAll={() => alert("See All clicked")}
           />
 
-          <div className="h-[170px] xsm:h-full w-full' bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
+          <div className="h-[195px] xsm:h-full w-full' bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
             <span className="text-gray-400 text-sm font-medium">
               {/* {game.name} */}
             </span>

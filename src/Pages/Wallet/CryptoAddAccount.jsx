@@ -109,7 +109,7 @@ export default function CryptoAddAccount() {
             className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm "
             style={{
               fontFamily: "Roboto",
-              fontStyle:"normal"
+              fontStyle: "normal",
             }}
           />
         </div>
@@ -119,14 +119,22 @@ export default function CryptoAddAccount() {
           <label className="block text-sm font-medium text-red mb-1">
             Phone number
           </label>
-          <input
-            type="text"
-            placeholder="Enter your mobile number"
-            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
+          <div
+            className="flex gap-2"
             style={{
               fontFamily: "Roboto",
             }}
-          />
+          >
+            <input
+              type="text"
+              placeholder="Enter your mobile number"
+              className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
+            />
+            <button className="bg-red text-white whitespace-nowrap px-2 rounded-md text-sm">
+              
+              Send OTP
+            </button>
+          </div>
         </div>
 
         {/* IFSC Code */}

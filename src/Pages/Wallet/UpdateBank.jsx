@@ -9,7 +9,7 @@ const [selectedPayment, setSelectedPayment] = useState(null);
     mode === "add" ? "Add Bank Account" : "Update Bank Account";
   return (
     <div
-      className="min-h-screen  p-6 rounded-md "
+      className="min-h-screen px-5 py-6 rounded-md "
       style={{
         fontFamily: "Roboto",
       }}

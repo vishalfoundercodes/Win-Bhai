@@ -371,7 +371,7 @@ const GameSection = ({ title, games, icon }) => {
     <div
       id={rowId}
       className={`transition-all duration-500 ease-in-out ${
-        isSecondRow && !expanded ? "mt-2" : ""
+        isSecondRow && !expanded ? "mt-4" : ""
       } hide-scrollbar ${
         expanded
           ? "" // No specific class for expanded state, items will flow naturally
@@ -381,7 +381,7 @@ const GameSection = ({ title, games, icon }) => {
       {items.map((game) => (
         <div
           key={game.id}
-          className="min-w-[100px] h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
+          className="min-w-[105px] h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
           onClick={() => navigate(game.route || "#")}
         >
           {game.image ? (
@@ -399,7 +399,7 @@ const GameSection = ({ title, games, icon }) => {
   );
 
   return (
-    <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-2">
+    <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-4">
       {/* Header */}
       <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[8px] shadow-md mb-3">
         <div className="flex items-center gap-2">
@@ -412,7 +412,7 @@ const GameSection = ({ title, games, icon }) => {
             onClick={() => setExpanded(!expanded)}
             className="text-red font-medium text-ssm"
           >
-            {expanded ? "Collapse" : "See All"}
+            {expanded ? "See Less" : "See All"}
           </button>
 
           {!expanded && (
@@ -426,6 +426,22 @@ const GameSection = ({ title, games, icon }) => {
               <button
                 onClick={() => scrollRow(`${title}-row-1`, "right")}
                 className="p-1 border border-red rounded-[8px] shadow text-red"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+          {expanded && (
+            <>
+              <button
+                onClick={() => scrollRow(`${title}-row-1`, "left")}
+                className="p-1 border border-gray rounded-[8px] shadow text-gray"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={() => scrollRow(`${title}-row-1`, "right")}
+                className="p-1 border border-gray rounded-[8px] shadow text-gray"
               >
                 <ChevronRight size={18} />
               </button>

@@ -13,14 +13,20 @@ export default function Statistics() {
       <div className="relative z-1 max-w-3xl mx-auto px-4 py-6">
         {/* Header Section */}
         <div className="flex flex-col justify-between  mb-6 gap-2">
-          <h2 className="text-white font-medium text-sm"
-          style={{
-            fontFamily:"Roboto"
-          }}
-          >Statistics</h2>
+          <h2
+            className="text-white font-medium text-sm"
+            style={{
+              fontFamily: "Roboto",
+            }}
+          >
+            Statistics
+          </h2>
           <div className="flex items-center gap-2">
             {/* Dropdown */}
-            <select className="px-3 py-1 rounded-md border border-gray-300 flex-1 bg-white appearance-gray">
+            <select
+              className="px-3 py-1 rounded-md border border-gray-300 flex-1 bg-white appearance-gray focus:outline-none
+"
+            >
               <option></option>
               <option>All Time</option>
               <option>Period</option>
@@ -47,171 +53,92 @@ export default function Statistics() {
 
         {/* Table */}
         {/* Table Wrapper */}
-        <div className="bg-white rounded-lg shadow p-2 overflow-x-auto hide-scrollbar z-1">
+        <div
+          className=" overflow-x-auto hide-scrollbar z-1"
+          style={{
+            fontFamily: "Roboto",
+            fontSize: "16px",
+            fontWeight: 200,
+          }}
+        >
           <table className="w-full min-w-max text-left border-collapse">
-            <thead>
-              <tr className="border-b border-lightBorder text-ssm font-semibold text-gray-600 whitespace-nowrap">
-                <th className="py-2 px-2">Date</th>
-
-                {/* Short Divider */}
-                <td className="px-1">
-                  <div className="h-5 w-px bg-lightBorder mx-auto"></div>
-                </td>
-
-                <th className="py-2 px-2">Registration</th>
-
-                <td className="px-1">
-                  <div className="h-5 w-px bg-lightBorder mx-auto"></div>
-                </td>
-
-                <th className="py-2 px-2">First Deposit</th>
-
-                <td className="px-1">
-                  <div className="h-5 w-px bg-lightBorder mx-auto"></div>
-                </td>
-
-                <th className="py-2 px-2">Total</th>
+            {/* Header */}
+            <thead className="bg-red text-white">
+              <tr>
+                <th className="py-2 px-2 border-r border-b border-lightBorder">
+                  Date
+                </th>
+                <th className="py-2 px-2  border-r border-b border-lightBorder">
+                  Registration
+                </th>
+                <th className="py-2 px-2  border-r border-b border-lightBorder">
+                  First Deposit
+                </th>
+                <th className="py-2 px-2 border-b border-lightBorder">
+                  Total Deposit
+                </th>
               </tr>
             </thead>
-            <tbody className="text-ssm font-medium text-center text-darkGray">
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">All Time</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+
+            {/* Body */}
+            <tbody className="text-ssm font-medium text-center text-darkGray bg-white">
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  All Time
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">Period</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  Period
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  9/10/2025
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  9/10/2025
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  9/10/2025
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  9/10/2025
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
+              <tr>
+                <td className="py-2 px-2 border border-lightBorder text-start">
+                  9/10/2025
                 </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
+                <td className="py-2 px-2 border border-lightBorder">0</td>
               </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-              </tr>
-              <tr className="border-b border-lightBorder">
-                <td className="py-2 px-2">9/10/2025</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-                <td className="px-1">
-                  <div className="h-5 w-px  mx-auto"></div>
-                </td>
-                <td className="py-2 px-2">0</td>
-              </tr>
-  
-            
-             
             </tbody>
           </table>
         </div>

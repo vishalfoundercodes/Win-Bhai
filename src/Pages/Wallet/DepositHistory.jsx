@@ -194,10 +194,11 @@ const handleCopy = (id) => {
 };
 
   return (
-    <div className="w-full max-w-m mx-auto min-h-screen px-4 py-2"
-    style={{
-      fontFamily:"Inter"
-    }}
+    <div
+      className="w-full max-w-m mx-auto min-h-screen px-4 py-2"
+      style={{
+        fontFamily: "Inter",
+      }}
     >
       {/* Header */}
       <div className="flex justify-between items-center pb-0 mb-0">
@@ -257,7 +258,7 @@ const handleCopy = (id) => {
             Just For Today
           </button>
           <button className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm">
-            From Yesturday
+            From Yesterday
           </button>
         </div>
         <button className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm">
@@ -350,8 +351,9 @@ const handleCopy = (id) => {
               >
                 {deposit.status}
               </span>
-              <p className="text-red-600 font-bold">
-                ₹{deposit.amount.toLocaleString()}
+              <p className="text-black2 font-bold">
+                <span className="text-red">₹</span>{" "}
+                {deposit.amount.toLocaleString()}
               </p>
             </div>
           </div>

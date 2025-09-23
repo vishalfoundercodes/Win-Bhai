@@ -68,10 +68,12 @@ export default function BettingTable() {
                 key={index}
                 className="border-b border-grayBorder last:border-none whitespace-nowrap text-darkGray"
               >
-                <td className="px-3 py-2">{row.betId}</td>
-                <td className="px-3 py-2">{row.title}</td>
-                <td className="px-3 py-2">{row.rate}</td>
-                <td className="px-3 py-2">{row.stake}</td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.betId}
+                </td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.title}</td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.rate}</td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.stake}</td>
                 <td className="px-3 py-2 text-green-600 font-medium">
                   {row.profitLoss.toFixed(3)}
                 </td>

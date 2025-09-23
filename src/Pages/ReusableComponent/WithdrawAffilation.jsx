@@ -120,7 +120,7 @@ export default function WithdrawAffilation() {
                     onClick={() => navigate("/WithdrawFunds")}
                   >
                     <CreditCard className="text-white w-5 h-5" />
-                    Withdraw funds
+                    Withdraw Funds
                   </button>
                 </div>
               </div>

@@ -14,22 +14,24 @@ const AffiliateModal = ({ isOpen, setIsOpen }) => {
       <div className="bg-white w-full  mx-2 p-4 rounded-xl shadow-lg relative">
         <div className="">
           {/* Close Button */}
-          <button
-            className="absolute top-2 right-4 text-[32px] text-black2"
-            onClick={() => setIsOpen(false)}
-          >
-            &times;
-          </button>
+          <div className="px-3">
+            <button
+              className="absolute top-2 right-6 text-[32px] text-black2"
+              onClick={() => setIsOpen(false)}
+            >
+              &times;
+            </button>
 
-          <h2
-            className="text-lg font-semibold text-gray-900 mb-4"
-            style={{
-              fontFamily: "Inter",
-            }}
-          >
-            Add Affiliate
-          </h2>
-            
+            <h2
+              className="text-lg font-semibold text-gray-900 mb-4 "
+              style={{
+                fontFamily: "Inter",
+              }}
+            >
+              Add Affiliate
+            </h2>
+          </div>
+
           <div className="space-y-4 border border-lightBorder p-4 rounded-[8px] m-2">
             {/* Campaign Name */}
             <div>
@@ -70,7 +72,7 @@ const AffiliateModal = ({ isOpen, setIsOpen }) => {
 
             {/* Buttons */}
             <div className="flex flex-col gap-3 mt-6">
-              <button className="w-full bg-gray-400 text-white py-2 rounded-md">
+              <button className="w-full bg-lightgrayBg2 text-white py-2 rounded-md">
                 Reset
               </button>
               <button className="w-full bg-red text-white py-2 rounded-md">

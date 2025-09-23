@@ -37,6 +37,19 @@ export default function Pagination({
           {page}
         </button>
       ))}
+      {pages.map((page) => (
+        <button
+          key={page}
+          onClick={() => onPageChange(page)}
+          className={`px-3 py-1 rounded-md border ${
+            page === currentPage
+              ? "bg-red text-white"
+              : "bg-white text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          {page +1}
+        </button>
+      ))}
 
       {/* Next button */}
       <button

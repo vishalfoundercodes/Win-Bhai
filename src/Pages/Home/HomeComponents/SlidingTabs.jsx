@@ -533,7 +533,7 @@ naviagte(`/game/${id}`);
             >
               {/* ✅ Render icon only if exists */}
               {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap text-[12px] font-normal">
+              <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal">
                 {cat.label}
               </span>
             </button>

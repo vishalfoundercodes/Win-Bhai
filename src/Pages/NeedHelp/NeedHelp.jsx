@@ -7,7 +7,7 @@ export default function HelpPage() {
       <h2 className="text-xsm font-semibold text-gray-900 text-center">
         Need Help? Chat With Us
       </h2>
-      <p className="text-sm text-gray-600 text-center mt-1">
+      <p className="text-ssm text-gray-600 text-center mt-1">
         Choose your favorite platform to connect instantly
       </p>
 

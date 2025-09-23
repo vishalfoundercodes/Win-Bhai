@@ -6,8 +6,29 @@ export default function Learn() {
   const [openDropdown, setOpenDropdown] = useState(null); // track which dropdown is open
   const ref = useRef(null);
 
-  const categories = ["All", "Math", "Science", "History", "Programming"];
-  const languages = ["English", "Hindi", "Marathi", "Tamil"];
+  const categories = [
+    "All",
+    "Casino",
+    "Games",
+    "Sports",
+    "Affiliation",
+    "How To Play",
+    "Deposit",
+    "Withdrawal",
+    "Bonus",
+    "Learn To Play",
+    "Basic Guide",
+    "Others",
+  ];
+  const languages = [
+    "English",
+    "Hindi",
+    "Bangla",
+    "Tamil",
+    "Marathi",
+    "Telugu",
+    "Nepali",
+  ];
 
   // close dropdown on outside click
   useEffect(() => {
@@ -22,7 +43,7 @@ export default function Learn() {
 
   return (
     <div
-      className="min-h-screen bg-gray-200 flex flex-col items-center p-6"
+      className="min-h-screen bg-gray-200 flex flex-col items-center px-6 py-6"
       style={{
         fontFamily: "Roboto",
       }}
@@ -70,7 +91,7 @@ export default function Learn() {
           </div>
 
           {openDropdown === "category" && (
-            <div className="absolute mt-1 w-full bg-white  rounded-md shadow-lg z-10">
+            <div className="absolute mt-1 w-full bg-white  rounded-md shadow-lg z-1">
               {categories.map((cat, i) => (
                 <div
                   key={i}

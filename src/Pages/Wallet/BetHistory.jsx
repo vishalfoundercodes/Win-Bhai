@@ -23,7 +23,7 @@ export default function BetHistory() {
         <SlidingTabs />
       </div>
       <div
-        className="w-full bg-red text-white p-2 font-medium text-sm"
+        className="w-full bg-red text-white px-4 py-2 font-medium text-sm"
         style={{
           fontFamily: "Roboto",
           fontWeight: "400",

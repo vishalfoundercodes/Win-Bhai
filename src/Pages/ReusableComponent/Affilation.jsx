@@ -103,7 +103,15 @@ export default function AffiliatePage() {
           </div>
 
           {/* Stats */}
-          <div className="space-y-2 text-ssm font-semibold text-gray-700 ">
+          <div
+            className="space-y-2 text-vsm  text-[#525252] "
+            style={{
+              fontFamily: "Roboto",
+              fontWeight: 600, // Should be a number or valid keyword like "normal" or "bold"
+              fontSize: "16px",
+              fontStyle: "normal", // Or "italic", "oblique", etc.
+            }}
+          >
             <div className="flex justify-between border-b pb-1 border-[#DBDBDB]">
               <span>Transition:</span>
               <span>0</span>
@@ -121,23 +129,19 @@ export default function AffiliatePage() {
               <span>0</span>
             </div>
             <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
-              <span>Ratio on registrations:</span>
+              <span>Link Clicks:</span>
               <span>0</span>
             </div>
             <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
-              <span>Ratio on deposits:</span>
+              <span>Total Deposit:</span>
               <span>0</span>
             </div>
             <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
-              <span>Amount Deposits:</span>
+              <span>Total Withdrawal:</span>
               <span>0</span>
             </div>
             <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
-              <span>Cost Transition:</span>
-              <span>0</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Average player income:</span>
+              <span>Your Commission:</span>
               <span>0</span>
             </div>
           </div>
@@ -176,27 +180,34 @@ export default function AffiliatePage() {
         </div>
 
         {/* Legend Section */}
-        <div className="p-4 flex flex-wrap gap-2 text-xs bg-white rounded-2xl">
-          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-            <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
-            <span>Referrals</span>
-          </span>
-          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-            <span className="w-2 h-2 bg-red rounded-full border-2 border-white"></span>
-            <span>Registrations</span>
-          </span>
-          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-            <span className="w-2 h-2 bg-blue rounded-full border-2 border-white"></span>
-            <span>Income</span>
-          </span>
-          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-            <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
-            <span>First Deposits</span>
-          </span>
-          <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-            <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
-            <span>Amount of Deposits</span>
-          </span>
+        <div className="h-50 bg-white rounded-xl">
+          <div className="p-4 flex flex-wrap gap-2 text-xs">
+            <div className="grid grid-cols-3 gap-2">
+              <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
+                <span>Referrals</span>
+              </span>
+              <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
+                <span>Registrations</span>
+              </span>
+              <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                <span className="w-2 h-2 bg-blue rounded-full border-2 border-white"></span>
+                <span>Income</span>
+              </span>
+            </div>
+
+            <div className="flex w-full justify-between">
+              <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
+                <span>First Deposits</span>
+              </span>
+              <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
+                <span>Amount of Deposits</span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

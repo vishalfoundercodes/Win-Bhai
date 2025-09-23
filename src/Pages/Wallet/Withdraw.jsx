@@ -20,6 +20,7 @@ export default function Withdraw() {
   const navigate = useNavigate()
 
   const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
+  const cryptoAmounts = [500, 2000, 5000, 10000,20000, 30000, 50000, 70000, 100000];
   const [copied, setCopied] = useState("");
 
   const copyToClipboard = (text, label) => {
@@ -50,9 +51,9 @@ export default function Withdraw() {
   ];
 
   return (
-    <div className="min-h-screen  flex justify-center items-start py-6 px-1 ">
-      <div className="w-full px-5 space-y-2">
-        <div className="bg-black text-white rounded-[8px] p-2 text-ssm font-medium">
+    <div className="min-h-screen  flex justify-center items-start py-6 px-0 ">
+      <div className="w-full px-4 space-y-2">
+        <div className="bg-black2 text-white rounded-[8px] p-2 text-ssm font-medium">
           <p>Cashable Amount: 0</p>
         </div>
         {/* Payment Options */}
@@ -603,7 +604,7 @@ export default function Withdraw() {
                     <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
                       {/* Top row (IFSC + Buttons) */}
                       <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-semibold text-gray-800 ml-2">
+                        <p className="text-sm font-semibold text-gray-800 ml-10">
                           {card.ifsc}
                         </p>
                         <div className="flex gap-2">
@@ -629,7 +630,7 @@ export default function Withdraw() {
                       </p>
 
                       {/* Name */}
-                      <p className="font-medium text-gray-800 text-right">
+                      <p className="font-medium text-gray-800 text-right mr-4">
                         {card.name}
                       </p>
                     </div>
@@ -665,7 +666,7 @@ export default function Withdraw() {
                     <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
                       {/* Top row (IFSC + Buttons) */}
                       <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-semibold text-gray-800 ml-2">
+                        <p className="text-sm font-semibold text-gray-800 ml-10">
                           {card.ifsc}
                         </p>
                         <div className="flex gap-2">
@@ -691,7 +692,7 @@ export default function Withdraw() {
                       </p>
 
                       {/* Name */}
-                      <p className="font-medium text-gray-800 text-right">
+                      <p className="font-medium text-gray-800 text-right mr-4">
                         {card.name}
                       </p>
                     </div>
@@ -749,21 +750,39 @@ export default function Withdraw() {
             />
             <span className="text-black font-medium">INR</span>
           </div>
-          <p className="text-ssm text-lightGray mt-1 font-semibold">
-            Min 100 - Max 100000
-          </p>
+          {selectedPayment === "manual" && (
+            <p className="text-ssm text-lightGray mt-1 font-semibold">
+              Min 200 - Max 1000000
+            </p>
+          )}
+          {selectedPayment === "crypto" && (
+            <p className="text-ssm text-lightGray mt-1 font-semibold">
+              Min 500 - Max 1000000
+            </p>
+          )}
 
           {/* Quick Amount Buttons */}
           <div className="grid grid-cols-3 gap-2 mt-3">
-            {quickAmounts.map((val, idx) => (
-              <button
-                key={idx}
-                onClick={() => setAmount(val)}
-                className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
-              >
-                +{val.toLocaleString()}
-              </button>
-            ))}
+            {selectedPayment === "manual" &&
+              quickAmounts.map((val, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setAmount(val)}
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+                >
+                  +{val.toLocaleString()}
+                </button>
+              ))}
+            {selectedPayment === "crypto" &&
+              cryptoAmounts.map((val, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setAmount(val)}
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+                >
+                  +{val.toLocaleString()}
+                </button>
+              ))}
           </div>
         </div>
 
@@ -782,10 +801,12 @@ export default function Withdraw() {
           </label>
         </div> */}
         {/* reminder */}
-        <p className="text-red-600 text-ssm">
-          Reminder: A maximum of 5 withdrawals are allowed per day, With no
-          withdrawals permitted below ₹200.
-        </p>
+        {selectedPayment === "manual" && (
+          <p className="text-red-600 text-ssm">
+            Reminder: A maximum of 5 withdrawals are allowed per day, With no
+            withdrawals permitted below ₹200.
+          </p>
+        )}
         {/* Chat on WhatsApp */}
         {/* <div className="w-full  mt-4 hide-scrollbar">
           <button className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between">

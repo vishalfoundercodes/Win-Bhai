@@ -2,7 +2,7 @@ import React from "react";
 
 export default function PersonalInfo() {
   return (
-    <div className="p-4">
+    <div className="p-4 min-h-screen">
       <form className="space-y-4 bg-white p-6 rounded-2xl">
         {/* User Name */}
         <div>

@@ -185,7 +185,7 @@ const TrendingGames = ({ title, games, icon }) => {
       {gameList.map((game, index) => (
         <div
           key={game.id || index}
-          className={`min-w-[100px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
+          className={`min-w-[105px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
           onClick={() => {
             if (!game.empty) navigate(game.route || "#");
           }}
@@ -225,7 +225,7 @@ const TrendingGames = ({ title, games, icon }) => {
             onClick={() => setExpanded(!expanded)}
             className="text-red font-medium text-ssm"
           >
-            {expanded ? "Collapse" : "See All"}
+            {expanded ? "See Less" : "See All"}
           </button>
 
           {!expanded && (
@@ -239,6 +239,22 @@ const TrendingGames = ({ title, games, icon }) => {
               <button
                 onClick={() => scrollRow(title + "-row-1", "right")}
                 className="p-1 border border-red rounded-[8px] shadow text-red"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+          {expanded && (
+            <>
+              <button
+                onClick={() => scrollRow(title + "-row-1", "left")}
+                className="p-1 border border-gray rounded-[8px] shadow text-gray"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={() => scrollRow(title + "-row-1", "right")}
+                className="p-1 border border-gray rounded-[8px] shadow text-gray"
               >
                 <ChevronRight size={18} />
               </button>

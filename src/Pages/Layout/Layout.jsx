@@ -99,6 +99,12 @@ export default function Layout({ children }) {
     "/changePassword",
     "/cuppon",
     "/RedeemBonus",
+    "/affilation",
+    "/affilationDashboard",
+    "/Statistics",
+    "/WithdrawAffilation",
+    "/updateAccount",
+    "/CryptoAdd",
   ];
   const hideHeaderPaths = [
     "/cuppon",
@@ -149,8 +155,8 @@ export default function Layout({ children }) {
             {/* <Header /> */}
             {children}
             {!shouldHideFooter && (
-              <div className=" sticky bottom-0">
-                <div className="md:hidden">
+              <div className=" sticky bottom-0 z-40">
+                <div className="md:hidden ">
                   {" "}
                   <Footer />
                 </div>
