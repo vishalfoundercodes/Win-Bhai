@@ -36,6 +36,10 @@ import Learn from "./Pages/ReusableComponent/Learn"
 import CryptoAddAccount from "./Pages/Wallet/CryptoAddAccount"
 import CryptoDeposit from "./Pages/Wallet/CryptoDeposit"
 import WithdrawHistory from "./Pages/Wallet/WithdrawHistory"
+import BankWithdraw from "./Pages/ReusableComponent/AffilationWithdraw/BankWithdraw"
+import CryptoWithdraw from "./Pages/ReusableComponent/AffilationWithdraw/CryptoWithdraw";
+import WinbhaiWallet from "./Pages/ReusableComponent/AffilationWithdraw/WinbhaiWallet"
+import WhatsupWithdraw from "./Pages/ReusableComponent/AffilationWithdraw/WhatsupWithdraw"
 function App() {
 
 
@@ -71,6 +75,10 @@ function App() {
             <Route path="/lottery/wingo" element={<WinGo />} />,
             <Route path="/chickenRoadGame" element={<ChickenRoadLayout />} />,
             <Route path="/affilationDashboard" element={<AffiliatePage />} />,
+            <Route path="/BankWithdraw" element={<BankWithdraw />} />,
+            <Route path="/CryptoWithdraw" element={<CryptoWithdraw />} />,
+            <Route path="/WhatsupWithdraw" element={<WhatsupWithdraw />} />,
+            <Route path="/WinbhaiWallet" element={<WinbhaiWallet />} />,
             <Route path="/affilation" element={<ProfilePage2 />} />,
             <Route path="/ForgetUserName" element={<ForgetUserName />} />,
             <Route path="/PendingBets" element={<PendingBets />} />,

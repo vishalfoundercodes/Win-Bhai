@@ -110,7 +110,7 @@ export default function GameCategories() {
       {row.map((cat, i) => (
         <div
           key={i}
-          className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-44 xxs:w-48  flex-shrink-0"
+          className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-38 xsm4:w-40 xsm3:w-42 xxs:w-48  flex-shrink-0"
         >
           {/* Background image */}
           <img

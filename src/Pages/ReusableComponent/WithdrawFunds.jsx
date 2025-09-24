@@ -120,16 +120,18 @@ export default function WithdrawFunds() {
             className="text-gray-800 font-medium"
             onClick={() => {
               if (option.label === "Winbhai Wallet") {
-                setShowModal(true);
+                 navigate("/WinbhaiWallet");
+                // setShowModal(true);
               }
               if (option.label === "WhatsApp") {
-                setWhatsApp(true);
+                 navigate("/WhatsupWithdraw");
+                // setWhatsApp(true);
               }
               if (option.label === "Crypto Withdrawal") {
-                navigate("/withdraw");
+                navigate("/CryptoWithdraw");
               }
               if (option.label === "Bank Withdrawal") {
-                navigate("/withdraw");
+                navigate("/BankWithdraw");
               }
             }}
           >

@@ -381,7 +381,7 @@ const GameSection = ({ title, games, icon }) => {
       {items.map((game) => (
         <div
           key={game.id}
-          className="min-w-[105px] h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
+          className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
           onClick={() => navigate(game.route || "#")}
         >
           {game.image ? (
@@ -463,7 +463,7 @@ const GameSection = ({ title, games, icon }) => {
           filteredGames.map((game) => (
             <div
               key={game.id}
-              className="min-w-[100px] h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
+              className="min-w-[85px] h-[115px] xsm3:min-w-[100px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
               onClick={() => navigate(game.route || "#")}
             >
               {game.image ? (

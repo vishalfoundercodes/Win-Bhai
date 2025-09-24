@@ -267,19 +267,19 @@ const handleCopy = (id) => {
       </div>
 
       {/* tabs */}
-      <div className="flex gap-2 mb-3 pl-1 ">
+      <div className="grid grid-cols-4 gap-2 xsm:gap-2 mb-3 w-full">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-0 py-1 text-ssm font-normal rounded-md border 
-            ${
-              activeTab === tab
-                ? "bg-red-700 text-white border-red-700"
-                : "bg-white text-lightGray border-grayBorder"
-            }`}
+            className={`px-0 py-2 text-xs xsm:text-ssm font-normal rounded-[8px] border text-center truncate
+      ${
+        activeTab === tab
+          ? "bg-red text-white border-red"
+          : "bg-white text-lightGray border-grayBorder"
+      }`}
           >
-            <span className="px-5">{tab}</span>
+            {tab}
           </button>
         ))}
       </div>

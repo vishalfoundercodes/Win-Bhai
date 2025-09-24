@@ -94,6 +94,7 @@ export default function Layout({ children }) {
     "/profitLoss",
     "/accountStatement",
     "/depositHistory",
+    "/withdrawHistory",
     "/betHistory",
     "/PendingBets",
     "/changePassword",
@@ -105,6 +106,8 @@ export default function Layout({ children }) {
     "/WithdrawAffilation",
     "/updateAccount",
     "/CryptoAdd",
+    "/WinbhaiWallet",
+    "/WhatsupWithdraw",
   ];
   const hideHeaderPaths = [
     "/cuppon",

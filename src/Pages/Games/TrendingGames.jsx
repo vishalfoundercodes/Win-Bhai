@@ -185,7 +185,7 @@ const TrendingGames = ({ title, games, icon }) => {
       {gameList.map((game, index) => (
         <div
           key={game.id || index}
-          className={`min-w-[105px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
+          className={`min-w-[80px] xsm3:min-w-[105px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
           onClick={() => {
             if (!game.empty) navigate(game.route || "#");
           }}
@@ -215,9 +215,9 @@ const TrendingGames = ({ title, games, icon }) => {
     <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-2">
       {/* Header */}
       <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[8px] shadow-md mb-3">
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-1 xsm3:gap-2`}>
           <span className="w-6 h-6">{icon || "🎮"}</span>
-          <h2 className="text-sm font-semibold">{title || "Trending Games"}</h2>
+          <h2 className="text-ssm xsm3:text-sm font-semibold">{title || "Trending Games"}</h2>
         </div>
 
         <div className="flex items-center gap-2">

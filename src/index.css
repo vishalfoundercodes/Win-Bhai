@@ -81,6 +81,7 @@
   --animation-bounce: bounce 1s infinite;
 
   /* Breakpoints */
+  --breakpoint-xsm4: 350px;
   --breakpoint-xsm3: 375px;
 --breakpoint-xxs: 400px;
 --breakpoint-xsm2: 400px;

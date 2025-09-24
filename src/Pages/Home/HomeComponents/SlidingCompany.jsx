@@ -25,7 +25,7 @@ export default function SlidingCompany() {
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
-              className={`flex items-center justify-center w-[105px] h-[40px] rounded-[8px] border transition-all duration-200 px-4 py-2
+              className={`flex items-center justify-center w-[80px] xsm4:w-[85px] xsm3:w-[90px] xxs:w-[105px] h-[40px] rounded-[8px] border transition-all duration-200 px-4 py-2
                 ${
                   active === cat.id
                     ? "bg- border-maroon"

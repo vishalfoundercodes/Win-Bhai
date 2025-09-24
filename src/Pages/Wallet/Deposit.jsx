@@ -5,7 +5,7 @@ import phonePay from "../../assets/Wallet/phone pay.png";
 import googlePay from "../../assets/Wallet/google pay.png";
 import { useNavigate } from "react-router-dom";
 export default function DepositPage() {
-  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState("indianpay");
   const [amount, setAmount] = useState("");
 const navigate = useNavigate()
   const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
@@ -40,7 +40,7 @@ const navigate = useNavigate()
               onClick={() => setSelectedPayment("indianpay")}
             >
               <svg
-                width="94"
+                width="88"
                 height="41"
                 viewBox="0 0 94 41"
                 fill="none"
@@ -1058,7 +1058,7 @@ const navigate = useNavigate()
         )}
 
         {/* Offers Section */}
-        {!selectedPayment === "crypto" && (
+        {selectedPayment !== "crypto" && (
           <div className="rounded-[8px] shadow p-4 bg-white">
             <h2 className="text-lightGray font-semibold mb-0 text-ssm uppercase">
               Available Offers
@@ -1104,17 +1104,35 @@ const navigate = useNavigate()
         {selectedPayment === "indianpay" && (
           <div className="bg-white rounded-[8px] shadow px-4 py-4">
             {/* <p className="text-ssm font-semibold mb-3">Choose Wallet :</p> */}
-            <div className="flex gap-4">
+            <div className="grid grid-cols-4 gap-2 xsm:gap-3 xxs:gap-4">
               {/* PhonePe */}
-              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
-                <img src={phonePay} alt="PhonePe" className="w-10 h-10" />
-                <p className="text-xs mt-1">PhonePe</p>
+              <div className="flex flex-col items-center px-2 xsm:px-3 xxs:px-4 py-2 rounded-[5px] cursor-pointer hover:shadow-md bg-[#EEEEEE]">
+                <img
+                  src={phonePay}
+                  alt="PhonePe"
+                  className="w-8 h-8 xsm:w-9 xsm:h-9 xxs:w-10 xxs:h-10"
+                />
+                <p className="text-xs xsm:text-sm mt-1">PhonePe</p>
               </div>
 
               {/* GPay */}
-              <div className="flex flex-col items-center p-3 rounded-[5px] shadow-xl cursor-pointer hover:shadow-md">
-                <img src={googlePay} alt="GPay" className="w-10 h-10" />
-                <p className="text-xs mt-1">G Pay</p>
+              <div className="flex flex-col items-center px-2 xsm:px-3 xxs:px-4 py-2 rounded-[5px] cursor-pointer hover:shadow-md bg-[#EEEEEE]">
+                <img
+                  src={googlePay}
+                  alt="GPay"
+                  className="w-8 h-8 xsm:w-9 xsm:h-9 xxs:w-9 xxs:h-10"
+                />
+                <p className="text-xs xsm:text-sm mt-1">G Pay</p>
+              </div>
+
+              {/* Empty 1 */}
+              <div className="flex flex-col items-center px-2 xsm:px-3 xxs:px-4 py-2 rounded-[5px] cursor-pointer hover:shadow-md bg-[#EEEEEE]">
+                <div className="w-8 h-8 xsm:w-9 xsm:h-9 xxs:w-10 xxs:h-10" />
+              </div>
+
+              {/* Empty 2 */}
+              <div className="flex flex-col items-center px-2 xsm:px-3 xxs:px-4 py-2 rounded-[5px] cursor-pointer hover:shadow-md bg-[#EEEEEE]">
+                <div className="w-8 h-8 xsm:w-9 xsm:h-9 xxs:w-10 xxs:h-10" />
               </div>
             </div>
           </div>
@@ -1137,7 +1155,15 @@ const navigate = useNavigate()
         {selectedPayment === "manual" && (
           <button
             type="submit"
-            className="w-full bg-gray-400 text-white text-ssm font-medium py-3 rounded-md text-center"
+            className="w-full bg-lightGray text-white text-ssm font-medium py-3 rounded-md text-center"
+          >
+            SUBMIT
+          </button>
+        )}
+        {selectedPayment === "indianpay" && (
+          <button
+            type="submit"
+            className="w-full bg-lightGray text-white text-ssm font-medium py-3 rounded-md text-center"
           >
             SUBMIT
           </button>

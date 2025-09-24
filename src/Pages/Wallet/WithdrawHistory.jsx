@@ -99,10 +99,11 @@ export default function WithdrawHistory() {
   };
 
   return (
-    <div className="w-full max-w-m mx-auto min-h-screen px-4 py-2"
-    style={{
-        fontFamily:"Inter"
-    }}
+    <div
+      className="w-full max-w-m mx-auto min-h-screen px-4 py-2"
+      style={{
+        fontFamily: "Inter",
+      }}
     >
       {/* Header */}
       <div className="flex justify-between items-center pb-0 mb-0">
@@ -171,7 +172,7 @@ export default function WithdrawHistory() {
       </div>
 
       {/* tabs */}
-      <div className="flex gap-2 mb-3 pl-1 ">
+      {/* <div className="flex gap-2 mb-3 pl-1 ">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -184,6 +185,22 @@ export default function WithdrawHistory() {
             }`}
           >
             <span className="px-5">{tab}</span>
+          </button>
+        ))}
+      </div> */}
+      <div className="grid grid-cols-4 gap-2 xsm:gap-2 mb-3 w-full">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-0 py-2 text-xs xsm:text-ssm font-normal rounded-md border text-center truncate
+      ${
+        activeTab === tab
+          ? "bg-red text-white border-red"
+          : "bg-white text-lightGray border-grayBorder"
+      }`}
+          >
+            {tab}
           </button>
         ))}
       </div>

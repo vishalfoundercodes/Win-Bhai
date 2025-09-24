@@ -18,7 +18,7 @@ export default function Withdraw() {
   const [selectedPayment, setSelectedPayment] = useState("manual");
   const [amount, setAmount] = useState("");
   const navigate = useNavigate()
-
+const [active, setActive] = useState("Option 1");
   const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
   const cryptoAmounts = [500, 2000, 5000, 10000,20000, 30000, 50000, 70000, 100000];
   const [copied, setCopied] = useState("");
@@ -50,6 +50,7 @@ export default function Withdraw() {
     },
   ];
 
+  const options = ["Option 1"];
   return (
     <div className="min-h-screen  flex justify-center items-start py-6 px-0 ">
       <div className="w-full px-4 space-y-2">
@@ -576,15 +577,34 @@ export default function Withdraw() {
             </button>
           </div>
         </div>
-
+        {/* option for crypto */}
+        {selectedPayment === "crypto" && (
+          <div className="flex space-x-2 p-1 ">
+            {options.map((option) => (
+              <button
+                key={option}
+                onClick={() => setActive(option)}
+                className={`px-4 py-2 rounded-md font-medium transition ${
+                  active === option
+                    ? "bg-red text-white"
+                    : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        )}
         {/* account detail manual */}
         {selectedPayment === "manual" && (
-          <container className="mb-2">
+          <container className="mb-2 ">
             <Swiper
               modules={[Pagination]}
               spaceBetween={20}
-              slidesPerView={1}
-              loop={true}
+              slidesPerView={1.2}
+              centeredSlides={false}
+              initialSlide={0}
+              loop={false}
               grabCursor={true}
               touchEventsTarget="container"
               className="w-full"
@@ -641,12 +661,14 @@ export default function Withdraw() {
           </container>
         )}
         {selectedPayment === "crypto" && (
-          <container className="mb-2">
+          <container className="mb-2 ">
             <Swiper
               modules={[Pagination]}
               spaceBetween={20}
-              slidesPerView={1}
-              loop={true}
+              slidesPerView={1.2}
+              centeredSlides={false}
+              initialSlide={0}
+              loop={false}
               grabCursor={true}
               touchEventsTarget="container"
               className="w-full"
