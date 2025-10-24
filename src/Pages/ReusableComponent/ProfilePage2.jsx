@@ -1,12 +1,15 @@
 import { Wallet, Megaphone, BarChart2, LogOut, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useProfile } from "../../Context/ProfileContext";
 export default function ProfilePage2() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { profileDetails, fetchProfile } = useProfile();
+  console.log("affilation profile:",profileDetails)
   return (
     <div
       className="min-h-screen bg-[#E7E7E7] flex flex-col items-center p-4"
       style={{
-        fontFamily: "Roboto"
+        fontFamily: "Roboto",
       }}
     >
       {/* Profile Section */}
@@ -33,7 +36,9 @@ export default function ProfilePage2() {
 
           <span className="absolute top-1 left-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
         </div>
-        <h2 className="mt-2 text-lg font-semibold text-red">Shivam</h2>
+        <h2 className="mt-2 text-lg font-semibold text-red">
+          {profileDetails?.username || "User"}
+        </h2>
       </div>
 
       {/* Revenue Section */}

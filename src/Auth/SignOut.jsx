@@ -28,7 +28,7 @@ const navigate=useNavigate()
           <button
             onClick={() => {
               onClose();
-              localStorage.removeItem("userId");
+              localStorage.clear();
               navigate("/");
               window.location.reload();
               // alert("Signed out!"); // yaha tumhara signout logic ayega

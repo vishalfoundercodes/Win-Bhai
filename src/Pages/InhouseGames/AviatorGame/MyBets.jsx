@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
-import { configModalUsaWin } from '../../../utils/apis'
+import { configModalWinBhai } from '../../../utils/apis'
 
 function MyBets({ betApiHitted }) {
     const userId = localStorage.getItem("userId")
@@ -16,7 +16,7 @@ function MyBets({ betApiHitted }) {
         }
         // console.log("pYLOAD", payload)
         try {
-            const res = await axios.post(`${configModalUsaWin}aviator_history`, payload)
+            const res = await axios.post(`${configModalWinBhai}aviator_history`, payload)
             // toast.success(res?.data?.message)
             // console.log("betbetebetebete", res)
             if (res?.data?.status === 200) {
@@ -76,7 +76,7 @@ function MyBets({ betApiHitted }) {
                                 <p className="text-white">{data.amount}</p>
                                 <div className="w-14">
                                     {data.multiplier>0 && (
-                                    <p className="text-xsm bg-black px-2 py-0.5 rounded-full">
+                                    <p className="text-sm bg-black px-2 py-0.5 rounded-full">
                                         {data.multiplier}x
                                     </p>
                                      )}

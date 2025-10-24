@@ -8,7 +8,7 @@ import { IoCaretDownSharp, IoCaretUpSharp } from "react-icons/io5";
 import { GrRefresh } from "react-icons/gr";
 import axios from 'axios'
 import { socket } from './AviatorSocket'
-import { configModalUsaWin } from "../../../utils/apis";
+import { configModalWinBhai } from "../../../utils/apis";
 import { useProfile } from "../../resuable_component/gameApi";
 
 
@@ -28,12 +28,12 @@ function AviatorHome() {
       setHotAirData(q);
     };
 
-    socket.on("bdgcasino_aviator", handleSocket);
-    return () => socket.off("bdgcasino_aviator", handleSocket);
+    socket.on("winbhai_aviator", handleSocket);
+    return () => socket.off("winbhai_aviator", handleSocket);
   }, []);
   const getPreviousResult = async () => {
     try {
-      const res = await axios.get(`${configModalUsaWin}aviator_last_five_result`)
+      const res = await axios.get(`${configModalWinBhai}aviator_last_five_result`)
       // console.log("first", res)
       if (res?.data?.status === 200 || res?.data?.status === "200") {
         setGetData(res?.data?.data)

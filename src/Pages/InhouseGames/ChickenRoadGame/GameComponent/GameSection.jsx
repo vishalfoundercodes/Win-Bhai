@@ -22,8 +22,12 @@ export default function GameSection({
   profileRefresher,
   restartGame,
 }) {
+  // const userid = localStorage.getItem("userId");
   const userid = localStorage.getItem("userId");
   const navigate = useNavigate()
+  useEffect(()=>{
+    console.log(userid)
+  },[])
 
   const { get, post, put, del, loading, error } = useApi();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,16 +82,6 @@ export default function GameSection({
     }
   }, [profileRefresher]);
 
-  // const handleFullscreen = () => {
-  //   const elem = document.documentElement;
-  //   if (elem.requestFullscreen) {
-  //     elem.requestFullscreen();
-  //   } else if (elem.webkitRequestFullscreen) {
-  //     elem.webkitRequestFullscreen();
-  //   } else if (elem.msRequestFullscreen) {
-  //     elem.msRequestFullscreen();
-  //   }
-  // };
 
   const handleFullscreen = () => {
     const isFullscreen =
@@ -154,7 +148,7 @@ export default function GameSection({
               <AiOutlineExclamationCircle className="" />
               <span className=" sm:inline hidden ml-1">How to play?</span>
             </button>
-            {!userid && (
+            {userid && (
               <button
                 className="px-3 sm:px-5 py-1 flex items-center rounded bg-[#4F5163] hover:bg-grayBgHover  transition whitespace-nowrap"
                 // onClick={() => setIsModalOpen(true)}
@@ -166,7 +160,7 @@ export default function GameSection({
               </button>
             )}
 
-            {userid && (
+            {!userid && (
               <div className="flex items-center gap-2 text-xsm">
                 <button
                   className="hover:bg-orange-dark text-white  px-5 py-1 rounded transition cursor-pointer items-center bg-[#4F5163] hover:bg-grayBgHover uppercase"

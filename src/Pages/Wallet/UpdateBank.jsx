@@ -1,12 +1,101 @@
+import axios from 'axios';
 import React,{useState} from 'react'
-import { useLocation } from "react-router-dom";
+import { data, useLocation,useNavigate } from "react-router-dom";
+import apis from '../../utils/apis';
+import { toast } from 'react-toastify';
 
 export default function UpdateBankAccount() {
   const location = useLocation();
+  const navigate =useNavigate()
   const mode = location.state?.mode || "update"; // default update
 const [selectedPayment, setSelectedPayment] = useState(null);
   const headingText =
     mode === "add" ? "Add Bank Account" : "Update Bank Account";
+
+    const [formData, setFormData] = useState({
+      user_id: "", // example static user id (you can set dynamically)
+      name: "",
+      account_number: "",
+      confirm_account_number: "",
+      ifsc_code: "",
+    });
+
+    const [errors, setErrors] = useState({});
+    const [submittedPayload, setSubmittedPayload] = useState(null);
+
+    // ✅ Handle input change
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+
+    // ✅ Validate fields
+    const validateForm = () => {
+      let newErrors = {};
+
+      if (!formData.name.trim()) {
+        newErrors.name = "Account holder name is required";
+      }
+
+      if (!formData.account_number.trim()) {
+        newErrors.account_number = "Account number is required";
+      } else if (!/^\d{9,18}$/.test(formData.account_number)) {
+        newErrors.account_number =
+          "Account number must be between 9 to 18 digits";
+      }
+
+      if (!formData.confirm_account_number.trim()) {
+        newErrors.confirm_account_number = "Please confirm your account number";
+      } else if (formData.confirm_account_number !== formData.account_number) {
+        newErrors.confirm_account_number = "Account numbers do not match";
+      }
+
+      if (!formData.ifsc_code.trim()) {
+        newErrors.ifsc_code = "IFSC code is required";
+      } else if (!/^[A-Z]{4}0[A-Z0-9]{6}$/i.test(formData.ifsc_code)) {
+        newErrors.ifsc_code = "Enter a valid IFSC code";
+      }
+
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+
+    // ✅ Handle form submit
+    const handleSubmit = async(e) => {
+      e.preventDefault();
+      if (validateForm()) {
+        const payload = {
+          user_id: localStorage.getItem("userId"),
+          name: formData.name.trim(),
+          account_number: formData.account_number.trim(),
+          ifsc_code: formData.ifsc_code.trim(),
+        };
+
+        console.log("✅ Payload:", payload);
+        try {
+          const res = await axios.post(apis.add_account,payload);
+          console.log("res",res)
+          if(res?.data?.status===200){
+            toast.success(res?.data?.message)
+               setFormData({
+                 user_id: "", // keep user id
+                 wallet_address: "",
+                 wallet_type: "",
+                 phone_no: "",
+                 otp: "",
+               });
+               navigate("/withdraw");
+          }
+        } catch (error) {
+          console.log(error)
+          toast.error(error?.response?.data?.message)
+        }
+        setSubmittedPayload(payload);
+      }
+    };
   return (
     <div
       className="min-h-screen px-5 py-6 rounded-md "
@@ -27,9 +116,15 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           </label>
           <input
             type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
             placeholder="Enter account holder’s name"
             className="w-full border bg-white  placeholder:text-sm  text-lightGray rounded-md px-3 py-2 text-sm "
           />
+          {errors.name && (
+            <p className="text-xs text-red-500 mt-1">{errors.name}</p>
+          )}
         </div>
 
         {/* Bank Account Number */}
@@ -39,9 +134,15 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           </label>
           <input
             type="text"
+            name="account_number"
+            value={formData.account_number}
+            onChange={handleChange}
             placeholder="Enter bank account number"
             className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm "
           />
+          {errors.account_number && (
+            <p className="text-xs text-red-500 mt-1">{errors.account_number}</p>
+          )}
         </div>
 
         {/* Confirm Bank Account Number */}
@@ -51,9 +152,17 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           </label>
           <input
             type="text"
+            name="confirm_account_number"
+            value={formData.confirm_account_number}
+            onChange={handleChange}
             placeholder="Re-enter bank account number"
             className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
           />
+          {errors.confirm_account_number && (
+            <p className="text-xs text-red-500 mt-1">
+              {errors.confirm_account_number}
+            </p>
+          )}
         </div>
 
         {/* IFSC Code */}
@@ -63,23 +172,30 @@ const [selectedPayment, setSelectedPayment] = useState(null);
           </label>
           <input
             type="text"
+            name="ifsc_code"
+            value={formData.ifsc_code}
+            onChange={handleChange}
             placeholder="Enter IFSC code"
             className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm  placeholder:text-sm "
           />
+          {errors.ifsc_code && (
+            <p className="text-xs text-red-500 mt-1">{errors.ifsc_code}</p>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
-          type="submit"
           className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
           style={{
             fontFamily: "Roboto",
             fontSize: "13.5px",
           }}
+          onClick={handleSubmit}
         >
           SUBMIT
         </button>
       </form>
+
       {/* Payment Options */}
       {/* <div className=" px-4 py-4 bg-white  rounded-[8px] shadow mt-5">
         <h2 className="text-gray-800 font-semibold mb-4">Withdraw Options :</h2>

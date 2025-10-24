@@ -1,40 +1,32 @@
-import React,{useState} from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Pagination from "../ReusableComponent/Pagination";
 import { div } from "framer-motion/client";
 
-export default function BettingTable() {
-    const data = [
-      {
-        betId: 28687398,
-        title: "Calicut Globstars V Kochi Blue Tigers/20 Over Run CG/100.00",
-        rate: 230,
-        stake: 200,
-        profitLoss: 200,
-        result: 249,
-        placedTime: "2025-08-27 15:52:16",
-        settleTime: "2025-08-27 16:25:42",
-      },
-      {
-        betId: 28687398,
-        title: "Calicut Globstars V Kochi Blue Tigers/20 Over Run CG/100.00",
-        rate: 230,
-        stake: 200,
-        profitLoss: 200,
-        result: 249,
-        placedTime: "2025-08-27 15:52:16",
-        settleTime: "2025-08-27 16:25:42",
-      },
-    ];
-      const [currentPage, setCurrentPage] = useState(1);
-      const [rowsPerPage, setRowsPerPage] = useState(10);
-  
-      const totalPages = Math.ceil(data.length / rowsPerPage);
-  
-      const paginatedData = data.slice(
-        (currentPage - 1) * rowsPerPage,
-        currentPage * rowsPerPage
-      );
+export default function BettingTable({data}) {
+useEffect(()=>{
+  console.log("data",data);
+},[data])
 
+  const combinedData = useMemo(() => {
+    if (!data) return [];
+    const aviator = data.aviator_bets || [];
+    const chicken = data.chicken_bets || [];
+    const bets = data.bets || [];
+    return [...aviator, ...bets, ...chicken];
+  }, [data]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  // const totalPages = Math.ceil(data.length / rowsPerPage);
+
+   const [currentPage, setCurrentPage] = useState(1);
+   const [rowsPerPage, setRowsPerPage] = useState(10);
+   const totalPages = Math.ceil(combinedData.length / rowsPerPage);
+
+  const paginatedData = combinedData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
   return (
     <div>
@@ -63,23 +55,41 @@ export default function BettingTable() {
 
           {/* Body */}
           <tbody className="text-ssm bg-white">
-            {data.map((row, index) => (
+            {paginatedData.map((row, index) => (
               <tr
                 key={index}
                 className="border-b border-grayBorder last:border-none whitespace-nowrap text-darkGray"
               >
                 <td className="px-3 py-2 border-r border-b border-lightBorder">
-                  {row.betId}
+                  {row.game_sr_num || row.games_no || row.user_id || row.bet_id}
                 </td>
-                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.title}</td>
-                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.rate}</td>
-                <td className="px-3 py-2 border-r border-b border-lightBorder">{row.stake}</td>
-                <td className="px-3 py-2 text-green-600 font-medium">
-                  {row.profitLoss.toFixed(3)}
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.title}
                 </td>
-                <td className="px-3 py-2">{row.result}</td>
-                <td className="px-3 py-2">{row.placedTime}</td>
-                <td className="px-3 py-2">{row.settleTime}</td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.rate}
+                </td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.stake}
+                </td>
+                <td
+                  className={`px-3 py-2 border-r border-b border-lightBorder  font-medium ${
+                    row.win_status === "Loss"
+                      ? "text-red-500"
+                      : "text-green-600"
+                  }`}
+                >
+                  {row.profit_loss}
+                </td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.result}
+                </td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.placed_at}
+                </td>
+                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                  {row.settled_at}
+                </td>
               </tr>
             ))}
           </tbody>

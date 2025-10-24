@@ -1,3 +1,20 @@
+<!-- // const options = [
+// "All",
+// "Cricket",
+// "Football",
+// "Tennis",
+// "Horse Racing",
+// "Greyhound Racing",
+// "Kabaddi",
+// "Binary",
+// "Politics",
+// "Live Casino",
+// "Int Casino",
+// "Casino Vivo",
+// "iCasino",
+// ];
+    -->
+   
    <!-- icon of multiple bank -->
     <!-- <span className="text-ssm font-medium">Indianpay Payment</span> -->
    <svg

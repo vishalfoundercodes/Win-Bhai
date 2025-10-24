@@ -166,6 +166,26 @@ export default function Game() {
   };
 
     const [dinoLandedIndex, setDinoLandedIndex] = useState(null);
+
+    const updateRoastMultiplier = () => {
+      get(`${apis?.chickenMultplier}?user_id=${userid}`)
+        .then((res) => {
+          if (res?.data?.success === true) {
+            const data = res?.data?.data || [];
+            const currentModeData = data.find(
+              (item) => item?.type === activeDifficulty
+            );
+
+            if (currentModeData) {
+              setDifficultyArray((prev) => ({
+                ...prev,
+                roast_multiplier: currentModeData.roast_multiplier,
+              }));
+            }
+          }
+        })
+        .catch(console.error);
+    };
   const restartGame = () => {
     setDinoLandedIndex(null)
     setIslastSecondSegment(false);
@@ -177,6 +197,7 @@ export default function Game() {
         behavior: "smooth",
       });
     }
+    updateRoastMultiplier();
     setGameStarted(false);
     setHasMoved(false);
     setResetCoinsTrigger((prev) => prev + 1);

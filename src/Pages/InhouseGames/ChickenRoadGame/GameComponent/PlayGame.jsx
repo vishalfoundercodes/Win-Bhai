@@ -398,12 +398,16 @@ export default function PlayGame({
       localStorage.setItem("redfragment", "true");
       console.log("🔴 Red fragment activated - localStorage set");
 
-      const timer = setTimeout(() => {
-        localStorage.removeItem("redfragment");
-        console.log("🔴 Red fragment localStorage removed after 1 second");
-      }, 2500);
+      // const timer = setTimeout(() => {
+      //   localStorage.removeItem("redfragment");
+      //   console.log("🔴 Red fragment localStorage removed after 1 second");
+      // }, 2500);
 
-      return () => clearTimeout(timer);
+      // return () => clearTimeout(timer);
+      setTimeout(()=>{
+        console.log("hii")
+        localStorage.removeItem("redfragment");
+      },3000)
     }
   }, [redFragments]);
   

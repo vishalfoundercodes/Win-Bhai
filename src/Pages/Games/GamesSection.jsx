@@ -329,13 +329,21 @@
 
 // export default GameSection;
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
+import Loader from "../resuable_component/Loader/Loader";
+import { useProfile } from "../../Context/ProfileContext";
 
 const GameSection = ({ title, games, icon }) => {
+   const { profileDetails, setprofileDetails } = useProfile();
+ 
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const [loading,setloading]=useState(false)
 
   const scrollRow = (rowId, direction) => {
     const container = document.getElementById(rowId);
@@ -382,14 +390,17 @@ const GameSection = ({ title, games, icon }) => {
         <div
           key={game.id}
           className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
-          onClick={() => navigate(game.route || "#")}
+          onClick={() => {navigate(game.route || "#");handleGameOpen(game.gameId);}}
         >
-          {game.image ? (
-            <img
-              src={game.image}
-              alt={game.name}
-              className="w-full h-full object-cover rounded-[8px]"
-            />
+          {game.image || game.imgUrl ? (
+            <>
+             
+              <img
+                src={game.image || game.imgUrl}
+                alt={game.name}
+                className="w-full h-full object-cover rounded-[8px] border-3 border-red"
+              />
+            </>
           ) : (
             <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]" />
           )}
@@ -398,6 +409,48 @@ const GameSection = ({ title, games, icon }) => {
     </div>
   );
 
+  //  useEffect(() => {
+  //    console.log("games jilli:", games);
+  //  },[]);
+
+   const handleGameOpen=async(id)=>{
+   const userId = localStorage.getItem("userId");
+     if (!userId) {
+       toast.error("Please login first.");
+       return; // stop further execution
+     }
+    try{
+      setloading(true)
+      const userId= localStorage.getItem("userId");
+      const payload = {
+        user_id: userId,
+        amount: profileDetails?.wallet || 0,
+        game_id: id,
+      };
+      console.log("payload",payload)
+      const res = await axios.post(apis.jilliGame,payload);
+      if(res?.data?.status===200){
+        // setloading(false)
+        window.open(res?.data?.gameUrl, "_blank");
+      }
+      else{
+        toast.error("Something went wrong to play the game.")
+      }
+    }catch(error){
+      console.error(error)
+      toast.error(error?.response?.data?.message);
+    }finally{
+      setloading(false)
+    }
+   }
+
+   
+     if (loading)
+       return (
+         <div className="text-center py-6 text-gray-500 min-h-screen">
+           <Loader />
+         </div>
+       );
   return (
     <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-4">
       {/* Header */}
@@ -464,13 +517,13 @@ const GameSection = ({ title, games, icon }) => {
             <div
               key={game.id}
               className="min-w-[85px] h-[115px] xsm3:min-w-[100px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
-              onClick={() => navigate(game.route || "#")}
+              onClick={() => {navigate(game.route || "#");handleGameOpen(game.gameId);}}
             >
-              {game.image ? (
+              {game.image || game.imgUrl ? (
                 <img
-                  src={game.image}
+                  src={game.image || game.imgUrl}
                   alt={game.name}
-                  className="w-full h-full object-cover rounded-[8px]"
+                  className="w-full h-full object-cover rounded-[8px] border-3 border-red"
                 />
               ) : (
                 <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]" />

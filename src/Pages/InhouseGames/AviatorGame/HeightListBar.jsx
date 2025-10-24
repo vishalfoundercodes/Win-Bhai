@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { configModalUsaWin } from '../../../utils/apis'
+import { configModalWinBhai } from '../../../utils/apis'
 
 // eslint-disable-next-line react/prop-types
 function HeightListBar({ hotAirData, betApiHitted, refreshHeightList, setRefreshHeightList }) {
@@ -10,7 +10,7 @@ function HeightListBar({ hotAirData, betApiHitted, refreshHeightList, setRefresh
     const getPreviousResult = async () => {
         // console.log("first")
         try {
-            const res = await axios.get(`${configModalUsaWin}aviator_last_five_result`)
+            const res = await axios.get(`${configModalWinBhai}aviator_last_five_result`)
             // alert("hittedd")
             console.log("aviator_last_five_result", res)
             if (res?.data?.status === 200 || res?.data?.status === "200") {

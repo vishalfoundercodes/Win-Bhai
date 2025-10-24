@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
+import apis from "../utils/apis";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ChangePassword = () => {
   // State to toggle each field visibility
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const navigate=useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -18,16 +23,42 @@ const ChangePassword = () => {
     validationSchema: Yup.object({
       currentPassword: Yup.string().required("Current password is required"),
       newPassword: Yup.string()
-        .min(6, "Password must be at least 6 characters")
         .required("New password is required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("newPassword")], "Passwords must match")
         .required("Confirm password is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Password change payload:", values);
+    onSubmit: async(values) => {
+      const userId=localStorage.getItem('userId')
+      console.log("Password change payload:", userId);
+      console.log("Password change payload:", { ...values, userid:userId });
       // API call here
-      alert("Password updated successfully!");
+      try{
+        const payload = {
+          old_password: values.currentPassword,
+          new_password: values.newPassword,
+          confirm_password: values.confirmPassword,
+          userid: userId,
+        };
+        console.log(payload)
+           const res = await axios.post(apis.changePassword, payload);
+                  console.log(res);
+
+                  if (res?.data?.status === 200) {
+                    toast.success(res?.data?.msg);
+                    localStorage.clear()
+                    navigate("/login");
+                  }
+                  if (res?.data?.status === 400) {
+                    toast.error(res?.data?.msg);
+                  }
+      }catch(error){
+          console.log(error)
+            if (error?.response?.data?.status === 400) {
+              toast.error(error?.response?.data?.msg);
+              console.log('fgh')
+            }
+      }
     },
   });
 

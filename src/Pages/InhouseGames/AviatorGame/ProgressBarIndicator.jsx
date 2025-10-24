@@ -19,7 +19,7 @@ const ProgressBarIndicator = ({ timer }) => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center max-w-lg mx-auto mt-2">
+    <div className="w-full flex justify-center max-w-[512px] mx-auto mt-2">
       <div className="w-[50%] h-2 bg-gray rounded-full overflow-hidden">
         <div
           className="h-full bg-[#F85050] transition-all duration-50"

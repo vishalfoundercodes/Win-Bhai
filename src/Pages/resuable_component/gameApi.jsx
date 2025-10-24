@@ -136,8 +136,9 @@ export const fetchGameURLSpribe = async (gameid, userId, navigate, setLoading) =
     };
 
     const payload = {
-        user_id: userId,
-        game_id: gameid
+      user_id: userId,
+      game_id: gameid,
+      
     };
 
     try {

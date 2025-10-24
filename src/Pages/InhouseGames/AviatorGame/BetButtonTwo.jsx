@@ -10,7 +10,7 @@ import apis from "../../../utils/apis";
 import { useNavigate } from "react-router-dom";
 import { use } from "react";
 import "./index.css";
-import { configModalUsaWin } from "../../../utils/apis";
+import { configModalWinBhai } from "../../../utils/apis";
 import { useProfile } from "../../resuable_component/gameApi";
 
 function BetButtonTwo({ setBtn, setBetApiHitted }) {
@@ -34,8 +34,8 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
       setHotAirData(q);
     };
 
-    socket.on("bdgcasino_aviator", handleSocket);
-    return () => socket.off("bdgcasino_aviator", handleSocket);
+    socket.on("winbhai_aviator", handleSocket);
+    return () => socket.off("winbhai_aviator", handleSocket);
   }, []);
   // console.log("hotAirDatahotAirDatahotAirDatahotAirData",hotAirData)
   const handleIncrement = () => setBetAmount((prev) => Number(prev) + 1);
@@ -47,7 +47,7 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
   const normalBetHandler = async () => {
     try {
           const loginTokenFromLocalStorage =
-            localStorage.getItem("login_token");
+            localStorage.getItem("token");
           const response = await axios.get(`${apis.profile}${userId}`);
           const profileToken = response?.data?.data?.login_token;
           if (profileToken != loginTokenFromLocalStorage) {
@@ -72,7 +72,7 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
               // console.log("pYLOAD", payload);
               try {
                 const res = await axios.post(
-                  `${configModalUsaWin}aviator_bet`,
+                  `${configModalWinBhai}aviator_bet`,
                   payload
                 );
                 // toast.success(res?.data?.message)
@@ -120,7 +120,7 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
     // console.log("pYLOAD", payload)
     try {
       const res = await axios.get(
-        `${configModalUsaWin}aviator_bet_cancel?userid=${userId}&number=2&gamesno=${sr}`
+        `${configModalWinBhai}aviator_bet_cancel?userid=${userId}&number=2&gamesno=${sr}`
       );
       // toast.success(res?.data?.message)
       // console.log("cvancelcancelcanel", res);
@@ -162,7 +162,7 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
     // console.log("saltEncodedsaltEncoded", saltEncoded)
     try {
       const res = await axios.post(
-        `${configModalUsaWin}aviator_cashout?salt=${encodeURIComponent(
+        `${configModalWinBhai}aviator_cashout?salt=${encodeURIComponent(
           saltEncoded
         )}`
       );

@@ -15,8 +15,8 @@ const useApi = (baseURL = baseUrlUsaWin) => {
     });
     const request = useCallback(async (method, url, data = null, config = {}) => {
         setLoading(true);
-        // const userId = localStorage.getItem('userId');
-        const userId = 8
+        const userId = localStorage.getItem('userId');
+        // const userId = 8
         if (!userId) {
             toast.error('User not found. Please log in again.');
             // throw new Error('User ID not found');

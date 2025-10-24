@@ -1,11 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RefreshCcw } from "lucide-react";
 import calender from "../../assets/Wallet/calender.png";
 import "./DateInput.css";
 import CalendarModal from "../ReusableComponent/Calender";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
 
 
 export default function WithdrawHistory() {
+  const [data, setData] = useState([]);
+  const userId = localStorage.getItem("userId");
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${apis.withdraw_history}${userId}`);
+      console.log(res?.data?.data);
+      setData(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message)
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const [deposits] = useState([
     {
       id: "ORD12345675",
@@ -75,18 +96,6 @@ export default function WithdrawHistory() {
   const [endDate, setEndDate] = useState("");
   const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
 
-  const formatDate = (date) => {
-    if (!date) return "";
-    return new Date(date).toLocaleDateString("en-US");
-  };
-
-  // helper to format yyyy-mm-dd -> mm/dd/yyyy
-  // const formatDate = (value) => {
-  //   if (!value) return "";
-  //   const [year, month, day] = value.split("-");
-  //   return `${month}/${day}/${year}`;
-  // };
-
   const [copiedId, setCopiedId] = useState(null);
 
   const handleCopy = (id) => {
@@ -96,6 +105,68 @@ export default function WithdrawHistory() {
     setTimeout(() => {
       setCopiedId(null);
     }, 2000);
+  };
+
+  // Format date to mm/dd/yyyy
+  const formatDate = (date) => {
+    if (!date) return "";
+    const options = { month: "2-digit", day: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("en-US", options); // Ensure mm/dd/yyyy format
+  };
+
+  // Function to filter data based on the active tab and date range
+ const filteredData = (data || []).filter((deposit) => {
+   // Date filtering logic first
+   const depositDate = new Date(deposit.created_at);
+   const start = new Date(startDate);
+   const end = new Date(endDate);
+
+   // Ensure that the 'endDate' includes data for the entire day (i.e., until 23:59:59)
+   if (endDate) {
+     end.setHours(23, 59, 59, 999); // Set to the end of the day (23:59:59.999)
+   }
+
+   // If there is a start date, check if the deposit date is before the start date
+   if (startDate && depositDate < start) return false;
+
+   // If there is an end date, check if the deposit date is after the end date
+   if (endDate && depositDate > end) return false;
+
+   // Now that the date filter is applied, we apply the tab filter
+   if (activeTab === "All") return true;
+
+   if (activeTab === "Processing" && deposit.status === 1) return true;
+   if (activeTab === "Success" && deposit.status === 2) return true;
+   if (activeTab === "Failed" && deposit.status === 3) return true;
+
+   // If no tab matches, return false (exclude the deposit)
+   return false;
+ });
+
+
+  // Update start date
+  const handleStartDateClick = () => {
+    setOpenModal("start");
+  };
+
+  // Update end date
+  const handleEndDateClick = () => {
+    setOpenModal("end");
+  };
+
+  // Set default date filters for "Just For Today" and "From Yesterday"
+  const handleDatePreset = (preset) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    if (preset === "today") {
+      setStartDate(formatDate(today));
+      setEndDate(formatDate(today));
+    } else if (preset === "yesterday") {
+      setStartDate(formatDate(yesterday));
+      setEndDate(formatDate(today));
+    }
   };
 
   return (
@@ -127,7 +198,8 @@ export default function WithdrawHistory() {
               readOnly
               placeholder="mm/dd/yyyy"
               className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-              onClick={() => setOpenModal("start")}
+              // onClick={() => setOpenModal("start")}
+              onClick={handleStartDateClick}
             />
             <img
               src={calender}
@@ -148,21 +220,29 @@ export default function WithdrawHistory() {
               readOnly
               placeholder="mm/dd/yyyy"
               className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-              onClick={() => setOpenModal("end")}
+              // onClick={() => setOpenModal("end")}
+              onClick={handleEndDateClick}
             />
             <img
               src={calender}
               alt="calendar"
               className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
-              onClick={() => setOpenModal("end")}
+              // onClick={() => setOpenModal("end")}
+              onClick={handleEndDateClick}
             />
           </div>
         </div>
         <div className="flex justify-between gap-2 mb-2">
-          <button className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm">
+          <button
+            onClick={() => handleDatePreset("today")}
+            className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
+          >
             Just For Today
           </button>
-          <button className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm">
+          <button
+            onClick={() => handleDatePreset("yesterday")}
+            className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
+          >
             From Yesturday
           </button>
         </div>
@@ -206,37 +286,36 @@ export default function WithdrawHistory() {
       </div>
       {/* Deposit List */}
       <div className="space-y-3">
-        {deposits.map((deposit, index) => (
+        {filteredData.map((deposit, index) => (
           <div
             key={index}
             className="bg-white rounded-xl shadow p-4 flex justify-between items-center"
           >
             <div>
               <div className="flex items-center gap-2 relative">
-                <p className="text-ssm font-semibold">{deposit.id}</p>
+                <p className="text-ssm font-semibold">{deposit.order_id}</p>
                 <svg
-                  //   onClick={() => navigator.clipboard.writeText(deposit.id)}
-                  onClick={() => handleCopy(deposit.id)}
+                  onClick={() => handleCopy(deposit.order_id)}
                   width="16"
                   height="17"
                   viewBox="0 0 16 17"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g clip-path="url(#clip0_913_1604)">
+                  <g clipPath="url(#clip0_913_1604)">
                     <path
                       d="M13.056 5.84033H6.54612C5.82706 5.84033 5.24414 6.42325 5.24414 7.14231V13.6522C5.24414 14.3712 5.82706 14.9542 6.54612 14.9542H13.056C13.7751 14.9542 14.358 14.3712 14.358 13.6522V7.14231C14.358 6.42325 13.7751 5.84033 13.056 5.84033Z"
                       stroke="#9CA3AF"
-                      stroke-width="2.23195"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2.23195"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M2.63987 11.0484C1.92378 11.0484 1.33789 10.4625 1.33789 9.74643V3.23655C1.33789 2.52046 1.92378 1.93457 2.63987 1.93457H9.14975C9.86583 1.93457 10.4517 2.52046 10.4517 3.23655"
                       stroke="#9CA3AF"
-                      stroke-width="2.23195"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2.23195"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </g>
                   <defs>
@@ -250,27 +329,34 @@ export default function WithdrawHistory() {
                     </clipPath>
                   </defs>
                 </svg>
-                {/* Tooltip */}
 
-                {(copiedId == deposit.id || null) && (
+                {/* Tooltip */}
+                {copiedId === deposit.order_id && (
                   <span className="absolute top-[-25px] left-0 bg-black text-white text-xs px-2 py-1 rounded-md shadow">
                     Copied!
                   </span>
                 )}
               </div>
-              <p className="text-xs text-gray-500 mt-2">{deposit.date}</p>
+              <p className="text-xs text-gray-500 mt-2">{deposit.created_at}</p>
             </div>
             <div className="text-right">
               <span
                 className={`px-2 py-1 text-xs rounded-2xl font-medium inline-block mb-1 ${
-                  deposit.status === "Failed"
+                  deposit.status === 3
                     ? "bg-red-100 text-red-600"
-                    : deposit.status === "Processing"
+                    : deposit.status === 1
                     ? "bg-green-100 text-green-600"
                     : "bg-[#DBEAFE] text-[#2563EB]"
                 }`}
               >
-                {deposit.status}
+                {/* Deposit Status */}
+                {deposit.status === 1
+                  ? "Processing"
+                  : deposit.status === 2
+                  ? "Success"
+                  : deposit.status === 3
+                  ? "Failed"
+                  : "Unknown"}
               </span>
               <p className="text-black2 font-bold">
                 <span className="text-red-600">₹</span>{" "}

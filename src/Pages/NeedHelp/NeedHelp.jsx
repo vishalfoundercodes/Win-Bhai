@@ -1,6 +1,27 @@
+import axios from "axios";
 import { ArrowRight, Mail, Phone } from "lucide-react";
+import apis from "../../utils/apis";
+import { useEffect, useState } from "react";
+
 
 export default function HelpPage() {
+  const [dataSection ,setDataSection]=useState(null)
+  const [supportSection ,setSupportSection]=useState(null)
+  const fetchData=async()=>{
+    try {
+      const res=await axios.get(apis.customer_service)
+      console.log(res?.data);
+      setDataSection(res?.data?.chat_section);
+      setSupportSection(res?.data?.support_section);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    fetchData()
+  },[])
+  
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-8 flex flex-col items-center  hide-scrollbar">
       {/* Title */}
@@ -11,39 +32,8 @@ export default function HelpPage() {
         Choose your favorite platform to connect instantly
       </p>
 
-      {/* Chat on Telegram */}
-      <div className="w-full  mt-6">
-        <button className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="bg-[linear-gradient(134.66deg,#4286F6_0.29%,#274E90_99.71%)] p-4 rounded-[15px]">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M16 0.5C7.437 0.5 0.5 7.438 0.5 16C0.5 24.562 7.438 31.5 16 31.5C24.562 31.5 31.5 24.562 31.5 16C31.5 7.438 24.562 0.5 16 0.5ZM23.613 11.119L21.069 23.107C20.881 23.957 20.375 24.163 19.669 23.763L15.794 20.907L13.925 22.707C13.719 22.913 13.544 23.088 13.144 23.088L13.419 19.144L20.6 12.656C20.913 12.381 20.531 12.225 20.118 12.5L11.243 18.087L7.418 16.893C6.587 16.631 6.568 16.062 7.593 15.662L22.537 9.899C23.231 9.649 23.837 10.068 23.612 11.118L23.613 11.119Z"
-                  fill="white"
-                />
-              </svg>
-            </div>
-            <div className="text-left">
-              <p className="font-medium text-sm text-gray-900">
-                Chat on Telegram
-              </p>
-              <p className="text-ssm text-gray-500">
-                Connect with us instantly on Telegram for quick responses
-              </p>
-            </div>
-          </div>
-          <ArrowRight className="w-14 h-5 text-darkGray" />
-        </button>
-      </div>
-
       {/* Chat on WhatsApp */}
-      <div className="w-full  mt-4 hide-scrollbar">
+      {/* <div className="w-full  mt-4 hide-scrollbar">
         <button className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
@@ -71,16 +61,40 @@ export default function HelpPage() {
           </div>
           <ArrowRight className="w-14 h-5 text-darkGray" />
         </button>
-      </div>
+      </div> */}
+      {dataSection &&
+        dataSection.map((item) => (
+          <div key={item.id} className="w-full mt-4 hide-scrollbar">
+            <button className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className=" rounded-[15px]">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-36 h-20 object-cover rounded-[15px]"
+                  />
+                </div>
+                <div className="text-left">
+                  <p className="font-medium text-sm text-gray-900">
+                    {item.name}
+                  </p>
+                  <p className="text-ssm text-gray-500">{item.description}</p>
+                </div>
+              </div>
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <ArrowRight className="w-14 h-5 text-darkGray" />
+              </a>
+            </button>
+          </div>
+        ))}
 
       {/* Other Ways */}
       <div className="w-full bg-white rounded-xl shadow p-4 mt-6">
         <h3 className="text-sm font-semibold text-gray-700 mb-3">
           Other Ways to Reach Us
         </h3>
-
         {/* Email */}
-        <div className="flex items-center gap-3 mb-3">
+        {/* <div className="flex items-center gap-3 mb-3">
           <div className="bg-red p-2 rounded-[10px]">
             <svg
               width="24"
@@ -103,10 +117,35 @@ export default function HelpPage() {
             <p className="text-sm font-medium text-gray-900">Email Support</p>
             <p className="text-ssm text-gray-500">promo@winbhai.in</p>
           </div>
-        </div>
+        </div> */}
+        {supportSection &&
+          supportSection.map((item) => (
+            <div key={item.id} className="flex items-center gap-3 mb-3">
+              <div className="rounded-[10px]">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-10 h-11 object-cover rounded-[10px]"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">{item.name}</p>
+                <p className="text-ssm text-gray-500">
+                  {item.description || ""}
+                </p>
+                {item.link ? (
+                  <a href={item.link} className="text-gray-500 text-xs">
+                    {item.name} Link
+                  </a>
+                ) : item.phone ? (
+                  <p className="text-xs text-gray-600">Phone: {item.phone}</p>
+                ) : null}
+              </div>
+            </div>
+          ))}
 
         {/* Phone */}
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <div className="bg-red p-2 rounded-[10px]">
             <svg
               width="24"
@@ -125,7 +164,7 @@ export default function HelpPage() {
             <p className="text-sm font-medium text-gray-900">Phone Support</p>
             <p className="text-ssm text-gray-500">0987654321</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

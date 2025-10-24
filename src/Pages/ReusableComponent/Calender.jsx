@@ -48,8 +48,13 @@ export default function CalendarModal({ isOpen, onClose, onSelect }) {
             className="text-[#d32f2f] font-semibold text-lg cursor-pointer"
             onClick={() => setView("months")}
           >
-            {value.toLocaleString("default", { month: "long" })}{" "}
-            {value.getFullYear()}
+            {/* {value.toLocaleString("default", { month: "long" })}{" "}
+            {value.getFullYear()} */}
+            {value
+              ? `${value.toLocaleString("default", {
+                  month: "long",
+                })} ${value.getFullYear()}`
+              : "Select Date"}
           </h2>
           <div className="flex space-x-2">
             <button
@@ -126,7 +131,10 @@ export default function CalendarModal({ isOpen, onClose, onSelect }) {
         <div className="flex justify-between mt-4 pt-2 border-t">
           <button
             className="text-[#d32f2f] font-medium"
-            onClick={() => setValue(null)}
+            onClick={() => {
+              setValue(null); // 1️⃣ Clear selected date in local state
+              onSelect(null); // 2️⃣ Tell parent component that date is cleared
+            }}
           >
             Clear
           </button>

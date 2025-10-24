@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Clipboard } from "lucide-react";
 import { Upload } from "lucide-react";
 import phonePay from "../../assets/Wallet/phone pay.png";
@@ -14,9 +14,18 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
+import {useProfile} from "../../Context/ProfileContext";
+import Loader from "../resuable_component/Loader/Loader";
+import { div } from "framer-motion/client";
 export default function Withdraw() {
   const [selectedPayment, setSelectedPayment] = useState("manual");
+  const [loader,setLoader]=useState(false)
   const [amount, setAmount] = useState("");
+  const [upiId, setUpiId] = useState("");
+      const [selectedCardId, setSelectedCardId] = useState(null);
   const navigate = useNavigate()
 const [active, setActive] = useState("Option 1");
   const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
@@ -29,28 +38,175 @@ const [active, setActive] = useState("Option 1");
     setTimeout(() => setCopied(""), 2000);
   };
 
-  const cards = [
-    {
-      ifsc: "SBIN0030089",
-      account: "39227182111",
-      name: "Vikas Sharma",
-      image: image1,
-    },
-    {
-      ifsc: "HDFC875422",
-      account: "98765432100529637538",
-      name: "Dummy User",
-      image: image2,
-    },
-    {
-      ifsc: "ICIC004421",
-      account: "123456789012",
-      name: "Rahul Singh",
-      image: image3,
-    },
-  ];
+  // const cards = [
+  //   {
+  //     ifsc: "SBIN0030089",
+  //     account: "39227182111",
+  //     name: "Vikas Sharma",
+  //     image: image1,
+  //   },
+  //   {
+  //     ifsc: "HDFC875422",
+  //     account: "98765432100529637538",
+  //     name: "Dummy User",
+  //     image: image2,
+  //   },
+  //   {
+  //     ifsc: "ICIC004421",
+  //     account: "123456789012",
+  //     name: "Rahul Singh",
+  //     image: image3,
+  //   },
+  // ];
 
   const options = ["Option 1"];
+const [accounts, setAccounts] = useState([]);
+const defaultImages = [image1, image2, image3];
+
+ const userId = localStorage.getItem("userId");
+  // console.log("userIduserIduserIduserIduserIduserIduserIduserId", userId)
+ const {profileDetails, fetchProfile } = useProfile();
+
+  const fetchaccount=async()=>{
+    try {
+      setLoader(true)
+      const userId=localStorage.getItem("userId")
+      const res = await axios.get(`${apis.account_view}${userId}`);
+      console.log("account",res?.data?.data)
+      setAccounts(res?.data?.data);
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoader(false)
+    }
+  }
+  const fetchusdtaccount=async()=>{
+    try {
+      setLoader(true)
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+      };
+      const res = await axios.post(`${apis.view_usdt_wallet_address}`, payload);
+      console.log("account usdt",res?.data?.data)
+      setAccounts(res?.data?.data);
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoader(false)
+    }
+  }
+
+  const cards = accounts.map((acc, index) => ({
+    ifsc: acc.ifsc_code || acc.wallet_type,
+    account: acc.account_number || acc.wallet_address,
+    name: acc.name,
+    image: defaultImages[index % defaultImages.length], // rotate through images
+    id:acc.id
+  }));
+
+  
+  const handleUsdtPayment=async()=>{
+    try {
+      setLoader(true)
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+        usdt_wallet_address_id: selectedCardId,
+        amount_inr: amount,
+        amount: amount / profileDetails?.withdraw_conversion_rate,
+        type: 0,
+      };
+      console.log(payload)
+      const res = await axios.post(apis.usdtwithdraw, payload);
+      console.log(res)
+      if(res?.data?.status===200){
+       await fetchProfile();
+        toast.success(res?.data?.message);
+        setAmount("")
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.response?.data?.message)
+    }
+    finally{
+      setLoader(false)
+    }
+  }
+
+  useEffect(() => {
+    if(selectedPayment=="manual"){
+ fetchaccount();
+    }
+    else{
+ fetchusdtaccount();
+    }
+  }, [selectedPayment]);
+
+  const cryptoMin=940
+  const cryptoMax=188000
+  const manualMin=200
+  const manualMax = 1000000
+
+    const handleSelectCard = (card) => {
+      setSelectedCardId(card.id); // store selected card ID
+      console.log("Selected Card ID:", card.id);
+    };
+
+    const handleIndainPayment=async()=>{
+      try {
+        setLoader(true)
+        const payload={
+          user_id:localStorage.getItem("userId"),
+          amount:amount,
+          upi_id:upiId
+        }
+        console.log("payload",payload)
+        const res = await axios.post(apis.indianpay_withdraw, payload);
+           if (res?.data?.status === 200) {
+             await fetchProfile();
+             toast.success(res?.data?.message);
+             setAmount("");
+             setUpiId("")
+           }
+      } catch (error) {
+        console.log(error)
+        toast.error(error?.response?.data?.message);
+      }finally{
+        setLoader(false)
+      }
+    }
+
+    const handleBankWithdraw=async()=>{
+      try {
+         setLoader(true);
+         const payload = {
+           user_id: localStorage.getItem("userId"),
+           amount: amount,
+           account_id: selectedCardId,
+           type: 1,
+         };
+         console.log("payload", payload);
+         const res = await axios.post(apis.withdraw, payload);
+         if (res?.data?.status === 200) {
+           await fetchProfile();
+           toast.success(res?.data?.message);
+           setAmount("");
+           setUpiId("");
+         }
+      } catch (error) {
+        console.error(error)
+        toast.error(error?.response?.data?.message);
+      } finally {
+        setLoader(false);
+      }    
+    }
+
+  if(loader){
+     return (
+       <div className="min-h-screen flex items-center justify-center">
+         <Loader />
+       </div>
+     );
+  }
   return (
     <div className="min-h-screen  flex justify-center items-start py-6 px-0 ">
       <div className="w-full px-4 space-y-2">
@@ -612,12 +768,26 @@ const [active, setActive] = useState("Option 1");
             >
               {cards.map((card, idx) => (
                 <SwiperSlide key={idx}>
-                  <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                  <div
+                    className={`relative w-full h-32 rounded-xl overflow-hidden shadow cursor-pointer transition-all duration-200 ${
+                      selectedCardId == card.id
+                        ? "border-2 border-blue-500"
+                        : "border border-transparent"
+                    }`}
+                    onClick={() => {
+                      console.log(card);
+                      handleSelectCard(card);
+                    }}
+                  >
                     {/* Background image */}
                     <img
                       src={card.image}
                       alt="Bank Card"
-                      className="w-full h-full object-cover rounded-xl"
+                      className={`w-full h-full object-cover rounded-xl ${
+                        selectedCardId == card.id
+                          ? "border-2 border-blue-500"
+                          : "border border-transparent"
+                      }`}
                     />
 
                     {/* Overlay details */}
@@ -676,12 +846,26 @@ const [active, setActive] = useState("Option 1");
             >
               {cards.map((card, idx) => (
                 <SwiperSlide key={idx}>
-                  <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                  <div
+                    className={`relative w-full h-32 rounded-xl overflow-hidden shadow cursor-pointer transition-all duration-200 ${
+                      selectedCardId == card.id
+                        ? "border-2 border-blue-500"
+                        : "border border-transparent"
+                    }`}
+                    onClick={() => {
+                      console.log(card);
+                      handleSelectCard(card);
+                    }}
+                  >
                     {/* Background image */}
                     <img
                       src={card.image}
                       alt="Bank Card"
-                      className="w-full h-full object-cover rounded-xl"
+                      className={`w-full h-full object-cover rounded-xl ${
+                        selectedCardId == card.id
+                          ? "border-2 border-blue-500"
+                          : "border border-transparent"
+                      }`}
                     />
 
                     {/* Overlay details */}
@@ -689,7 +873,7 @@ const [active, setActive] = useState("Option 1");
                       {/* Top row (IFSC + Buttons) */}
                       <div className="flex justify-between items-center mb-2">
                         <p className="text-sm font-semibold text-gray-800 ml-10">
-                          {card.ifsc}
+                          {card.ifsc || card.wallet_type}
                         </p>
                         <div className="flex gap-2">
                           <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
@@ -710,7 +894,7 @@ const [active, setActive] = useState("Option 1");
 
                       {/* Account number */}
                       <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
-                        {card.account}
+                        {card.account || card.wallet_address}
                       </p>
 
                       {/* Name */}
@@ -756,6 +940,27 @@ const [active, setActive] = useState("Option 1");
           </div>
         )}
 
+        {selectedPayment === "indianpay" && (
+          <div>
+            <div className="rounded-[8px] shadow p-4 bg-white">
+              <h2 className="text-black font-semibold mb-3">
+                Upi Id<span className="text-red-500">*</span>
+              </h2>
+              <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
+                {/* <span className="text-gray-500">₹</span> */}
+                <input
+                  type="email"
+                  placeholder="Enter Upi Id"
+                  value={upiId}
+                  onChange={(e) => setUpiId(e.target.value)}
+                  className="w-full outline-none text-gray-700 font-normal"
+                />
+                {/* <span className="text-black font-medium">UPI Id</span> */}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Amount Section */}
         <div className="rounded-[8px] shadow p-4 bg-white">
           <h2 className="text-black font-semibold mb-3">
@@ -774,12 +979,12 @@ const [active, setActive] = useState("Option 1");
           </div>
           {selectedPayment === "manual" && (
             <p className="text-ssm text-lightGray mt-1 font-semibold">
-              Min 200 - Max 1000000
+              Min {manualMin} - Max {manualMax}
             </p>
           )}
           {selectedPayment === "crypto" && (
             <p className="text-ssm text-lightGray mt-1 font-semibold">
-              Min 500 - Max 1000000
+              Min {cryptoMin} - Max {cryptoMax}
             </p>
           )}
 
@@ -860,18 +1065,63 @@ const [active, setActive] = useState("Option 1");
           </button>
         </div> */}
         {/* submit */}
-        <div className="flex w-full items-center justify-center">
-          <button
-            type="submit"
-            className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
-            style={{
-              fontFamily: "Roboto",
-              fontSize: "13.5px",
-            }}
-          >
-            SUBMIT
-          </button>
-        </div>
+        {selectedPayment === "manual" && (
+          <div className="flex w-full items-center justify-center">
+            <button
+              // type="submit"
+              onClick={handleBankWithdraw}
+              className={`w-full bg-[#969696] text-white font-medium py-3 rounded-md ${
+                amount >= manualMin && amount <= manualMax
+                  ? "bg-red hover:bg-red-600"
+                  : "bg-lightGray cursor-not-allowed"
+              }`}
+              style={{
+                fontFamily: "Roboto",
+                fontSize: "13.5px",
+              }}
+            >
+              SUBMIT
+            </button>
+          </div>
+        )}
+        {selectedPayment == "crypto" && (
+          <div className="flex w-full items-center justify-center">
+            <button
+              // type="submit"
+              onClick={handleUsdtPayment}
+              className={`w-full  text-white font-medium py-3 rounded-md ${
+                amount >= cryptoMin && amount <= cryptoMax
+                  ? "bg-red hover:bg-red-600"
+                  : "bg-lightGray cursor-not-allowed"
+              }`}
+              style={{
+                fontFamily: "Roboto",
+                fontSize: "13.5px",
+              }}
+            >
+              SUBMIT
+            </button>
+          </div>
+        )}
+        {selectedPayment == "indianpay" && (
+          <div className="flex w-full items-center justify-center">
+            <button
+              // type="submit"
+              onClick={handleIndainPayment}
+              className={`w-full  text-white font-medium py-3 rounded-md ${
+                amount >= 100 && amount <= cryptoMax
+                  ? "bg-red hover:bg-red-600"
+                  : "bg-lightGray cursor-not-allowed"
+              }`}
+              style={{
+                fontFamily: "Roboto",
+                fontSize: "13.5px",
+              }}
+            >
+              SUBMIT
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

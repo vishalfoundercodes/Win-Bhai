@@ -32,9 +32,9 @@ export default function AccountStatementTable({ data }) {
               <th className="px-3 py-2 text-left border-r border-b border-lightBorder">
                 DESCRIPTION
               </th>
-              <th className="px-3 py-2 text-left border-r border-b border-lightBorder">
+              {/* <th className="px-3 py-2 text-left border-r border-b border-lightBorder">
                 ROUND
-              </th>
+              </th> */}
             </tr>
           </thead>
           <tbody>
@@ -44,7 +44,7 @@ export default function AccountStatementTable({ data }) {
                 className="text-ssm border-b border-gray-200 bg-gray-50 "
               >
                 <td className="px-3 py-2 whitespace-nowrap border-r border-b border-lightBorder">
-                  {row.date}
+                  {row.date_time}
                 </td>
                 <td className="px-3 py-2 border-r border-b border-lightBorder">
                   {row.credit}
@@ -63,9 +63,9 @@ export default function AccountStatementTable({ data }) {
                 <td className="px-3 py-2 border-r border-b border-lightBorder">
                   {row.description}
                 </td>
-                <td className="px-3 py-2 border-r border-b border-lightBorder">
+                {/* <td className="px-3 py-2 border-r border-b border-lightBorder">
                   {row.round}
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

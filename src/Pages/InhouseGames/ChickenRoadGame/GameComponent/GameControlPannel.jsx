@@ -107,8 +107,8 @@ const navigate = useNavigate();
         setAmountOptions(values); // Save to state
       }
     } catch (error) {
-      // console.log(error);
-      // console.log("api of amount options:", apis.bet_value);
+      console.log(error);
+      // console.log("api of amount options:", error.bet_value);
       toast.error("Failed to fetch amount options");
     }
   };
@@ -174,7 +174,7 @@ const navigate = useNavigate();
       return;
     }
     try {
-      const loginTokenFromLocalStorage = localStorage.getItem("login_token");
+      const loginTokenFromLocalStorage = localStorage.getItem("token");
       const response = await axios.get(`${apis.profile}${userid}`);
       const profileToken = response?.data?.data?.login_token;
       if (profileToken != loginTokenFromLocalStorage) {
@@ -228,6 +228,7 @@ const navigate = useNavigate();
         // console.log(`cash out res: ${apis?.chickenbet}`);
         post(`${apis?.chickenbet}`, payload)
           .then((res) => {
+            console.log(res)
             if (res?.data?.success === true) {
               // console.log("res for payload cash out:", res.data);
               setProfileRefresher(true);

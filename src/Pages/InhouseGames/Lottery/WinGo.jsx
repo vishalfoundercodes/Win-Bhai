@@ -42,9 +42,9 @@ const wingo_game_history = apis.wingo_game_history
 const wingo_win_amount_announcement = apis.wingo_win_amount_announcement
 const images = [zero, one, two, three, four, five, six, seven, eight, nine];
 const notes = [
-  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
-  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
-  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://winbhai.in / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://winbhai.in / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://winbhai.in / Please re",
 ];
 const WinGo = () => {
   const [myDetails, setMyDetails] = useState(null)
@@ -79,8 +79,7 @@ const WinGo = () => {
   const { timers, setEventName } = useSocket();
 
   useEffect(() => {
-    // setEventName("demo_wingotrx");
-    setEventName("bdgcasino_wingo");
+    setEventName("winbhai_wingo");
   }, [setEventName]);
   useEffect(() => {
     const selectedTime =
@@ -514,7 +513,7 @@ const WinGo = () => {
               <div className="h-7 flex items-center overflow-hidden">
                 <img className="h-5 w-5" src={micphone} alt="ds" />{" "}
                 <div
-                  className={`flex-1  font-bold w-full pl-1 -pt-2 -pb-2  text-[9px] xsm:text-[9.5px] overflow-hidden text-ellipsis whitespace-normal break-words transition-transform duration-1000 ease-in-out ${
+                  className={`flex-1  font-bold w-full pl-1 -pt-2 -pb-2 text-[8px] xsm3:text-[9px] xsm:text-[9.5px] overflow-hidden text-ellipsis whitespace-normal break-words transition-transform duration-1000 ease-in-out ${
                     animate
                       ? "transform -translate-y-full"
                       : "transform translate-y-0"

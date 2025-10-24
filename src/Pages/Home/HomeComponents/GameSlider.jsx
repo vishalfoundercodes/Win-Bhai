@@ -13,8 +13,8 @@ import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-export default function GameSlider({ isOpen, onClose }) {
-    const [selected, setSelected] = useState(null);
+export default function GameSlider({ isOpen, onClose, profileDetails }) {
+  const [selected, setSelected] = useState(null);
 
   const navigate = useNavigate();
   const Cricket = ({ active }) => (
@@ -319,10 +319,12 @@ export default function GameSlider({ isOpen, onClose }) {
         {/* User Info */}
         <div className="flex items-center gap-3 px-4 py-3 border-b">
           <div className="w-8 h-8 flex items-center justify-center rounded-[6px] bg-[#A21518] text-white font-bold text-xsm p-4">
-            V
+            {profileDetails?.username?.charAt(0)?.toUpperCase() || "U"}
+            
           </div>
           <span className="text-darkGray font-medium text-sm">
-            Vikas Sharma
+            {profileDetails?.username || "User"}
+           
           </span>
         </div>
 

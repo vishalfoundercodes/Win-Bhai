@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import SlidingTabs from '../Home/HomeComponents/SlidingTabs';
 import calender from "../../assets/Wallet/calender.png";
@@ -7,56 +7,153 @@ import BettingTable from "./BetTable";
 import CalendarModal from "../ReusableComponent/Calender";
 import ProfitLossTable from "./ProfitLossTable";
 import AccountStatementTable from "./AccountStatementTable";
+import axios from "axios";
+import apis from "../../utils/apis";
 export default function AccountStatement() {
-      const startRef = useRef(null);
-      const endRef = useRef(null);
+  const startRef = useRef(null);
+  const endRef = useRef(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-      const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
-const [dropdownModal, setDropdownModal] = useState(null); // "report" | "range" | null
+  const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
+  const [dropdownModal, setDropdownModal] = useState(null); // "report" | "range" | null
 
-const [reportType, setReportType] = useState("All");
-const [dateRange, setDateRange] = useState("Today");
+  const [reportType, setReportType] = useState("All");
+  const [dateRange, setDateRange] = useState("Today");
+
+  const [accountData, setAccountData] = useState([]);
+   const [filteredData, setFilteredData] = useState([]);
+  const fetchAccountData = async () => {
+    try {
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+      };
+      const res = await axios.post(apis.accountStatement, payload);
+      console.log("account statement res", res);
+      if (res.data.status===200) {
+        console.log("account", res?.data?.data)
+        setAccountData(res?.data?.data);
+      }
+    } catch (error) {
+      console.error("Error fetching account statement:", error);
+    }
+  };
+  useEffect(() => {
+    fetchAccountData();
+  }, []);
 
   // helper to format yyyy-mm-dd -> mm/dd/yyyy
-const formatDate = (value) => {
-  if (!value) return "";
+  const formatDate = (value) => {
+    if (!value) return "";
 
-  // If it's a Date object
-  if (value instanceof Date) {
-    const year = value.getFullYear();
-    const month = String(value.getMonth() + 1).padStart(2, "0");
-    const day = String(value.getDate()).padStart(2, "0");
-    return `${month}/${day}/${year}`;
-  }
+    // If it's a Date object
+    if (value instanceof Date) {
+      const year = value.getFullYear();
+      const month = String(value.getMonth() + 1).padStart(2, "0");
+      const day = String(value.getDate()).padStart(2, "0");
+      return `${month}/${day}/${year}`;
+    }
 
-  // If it's already a string (yyyy-mm-dd)
-  if (typeof value === "string") {
-    const [year, month, day] = value.split("-");
-    return `${month}/${day}/${year}`;
-  }
+    // If it's already a string (yyyy-mm-dd)
+    if (typeof value === "string") {
+      const [year, month, day] = value.split("-");
+      return `${month}/${day}/${year}`;
+    }
 
-  return "";
-};
+    return "";
+  };
 
+  // 👉 Function to filter data
+  const handleFilter = () => {
+    if (!accountData?.length) return;
 
+    const today = new Date();
+    let start = startDate ? new Date(startDate) : null;
+    let end = endDate ? new Date(endDate) : null;
+
+    // Handle predefined ranges
+    if (!startDate && !endDate) {
+      if (dateRange === "Today") {
+        start = new Date(today.setHours(0, 0, 0, 0));
+        end = new Date();
+      } else if (dateRange === "Yesterday") {
+        const y = new Date();
+        y.setDate(y.getDate() - 1);
+        start = new Date(y.setHours(0, 0, 0, 0));
+        end = new Date(y.setHours(23, 59, 59, 999));
+      } else if (dateRange === "Last 7 Days") {
+        const s = new Date();
+        s.setDate(today.getDate() - 7);
+        start = s;
+        end = new Date();
+      } else if (dateRange === "Last 30 Days") {
+        const s = new Date();
+        s.setDate(today.getDate() - 30);
+        start = s;
+        end = new Date();
+      }
+    }
+
+    // Filter based on date_time
+    // Start filtering
+    let filtered = accountData.filter((item) => {
+      const itemDate = new Date(item.date_time);
+      if (start && itemDate < start) return false;
+      if (end && itemDate > end) return false;
+      return true;
+    });
+
+    // Apply report type filter (description-based)
+    // Filter by description (report type)
+    if (reportType !== "All") {
+      filtered = filtered.filter((item) => {
+        const desc = item.description?.toLowerCase() || "";
+
+        if (reportType === "Deposit & Withdraw Report") {
+          return desc.includes("deposit") || desc.includes("withdraw");
+        }
+
+        if (reportType === "Deposit") {
+          return desc.includes("deposit");
+        }
+
+        if (reportType === "Withdraw") {
+          return desc.includes("withdraw");
+        }
+
+        if (reportType.toLowerCase().includes("game")) {
+          return desc.includes("game");
+        }
+
+        return true;
+      });
+    }
+    // ✅ If nothing is filtered out (no filters applied), show all data
+    if (!start && !end && reportType === "All" && dateRange === "Today") {
+      setFilteredData(accountData);
+      console.log("account data", accountData);
+    } else {
+      setFilteredData(filtered);
+      console.log("account data", filtered);
+    }
+  };
   const sampleData = [
-  {
-    date: "2025-09-06 23:36:18",
-    credit: 0,
-    debit: 10,
-    balance: 0.27,
-    description: "Withdraw................",
-    round: "02",
-  },
-  {
-    date: "2025-09-06 23:36:18",
-    credit: 0,
-    debit: -8,
-    balance: 0.27,
-    description: "Withdraw................",
-    round: "02",
-  }]
+    {
+      date: "2025-09-06 23:36:18",
+      credit: 0,
+      debit: 10,
+      balance: 0.27,
+      description: "Withdraw................",
+      round: "02",
+    },
+    {
+      date: "2025-09-06 23:36:18",
+      credit: 0,
+      debit: -8,
+      balance: 0.27,
+      description: "Withdraw................",
+      round: "02",
+    },
+  ];
 
   return (
     <div className="min-h-screen">
@@ -145,7 +242,7 @@ const formatDate = (value) => {
 
               {dropdownModal === "report" && (
                 <div className="absolute mt-1 w-full bg-white rounded-xl shadow-lg z-10">
-                  {["All", "Deposit/Withdraw Report", "Game Report"].map(
+                  {["All", "Deposit & Withdraw Report", "Deposit", "Withdraw","Game report"].map(
                     (option, i) => (
                       <div
                         key={i}
@@ -209,7 +306,10 @@ const formatDate = (value) => {
             </div>
           </div>
 
-          <button className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm">
+          <button
+            className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm"
+            onClick={handleFilter}
+          >
             Submit
           </button>
         </div>
@@ -217,7 +317,8 @@ const formatDate = (value) => {
       <div className="pl-4">
         {" "}
         {/* Account statment table  */}
-        <AccountStatementTable data={sampleData} />
+        {/* <AccountStatementTable data={accountData} /> */}
+        <AccountStatementTable data={filteredData} />
       </div>
 
       {/* Calendar Modal */}

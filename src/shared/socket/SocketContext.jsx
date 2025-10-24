@@ -5,7 +5,7 @@ import io from "socket.io-client";
 const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-  const domain = "https://aviatorudaan.com/";
+  const domain = "https://jupitergames.vip";
   const socket = useMemo(() => io(domain), []);
 
   const [timers, setTimers] = useState({

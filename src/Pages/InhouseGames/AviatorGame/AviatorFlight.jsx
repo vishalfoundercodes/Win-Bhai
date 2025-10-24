@@ -31,9 +31,8 @@ function AviatorFlight({ changeBg, setChangeBg, isSoundOn, setIsSoundOn, isPathR
             setHotAirData(q);
         };
 
-        // socket.on("demo_aviator", handleSocket);
-        socket.on("bdgcasino_aviator", handleSocket);
-        return () => socket.off("bdgcasino_aviator", handleSocket);
+        socket.on("winbhai_aviator", handleSocket);
+        return () => socket.off("winbhai_aviator", handleSocket);
     }, []);
     // console.log("hotAirData",hotAirData)
 

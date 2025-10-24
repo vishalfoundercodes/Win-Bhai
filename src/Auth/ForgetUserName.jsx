@@ -11,6 +11,9 @@ import srilankaFlag from "../assets/Country/srilanka.png";
 import uaeFlag from "../assets/Country/uae.png";
 import ukFlag from "../assets/Country/uk.png";
 import usFlag from "../assets/Country/us.png";
+import axios from "axios";
+import apis from "../utils/apis";
+import { toast } from "react-toastify";
 export default function ForgetUserName() {
   const navigate = useNavigate();
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -29,6 +32,75 @@ export default function ForgetUserName() {
                  ];
                    const [isOpen, setIsOpen] = useState(false);
                    const [selected, setSelected] = useState(countries[0]);
+                     const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [username, setUsername] = useState("");
+  const [confirmUsername, setConfirmUsername] = useState("");
+  const [buttonDisabled,setButtonDisabled]=useState(true)
+
+            const handleSubmit = async (e) => {
+                  e.preventDefault(); // Prevent page refresh
+
+                  if (!phoneNumber) {
+                    toast.error("Phone Number is required.");
+                    return; // Exit the function if validation fails
+                  }
+                  if (!username) {
+                    toast.error("Username is required.");
+                    return; // Exit the function if validation fails
+                  }
+                  if (username !== confirmUsername) {
+                    toast.error("Username and confirm username must be same.");
+                    return; // Exit the function if validation fails
+                  }
+                 // Create payload
+                  const payload = {
+                    country_code: selected.code,
+                    mobile: phoneNumber,
+                    otp: otp,
+                    new_username: username,
+                    
+                  };
+                  // Log the payload
+                  console.log(payload);
+                  const res = await axios.post(apis.forget_username, payload);
+                  console.log(res);
+
+                  if (res?.data?.status === 200) {
+                    toast.success(res?.data?.message);
+                    navigate("/login");
+                  }
+                  if (res?.data?.status === 400) {
+                    toast.error(res?.data?.message);
+                  }
+                };
+
+                const sendOtp=async(number)=>{
+                  const res = await axios.post(`${apis.sendOtp}${number}`);
+                  console.log(res?.data)
+                  if (res?.data?.error === 200 || res?.data?.error === "200") {
+                    toast.success(res?.data?.msg);
+                  } else {
+                    toast.error(res?.data?.msg);
+                  }
+                }
+
+                const handleVerify=async(value)=>{
+                  console.log(phoneNumber,value)
+                   console.log(`${apis.verifyOtp}${phoneNumber}&otp=${value}`);
+                  const res = await axios.post(
+                    `${apis.verifyOtp}${phoneNumber}&otp=${value}`
+                  );
+                 
+                  console.log(res)
+                  if(res?.data?.error===200 || res?.data?.error==='200'){
+                    toast.success(res?.data?.msg);
+                    setButtonDisabled(false)
+                  }
+                 else if(res?.data?.error===400 || res?.data?.error==='400'){
+                    toast.error(res?.data?.msg);
+                  }
+                }
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
@@ -45,7 +117,7 @@ export default function ForgetUserName() {
           ×
         </div>
 
-        <form className="space-y-4 mt-4 mb-2">
+        <form className="space-y-4 mt-4 mb-2" onSubmit={handleSubmit}>
           {/* Phone Number */}
           {/* Phone Number */}
           <div className="flex mt-2 gap-2">
@@ -85,7 +157,7 @@ export default function ForgetUserName() {
               </div>
 
               {/* Dropdown */}
-              {isOpen && (
+              {isOpen && buttonDisabled && (
                 <div className="absolute mt-2 w-72  bg-white border border-gray-300 rounded-[6px] shadow-lg max-h-60 overflow-y-auto z-50 hide-scrollbar px-3 py-2">
                   {countries.map((country, idx) => (
                     <div
@@ -133,14 +205,30 @@ export default function ForgetUserName() {
                 <input
                   type="text"
                   placeholder="Phone Number"
+                  disabled={!buttonDisabled}
                   className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
                   style={{ fontFamily: "Roboto, sans-serif" }}
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+                    if (value.length <= 10) {
+                      setPhoneNumber(value);
+                    }
+                  }}
+                  maxLength={10}
                 />
 
                 {/* OTP Button */}
                 <button
                   type="button"
                   className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600"
+                  onClick={() => {
+                    if (phoneNumber.length === 10) {
+                      sendOtp(phoneNumber);
+                    } else {
+                      toast.error("Enter the 10 digit number");
+                    }
+                  }}
                 >
                   Get OTP
                 </button>
@@ -155,6 +243,18 @@ export default function ForgetUserName() {
               type="text"
               placeholder="Enter OTP"
               className="w-full px-4 py-2 border rounded-xl text-sm bg-inputBoxBg text-inputText border-inputBorder focus:outline-none"
+              value={otp}
+              // onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+                if (value.length <= 4) {
+                  setOtp(value);
+                }
+                if(value.length===4){
+                  handleVerify(value);
+                }
+              }}
+              maxLength={4}
             />
           </div>
 
@@ -165,9 +265,12 @@ export default function ForgetUserName() {
             </label>
             <div className="relative">
               <input
+                disabled={buttonDisabled}
                 type={showNewPassword ? "text" : "password"}
-                placeholder="New Password"
+                placeholder="New Username"
                 className="w-full px-4 py-2 border rounded-xl text-sm bg-inputBoxBg text-inputText border-inputBorder focus:outline-none"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <button
                 type="button"
@@ -230,9 +333,12 @@ export default function ForgetUserName() {
             </label>
             <div className="relative">
               <input
+                disabled={buttonDisabled}
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 className="w-full px-4 py-2 border rounded-xl text-sm bg-inputBoxBg text-inputText border-inputBorder focus:outline-none"
+                value={confirmUsername}
+                onChange={(e) => setConfirmUsername(e.target.value)}
               />
               <button
                 type="button"

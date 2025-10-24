@@ -11,6 +11,9 @@ import srilankaFlag from "../assets/Country/srilanka.png";
 import uaeFlag from "../assets/Country/uae.png";
 import ukFlag from "../assets/Country/uk.png";
 import usFlag from "../assets/Country/us.png";
+import apis from "../utils/apis";
+import axios from "axios";
+import { toast } from "react-toastify";
 export default function Login() {
     const navigate=useNavigate()
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -34,6 +37,53 @@ export default function Login() {
               const [isOpenCountry, setIsOpenCountry] = useState(false);
               const [selectedCountry, setSelectedcountry] = useState(countries[0]);
     
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [selectedOption, setSelectedOption] = useState("Username");
+
+    const handleLogin = async (e) => {
+      e.preventDefault(); // Prevent the page reload on form submit
+
+      // Validate required fields
+      if (!username && !phoneNumber) {
+        toast.error("Please provide either a username or phone number.");
+        return; // Exit the function if validation fails
+      }
+
+      if (!password) {
+        toast.error("Password is required.");
+        return; // Exit the function if validation fails
+      }
+
+      // If validation passes, proceed with login
+      const payload = {
+        identity:
+          selectedOption === "Username" ? username : phoneNumber ,
+        password,
+        country_code: selectedCountry.code,
+        selectedOption,
+      };
+
+      console.log("Login Payload:", payload);
+
+      // Add your logic to handle login here, such as sending the data to the server
+      try {
+        const res = await axios.post(apis.login, payload);
+        // console.log(res); // Log the response from the server
+        if(res?.data?.status==="200" || res?.data?.status===200){
+          toast.success(res?.data?.message);
+             localStorage.setItem("userId", res?.data?.id);
+             localStorage.setItem("token", res?.data?.login_token);
+             navigate("/");
+        }
+        // Handle server response here, like redirecting on successful login
+      } catch (error) {
+        console.error("Login Error:", error?.response?.data?.message); // Handle any errors from the server
+        toast.error(error?.response?.data?.message);
+      }
+    };
+
   return (
     <div
       className="min-h-screen w-full flex items-center justify-center bg-no-repeat bg-cover bg-center relative"
@@ -58,10 +108,7 @@ export default function Login() {
         {/* Form Content */}
         <form
           className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault(); // ❌ Prevents page reload
-            console.log("Form Submitted");
-          }}
+          onSubmit={handleLogin}
         >
           {/* Login with + User ID */}
           <div className="flex flex-col sm:flex-row sm:space-x-2">
@@ -112,6 +159,7 @@ export default function Login() {
                       }`}
                       onClick={() => {
                         setSelected(option);
+                        setSelectedOption(option);
                         setIsOpen(false);
                       }}
                     >
@@ -212,6 +260,8 @@ export default function Login() {
                       placeholder="Phone Number"
                       className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
                       style={{ fontFamily: "Roboto, sans-serif" }}
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
 
                     {/* OTP Button */}
@@ -248,6 +298,8 @@ export default function Login() {
                   type={showUserName ? "text" : "password"}
                   placeholder="Enter username"
                   className="w-full px-4 py-2 border rounded-md bg-inputBoxBg text-inputText border-inputBorder text-sm focus:outline-none "
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
                 <button
                   type="button"
@@ -323,6 +375,8 @@ export default function Login() {
                 type={showNewPassword ? "text" : "password"}
                 placeholder="Enter Password"
                 className="w-full px-4 py-2 border rounded-md bg-inputBoxBg text-inputText border-inputBorder text-sm focus:outline-none "
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="button"
@@ -407,9 +461,9 @@ export default function Login() {
               fontWeight: 200,
               fontSize: "13px",
             }}
-            onClick={() => {
-              localStorage.setItem("userId", 1), navigate("/");
-            }}
+            // onClick={() => {
+            //   localStorage.setItem("userId", 1), navigate("/");
+            // }}
           >
             Login
           </button>

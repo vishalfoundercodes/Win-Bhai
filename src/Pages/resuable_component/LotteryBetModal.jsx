@@ -127,9 +127,10 @@ function LotteryBetModal({
 
   const wingoBetHandler = async () => {
     try{
-    const loginTokenFromLocalStorage = localStorage.getItem("login_token");
+    const loginTokenFromLocalStorage = localStorage.getItem("token");
     const response = await axios.get(`${apis.profile}${userId}`);
     const profileToken = response?.data?.data?.login_token;
+    
     if (profileToken != loginTokenFromLocalStorage) {
       setLoading(true);
       console.log("wingo login token matches");
@@ -193,184 +194,186 @@ if (loading) {
   return <Loader />;
 }
     return (
-    <>
-      <div
-        className="fixed inset-0 z-50 flex justify-center items-end bg-black bg-opacity-50"
-        onClick={handleOverlayClick}
-      >
+      <>
         <div
-          onClick={(e) => e.stopPropagation()}
-          className="w-full xsm:w-[400px] bg-red text-white rounded-t-3xl shadow-lg"
+          className="fixed inset-0 z-50 flex justify-center items-end bg-grayBg bg-opacity-50"
+          onClick={handleOverlayClick}
         >
           <div
-            className={`${
-              gameDetails?.colorCode === "rv"
-                ? `bg-[#9B48DB]`
-                : gameDetails?.colorCode === "gv"
-                ? `bg-[#9B48DB]`
-                : "bg-red text-blackLight"
-            } h-[6.6rem] rounded-t-3xl`}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full xsm:w-[400px] min-h-screen  bg-black text-white shadow-lg backdrop-blur-sm"
           >
-            <div
-              className="relative flex flex-col items-center justify-center rounded-t-3xl py-3 text-white"
-              style={{ backgroundColor: colorClass }}
-            >
+            <div className="absolute bottom-0 w-full">
               <div
-                className="absolute left-1/2 transform -translate-x-1/2 -bottom-3 w-full h-3"
-                style={{
-                  backgroundColor: colorClass,
-                  clipPath: "polygon(50% 100%, -20% -20%, 100% 0%)",
-                }}
-              />
-              <h1 className="text-lg font-bold">
-                Win Go{" "}
-                {gameDetails?.gameId === 1
-                  ? "30 Seconds"
-                  : gameDetails?.gameId === 2
-                  ? "1 Minute"
-                  : gameDetails?.gameId === 3
-                  ? "3 Minutes"
-                  : "5 Minutes"}{" "}
-              </h1>
-              <p className="bg-white capitalize w-[80%] mt-3 text-black flex justify-center rounded-md text-sm sm:text-base md:text-sm py-1">
-                Select &nbsp; &nbsp;{" "}
-                {gameDetails?.colorCode === "yellow"
-                  ? "Big"
-                  : gameDetails?.colorCode === "bg3"
-                  ? "Small"
-                  : gameDetails?.colorCode === "r"
-                  ? gameDetails?.betButtonId
-                  : gameDetails?.colorCode === "rv"
-                  ? gameDetails?.betButtonId
-                  : gameDetails?.colorCode === "g"
-                  ? gameDetails?.betButtonId
-                  : gameDetails?.colorCode === "gv"
-                  ? gameDetails?.betButtonId
-                  : gameDetails?.colorCode}
-              </p>
-            </div>
-          </div>
-
-          <div className="w-full mt-5 flex justify-between">
-            <p className="text-white px-4">Balance</p>
-            <div className="flex gap-1 mt-3 px-4">
-              {["1", "10", "100", "1000"].map((value, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleBalanceClick(value, i)}
-                  className={`flex items-center justify-center text-xsm rounded-md h-7 px-2 ${
-                    balanceIndex === i ? "" : "bg-redLight text-white"
-                  }`}
-                  style={{
-                    backgroundColor: balanceIndex === i ? colorClass : "",
-                  }}
-                >
-                  {value}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-between w-full mt-5 px-4">
-            <p className="text-white">Quantity</p>
-            <div className="flex items-center justify-center gap-1">
-              <button
-                onClick={decrementBet}
-                className="w-7 h-7 rounded-md font-extrabold text-[14px] flex justify-center items-center"
-                style={{ backgroundColor: colorClass }}
+                className={`${
+                  gameDetails?.colorCode === "rv"
+                    ? `bg-[#9B48DB]`
+                    : gameDetails?.colorCode === "gv"
+                    ? `bg-[#9B48DB]`
+                    : "bg-red text-blackLight"
+                } h-[6.6rem] rounded-t-3xl`}
               >
-                <FaMinus className="text-white text-center" />
-              </button>
-              <input
-                value={finalBetValue}
-                inputMode="numeric"
-                onChange={(e) => setFinalBetValue(e.target.value)}
-                className="outline-none pl-1 w-20 h-7 flex items-center justify-center text-center bg-redLight text-white text-sm xsm:text-base"
-                type="number"
-              />
-              <button
-                onClick={incrementBet}
-                className="w-7 h-7 rounded-md font-extrabold text-[14px] flex justify-center items-center"
-                style={{ backgroundColor: colorClass }}
-              >
-                <FaPlus className="text-white text-center" />
-              </button>
-            </div>
-          </div>
-
-          <div className="flex justify-end gap-1 mt-3 px-4">
-            {["X1", "X5", "X10", "X20", "X50", "X100"].map((label, i) => {
-              const numericValue = parseInt(label.slice(1), 10);
-              return (
-                <button
-                  key={i}
-                  onClick={() => handleQuantityClick(numericValue)}
-                  className={`flex items-center justify-center text-xsm rounded-md h-7 px-2 ${
-                    quantityIndex === numericValue
-                      ? ""
-                      : "bg-redLight text-white"
-                  }`}
-                  style={{
-                    backgroundColor:
-                      quantityIndex === numericValue ? colorClass : "",
-                  }}
+                <div
+                  className="relative flex flex-col items-center justify-center rounded-t-3xl py-3 text-white"
+                  style={{ backgroundColor: colorClass }}
                 >
-                  {label}
+                  <div
+                    className="absolute left-1/2 transform -translate-x-1/2 -bottom-3 w-full h-3"
+                    style={{
+                      backgroundColor: colorClass,
+                      clipPath: "polygon(50% 100%, -20% -20%, 100% 0%)",
+                    }}
+                  />
+                  <h1 className="text-lg font-bold">
+                    Win Go{" "}
+                    {gameDetails?.gameId === 1
+                      ? "30 Seconds"
+                      : gameDetails?.gameId === 2
+                      ? "1 Minute"
+                      : gameDetails?.gameId === 3
+                      ? "3 Minutes"
+                      : "5 Minutes"}{" "}
+                  </h1>
+                  <p className="bg-white capitalize w-[80%] mt-3 text-black flex justify-center rounded-md text-sm sm:text-base md:text-sm py-1">
+                    Select &nbsp; &nbsp;{" "}
+                    {gameDetails?.colorCode === "yellow"
+                      ? "Big"
+                      : gameDetails?.colorCode === "bg3"
+                      ? "Small"
+                      : gameDetails?.colorCode === "r"
+                      ? gameDetails?.betButtonId
+                      : gameDetails?.colorCode === "rv"
+                      ? gameDetails?.betButtonId
+                      : gameDetails?.colorCode === "g"
+                      ? gameDetails?.betButtonId
+                      : gameDetails?.colorCode === "gv"
+                      ? gameDetails?.betButtonId
+                      : gameDetails?.colorCode}
+                  </p>
+                </div>
+              </div>
+
+              <div className="w-full mt-5 flex justify-between">
+                <p className="text-white px-4">Balance</p>
+                <div className="flex gap-1 mt-3 px-4">
+                  {["1", "10", "100", "1000"].map((value, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleBalanceClick(value, i)}
+                      className={`flex items-center justify-center text-xsm rounded-md h-7 px-2 ${
+                        balanceIndex === i ? "" : "bg-redLight text-white"
+                      }`}
+                      style={{
+                        backgroundColor: balanceIndex === i ? colorClass : "",
+                      }}
+                    >
+                      {value}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex justify-between w-full mt-5 px-4">
+                <p className="text-white">Quantity</p>
+                <div className="flex items-center justify-center gap-1">
+                  <button
+                    onClick={decrementBet}
+                    className="w-7 h-7 rounded-md font-extrabold text-[14px] flex justify-center items-center"
+                    style={{ backgroundColor: colorClass }}
+                  >
+                    <FaMinus className="text-white text-center" />
+                  </button>
+                  <input
+                    value={finalBetValue}
+                    inputMode="numeric"
+                    onChange={(e) => setFinalBetValue(e.target.value)}
+                    className="outline-none pl-1 w-20 h-7 flex items-center justify-center text-center bg-redLight text-white text-sm xsm:text-base"
+                    type="number"
+                  />
+                  <button
+                    onClick={incrementBet}
+                    className="w-7 h-7 rounded-md font-extrabold text-[14px] flex justify-center items-center"
+                    style={{ backgroundColor: colorClass }}
+                  >
+                    <FaPlus className="text-white text-center" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-1 mt-3 px-4">
+                {["X1", "X5", "X10", "X20", "X50", "X100"].map((label, i) => {
+                  const numericValue = parseInt(label.slice(1), 10);
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => handleQuantityClick(numericValue)}
+                      className={`flex items-center justify-center text-xsm rounded-md h-7 px-2 ${
+                        quantityIndex === numericValue
+                          ? ""
+                          : "bg-redLight text-white"
+                      }`}
+                      style={{
+                        backgroundColor:
+                          quantityIndex === numericValue ? colorClass : "",
+                      }}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center mt-4 px-4">
+                <div
+                  onClick={() => setCheckAgreement(!checkAgreement)}
+                  className="flex items-center cursor-pointer bg-white rounded-full"
+                >
+                  {checkAgreement ? (
+                    <FaCheckCircle
+                      className="text-redLight"
+                      size={26}
+                      style={{ color: `[#B1835A]` }}
+                    />
+                  ) : (
+                    <FaRegCircle
+                      className="text-redLight"
+                      size={26}
+                      style={{ color: `[#B1835A]` }}
+                    />
+                  )}
+                </div>
+                <label htmlFor="agree" className="text-white ml-2 text-xsm ">
+                  I agree
+                </label>
+                <button
+                  onClick={togglePreSalesModal}
+                  className="ml-2 text-customred underline text-xsm "
+                >
+                  {"<<Pre-sale rules>>"}
                 </button>
-              );
-            })}
-          </div>
+              </div>
 
-          <div className="flex items-center mt-4 px-4">
-            <div
-              onClick={() => setCheckAgreement(!checkAgreement)}
-              className="flex items-center cursor-pointer bg-white rounded-full"
-            >
-              {checkAgreement ? (
-                <FaCheckCircle
-                  className="text-redLight"
-                  size={26}
-                  style={{ color: `[#B1835A]` }}
-                />
-              ) : (
-                <FaRegCircle
-                  className="text-redLight"
-                  size={26}
-                  style={{ color: `[#B1835A]` }}
-                />
-              )}
+              <div className="grid grid-cols-12 mt-5">
+                <button
+                  onClick={onClose}
+                  className={` bg-redLight text-white col-span-4 h-12`}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => wingoBetHandler()}
+                  className="bg-black col-span-8 h-12"
+                  style={{ backgroundColor: colorClass }}
+                >
+                  Total amount {finalBetValue}
+                </button>
+              </div>
             </div>
-            <label htmlFor="agree" className="text-white ml-2 text-xsm ">
-              I agree
-            </label>
-            <button
-              onClick={togglePreSalesModal}
-              className="ml-2 text-customred underline text-xsm "
-            >
-              {"<<Pre-sale rules>>"}
-            </button>
-          </div>
-
-          <div className="grid grid-cols-12 mt-5">
-            <button
-              onClick={onClose}
-              className={` bg-redLight text-white col-span-4 h-12`}
-            >
-              Cancel
-            </button>
-            <button
-              onClick={() => wingoBetHandler()}
-              className="bg-bg2 col-span-8 h-12"
-              style={{ backgroundColor: colorClass }}
-            >
-              Total amount {finalBetValue}
-            </button>
           </div>
         </div>
-      </div>
-      {isPreSalesModalOpen && <PreSalesModal onClose={togglePreSalesModal} />}
-    </>
-  );
+        {isPreSalesModalOpen && <PreSalesModal onClose={togglePreSalesModal} />}
+      </>
+    );
 }
 
 export default LotteryBetModal;

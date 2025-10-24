@@ -122,7 +122,7 @@
 //   );
 // }
 
-import React from "react";
+import React,{useEffect,useState} from "react";
 import ActionButtons from "./HomeComponents/ActionButtons";
 import SlidingTabs from "./HomeComponents/SlidingTabs";
 import SlidingTabs2 from "./HomeComponents/SlidingTabs2";
@@ -162,7 +162,35 @@ import lotterycategorywingo from "../../assets/GameIcons/lotterycategorywingo.pn
 // import alllotterybg from "../../assets/GameIcons/alllotterybg.png";
 import alllotterybg from "../../assets/GameIcons/wingoLogo.png";
 import TrendingGames from "../Games/TrendingGames";
+import axios from "axios";
+import apis from "../../utils/apis";
+import Loader from "../resuable_component/Loader/Loader"
+import { useProfile } from "../../Context/ProfileContext";
 export default function Home() {
+   const { profileDetails, setprofileDetails } = useProfile();
+  const [allGames, setAllGames] = useState([]);
+  const [slotGames, setSlotGames] = useState([]);
+
+  const fetchDataJIlli = async () => {
+    try {
+      const res = await axios.get(apis.all_game_list);
+      const games = res?.data?.data || [];
+
+      setAllGames(games.filter((game) => game.category !== "slot")); // store all games
+      setSlotGames(games.filter((game) => game.category === "slot")); // only slot
+      // console.log("all games:", allGames);
+      // console.log("slotGames :", slotGames);
+
+    } catch (error) {
+      console.error("Error fetching games", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataJIlli();
+  }, []);
+
+
   const games = [
     { id: 1, name: "AviaFly", image: aviaFly },
     { id: 2, name: "Aviator", image: aviator1 },
@@ -325,12 +353,57 @@ const games2 = [
   ];
 
    const userId = localStorage.getItem("userId");
+
+
+     const [brandGames, setBrandGames] = useState([]);
+     const [loading, setLoading] = useState(true);
+
+     
+     useEffect(() => {
+       const fetchBrandsAndGames = async () => {
+         try {
+           const brandRes = await axios.get(
+             "https://root.winbhai.in/api/brands_selected"
+           );
+           const brands = brandRes.data?.data || [];
+
+           // Parallel fetch for all brands
+           const gamePromises = brands.map(async (brand) => {
+             try {
+               const gameRes = await axios.get(
+                 `https://root.winbhai.in/api/games/${brand}`
+               );
+              //  console.log(gameRes)
+               return { brand, games: gameRes.data?.data || [] };
+             } catch (err) {
+               console.error(`Error fetching games for ${brand}:`, err);
+               return { brand, games: [] };
+             }
+           });
+
+           const brandGamesData = await Promise.all(gamePromises);
+           setBrandGames(brandGamesData);
+         } catch (error) {
+           console.error("Error fetching brands or games:", error);
+         } finally {
+           setLoading(false);
+         }
+       };
+       
+       fetchBrandsAndGames();
+     }, []);
+
+     if (loading)
+       return (
+         <div className="text-center py-6 text-gray-500 min-h-screen"><Loader/></div>
+       );
+
   return (
     <div className="flex flex-col justify-center bg-grayBg">
       {/* ------------------ Mobile + Tablet ------------------ */}
       <div className="xsm:hidden pt-2 pb-2">
         <div>{userId && <ActionButtons />}</div>
-
+      
         <SlidingTabs />
       </div>
 
@@ -410,10 +483,10 @@ const games2 = [
                 />
               </svg>
             }
-            games={games4}
+            games={slotGames}
             onSeeAll={() => alert("See All clicked")}
           />
-          <GameSection
+          {/* <GameSection
             title="Best Casino"
             icon={
               <svg
@@ -450,7 +523,7 @@ const games2 = [
             }
             games={games4}
             onSeeAll={() => alert("See All clicked")}
-          />
+          /> */}
           <GameSection
             title="Jili"
             icon={
@@ -467,10 +540,10 @@ const games2 = [
                 />
               </svg>
             }
-            games={games4}
+            games={allGames}
             onSeeAll={() => alert("See All clicked")}
           />
-          <GameSection
+          {/* <GameSection
             title="Spribe"
             icon={
               <svg
@@ -488,8 +561,8 @@ const games2 = [
             }
             games={games4}
             onSeeAll={() => alert("See All clicked")}
-          />
-          <GameSection
+          /> */}
+          {/* <GameSection
             title="Evolution"
             icon={
               <svg
@@ -507,8 +580,31 @@ const games2 = [
             }
             games={games4}
             onSeeAll={() => alert("See All clicked")}
-          />
-          <GameSection
+          /> */}
+          {brandGames.map(({ brand, games }) => (
+            <GameSection
+              key={brand}
+              title={brand}
+              icon={
+                <svg
+                  width="24"
+                  height="25"
+                  viewBox="0 0 24 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
+                    fill="#C10932"
+                  />
+                </svg>
+              }
+              games={games}
+              onSeeAll={() => alert(`See all games for ${brand}`)}
+            />
+          ))}
+
+          {/* <GameSection
             title="Ezugi"
             icon={
               <svg
@@ -545,7 +641,7 @@ const games2 = [
             }
             games={games4}
             onSeeAll={() => alert("See All clicked")}
-          />
+          /> */}
           <TrendingGames
             title="Casino Lobby"
             icon={

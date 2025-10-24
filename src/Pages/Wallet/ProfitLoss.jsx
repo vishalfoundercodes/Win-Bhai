@@ -7,59 +7,91 @@ import CalendarModal from "../ReusableComponent/Calender";
 import ProfitLossTable from "./ProfitLossTable";
 
 import { ChevronDown, ChevronUp } from "lucide-react";
+import axios from "axios";
+import apis from "../../utils/apis";
+import Loader from "../resuable_component/Loader/Loader";
 export default function ProfitLoss() {
-      const startRef = useRef(null);
-      const endRef = useRef(null);
+  const startRef = useRef(null);
+  const endRef = useRef(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-      const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
+  const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
   // helper to format yyyy-mm-dd -> mm/dd/yyyy
-const formatDate = (value) => {
-  if (!value) return "";
+  const formatDate = (value) => {
+    if (!value) return "";
 
-  // If it's a Date object
-  if (value instanceof Date) {
-    const year = value.getFullYear();
-    const month = String(value.getMonth() + 1).padStart(2, "0");
-    const day = String(value.getDate()).padStart(2, "0");
-    return `${month}/${day}/${year}`;
-  }
+    // If it's a Date object
+    if (value instanceof Date) {
+      const year = value.getFullYear();
+      const month = String(value.getMonth() + 1).padStart(2, "0");
+      const day = String(value.getDate()).padStart(2, "0");
+      return `${month}/${day}/${year}`;
+    }
 
-  // If it's already a string (yyyy-mm-dd)
-  if (typeof value === "string") {
-    const [year, month, day] = value.split("-");
-    return `${month}/${day}/${year}`;
-  }
+    // If it's already a string (yyyy-mm-dd)
+    if (typeof value === "string") {
+      const [year, month, day] = value.split("-");
+      return `${month}/${day}/${year}`;
+    }
 
-  return "";
-};
+    return "";
+  };
 
-const [isOpen, setIsOpen] = useState(false);
-const [selected, setSelected] = useState("Casino Vivo");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState("Casino Vivo");
 
-const options = [
-  "All",
-  "Cricket",
-  "Football",
-  "Tennis",
-  "Horse Racing",
-  "Greyhound Racing",
-  "Kabaddi",
-  "Binary",
-  "Politics",
-  "Live Casino",
-  "Int Casino",
-  "Casino Vivo",
-  "iCasino",
-];
+  const options = [
+    "All",
+    "Cricket",
+    "Football",
+    "Tennis",
+    "Horse Racing",
+    "Greyhound Racing",
+    "Kabaddi",
+    "Binary",
+    "Politics",
+    "Live Casino",
+    "Int Casino",
+    "Casino Vivo",
+    "iCasino",
+  ];
 
-const handleSelect = (option) => {
-  setSelected(option);
-  setIsOpen(false);
-};
+  const handleSelect = (option) => {
+    setSelected(option);
+    setIsOpen(false);
+  };
+
+  // ProfitLossPage.jsx
+  const [payload, setPayload] = useState({
+    user_id: localStorage.getItem("userId"),
+  });
+
+  const handleSearch = () => {
+    const formatDate = (dateStr) => {
+      if (!dateStr) return "";
+      const date = new Date(dateStr);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
+    const newPayload = {
+      user_id: localStorage.getItem("userId"),
+    };
+
+    // only include dates if both selected
+    if (startDate && endDate) {
+      newPayload.from_date = formatDate(startDate);
+      newPayload.to_date = formatDate(endDate);
+    }
+
+    console.log("Search payload:", newPayload);
+    setPayload(newPayload); // 🔥 update prop for ProfitLossTable
+  };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="py-2 ">
         <SlidingTabs />
       </div>
@@ -153,14 +185,17 @@ const handleSelect = (option) => {
               />
             </div>
           </div>
-          <button className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm">
+          <button
+            className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm"
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
       </div>
       <div className="px-4">
         {" "}
-        <ProfitLossTable />
+        <ProfitLossTable payload={payload} />
       </div>
 
       {/* Calendar Modal */}

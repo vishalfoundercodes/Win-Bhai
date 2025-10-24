@@ -5,13 +5,19 @@ import App from './App.jsx'
 import { SocketProvider } from "./shared/socket/SocketContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ProfileProvider } from './Context/ProfileContext.jsx';
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-      <Provider store={store}>
+    <Provider store={store}>
       <SocketProvider>
-    <App />
-    </SocketProvider>
+        <ToastContainer />
+        <ProfileProvider>
+          <App />
+        </ProfileProvider>
+      </SocketProvider>
     </Provider>
-  </StrictMode>,
-)
+  </StrictMode>
+);

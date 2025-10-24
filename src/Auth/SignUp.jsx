@@ -1,7 +1,7 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import signupbg from "../assets/Images/signup-bg.jpg";
 import logo from "../assets/logo-winbhai.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import indiaFlag from "../assets/Country/india.png"
 import bangladeshFlag from "../assets/Country/bangladesh.png";
 import canadaFlag from "../assets/Country/canada.png";
@@ -11,24 +11,126 @@ import srilankaFlag from "../assets/Country/srilanka.png";
 import uaeFlag from "../assets/Country/uae.png";
 import ukFlag from "../assets/Country/uk.png";
 import usFlag from "../assets/Country/us.png";
+import axios from "axios";
+import apis from "../utils/apis";
+import { toast } from "react-toastify";
 export default function SignUp() {
-    const navigate=useNavigate()
-      const [showNewPassword, setShowNewPassword] = useState(false);
-      const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-       const [countryCode, setCountryCode] = useState("+91");
-       const countries = [
-         { code: "+91", name: "INDIA", flag: indiaFlag },
-         { code: "+971", name: "UAE", flag: uaeFlag },
-         { code: "+92", name: "PAKISTAN", flag: pakistanFlag },
-         { code: "+977", name: "NEPAL", flag: nepalFlag },
-         { code: "+880", name: "BANGLADESH", flag: bangladeshFlag },
-         { code: "+94", name: "SRILANKA", flag: srilankaFlag },
-         { code: "+1", name: "UNITED STATES", flag: usFlag },
-         { code: "+1", name: "CANADA", flag: canadaFlag },
-         { code: "+44", name: "UNITED KINGDOM", flag: ukFlag },
-       ];
-         const [isOpen, setIsOpen] = useState(false);
-         const [selected, setSelected] = useState(countries[0]);
+  const navigate = useNavigate();
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [countryCode, setCountryCode] = useState("+91");
+  const countries = [
+    { code: "+91", name: "INDIA", flag: indiaFlag },
+    { code: "+971", name: "UAE", flag: uaeFlag },
+    { code: "+92", name: "PAKISTAN", flag: pakistanFlag },
+    { code: "+977", name: "NEPAL", flag: nepalFlag },
+    { code: "+880", name: "BANGLADESH", flag: bangladeshFlag },
+    { code: "+94", name: "SRILANKA", flag: srilankaFlag },
+    { code: "+1", name: "UNITED STATES", flag: usFlag },
+    { code: "+1", name: "CANADA", flag: canadaFlag },
+    { code: "+44", name: "UNITED KINGDOM", flag: ukFlag },
+  ];
+  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState(countries[0]);
+
+  // State for form fields
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [campaignCode, setCampaignCode] = useState("");
+  const [checkbox,setCheckbox]=useState(false)
+  const [buttonDisabled,setButtonDisabled]=useState(true)
+    const handleCheckboxChange = () => {
+      setCheckbox((prev) => !prev); // Toggle the checkbox state
+    };
+
+    const handleSubmit = async(e) => {
+      e.preventDefault(); // Prevent page refresh
+
+       if (!phoneNumber) {
+         toast.error("Phone Number is required.");
+         return; // Exit the function if validation fails
+       }
+       if (!username) {
+         toast.error("Username is required.");
+         return; // Exit the function if validation fails
+       }
+       if (!password) {
+              toast.error("Password is required.");
+              return; // Exit the function if validation fails
+            }
+       if (password !== confirmPassword) {
+         toast.error("Password and confirm password must be same.");
+         return; // Exit the function if validation fails
+       }
+       if(checkbox!==true){
+        toast.error("Accept the terms and condition.")
+        return
+       }
+
+      // Create payload
+      const payload = {
+        country_code: selected.code,
+        mobile: phoneNumber,
+        otp: otp,
+        username: username,
+        password: password,
+        password_confirmation: confirmPassword,
+        referral_code: campaignCode,
+      };
+      // Log the payload
+      console.log(payload);
+      const res = await axios.post(apis.register,payload);
+      console.log(res)
+
+      if(res?.data?.status===200){
+        toast.success(res?.data?.message);
+        localStorage.setItem("userId", res?.data?.data?.userId);
+        localStorage.setItem("token", res?.data?.data?.token);
+        navigate('/')
+      }
+      if(res?.data?.status===400){
+        toast.error(res?.data?.message);
+      }
+    
+    };
+
+          const sendOtp = async (number) => {
+            const res = await axios.post(`${apis.sendOtp}${number}`);
+            console.log(res?.data);
+            if (res?.data?.error === 200 || res?.data?.error === "200") {
+              toast.success(res?.data?.msg);
+            } else {
+              toast.error(res?.data?.msg);
+            }
+          };
+
+          const handleVerify = async (value) => {
+            console.log(phoneNumber, value);
+            console.log(`${apis.verifyOtp}${phoneNumber}&otp=${value}`);
+            const res = await axios.post(
+              `${apis.verifyOtp}${phoneNumber}&otp=${value}`
+            );
+
+            console.log(res);
+            if (res?.data?.error === 200 || res?.data?.error === "200") {
+              toast.success(res?.data?.msg);
+              setButtonDisabled(false);
+            } else if (res?.data?.error === 400 || res?.data?.error === "400") {
+              toast.error(res?.data?.msg);
+            }
+          };
+const location = useLocation(); // ✅ for reading URL query params
+
+useEffect(() => {
+  const queryParams = new URLSearchParams(location.search);
+  const campaignParam = queryParams.get("campaign"); // get value after ?campaign=
+  if (campaignParam) {
+    setCampaignCode(campaignParam); // ✅ auto-fill the field
+  }
+}, [location.search]);
   return (
     <div
       className=" w-full min-h-screen flex items-center justify-center bg-no-repeat bg-cover bg-center relative "
@@ -53,9 +155,10 @@ export default function SignUp() {
         {/* Form Content */}
         <form
           className="mt-6 sm:mt-8  space-y-1 xxs:space-y-2 gap-2"
-          onSubmit={() => {
-            localStorage.setItem("userId", 2), navigate("/");
-          }}
+          onSubmit={
+            // localStorage.setItem("userId", 2), navigate("/");
+            handleSubmit
+          }
         >
           {/* Phone Number with Get OTP - Styled Like Image */}
           {/* Phone Number with Get OTP - Styled Like Image */}
@@ -96,7 +199,7 @@ export default function SignUp() {
               </div>
 
               {/* Dropdown */}
-              {isOpen && (
+              {isOpen && buttonDisabled && (
                 <div className="absolute mt-2 left-0 right-0 mx-[16px] z-50">
                   <div className="px-3 py-2 max-h-96 bg-white border border-gray-300 rounded-[6px] shadow-lg overflow-y-auto  hide-scrollbar">
                     {countries.map((country, idx) => (
@@ -129,6 +232,7 @@ export default function SignUp() {
                 </div>
               )}
             </div>
+            {/* phone number */}
             <div>
               <label
                 className="block mb-1"
@@ -143,16 +247,32 @@ export default function SignUp() {
               <div className="relative w-full">
                 {/* Input Field */}
                 <input
+                  disabled={!buttonDisabled}
                   type="text"
                   placeholder="Phone Number"
                   className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
                   style={{ fontFamily: "Roboto, sans-serif" }}
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+                    if (value.length <= 10) {
+                      setPhoneNumber(value);
+                    }
+                  }}
+                  maxLength={10} // Restrict to 10 digits
                 />
 
                 {/* OTP Button */}
                 <button
                   type="button"
                   className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600"
+                  onClick={() => {
+                    if (phoneNumber.length === 10) {
+                      sendOtp(phoneNumber);
+                    } else {
+                      toast.error("Enter the 10 digit number");
+                    }
+                  }}
                 >
                   Get OTP
                 </button>
@@ -176,6 +296,18 @@ export default function SignUp() {
               type="text"
               placeholder="OTP"
               className="w-full px-4 py-2 border  rounded-md text-ssm focus:outline-none bg-inputBoxBg text-inputText border-inputBorder"
+              value={otp}
+              // onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, ""); // Remove non-digit characters
+                if (value.length <= 4) {
+                  setOtp(value);
+                }
+                if (value.length === 4) {
+                  handleVerify(value);
+                }
+              }}
+              maxLength={4}
             />
           </div>
 
@@ -192,9 +324,12 @@ export default function SignUp() {
               Username
             </label>
             <input
+              disabled={buttonDisabled}
               type="text"
               placeholder="Username"
               className="w-full px-4 py-2 border  rounded-md text-ssm bg-inputBoxBg text-inputText border-inputBorder"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -215,8 +350,11 @@ export default function SignUp() {
                 //   type="password"
                 // type={showNewPassword ? "text" : "password"}
                 type="text"
+                disabled={buttonDisabled}
                 placeholder="Enter Password"
                 className="w-full px-4 py-2 border  rounded-md text-ssm bg-inputBoxBg text-inputText border-inputBorder"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               {/* <button
                 type="button"
@@ -289,8 +427,11 @@ export default function SignUp() {
                 //   type="password"
                 // type={showConfirmPassword ? "text" : "password"}
                 type="text"
+                disabled={buttonDisabled}
                 placeholder="Enter Password"
                 className="w-full px-4 py-2 border  rounded-md text-ssm bg-inputBoxBg text-inputText border-inputBorder"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               {/* <button
                 type="button"
@@ -362,12 +503,19 @@ export default function SignUp() {
               type="text"
               placeholder="Enter Campaign Code"
               className="w-full px-4 py-2 border rounded-md text-ssm focus:outline-none bg-inputBoxBg text-inputText border-inputBorder"
+              value={campaignCode}
+              onChange={(e) => setCampaignCode(e.target.value)}
             />
           </div>
 
           {/* Terms */}
           <div className="flex items-start gap-2 text-ssm mt-2">
-            <input type="checkbox" className="mt-1" />
+            <input
+              type="checkbox"
+              className="mt-1"
+              checked={checkbox}
+              onChange={handleCheckboxChange} // Toggle checkbox value
+            />
             <p
               style={{
                 fontFamily: "Roboto, sans-serif",
