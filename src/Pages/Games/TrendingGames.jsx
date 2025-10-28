@@ -159,7 +159,7 @@ const TrendingGames = ({ title, games, icon }) => {
   };
 
   // Split the games into two rows
-  const totalVisible = 12;
+  const totalVisible = 3;
   const paddedGames = [...games];
 
   // Add empty placeholders if less than 12
@@ -195,7 +195,7 @@ const TrendingGames = ({ title, games, icon }) => {
               <img
                 src={game.image}
                 alt={game.name}
-                className="w-full h-[76px] object-cover rounded-[8px]"
+                className="w-[350px] h-[76px] object-cover rounded-[8px]"
               />
             ) : (
               <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">

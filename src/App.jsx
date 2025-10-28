@@ -150,6 +150,12 @@ import PrivateRoute from "./privateRoute";
 import PrivacyPolicy from "./Pages/LegalCompliance/PrivacyPolicy";
 import ResponsibleGambling from "./Pages/LegalCompliance/ResponsibleGambling";
 import RulesAndRegulation from "./Pages/LegalCompliance/RulesAndRegulation";
+import PromotionHome from "./Pages/PromotionAndEarn/PromotionHome";
+import SubordinateData from "./Pages/PromotionAndEarn/SubordinateData";
+import InvitationRules from "./Pages/PromotionAndEarn/InvitationRule";
+import RebateRatio from "./Pages/PromotionAndEarn/RebetRatio";
+import Commissiondetail from "./Pages/PromotionAndEarn/Commissiondetail";
+import AgentLine from "./Pages/PromotionAndEarn/AgentLine";
 
 function App() {
 
@@ -161,129 +167,176 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgetPassword" element={<FrogetPassword />} />
-
           {/* Protected Routes - use PrivateRoute for authentication check */}
           <Route path="/" element={<Home />} />
           <Route
             path="/needhelp"
-            element={<PrivateRoute>
-              <NeedHelp />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <NeedHelp />
+              </PrivateRoute>
+            }
           />
-          <Route path="/game" element={<PrivateRoute>
-            <Game />
-          </PrivateRoute> } />
+          <Route
+            path="/game"
+            element={
+              <PrivateRoute>
+                <Game />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/game/:tabName"
-            element={<PrivateRoute>
-              <Game />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <Game />
+              </PrivateRoute>
+            }
           />
           {/* <Route path="/game/:tabName" element={<Game />} /> */}
           <Route
             path="/deposit"
-            element={<PrivateRoute >
-              <Deposit />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <Deposit />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/withdraw"
-            element={<PrivateRoute>
-              <Withdraw />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <Withdraw />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/updateAccount"
-            element={<PrivateRoute>
-              <UpdateBankAccount />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <UpdateBankAccount />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/CryptoAdd"
-            element={<PrivateRoute>
-              <CryptoAddAccount />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <CryptoAddAccount />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/cuppon"
-            element={<PrivateRoute>
-              <Cuppons />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <Cuppons />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/RedeemBonus"
-            element={<PrivateRoute>
-              <RedeemBonus />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <RedeemBonus />
+              </PrivateRoute>
+            }
           />
-          <Route path="/Bonus" element={<PrivateRoute>
-            <Bonus />
-          </PrivateRoute> } />
+          <Route
+            path="/Bonus"
+            element={
+              <PrivateRoute>
+                <Bonus />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/Notification"
-            element={<PrivateRoute>
-              <Notification />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <Notification />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/Info"
-            element={<PrivateRoute>
-              <PersonalInfo />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <PersonalInfo />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/depositHistory"
-            element={<PrivateRoute>
-              <DepositHistory />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <DepositHistory />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/withdrawHistory"
-            element={<PrivateRoute>
-<WithdrawHistory />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <WithdrawHistory />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/betHistory"
-            element={<PrivateRoute>
-              <BetHistory />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <BetHistory />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/profitLoss"
-            element={<PrivateRoute>
-<ProfitLoss />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <ProfitLoss />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/accountStatement"
-            element={<PrivateRoute >
-              <AccountStatement />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <AccountStatement />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/changePassword"
-            element={<PrivateRoute>
-<ChangePassword />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <ChangePassword />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/downloadAPK"
-            element={<PrivateRoute>
-              <DownloadApkPage />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <DownloadApkPage />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/aviator"
-            element={<PrivateRoute>
-              <AvitatorLayout />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <AvitatorLayout />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/lottery/wingo"
-            element={<PrivateRoute>
-              <WinGo />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <WinGo />
+              </PrivateRoute>
+            }
           />
           {/* <Route
             path="/chickenRoadGame"
@@ -299,23 +352,43 @@ function App() {
           />
           <Route
             path="/affilationDashboard"
-            element={<PrivateRoute><AffiliatePage /></PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <AffiliatePage />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/BankWithdraw"
-            element={<PrivateRoute><BankWithdraw /></PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <BankWithdraw />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/CryptoWithdraw"
-            element={<PrivateRoute><CryptoWithdraw /></PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <CryptoWithdraw />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/WhatsupWithdraw"
-            element={<PrivateRoute><WhatsupWithdraw /></PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <WhatsupWithdraw />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/WinbhaiWallet"
-            element={<PrivateRoute><WinbhaiWallet /></PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <WinbhaiWallet />
+              </PrivateRoute>
+            }
           />
           {/* <Route
             path="/affilation"
@@ -331,63 +404,133 @@ function App() {
           />
           <Route
             path="/ForgetUserName"
-            element={<PrivateRoute>
-<ForgetUserName />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <ForgetUserName />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/PendingBets"
-            element={<PrivateRoute>
-              <PendingBets />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <PendingBets />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/PromoteAndEarn"
+            element={
+              <PrivateRoute>
+                <PromotionHome />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/promotion/subordinatedata"
+            element={
+              <PrivateRoute>
+                <SubordinateData />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/promotion/invitationrules"
+            element={
+              <PrivateRoute>
+                <InvitationRules />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/promotion/rebateratio"
+            element={
+              <PrivateRoute>
+                <RebateRatio />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/promotion/commissiondetail"
+            element={
+              <PrivateRoute>
+                <Commissiondetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/promotion/agentLine"
+            element={
+              <PrivateRoute>
+                <AgentLine />
+              </PrivateRoute>
+            }
           />
           <Route path="/CreateCampaign" element={<CreateCampaign />} />
           <Route
             path="/Statistics"
-            element={<PrivateRoute>
-              <Statistics />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <Statistics />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/WithdrawFunds"
-            element={<PrivateRoute>
-              <WithdrawFunds />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <WithdrawFunds />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/CryptoDeposit"
-            element={<PrivateRoute>
-              <CryptoDeposit />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <CryptoDeposit />
+              </PrivateRoute>
+            }
           />
-          <Route path="/Learn" element={<PrivateRoute>
-            <Learn />
-          </PrivateRoute> } />
+          <Route
+            path="/Learn"
+            element={
+              <PrivateRoute>
+                <Learn />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/WithdrawAffilation"
-            element={<PrivateRoute>
-<WithdrawAffilation />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <WithdrawAffilation />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/privacy"
-            element={<PrivateRoute>
-              <PrivacyPolicy />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <PrivacyPolicy />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/resposibleGambling"
-            element={<PrivateRoute>
-              <ResponsibleGambling />
-            </PrivateRoute>}
+            element={
+              <PrivateRoute>
+                <ResponsibleGambling />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/rules"
-            element={<PrivateRoute>
-              <RulesAndRegulation />
-            </PrivateRoute> }
+            element={
+              <PrivateRoute>
+                <RulesAndRegulation />
+              </PrivateRoute>
+            }
           />
-
           {/* Catch-all route for undefined paths */}
           <Route path="*" element={<Home />} />
         </Routes>

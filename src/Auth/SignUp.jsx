@@ -542,7 +542,7 @@ useEffect(() => {
         </form>
         {/* Login Link */}
         <div className="text-center text-sm mt-1 text-[#4B5563] text-ssm mb-1">
-          Don’t have an account?{" "}
+          Already have an account?{" "}
           <button
             className="bg-buttonRed text-white px-3 py-1 rounded font-normal text-ssm"
             onClick={() => navigate("/login")}

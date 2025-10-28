@@ -390,13 +390,15 @@ const GameSection = ({ title, games, icon }) => {
         <div
           key={game.id}
           className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
-          onClick={() => {navigate(game.route || "#");handleGameOpen(game.gameId);}}
+          onClick={() => {
+            navigate(game.route || "#");
+            handleGameOpen(game.gameID);
+          }}
         >
-          {game.image || game.imgUrl ? (
+          {game.image || game.imgUrl || game.game_img ? (
             <>
-             
               <img
-                src={game.image || game.imgUrl}
+                src={game.image || game.imgUrl || game.game_img}
                 alt={game.name}
                 className="w-full h-full object-cover rounded-[8px] border-3 border-red"
               />
@@ -428,7 +430,7 @@ const GameSection = ({ title, games, icon }) => {
         game_id: id,
       };
       console.log("payload",payload)
-      const res = await axios.post(apis.jilliGame,payload);
+      const res = await axios.post(apis.openGame, payload);
       if(res?.data?.status===200){
         // setloading(false)
         window.open(res?.data?.gameUrl, "_blank");
@@ -517,11 +519,14 @@ const GameSection = ({ title, games, icon }) => {
             <div
               key={game.id}
               className="min-w-[85px] h-[115px] xsm3:min-w-[100px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
-              onClick={() => {navigate(game.route || "#");handleGameOpen(game.gameId);}}
+              onClick={() => {
+                navigate(game.route || "#");
+                handleGameOpen(game.gameID);
+              }}
             >
-              {game.image || game.imgUrl ? (
+              {game.image || game.imgUrl || game.game_img ? (
                 <img
-                  src={game.image || game.imgUrl}
+                  src={game.image || game.imgUrl || game.game_img}
                   alt={game.name}
                   className="w-full h-full object-cover rounded-[8px] border-3 border-red"
                 />

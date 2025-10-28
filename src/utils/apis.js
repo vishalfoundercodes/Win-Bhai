@@ -39,6 +39,9 @@ const apis = {
   usdtwithdraw: `${configModalWinBhai}usdtwithdraw`,
   indianpay_withdraw: `${configModalWinBhai}indianpay_withdraw`,
   withdraw: `${configModalWinBhai}withdraw`,
+  promotionData: `${configModalWinBhai}agency-promotion-data-`,
+  subordinateData: `${configModalWinBhai}subordinate-data`,
+  tier: `${configModalWinBhai}tier`,
 
   // https://root.winbhai.in/api/jilliGame
 
@@ -71,8 +74,12 @@ const apis = {
   bet_value: `${configModalWinBhai}bet_values`,
 
   //jilli  game apis
-  all_game_list: `${configModalWinBhai}getJilliGames`,
+  // all_game_list: `${configModalWinBhai}getJilliGames`,
+  // https://root.winbhai.in/api/get_brands
+  all_game_list: `${configModalWinBhai}get_brands`,
+  all_jilli_game_list: `https://softapi.gt.tc/brands.php?brand_id=49`,
   jilliGame: `${configModalWinBhai}jilliGame`,
+  openGame: `${configModalWinBhai}openGame`,
 
   // general apis
   profile_winbhai: `${configModalWinBhai}profile?id=`,

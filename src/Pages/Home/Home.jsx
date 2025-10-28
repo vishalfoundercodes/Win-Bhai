@@ -163,32 +163,16 @@ import lotterycategorywingo from "../../assets/GameIcons/lotterycategorywingo.pn
 import alllotterybg from "../../assets/GameIcons/wingoLogo.png";
 import TrendingGames from "../Games/TrendingGames";
 import axios from "axios";
-import apis from "../../utils/apis";
+import apis, { configModalWinBhai } from "../../utils/apis";
 import Loader from "../resuable_component/Loader/Loader"
 import { useProfile } from "../../Context/ProfileContext";
+import { brandsData } from "./data";
+import { gameDetails } from "./gameDetail";
 export default function Home() {
-   const { profileDetails, setprofileDetails } = useProfile();
+  const { profileDetails, setprofileDetails } = useProfile();
   const [allGames, setAllGames] = useState([]);
   const [slotGames, setSlotGames] = useState([]);
 
-  const fetchDataJIlli = async () => {
-    try {
-      const res = await axios.get(apis.all_game_list);
-      const games = res?.data?.data || [];
-
-      setAllGames(games.filter((game) => game.category !== "slot")); // store all games
-      setSlotGames(games.filter((game) => game.category === "slot")); // only slot
-      // console.log("all games:", allGames);
-      // console.log("slotGames :", slotGames);
-
-    } catch (error) {
-      console.error("Error fetching games", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataJIlli();
-  }, []);
 
 
   const games = [
@@ -248,36 +232,36 @@ export default function Home() {
     },
   ];
 
-const games2 = [
-  {
-    id: 1,
-    name: "Slot Games",
-    image: slotGames,
-    icon: slotGamesIcon,
-    bg: "bg-gradient-to-r from-[#A21518] via-[#880100] to-[#4B0102]",
-  },
-  {
-    id: 2,
-    name: "Aura",
-    image: aura,
-    icon: auraIcon,
-    bg: "bg-gradient-to-r from-[#B980CA] via-[#86429C] to-[#631877]",
-  },
-  {
-    id: 3,
-    name: "Fishing Games",
-    image: finishingGames,
-    icon: fishingIcon,
-    bg: "bg-gradient-to-r from-[#5DF3ED] via-[#00C0F3] to-[#0F9AC3]",
-  },
-  {
-    id: 4,
-    name: "Game Show",
-    image: gameshow,
-    icon: gameshowIcon,
-    bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-  },
-];
+  const games2 = [
+    {
+      id: 1,
+      name: "Slot Games",
+      image: slotGames,
+      icon: slotGamesIcon,
+      bg: "bg-gradient-to-r from-[#A21518] via-[#880100] to-[#4B0102]",
+    },
+    {
+      id: 2,
+      name: "Aura",
+      image: aura,
+      icon: auraIcon,
+      bg: "bg-gradient-to-r from-[#B980CA] via-[#86429C] to-[#631877]",
+    },
+    {
+      id: 3,
+      name: "Fishing Games",
+      image: finishingGames,
+      icon: fishingIcon,
+      bg: "bg-gradient-to-r from-[#5DF3ED] via-[#00C0F3] to-[#0F9AC3]",
+    },
+    {
+      id: 4,
+      name: "Game Show",
+      image: gameshow,
+      icon: gameshowIcon,
+      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
+    },
+  ];
 
   const games3 = [
     {
@@ -349,61 +333,123 @@ const games2 = [
       image: sidebarImage10,
       icon: sidebarImage10,
       bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    }
+    },
   ];
 
-   const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
 
-     const [brandGames, setBrandGames] = useState([]);
-     const [loading, setLoading] = useState(true);
+  const allowed_games = [
+    "112",
+    "49",
+    "52",
+    "50",
+    "123",
+    "58",
+    "57",
+    "107",
+    "104",
+    "89",
+    "82",
+    "72",
+    "46",
+    "100",
+    "78",
+    "59",
+  ];
 
-     
-     useEffect(() => {
-       const fetchBrandsAndGames = async () => {
-         try {
-           const brandRes = await axios.get(
-             "https://root.winbhai.in/api/brands_selected"
-           );
-           const brands = brandRes.data?.data || [];
 
-           // Parallel fetch for all brands
-           const gamePromises = brands.map(async (brand) => {
-             try {
-               const gameRes = await axios.get(
-                 `https://root.winbhai.in/api/games/${brand}`
-               );
-              //  console.log(gameRes)
-               return { brand, games: gameRes.data?.data || [] };
-             } catch (err) {
-               console.error(`Error fetching games for ${brand}:`, err);
-               return { brand, games: [] };
-             }
-           });
 
-           const brandGamesData = await Promise.all(gamePromises);
-           setBrandGames(brandGamesData);
-         } catch (error) {
-           console.error("Error fetching brands or games:", error);
-         } finally {
-           setLoading(false);
-         }
-       };
-       
-       fetchBrandsAndGames();
-     }, []);
+ const [brandGames, setBrandGames] = useState([]);
+ const [loading, setLoading] = useState(true);
+//  const [slotGames, setSlotGames] = useState([]);
+ // Function to fetch brands and games
+  useEffect(() => {
+    const fetchBrandsAndGames = async () => {
+      try {
+        // Step 1: Fetch the list of brands
+        const brandRes = await axios.get(`${apis.all_game_list}`);
+        const brands = brandRes?.data?.games || [];
+        console.log("Brands:", brands);
 
-     if (loading)
-       return (
-         <div className="text-center py-6 text-gray-500 min-h-screen"><Loader/></div>
-       );
+        // Filter the brands to only include those with allowed `brand_id`
+        const filteredBrands = brands.filter((brand) =>
+          allowed_games.includes(brand.brand_id)
+        );
+
+        // Step 2: Fetch games for each allowed brand
+        const gamePromises = filteredBrands.map(async (brand) => {
+          try {
+            const gameRes = await axios.get(
+              `${configModalWinBhai}brand-details/${brand.brand_id}`
+            );
+            console.log("Game Data for Brand ID:", brand.brand_id);
+            console.log("Games:", gameRes?.data?.data?.games);
+
+            // Extract games data
+            const games = gameRes?.data?.data?.games || [];
+
+            // Filter out "slot" category games for brand_id 49
+            if (brand.brand_id === "49") {
+              // Filter out slot category games for this brand
+              const slotCategoryGames = games.filter(
+                (game) => game.category === "slot"
+              );
+              const nonSlotGames = games.filter(
+                (game) => game.category !== "slot"
+              );
+
+              // Store the slot games separately
+              setSlotGames((prevSlotGames) => [
+                ...prevSlotGames,
+                ...slotCategoryGames,
+              ]);
+              // Store the slot games separately
+              setAllGames((prevNonSlotGames) => [
+                ...prevNonSlotGames,
+                ...nonSlotGames,
+              ]);
+
+              // Return non-slot games for other usage
+              return { brand, games: nonSlotGames };
+            }
+
+            // For other brands, return all the games as usual
+            return { brand, games };
+          } catch (err) {
+            console.error(`Error fetching games for ${brand.brand_id}:`, err);
+            return { brand, games: [] }; // Return empty games if error occurs
+          }
+        });
+
+        // Step 3: Wait for all the game data to be fetched
+        const brandGamesData = await Promise.all(gamePromises);
+
+        // Step 4: Set the state with the combined brand and games data
+        setBrandGames(brandGamesData);
+      } catch (error) {
+        console.error("Error fetching brands or games:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrandsAndGames();
+  }, []);
+
+  if (loading)
+    return (
+      <div className="text-center py-6 text-gray-500 min-h-screen">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="flex flex-col justify-center bg-grayBg">
       {/* ------------------ Mobile + Tablet ------------------ */}
       <div className="xsm:hidden pt-2 pb-2">
         <div>{userId && <ActionButtons />}</div>
-      
+
         <SlidingTabs />
       </div>
 
@@ -524,7 +570,7 @@ const games2 = [
             games={games4}
             onSeeAll={() => alert("See All clicked")}
           /> */}
-          <GameSection
+          {/* <GameSection
             title="Jili"
             icon={
               <svg
@@ -542,7 +588,7 @@ const games2 = [
             }
             games={allGames}
             onSeeAll={() => alert("See All clicked")}
-          />
+          /> */}
           {/* <GameSection
             title="Spribe"
             icon={
@@ -581,28 +627,35 @@ const games2 = [
             games={games4}
             onSeeAll={() => alert("See All clicked")}
           /> */}
-          {brandGames.map(({ brand, games }) => (
-            <GameSection
-              key={brand}
-              title={brand}
-              icon={
-                <svg
-                  width="24"
-                  height="25"
-                  viewBox="0 0 24 25"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                    fill="#C10932"
-                  />
-                </svg>
+          {brandGames.length > 0 ? (
+            brandGames.map(({ brand, games }) => {
+              if (!brand || !brand.brand_title) {
+                console.error("Invalid brand data", brand);
+                return null;
               }
-              games={games}
-              onSeeAll={() => alert(`See all games for ${brand}`)}
-            />
-          ))}
+
+              return (
+                <GameSection
+                  key={brand.brand_id}
+                  title={brand.brand_title}
+                  icon={
+                    <img
+                      src={brand.logo}
+                      alt={brand.brand_title}
+                      width={24}
+                      height={24}
+                    />
+                  }
+                  games={games} // Pass the games array to the GameSection
+                  onSeeAll={() =>
+                    alert(`See all games for ${brand.brand_title}`)
+                  }
+                />
+              );
+            })
+          ) : (
+            <p>No brands available</p>
+          )}
 
           {/* <GameSection
             title="Ezugi"

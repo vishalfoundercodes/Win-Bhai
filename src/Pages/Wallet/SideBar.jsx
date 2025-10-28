@@ -17,8 +17,8 @@ import { useNavigate } from "react-router-dom";
 import SignOutModal from "../../Auth/SignOut";
 import { useState } from "react";
 
-export default function Sidebar({ isOpen, onClose ,profileDetails }) {
-  const navigate= useNavigate()
+export default function Sidebar({ isOpen, onClose, profileDetails, profileDetails2 }) {
+  const navigate = useNavigate();
   const [openSignOutModal, setOpenSignOutModal] = useState(false);
   return (
     <div
@@ -70,7 +70,7 @@ export default function Sidebar({ isOpen, onClose ,profileDetails }) {
                   stroke-width="2"
                 />
               </svg>
-              {profileDetails?.username || "User"}
+              {profileDetails?.username || profileDetails2?.username || "User"}
             </h2>
             <div className="w-full mb-2 border-b border-grayBorder"></div>
             <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4">
@@ -93,7 +93,7 @@ export default function Sidebar({ isOpen, onClose ,profileDetails }) {
             <div className="border border-grayBorder mx-4 bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start ">
               <p className="text-xs font-medium text-darkGray">Total Balance</p>
               <p className="text-green-600 font-bold">
-                ₹ {profileDetails?.wallet}
+                ₹ {profileDetails?.wallet || profileDetails2?.wallet || "0"}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2 text-sm mb-3 px-4">
@@ -448,7 +448,7 @@ export default function Sidebar({ isOpen, onClose ,profileDetails }) {
               className="flex items-center gap-3 p-3"
               onClick={() => {
                 onClose();
-                navigate("/betHistory");
+                navigate("/PromoteAndEarn");
               }}
             >
               <svg

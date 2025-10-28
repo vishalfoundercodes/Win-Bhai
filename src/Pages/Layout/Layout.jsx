@@ -369,7 +369,7 @@ export default function Layout({ children }) {
 
     const [isLoading, setIsLoading] = useState(false);
          
-          const [profileDetails, setprofileDetails] = useState(null);
+          const [profileDetails2, setprofileDetails] = useState(null);
      
         const profile = async () => {
           try {
@@ -443,11 +443,11 @@ export default function Layout({ children }) {
       <ProfileProvider>
         {location.pathname === "/aviator" ? (
           <AvitatorLayout
-            component={<AviatorHome profileDetails={profileDetails} />}
+            component={<AviatorHome profileDetails={profileDetails2} />}
           />
         ) : location?.pathname === "/chickenRoadGame" ? (
           <ChickenRoadLayout
-            component={<Game profileDetails={profileDetails} />}
+            component={<Game profileDetails={profileDetails2} />}
           />
         ) : (
           <div
@@ -466,7 +466,7 @@ export default function Layout({ children }) {
                 ) : (
                   <Header
                     className="sticky top-0 z-50"
-                    profileDetails={profileDetails}
+                    profileDetails2={profileDetails2}
                   />
                 ))}
               {isLoading && <Loader />}

@@ -7,7 +7,7 @@ import GameSlider from "../Pages/Home/HomeComponents/GameSlider";
 import { useNavigate } from "react-router-dom";
 import headerImage from "../assets/Home/headerImage.png";
 import {useProfile}  from "../Context/ProfileContext";
-const Header = () => {
+const Header = ({ profileDetails2}) => {
   const { profileDetails, fetchProfile } = useProfile();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -48,8 +48,6 @@ const Header = () => {
       localStorage.removeItem("sidebar");
     }
   }, [leftSidebarOpen]);
-
-
 
   return (
     <>
@@ -187,7 +185,9 @@ const Header = () => {
                 className="flex items-center bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] text-white px-1 py-2 rounded-full gap-1 cursor-pointer whitespace-nowrap"
                 onClick={toggleSidebar}
               >
-                <span className="text-[13px]">₹ {profileDetails?.wallet}</span>
+                <span className="text-[13px]">
+                  ₹ {profileDetails?.wallet || profileDetails2?.wallet || "0"}
+                </span>
                 <FaUser className="text-ssm" />
               </div>
             </div>
@@ -199,6 +199,7 @@ const Header = () => {
         isOpen={sidebarOpen}
         onClose={toggleSidebar}
         profileDetails={profileDetails}
+        profileDetails2={profileDetails2}
       />
       <GameSlider
         isOpen={leftSidebarOpen}
