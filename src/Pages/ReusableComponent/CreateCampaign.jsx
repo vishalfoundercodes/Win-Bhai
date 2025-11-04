@@ -62,7 +62,7 @@ const CreateCampaign = () => {
             </svg>
           </div>
           <div
-            className="p-4 space-y-4"
+            className="p-4 lg2:p-0 lg2:pr-4 space-y-4"
             style={{
               fontFamily: "Roboto",
             }}
@@ -82,10 +82,10 @@ const CreateCampaign = () => {
               </div>
             </div>
             <div
-              className=" border-2 border-black px-2 py-3 w-full rounded-[8px] text-center text-gray"
+              className=" border-2 border-black px-2 py-3 w-full rounded-[8px] text-center text-gray cursor-pointer"
               onClick={() => setIsOpen(true)}
             >
-              <button>Add New Affiliate</button>
+              <button className="cursor-pointer">Add New Affiliate</button>
             </div>
             <div className="w-full space-y-2">
               <h1 className="text-ssm font-semibold">Featured</h1>
@@ -117,7 +117,7 @@ const CreateCampaign = () => {
                         <span className="text-gray-400 text-lg flex gap-3">
                           <div>
                             <Copy
-                              className="text-red"
+                              className="text-red cursor-pointer"
                               onClick={() => {
                                 navigator.clipboard.writeText(
                                   item.referral_link

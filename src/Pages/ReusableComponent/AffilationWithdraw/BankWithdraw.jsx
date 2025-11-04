@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Trash2, Pencil } from "lucide-react";
 import { Plus } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -34,74 +34,112 @@ export default function BankWithdraw() {
         },
       ];
         const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
+        
+          const [slidesPerView, setSlidesPerView] = useState(1.2);
+          useEffect(() => {
+            const updateSlides = () => {
+              if (window.innerWidth >= 1024) {
+                // lg2 breakpoint
+                setSlidesPerView(3.2);
+              } else {
+                setSlidesPerView(1.2);
+              }
+            };
+
+            updateSlides(); // run initially
+            window.addEventListener("resize", updateSlides);
+
+            return () => window.removeEventListener("resize", updateSlides);
+          }, []);
   return (
-    <div className="min-h-screen px-4 py-2 space-y-4">
-      {/* account detail manual */}
-      <div className="text-black2 rounded-[8px] text-sm font-medium">
-        <p>Bank Withdrawal :</p>
-      </div>
-      <container className="mb-2 ">
-        <Swiper
-          modules={[Pagination]}
-          spaceBetween={20}
-          slidesPerView={1.2}
-          centeredSlides={false}
-          initialSlide={0}
-          loop={false}
-          grabCursor={true}
-          touchEventsTarget="container"
-          className="w-full"
-          mousewheel={{ forceToAxis: true }}
+    <div className="min-h-screen px-4 py-2 lg2:py-0 space-y-4">
+      <div
+        className="hidden lg2:block mb-2 cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
+        <svg
+          width="44"
+          height="44"
+          viewBox="0 0 44 44"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          {cards.map((card, idx) => (
-            <SwiperSlide key={idx}>
-              <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
-                {/* Background image */}
-                <img
-                  src={card.image}
-                  alt="Bank Card"
-                  className="w-full h-full object-cover rounded-xl"
-                />
+          <rect width="44" height="44" rx="8" fill="#C10932" />
+          <path
+            d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+            fill="white"
+          />
+        </svg>
+      </div>
+      {/* account detail manual */}
+      <div className="lg2:bg-white lg2:px-4 lg2:py-6 lg2:rounded-2xl">
+        <div className="text-black2 rounded-[8px] text-sm font-medium lg2:mb-3">
+          <p>Bank Withdrawal :</p>
+        </div>
+        <container className="mb-2 ">
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={20}
+            slidesPerView={slidesPerView}
+            centeredSlides={false}
+            initialSlide={0}
+            loop={false}
+            grabCursor={true}
+            touchEventsTarget="container"
+            className="w-full"
+            mousewheel={{ forceToAxis: true }}
+          >
+            {cards.map((card, idx) => (
+              <SwiperSlide key={idx}>
+                <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                  {/* Background image */}
+                  <img
+                    src={card.image}
+                    alt="Bank Card"
+                    className="w-full h-full object-cover rounded-xl"
+                  />
 
-                {/* Overlay details */}
-                <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
-                  {/* Top row (IFSC + Buttons) */}
-                  <div className="flex justify-between items-center mb-2">
-                    <p className="text-sm font-semibold text-gray-800 ml-10">
-                      {card.ifsc}
-                    </p>
-                    <div className="flex gap-2">
-                      <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
-                        <Trash2 className="w-4 h-4 text-gray-600" />
-                      </button>
-                      <button
-                        className="p-1 bg-white rounded shadow hover:bg-gray-100"
-                        onClick={() =>
-                          navigate("/updateAccount", {
-                            state: { mode: "update" },
-                          })
-                        }
-                      >
-                        <Pencil className="w-4 h-4 text-gray-600" />
-                      </button>
+                  {/* Overlay details */}
+                  <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
+                    {/* Top row (IFSC + Buttons) */}
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="text-sm font-semibold text-gray-800 ml-10">
+                        {card.ifsc}
+                      </p>
+                      <div className="flex gap-2">
+                        <button className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer">
+                          <Trash2 className="w-4 h-4 text-gray-600" />
+                        </button>
+                        <button
+                          className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer"
+                          onClick={() =>
+                            navigate("/updateAccount", {
+                              state: { mode: "update" },
+                            })
+                          }
+                        >
+                          <Pencil className="w-4 h-4 text-gray-600" />
+                        </button>
+                      </div>
                     </div>
+
+                    {/* Account number */}
+                    <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
+                      {card.account}
+                    </p>
+
+                    {/* Name */}
+                    <p className="font-medium text-gray-800 text-right mr-4">
+                      {card.name}
+                    </p>
                   </div>
-
-                  {/* Account number */}
-                  <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
-                    {card.account}
-                  </p>
-
-                  {/* Name */}
-                  <p className="font-medium text-gray-800 text-right mr-4">
-                    {card.name}
-                  </p>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </container>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </container>
+      </div>
+
       {/* add account */}
       <div className="flex items-center justify-between w-full p-4 bg-white rounded-[5px] shadow-sm mt-4">
         {/* Left Text */}
@@ -109,7 +147,7 @@ export default function BankWithdraw() {
 
         {/* Plus Button */}
         <button
-          className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition"
+          className="w-10 h-10 flex items-center justify-center border border-gray-300 rounded-md hover:bg-gray-100 transition cursor-pointer"
           onClick={() => navigate("/updateAccount", { state: { mode: "add" } })}
         >
           <Plus className="w-5 h-5 text-red" />
@@ -118,7 +156,7 @@ export default function BankWithdraw() {
       {/* amount */}
       <div className="rounded-[8px] shadow p-4 bg-white">
         <h2 className="text-black font-semibold mb-3">
-          Amount<span className="text-red-500">*</span>
+          Amount<span className="text-red">*</span>
         </h2>
         <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
           <span className="text-gray-500">₹</span>
@@ -142,7 +180,7 @@ export default function BankWithdraw() {
             <button
               key={idx}
               onClick={() => setAmount(val)}
-              className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+              className="bg-red text-white rounded-[8px] py-2 font-semibold cursor-pointer"
             >
               +{val.toLocaleString()}
             </button>
@@ -153,7 +191,7 @@ export default function BankWithdraw() {
       <div className="flex w-full items-center justify-center">
         <button
           type="submit"
-          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
+          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
           style={{
             fontFamily: "Roboto",
             fontSize: "13.5px",

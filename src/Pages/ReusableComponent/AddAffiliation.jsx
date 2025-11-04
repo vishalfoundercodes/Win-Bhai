@@ -57,17 +57,17 @@ const AffiliateModal = ({ isOpen, setIsOpen, onCampaignCreated, onClose }) => {
   }
   return (
     <div
-      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 "
       style={{
         fontFamily: "Roboto",
       }}
     >
-      <div className="bg-white w-full  mx-2 p-4 rounded-xl shadow-lg relative">
+      <div className="bg-white w-full lg2:max-w-120  mx-2 p-4 rounded-xl shadow-lg relative">
         <div className="">
           {/* Close Button */}
           <div className="px-3">
             <button
-              className="absolute top-2 right-6 text-[32px] text-black2"
+              className="absolute top-2 right-6 text-[32px] text-black2 cursor-pointer"
               onClick={() => {
                 setIsOpen(false);
                 onClose && onClose();
@@ -157,11 +157,11 @@ const AffiliateModal = ({ isOpen, setIsOpen, onCampaignCreated, onClose }) => {
 
             {/* Buttons */}
             <div className="flex flex-col gap-3 mt-6">
-              <button className="w-full bg-lightgrayBg2 text-white py-2 rounded-md">
+              <button className="w-full bg-lightgrayBg2 text-white py-2 rounded-md cursor-pointer">
                 Reset
               </button>
               <button
-                className="w-full bg-red text-white py-2 rounded-md"
+                className="w-full bg-red text-white py-2 rounded-md cursor-pointer"
                 onClick={CreateCampaign}
               >
                 Create Campaign

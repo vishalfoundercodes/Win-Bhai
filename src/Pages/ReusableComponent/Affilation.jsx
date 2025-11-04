@@ -2,10 +2,11 @@
 import React from "react";
 import { Calendar, Clock, ChevronDown } from "lucide-react";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function AffiliatePage() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("For all time");
+  const navigate=useNavigate()
   const options = ["For all time", "Month", "Week", "Today"];
 
   const handleSelect = (option) => {
@@ -200,31 +201,42 @@ export default function AffiliatePage() {
 
           {/* Legend Section */}
           <div className="h-50 bg-white rounded-xl">
-            <div className="p-4 flex flex-wrap gap-2 text-xs">
-              <div className="grid grid-cols-3 gap-2">
-                <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-                  <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
-                  <span>Referrals</span>
-                </span>
-                <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-                  <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
-                  <span>Registrations</span>
-                </span>
-                <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-                  <span className="w-2 h-2 bg-blue rounded-full border-2 border-white"></span>
-                  <span>Income</span>
-                </span>
-              </div>
-
-              <div className="flex w-full justify-between">
-                <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-                  <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
-                  <span>First Deposits</span>
-                </span>
-                <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
-                  <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
-                  <span>Amount of Deposits</span>
-                </span>
+            <div className="p-4 flex flex-wrap gap-2 text-xs lg2:grid-cols-12">
+              <div className="lg2:col-span-9">
+                <div className="grid grid-cols-3 lg2:grid-cols-9  gap-2">
+                  <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                    <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
+                    <span>Referrals</span>
+                  </span>
+                  <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                    <span className="w-2 h-2 bg-black rounded-full border-2 border-white "></span>
+                    <span>Registrations</span>
+                  </span>
+                  <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                    <span className="w-2 h-2 bg-blue rounded-full border-2 border-white"></span>
+                    <span>Income</span>
+                  </span>
+                  <div className="hidden lg2:flex w-full justify-between gap-2 ">
+                    <span className="flex items-center w-32 space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl whitespace-nowrap">
+                      <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
+                      <span>First Deposits</span>
+                    </span>
+                    <span className="flex items-center w-40 space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl whitespace-nowrap">
+                      <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
+                      <span>Amount of Deposits</span>
+                    </span>
+                  </div>
+                </div>
+                <div className="flex w-full justify-between lg2:hidden mt-2">
+                  <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                    <span className="w-2 h-2 bg-yellow-400 rounded-full border-2 border-white"></span>
+                    <span>First Deposits</span>
+                  </span>
+                  <span className="flex items-center space-x-1 bg-lightgrayBg text-[#F2F2F2] py-1 px-4 rounded-2xl">
+                    <span className="w-2 h-2 bg-green-500 rounded-full border-2 border-white"></span>
+                    <span>Amount of Deposits</span>
+                  </span>
+                </div>
               </div>
             </div>
           </div>

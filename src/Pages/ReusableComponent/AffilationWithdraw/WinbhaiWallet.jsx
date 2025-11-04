@@ -1,17 +1,39 @@
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom';
 export default function WinbhaiWallet() {
+  const navigate=useNavigate()
   return (
     <div
-      className="px-4  min-h-screen flex flex-col justify-between"
+      className="px-4  min-h-screen flex flex-col justify-between lg2:justify-normal"
       style={{ fontFamily: "Roboto" }}
     >
-      <div className="space-y-4 py-4">
-        <div className="text-black2 rounded-[8px] text-sm font-medium">
+      <div
+        className="hidden lg2:block mb-2 cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
+        <svg
+          width="44"
+          height="44"
+          viewBox="0 0 44 44"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="44" height="44" rx="8" fill="#C10932" />
+          <path
+            d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+            fill="white"
+          />
+        </svg>
+      </div>
+      <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg2:block">
+        <h2 className="text-white text-sm font-semibold">Winbhai Wallet</h2>
+      </div>
+      <div className="space-y-4 lg2:space-y-0 py-4 lg2:py-0">
+        <div className="text-black2 rounded-[8px] text-sm font-medium lg2:hidden">
           <p>Winbhai Wallet :</p>
         </div>
         <div></div>
-        <div className="bg-white rounded-[8px]  px-6 py-4 w-full text-center border border-red border-b-12">
+        <div className="bg-white rounded-[8px] lg2:rounded-t-[0px]  px-6 py-4 w-full text-center border border-red border-b-12">
           <div className="flex justify-center ">
             <div className="px-4 pt-4 pb-0 text-[30px] xsm3:text-[40px] font-medium">
               <h1>576.129 USDT</h1>
@@ -58,13 +80,16 @@ export default function WinbhaiWallet() {
           </div>
 
           {/* Offer text */}
-          <h2 className="text-sm font-medium text-[#3B3B3B] mb-2">
+          <h2 className="text-sm font-medium text-[#3B3B3B] mb-2 lg2:hidden">
             Transfer This Into Winbhai Wallet <br /> And Get 8% Bonus
+          </h2>
+          <h2 className="text-sm font-medium text-[#3B3B3B] mb-2 hidden lg2:block">
+            Transfer This Into Winbhai Wallet And Get 8% Bonus
           </h2>
         </div>
       </div>
 
-      <button className="w-full bg-red hover:bg-red text-white py-2 rounded-[8px] mb-16">
+      <button className="w-full bg-red hover:bg-red text-white py-2 rounded-[8px] mb-16 lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer lg2:mt-3">
         Transfer
       </button>
     </div>

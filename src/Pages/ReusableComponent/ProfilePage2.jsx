@@ -26,7 +26,7 @@ export default function ProfilePage2() {
         </svg>
       </div>
       <div
-        className="min-h-screen bg-[#E7E7E7] flex flex-col items-center p-4"
+        className="min-h-screen bg-[#E7E7E7] flex flex-col items-center p-4 lg2:p-0 lg2:pr-4"
         style={{
           fontFamily: "Roboto",
         }}
