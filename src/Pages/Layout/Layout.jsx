@@ -213,14 +213,15 @@ import axios from "axios";
 import apis from "../../utils/apis";
 import { ProfileProvider } from "../../Context/ProfileContext";
 import { toast } from "react-toastify";
+import GameSlider2 from "../Home/HomeComponents/GameSlider2";
 
 export default function Layout({ children }) {
   const location = useLocation();
   const navigate=useNavigate()
   // Position state for both icons - start just above footer
   const [leftPosition, setLeftPosition] = useState({
-    x: -11,
-    y: window.innerHeight - 190,
+    x: -2,
+    y: window.innerHeight - 160,
   });
   const [rightPosition, setRightPosition] = useState({
     x: window.innerWidth - 80,
@@ -234,7 +235,7 @@ export default function Layout({ children }) {
     const handleResize = () => {
       setLeftPosition((prev) => ({
         ...prev,
-        x: 16,
+        x: window.innerWidth - 18,
         y: window.innerHeight - 150,
       }));
       setRightPosition((prev) => ({
@@ -366,7 +367,14 @@ export default function Layout({ children }) {
   const shouldShowHeader2 = hideHeaderPaths.includes(location.pathname);
   const shouldHideHeader = hideHeaderAll.includes(location.pathname);
   const isWingoPath = location.pathname === "/lottery/wingo";
-
+  const hideLayoutPaths = [
+    "/login",
+    "/signup",
+    "/forgetPassword",
+    "/ForgetUserName",
+  ];
+    const hideLayout = hideLayoutPaths.includes(location.pathname);
+  
     const [isLoading, setIsLoading] = useState(false);
          
           const [profileDetails2, setprofileDetails] = useState(null);
@@ -460,27 +468,77 @@ export default function Layout({ children }) {
                 isWingoPath ? "xsm:w-[400px] bg-red2" : ""
               }`}
             >
-              {!shouldHideHeader &&
-                (shouldShowHeader2 ? (
-                  <Header2 className="sticky top-0 z-50" />
-                ) : (
-                  <Header
-                    className="sticky top-0 z-50"
-                    profileDetails2={profileDetails2}
-                  />
-                ))}
-              {isLoading && <Loader />}
-              {children}
+              {/* <div className="lg2:hidden">
+                {!shouldHideHeader &&
+                  (shouldShowHeader2 ? (
+                    <Header2 className="sticky top-0 z-50" />
+                  ) : (
+                    <Header
+                      className="sticky top-0 z-50"
+                      profileDetails2={profileDetails2}
+                    />
+                  ))}
+              </div> */}
+              {!shouldHideHeader && (
+                <>
+                  {/* Desktop header */}
+                  <div className="hidden lg2:block sticky top-0 z-50">
+                    {shouldShowHeader2 ? (
+                      <Header profileDetails2={profileDetails2} />
+                    ) : (
+                      <Header profileDetails2={profileDetails2} />
+                    )}
+                  </div>
 
+                  {/* Mobile header */}
+                  <div className="lg2:hidden sticky top-0 z-50">
+                    {shouldShowHeader2 ? (
+                      <Header2 />
+                    ) : (
+                      <Header profileDetails2={profileDetails2} />
+                    )}
+                  </div>
+                </>
+              )}
+
+              {/* <div className="hidden lg2:block">
+                <Header
+                  className="sticky top-0 z-50"
+                  profileDetails2={profileDetails2}
+                />
+              </div> */}
+
+              {!hideLayout && (
+                <div className="lg2:flex gap-16 px-12 py-6 hidden lg2:block">
+                  <div className="w-[20%]">
+                    <div>
+                      <GameSlider2 profileDetails={profileDetails2} />
+                    </div>
+                  </div>
+                  <div className="w-[80%]">
+                    {isLoading && <Loader />}
+                    {children}
+                  </div>
+                </div>
+              )}
+              <div className="hidden lg2:block">
+                {hideLayout && <>{children}</>}
+              </div>
+
+              <div className="lg2:hidden">
+                {isLoading && <Loader />}
+                {children}
+              </div>
               {/* Draggable WhatsApp and Telegram Images */}
               {location.pathname === "/" && !sidebar && (
-                <div className="fixed inset-0 pointer-events-none z-50">
+                <div className="fixed inset-0 pointer-events-none z-50 lg2:hidden">
                   {/* WhatsApp Image */}
                   <img
-                    // src="https://static.vecteezy.com/system/resources/previews/016/716/468/original/whatsapp-icon-free-png.png"
-                    src={whatsapp}
-                    alt="WhatsApp"
-                    className="w-32 h-48 cursor-grab active:cursor-grabbing pointer-events-auto"
+                    // src={whatsapp}
+                    src={telegram}
+                    // alt="WhatsApp"
+                    alt="telegram"
+                    className="w-20 h-32  cursor-grab active:cursor-grabbing pointer-events-auto"
                     // onMouseDown={(e) => handleMouseDown(e, "left")}
                     // onTouchStart={(e) => handleTouchStart(e, "left")}
                     style={{
@@ -494,7 +552,7 @@ export default function Layout({ children }) {
                   />
 
                   {/* Telegram Image */}
-                  <img
+                  {/* <img
                     // src="https://static.vecteezy.com/system/resources/previews/016/716/472/non_2x/telegram-icon-free-png.png"
                     src={telegram}
                     alt="Telegram"
@@ -509,7 +567,7 @@ export default function Layout({ children }) {
                       touchAction: "none",
                     }}
                     draggable="false"
-                  />
+                  /> */}
                 </div>
               )}
 

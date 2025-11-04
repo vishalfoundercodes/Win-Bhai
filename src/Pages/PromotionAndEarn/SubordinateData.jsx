@@ -116,7 +116,7 @@ function SubordinateData() {
     console.log("UID to copy:", uid);
 
     const matchedUser = suboridnateData?.subordinates_data?.find(
-      (item) => item.u_id === uid
+      (item) => item.u_id == uid
     );
 
     if (matchedUser) {
@@ -174,9 +174,9 @@ function SubordinateData() {
   }, [dateModalOpen]);
 
   return (
-    <div className="p-2 h-full w-full">
+    <div className="p-2 h-full w-full lg2:p-0">
       {loading && <Loader setLoading={setLoading} loading={loading} />}
-      <div className="relative flex items-center justify-center py-2 ">
+      <div className="relative flex items-center justify-center py-2 lg2:hidden">
         {/* Back arrow (absolutely positioned) */}
         <button
           onClick={() => window.history.back()}
@@ -204,64 +204,114 @@ function SubordinateData() {
         </h1>
       </div>
 
-      <div className="w-full flex items-center bg-white rounded-md p-2 gap-2">
-        <svg
-          width="15"
-          height="15"
-          viewBox="0 0 15 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+      {/* <div className="lg2:flex lg2:gap-4 hidden mb-2">
+        <div
+          className="hidden lg2:block cursor-pointer"
+          onClick={() => navigate(-1)}
         >
-          <path
-            d="M10.8248 9.53577C11.5538 8.5433 11.9844 7.31803 11.9844 5.99219C11.9844 2.68279 9.30158 0 5.99219 0C2.68279 0 0 2.68279 0 5.99219C0 9.30158 2.68279 11.9844 5.99219 11.9844C7.31838 11.9844 8.54395 11.5535 9.53657 10.8242L9.53577 10.8248C9.56296 10.8617 9.59324 10.897 9.62662 10.9303L13.1763 14.48C13.5363 14.84 14.12 14.84 14.48 14.48C14.84 14.12 14.84 13.5363 14.48 13.1763L10.9303 9.62662C10.897 9.59324 10.8617 9.56296 10.8248 9.53577ZM11.0625 5.99219C11.0625 8.79245 8.79245 11.0625 5.99219 11.0625C3.19193 11.0625 0.921875 8.79245 0.921875 5.99219C0.921875 3.19193 3.19193 0.921875 5.99219 0.921875C8.79245 0.921875 11.0625 3.19193 11.0625 5.99219Z"
-            fill="#969696"
-          />
-        </svg>
-        <input
-          onChange={(e) => setUid(e.target.value)}
-          placeholder="Search Subordinate UID "
-          className=" text-[15px] text-[#A8A5A1] outline-none bg-white"
-          type="text"
-          name=""
-          id=""
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-3 mt-3">
-        <button
-          onClick={() => handleModalFirst(!modalFirst)}
-          className="bg-white text-black rounded-md text-xs flex justify-between items-center shadow-md 
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+      </div> */}
+
+      <div className="p-2 px-4 lg2:pr-12 lg2:p-0">
+        <div className="w-full ">
+          <div
+            className="hidden lg2:block mb-2 cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 44 44"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="44" height="44" rx="8" fill="#C10932" />
+              <path
+                d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+          <div className=" w-full  lg2:rounded-b-2xl">
+            <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
+              <h2 className="text-white text-sm font-semibold">
+                Subordinate data
+              </h2>
+            </div>
+            <div className="lg2:grid lg2:grid-cols-12 lg2:gap-4 lg2:bg-white lg2:rounded-b-2xl lg2:py-3 lg2:px-8">
+              <div className=" lg2:col-span-5">
+                <div className="lg2:w-full">
+                  <div className="w-full flex items-center bg-white lg2:bg-lgGray rounded-md p-2 gap-2">
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 15 15"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10.8248 9.53577C11.5538 8.5433 11.9844 7.31803 11.9844 5.99219C11.9844 2.68279 9.30158 0 5.99219 0C2.68279 0 0 2.68279 0 5.99219C0 9.30158 2.68279 11.9844 5.99219 11.9844C7.31838 11.9844 8.54395 11.5535 9.53657 10.8242L9.53577 10.8248C9.56296 10.8617 9.59324 10.897 9.62662 10.9303L13.1763 14.48C13.5363 14.84 14.12 14.84 14.48 14.48C14.84 14.12 14.84 13.5363 14.48 13.1763L10.9303 9.62662C10.897 9.59324 10.8617 9.56296 10.8248 9.53577ZM11.0625 5.99219C11.0625 8.79245 8.79245 11.0625 5.99219 11.0625C3.19193 11.0625 0.921875 8.79245 0.921875 5.99219C0.921875 3.19193 3.19193 0.921875 5.99219 0.921875C8.79245 0.921875 11.0625 3.19193 11.0625 5.99219Z"
+                        fill="#969696"
+                      />
+                    </svg>
+                    <input
+                      onChange={(e) => setUid(e.target.value)}
+                      placeholder="Search Subordinate UID "
+                      className=" text-[15px] text-[#A8A5A1] outline-none bg-white lg2:bg-lgGray"
+                      type="text"
+                      name=""
+                      id=""
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mt-3">
+                    <button
+                      onClick={() => handleModalFirst(!modalFirst)}
+                      className="bg-white lg2:bg-lgGray text-black rounded-md text-xs flex justify-between items-center shadow-md 
              h-[32px] leading-none py-0 px-2 min-h-0"
-        >
-          <p className="text-black">
-            {modalFirstValue === 0
-              ? "All"
-              : modalFirstValue === 1
-              ? "Level1"
-              : modalFirstValue === 2
-              ? "Level2"
-              : modalFirstValue === 3
-              ? "Level3"
-              : modalFirstValue === 4
-              ? "Level4"
-              : modalFirstValue === 5
-              ? "Level5"
-              : modalFirstValue === 6
-              ? "Level6"
-              : modalFirstValue === 7
-              ? "Level7"
-              : modalFirstValue === 8
-              ? "Level8"
-              : modalFirstValue === 9
-              ? "Level9"
-              : modalFirstValue === 10
-              ? "Level10"
-              : ""}
-          </p>
-          <p>
-            <IoIosArrowDown size={18} />
-          </p>
-        </button>
-        {/* <button className="bg-customdarkBlue text-white rounded-md text-xsm  py-4 px-2 flex justify-center items-center shadow-md">
+                    >
+                      <p className="text-black">
+                        {modalFirstValue === 0
+                          ? "All"
+                          : modalFirstValue === 1
+                          ? "Level1"
+                          : modalFirstValue === 2
+                          ? "Level2"
+                          : modalFirstValue === 3
+                          ? "Level3"
+                          : modalFirstValue === 4
+                          ? "Level4"
+                          : modalFirstValue === 5
+                          ? "Level5"
+                          : modalFirstValue === 6
+                          ? "Level6"
+                          : modalFirstValue === 7
+                          ? "Level7"
+                          : modalFirstValue === 8
+                          ? "Level8"
+                          : modalFirstValue === 9
+                          ? "Level9"
+                          : modalFirstValue === 10
+                          ? "Level10"
+                          : ""}
+                      </p>
+                      <p>
+                        <IoIosArrowDown size={18} />
+                      </p>
+                    </button>
+                    {/* <button className="bg-customdarkBlue text-white rounded-md text-xsm  py-4 px-2 flex justify-center items-center shadow-md">
           <input
             value={confirmedDate}
             onChange={(e) => setConfirmedDate(e.target.value)}
@@ -269,120 +319,130 @@ function SubordinateData() {
             type="date"
           />
         </button> */}
-        <button
-          onClick={() => setDateModalOpen(true)}
-          className="bg-white text-black rounded-md text-xs flex justify-between items-center shadow-md 
+                    <button
+                      onClick={() => setDateModalOpen(true)}
+                      className="bg-white lg2:bg-lgGray text-black rounded-md text-xs flex justify-between items-center shadow-md 
              h-[32px] leading-none py-0 px-2 min-h-0"
-        >
-          <p>
-            {confirmedDate !== "Select date" ? confirmedDate : "Select date"}
-          </p>
-          <IoIosArrowDown size={18} />
-        </button>
-      </div>
-      <div className="bg-white rounded-lg">
-        <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
-          <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.number_of_deposit
-                ? suboridnateData?.data.number_of_deposit
-                : "0"}
-            </p>
-            <p className="text-black">Deposit number</p>
-          </div>
-          <div className="col-span-1 flex flex-col items-center">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.payin_amount
-                ? Number(suboridnateData.data.payin_amount).toFixed(2)
-                : "0"}
-            </p>
-            <p className="text-black">Deposit amount</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
-          <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.number_of_bettor
-                ? Number(suboridnateData.data.number_of_bettor)
-                : "0"}
-            </p>
-            <p className="text-black">Number of bettors</p>
-          </div>
-          <div className="col-span-1 flex flex-col items-center">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.bet_amount
-                ? Number(suboridnateData.data.bet_amount).toFixed(2)
-                : "0"}
-            </p>
-            <p className="text-black">Total bet</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
-          <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.first_deposit
-                ? Number(suboridnateData.data.first_deposit)
-                : "0"}
-            </p>
-            <p className="text-black text-center">
-              Number of people making first deposit
-            </p>
-          </div>
-          <div className="col-span-1 flex flex-col items-center">
-            <p className="text-black text-sm font-bold">
-              {suboridnateData?.data.first_deposit_amount
-                ? Number.isInteger(
-                    Number(suboridnateData.data.first_deposit_amount)
-                  )
-                  ? Number(suboridnateData.data.first_deposit_amount)
-                  : Number(suboridnateData.data.first_deposit_amount).toFixed(2)
-                : "0"}
-            </p>
-
-            <p className="text-black">First deposit amount</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-5 text-black">
-        {suboridnateData?.data.subordinates_data?.length > 0 ? (
-          suboridnateData?.data.subordinates_data?.map((item, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-lg py-2 px-2 mb-4"
-            >
-              <p className="py-4 border-b border1 ">
-                UID: {item?.u_id}{" "}
-                <button onClick={handleCopyUID}>
-                  {" "}
-                  <FaRegCopy />
-                </button>
-              </p>
-              <div className="flex text-ssm items-center justify-between">
-                <div>
-                  <p className="py-1.5">Level</p>
-                  <p className="py-1.5">Bet amount</p>
-                  <p className="py-1.5">Deposit amount</p>
-                  <p className="py-1.5">Commission</p>
+                    >
+                      <p>
+                        {confirmedDate !== "Select date"
+                          ? confirmedDate
+                          : "Select date"}
+                      </p>
+                      <IoIosArrowDown size={18} />
+                    </button>
+                  </div>
                 </div>
-                <div>
-                  <p className="py-1.5">{item?.level}</p>
-                  <p className="py-1.5">{item?.bet_amount}</p>
-                  {/* <p className="py-1.5">{item?.total_cash}</p> */}
-                  <p className="py-1.5">{item?.payin_amount}</p>
-                  <p className="py-1.5">{item?.commission}</p>
+              </div>
+              <div className="lg2:col-span-7 ">
+                <div className="bg-white lg2:bg-lgGray rounded-lg">
+                  <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
+                    <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.number_of_deposit
+                          ? suboridnateData?.data.number_of_deposit
+                          : "0"}
+                      </p>
+                      <p className="text-black">Deposit number</p>
+                    </div>
+                    <div className="col-span-1 flex flex-col items-center">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.payin_amount
+                          ? Number(suboridnateData.data.payin_amount).toFixed(2)
+                          : "0"}
+                      </p>
+                      <p className="text-black">Deposit amount</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
+                    <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.number_of_bettor
+                          ? Number(suboridnateData.data.number_of_bettor)
+                          : "0"}
+                      </p>
+                      <p className="text-black">Number of bettors</p>
+                    </div>
+                    <div className="col-span-1 flex flex-col items-center">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.bet_amount
+                          ? Number(suboridnateData.data.bet_amount).toFixed(2)
+                          : "0"}
+                      </p>
+                      <p className="text-black">Total bet</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 w-full p-2  mt-3 text-ssm">
+                    <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.first_deposit
+                          ? Number(suboridnateData.data.first_deposit)
+                          : "0"}
+                      </p>
+                      <p className="text-black text-center">
+                        Number of people making first deposit
+                      </p>
+                    </div>
+                    <div className="col-span-1 flex flex-col items-center">
+                      <p className="text-black text-sm font-bold">
+                        {suboridnateData?.data.first_deposit_amount
+                          ? Number.isInteger(
+                              Number(suboridnateData.data.first_deposit_amount)
+                            )
+                            ? Number(suboridnateData.data.first_deposit_amount)
+                            : Number(
+                                suboridnateData.data.first_deposit_amount
+                              ).toFixed(2)
+                          : "0"}
+                      </p>
+
+                      <p className="text-black">First deposit amount</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-5 text-black lg2:bg-lgGray">
+                  {suboridnateData?.data.subordinates_data?.length > 0 ? (
+                    suboridnateData?.data.subordinates_data?.map((item, i) => (
+                      <div
+                        key={i}
+                        className="bg-white lg2:bg-lgGray rounded-lg py-2 px-2 mb-4"
+                      >
+                        <p className="py-4 border-b border1 ">
+                          UID: {item?.u_id}{" "}
+                          <button onClick={() => handleCopyUID(item)} className="cursor-pointer">
+                            {" "}
+                            <FaRegCopy />
+                          </button>
+                        </p>
+                        <div className="flex text-ssm items-center justify-between">
+                          <div>
+                            <p className="py-1.5">Level</p>
+                            <p className="py-1.5">Bet amount</p>
+                            <p className="py-1.5">Deposit amount</p>
+                            <p className="py-1.5">Commission</p>
+                          </div>
+                          <div>
+                            <p className="py-1.5">{item?.level}</p>
+                            <p className="py-1.5">{item?.bet_amount}</p>
+                            {/* <p className="py-1.5">{item?.total_cash}</p> */}
+                            <p className="py-1.5">{item?.payin_amount}</p>
+                            <p className="py-1.5">{item?.commission}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                      <img src={no_data_available} className="mt-2" alt="ds" />
+                      <p className="text-black w-full text-center">No data</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <div>
-            <img src={no_data_available} className="mt-2" alt="ds" />
-            <p className="text-black w-full text-center">No data</p>
           </div>
-        )}
+        </div>
       </div>
-
       {/*  modal  */}
       {modalFirst && (
         <div className="fixed inset-0 z-50 flex justify-center items-end bg-black bg-opacity-50">

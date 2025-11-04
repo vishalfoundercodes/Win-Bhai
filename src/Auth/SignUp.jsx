@@ -248,7 +248,7 @@ useEffect(() => {
                 {/* Input Field */}
                 <input
                   disabled={!buttonDisabled}
-                  type="text"
+                  type="number"
                   placeholder="Phone Number"
                   className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
                   style={{ fontFamily: "Roboto, sans-serif" }}
@@ -265,7 +265,7 @@ useEffect(() => {
                 {/* OTP Button */}
                 <button
                   type="button"
-                  className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600"
+                  className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red cursor-pointer"
                   onClick={() => {
                     if (phoneNumber.length === 10) {
                       sendOtp(phoneNumber);
@@ -535,7 +535,7 @@ useEffect(() => {
           {/* Register Button */}
           <button
             type="submit"
-            className="w-full bg-[#000000] text-white py-2 rounded-md hover:bg-gray-800 mt-2 text-center"
+            className="w-full bg-[#000000] text-white py-2 rounded-md hover:bg-gray-800 mt-2 text-center cursor-pointer"
           >
             Register
           </button>
@@ -544,7 +544,7 @@ useEffect(() => {
         <div className="text-center text-sm mt-1 text-[#4B5563] text-ssm mb-1">
           Already have an account?{" "}
           <button
-            className="bg-buttonRed text-white px-3 py-1 rounded font-normal text-ssm"
+            className="bg-buttonRed text-white px-3 py-1 rounded font-normal text-ssm cursor-pointer"
             onClick={() => navigate("/login")}
           >
             login
@@ -555,7 +555,7 @@ useEffect(() => {
         {/* WhatsApp Button */}
         <button
           type="button"
-          className="w-full mb-2 flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-md hover:bg-green-50 text-sm font-medium transition"
+          className="w-full mb-2 flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-md hover:bg-green-50 text-sm font-medium transition cursor-pointer"
           style={{ fontFamily: "Roboto, sans-serif" }}
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

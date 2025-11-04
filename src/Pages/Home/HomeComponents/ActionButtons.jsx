@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 export default function ActionButtons() {
   const navigate=useNavigate()
   return (
-    <div className="px-0 py-2">
-      <div className="flex gap-4 bg-white py-2 px-3 rounded-[8px] w-fit mx-auto">
+    <div className="px-0 py-2 lg2:py-0">
+      <div className="flex gap-4 bg-white py-2 px-3 lg2:py-0 lg2:px-0 lg2:bg-transparent rounded-[8px] w-fit mx-auto">
         {/* Withdraw Button */}
         <div>
           <button
-            className="flex items-center gap-2 bg-gradient-to-r from-[#5B0418] to-[#C10932] text-white px-8 py-2 xsm3 xxs:px-11  rounded-[8px] font-medium shadow-md hover:opacity-90 transition"
+            className="flex items-center gap-2 bg-gradient-to-r from-[#5B0418] to-[#C10932] text-white px-8 py-2 lg2:px-6 lg2:py-1 lg2:border lg2:border-white xsm3 xxs:px-11  rounded-[8px] font-medium shadow-md hover:opacity-90 transition cursor-pointer"
             onClick={() => navigate("/withdraw")}
           >
             <svg
@@ -52,7 +52,7 @@ export default function ActionButtons() {
         <div>
           {/* Deposit Button */}
           <button
-            className="flex items-center gap-2 bg-gradient-to-r from-[#19C262] to-[#0C5C2E] text-white px-6 xsm3:px-8 py-2 xxs:px-10  rounded-[8px] font-medium shadow-md hover:opacity-90 transition"
+            className="flex items-center gap-2 bg-gradient-to-r from-[#19C262] to-[#0C5C2E] text-white px-6 xsm3:px-8 py-2 lg2:px-6 lg2:py-1 lg2:border lg2:border-white xxs:px-10  rounded-[8px] font-medium shadow-md hover:opacity-90 transition cursor-pointer"
             onClick={() => navigate("/deposit")}
           >
             <svg

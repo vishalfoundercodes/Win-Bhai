@@ -509,7 +509,7 @@ naviagte(`/game/${id}`);
 
   }
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar px-4"
+    <div className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
     style={{
       fontFamily:"Roboto"
     }}
@@ -524,7 +524,7 @@ naviagte(`/game/${id}`);
                 handleClick(cat.id);
               }}
               className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
-                transition-all duration-200
+                transition-all duration-200 cursor-pointer
                 ${
                   active === cat.id
                     ? "bg-[#c8102e] text-white border-[#c8102e]"
@@ -533,7 +533,7 @@ naviagte(`/game/${id}`);
             >
               {/* ✅ Render icon only if exists */}
               {cat.icon && <IconComp active={active === cat.id} />}
-              <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal">
+              <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal ">
                 {cat.label}
               </span>
             </button>

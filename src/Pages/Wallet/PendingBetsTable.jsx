@@ -209,10 +209,11 @@
 // }
 
 import { useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function PendingBetsTable({ data }) {
   const [bets, setBets] = useState([]);
   const [selected, setSelected] = useState([]);
+
 
   useEffect(() => {
     console.log("🔍 PendingBetsTable received data:", data);
@@ -260,9 +261,9 @@ export default function PendingBetsTable({ data }) {
     <div className="w-full mx-auto">
       {/* Table */}
       <div className="bg-gray-100 rounded-md p-4 mx-4">
-        <table className="w-full border-separate border-spacing-0">
+        <table className="w-full border-separate border-spacing-0 ">
           <thead>
-            <tr className="bg-gray-100 text-red font-semibold text-ssm">
+            <tr className="bg-gray-100 lg2:bg-red text-red lg2:text-white font-semibold text-ssm ">
               <th className="py-2 px-2 w-10"></th>
               <th className="py-2 px-2 text-center">Placed Date & Time</th>
               <th className="py-2 px-2 text-center">Bet Sequence</th>
@@ -295,7 +296,7 @@ export default function PendingBetsTable({ data }) {
       </div>
 
       {/* Buttons */}
-      <div className="flex justify-between mt-4 mb-4 mx-4 text-ssm">
+      <div className="flex justify-between lg2:justify-end lg2:gap-2 mt-4 mb-4 mx-4 text-ssm">
         <button className="px-3 py-2 rounded-md border border-red text-red font-medium hover:bg-red-50">
           Confirm Pending Bets
         </button>

@@ -2,11 +2,13 @@ import axios from "axios";
 import { ArrowRight, Mail, Phone } from "lucide-react";
 import apis from "../../utils/apis";
 import { useEffect, useState } from "react";
+import {useNavigate } from "react-router-dom";
 
 
 export default function HelpPage() {
   const [dataSection ,setDataSection]=useState(null)
   const [supportSection ,setSupportSection]=useState(null)
+  const navigate=useNavigate()
   const fetchData=async()=>{
     try {
       const res=await axios.get(apis.customer_service)
@@ -23,14 +25,33 @@ export default function HelpPage() {
   },[])
   
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-8 flex flex-col items-center  hide-scrollbar">
+    <div className="min-h-screen bg-gray-100 lg2:bg-transparent px-4 py-8 flex flex-col items-center lg2:items-start lg2:py-0  hide-scrollbar">
       {/* Title */}
-      <h2 className="text-xsm font-semibold text-gray-900 text-center">
-        Need Help? Chat With Us
-      </h2>
-      <p className="text-ssm text-gray-600 text-center mt-1">
-        Choose your favorite platform to connect instantly
-      </p>
+      <div className="lg2:flex lg2:gap-4 ">
+        <div className="hidden lg2:block cursor-pointer" onClick={()=>navigate(-1)}>
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div className="lg2:flex lg2:flex-col">
+          <h2 className="text-xsm font-semibold text-gray-900 text-center lg2:text-start lg2:-mt-2">
+            Need Help? Chat With Us
+          </h2>
+          <p className="text-ssm text-gray-600 text-center mt-1">
+            Choose your favorite platform to connect instantly
+          </p>
+        </div>
+      </div>
 
       {/* Chat on WhatsApp */}
       {/* <div className="w-full  mt-4 hide-scrollbar">

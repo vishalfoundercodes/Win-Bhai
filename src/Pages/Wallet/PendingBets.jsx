@@ -476,6 +476,7 @@ import PendingBetsTable from "./PendingBetsTable";
 import axios from "axios";
 import apis from "../../utils/apis";
 import Loader from "../resuable_component/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 export default function PendingBets() {
   const [startDate, setStartDate] = useState("");
@@ -483,6 +484,7 @@ export default function PendingBets() {
   const [openModal, setOpenModal] = useState(null); // "start" | "end" | null
   const [filteredData, setFilteredData] = useState([]);
   const [tempFilteredData, setTempFilteredData] = useState([]); // Store game-filtered data
+    const navigate = useNavigate();
 
   // helper to format yyyy-mm-dd -> mm/dd/yyyy
   const formatDate = (value) => {
@@ -688,11 +690,11 @@ export default function PendingBets() {
 
   return (
     <div className="min-h-screen">
-      <div className="py-2">
+      <div className="py-2 lg2:hidden">
         <SlidingTabs />
       </div>
       <div
-        className="w-full bg-red text-white py-2 px-5 font-medium text-sm"
+        className="w-full bg-red text-white py-2 px-5 font-medium text-sm lg2:hidden"
         style={{
           fontFamily: "Roboto",
           fontWeight: "400",
@@ -703,103 +705,132 @@ export default function PendingBets() {
         <h2>Pending Bets</h2>
       </div>
 
-      <div className="p-2 px-4">
-        {/* Game Filter Dropdown */}
-        <div className="mb-3">
-          <div className="relative w-full">
-            {/* Selected box */}
-            <div
-              className="bg-white rounded-md px-3 py-2 flex items-center justify-between cursor-pointer text-black font-semibold text-ssm"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <span>{selected}</span>
-              {isOpen ? (
-                <ChevronUp className="w-4 h-4 text-gray-500" />
-              ) : (
-                <ChevronDown className="w-4 h-4 text-gray-500" />
-              )}
-            </div>
-
-            {/* Dropdown menu */}
-            {isOpen && (
-              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg max-h-100 overflow-y-auto z-50 hide-scrollbar text-black font-semibold text-ssm">
-                {options.map((option) => (
-                  <div
-                    key={option}
-                    onClick={() => handleSelect(option)}
-                    className={`px-3 py-2 cursor-pointer hover:bg-gray-100 border-b border-[#E5E7EB] ${
-                      selected === option ? "bg-gray-50 font-medium" : ""
-                    }`}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Date Range Filter */}
-          <div className="flex justify-between mb-3 gap-2 mt-3">
-            {/* Start Date */}
-            <div className="relative flex-1">
-              <label className="text-black text-[12px] font-medium">
-                From Date
-              </label>
-              <input
-                type="text"
-                value={startDate}
-                readOnly
-                placeholder="mm/dd/yyyy"
-                className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-                onClick={() => setOpenModal("start")}
-              />
-              <img
-                src={calender}
-                alt="calendar"
-                className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
-                onClick={() => setOpenModal("start")}
-              />
-            </div>
-
-            {/* End Date */}
-            <div className="relative flex-1">
-              <label className="text-black text-[12px] font-medium">
-                To Date
-              </label>
-              <input
-                type="text"
-                value={endDate}
-                readOnly
-                placeholder="mm/dd/yyyy"
-                className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-                onClick={() => setOpenModal("end")}
-              />
-              <img
-                src={calender}
-                alt="calendar"
-                className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
-                onClick={() => setOpenModal("end")}
-              />
-            </div>
-          </div>
-          <button
-            className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm"
-            onClick={applyDateFilter}
-          >
-            Apply Filter
-          </button>
-        </div>
+      <div
+        className="hidden lg2:block mb-2 cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
+        <svg
+          width="44"
+          height="44"
+          viewBox="0 0 44 44"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect width="44" height="44" rx="8" fill="#C10932" />
+          <path
+            d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+            fill="white"
+          />
+        </svg>
       </div>
+      <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
+        <h2 className="text-white text-sm font-semibold">Pending Bets</h2>
+      </div>
+      <div className="lg2:bg-white w-full  lg2:rounded-b-2xl">
+        <div className="py-6 hidden lg2:block">
+          <SlidingTabs />
+        </div>
 
-      {/* Table */}
-      <div className="mt-4">
-        {console.log("🎯 Passing to PendingBetsTable:", filteredData)}
-        <PendingBetsTable data={filteredData} />
-        {/* {filteredData.length === 0 && !loading && (
+        <div className="lg2:grid lg2:grid-cols-12 lg2:gap-4 lg2:bg-white lg2:rounded-b-2xl lg2:py-3 lg2:px-8">
+          <div className="p-2 px-4 lg2:col-span-5">
+            {/* Game Filter Dropdown */}
+            <div className="mb-3 ">
+              <div className="relative w-full">
+                {/* Selected box */}
+                <div
+                  className="bg-white lg2:bg-lgGray rounded-md px-3 py-2 flex items-center justify-between cursor-pointer text-black font-semibold text-ssm"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <span>{selected}</span>
+                  {isOpen ? (
+                    <ChevronUp className="w-4 h-4 text-gray-500" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-gray-500" />
+                  )}
+                </div>
+
+                {/* Dropdown menu */}
+                {isOpen && (
+                  <div className="absolute mt-1 w-full bg-white lg2:bg-lgGray rounded-md shadow-lg max-h-100 overflow-y-auto z-50 hide-scrollbar text-black font-semibold text-ssm">
+                    {options.map((option) => (
+                      <div
+                        key={option}
+                        onClick={() => handleSelect(option)}
+                        className={`px-3 py-2 cursor-pointer hover:bg-gray-100 border-b border-[#E5E7EB] ${
+                          selected === option ? "bg-gray-50 font-medium" : ""
+                        }`}
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Date Range Filter */}
+              <div className="flex justify-between mb-3 gap-2 mt-3">
+                {/* Start Date */}
+                <div className="relative flex-1">
+                  <label className="text-black text-[12px] font-medium">
+                    From Date
+                  </label>
+                  <input
+                    type="text"
+                    value={startDate}
+                    readOnly
+                    placeholder="mm/dd/yyyy"
+                    className="custom-date-input p-2 text-ssm w-full bg-white lg2:bg-lgGray rounded-[8px] shadow pr-10"
+                    onClick={() => setOpenModal("start")}
+                  />
+                  <img
+                    src={calender}
+                    alt="calendar"
+                    className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
+                    onClick={() => setOpenModal("start")}
+                  />
+                </div>
+
+                {/* End Date */}
+                <div className="relative flex-1">
+                  <label className="text-black text-[12px] font-medium">
+                    To Date
+                  </label>
+                  <input
+                    type="text"
+                    value={endDate}
+                    readOnly
+                    placeholder="mm/dd/yyyy"
+                    className="custom-date-input p-2 text-ssm w-full bg-white lg2:bg-lgGray rounded-[8px] shadow pr-10"
+                    onClick={() => setOpenModal("end")}
+                  />
+                  <img
+                    src={calender}
+                    alt="calendar"
+                    className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
+                    onClick={() => setOpenModal("end")}
+                  />
+                </div>
+              </div>
+              <button
+                className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm cursor-pointer"
+                onClick={applyDateFilter}
+              >
+                Apply Filter
+              </button>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="mt-4 lg2:col-span-7">
+            {console.log("🎯 Passing to PendingBetsTable:", filteredData)}
+            <PendingBetsTable data={filteredData} />
+            {/* {filteredData.length === 0 && !loading && (
           <p className="text-center text-gray-500 mt-4">
             No pending bets found
           </p>
         )} */}
+          </div>
+        </div>
       </div>
 
       {/* Calendar Modal */}

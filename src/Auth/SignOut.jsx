@@ -33,13 +33,13 @@ const navigate=useNavigate()
               window.location.reload();
               // alert("Signed out!"); // yaha tumhara signout logic ayega
             }}
-            className="w-full bg-red hover:bg-red text-white font-medium py-2 rounded-md"
+            className="w-full bg-red hover:bg-red text-white font-medium py-2 rounded-md cursor-pointer"
           >
             Sign out
           </button>
           <button
             onClick={onClose}
-            className="w-full text-gray-600 hover:text-gray-800 font-medium py-2"
+            className="w-full text-gray-600 hover:text-gray-800 font-medium py-2 cursor-pointer"
           >
             Cancel
           </button>

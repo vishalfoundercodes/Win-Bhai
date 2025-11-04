@@ -38,9 +38,47 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-700 text-xl cursor-pointer"
+          className="absolute top-3 right-3 text-gray-700 text-xl cursor-pointer lg2:hidden"
         >
           <FaTimes />
+        </button>
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-700 text-xl cursor-pointer hidden lg2:block"
+        >
+          <svg
+            width="32"
+            height="20"
+            viewBox="0 0 32 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.96187 9.04016C5.50569 9.56451 5.50569 10.4355 4.96186 10.9598L0.996883 14.7828C0.452532 15.3077 0.453139 16.1797 0.998222 16.7038L1.42221 17.1115C1.93835 17.6077 2.75432 17.6077 3.27046 17.1115L9.66705 10.9611C10.2127 10.4365 10.2127 9.56348 9.66705 9.03887L3.27046 2.88855C2.75432 2.39227 1.93835 2.39228 1.42221 2.88855L0.998222 3.29621C0.453139 3.82031 0.452532 4.69232 0.996883 5.21718L4.96187 9.04016Z"
+              fill="#C10932"
+            />
+            <path
+              d="M29.3327 10H15.9994"
+              stroke="#C10932"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M29.3327 2H10.666"
+              stroke="#C10932"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M29.3327 18H10.666"
+              stroke="#C10932"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </button>
 
         {/* Content */}
@@ -48,7 +86,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
           {/* Balance Info */}
           <div className="bg-white py-1">
             <h2
-              className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4 "
+              className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4 cursor-pointer"
               onClick={() => navigate("/Info")}
             >
               <svg
@@ -73,7 +111,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               {profileDetails?.username || profileDetails2?.username || "User"}
             </h2>
             <div className="w-full mb-2 border-b border-grayBorder"></div>
-            <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4">
+            <h2 className="font-bold text-gray-800 mb-2 flex items-center gap-2 px-4 cursor-pointer">
               <svg
                 width="24"
                 height="24"
@@ -90,20 +128,20 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
             </h2>
             <div className="w-full mb-2 border-b border-grayBorder"></div>
             {/* <div className="w-full mb-2 border-b border-grayBorder"></div> */}
-            <div className="border border-grayBorder mx-4 bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start ">
+            <div className="border border-grayBorder mx-4 bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start cursor-pointer">
               <p className="text-xs font-medium text-darkGray">Total Balance</p>
               <p className="text-green-600 font-bold">
                 ₹ {profileDetails?.wallet || profileDetails2?.wallet || "0"}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-2 text-sm mb-3 px-4">
-              <div className="border rounded-[10px] p-2  col-span-1 border-grayBorder bg-grayBg">
+              <div className="border rounded-[10px] p-2  col-span-1 border-grayBorder bg-grayBg cursor-pointer">
                 <p className="text-xs text-darkGray font-medium uppercase">
                   Free Cash
                 </p>
                 <p className="font-bold">₹ 0.00</p>
               </div>
-              <div className="border rounded-[10px] p-2  border-grayBorder bg-grayBg">
+              <div className="border rounded-[10px] p-2  border-grayBorder bg-grayBg cursor-pointer">
                 <p className="text-xs text-darkGray font-medium">
                   Net Exposure
                 </p>
@@ -112,9 +150,9 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
             </div>
 
             {/* Deposit / Withdraw */}
-            <div className="flex gap-3 mb-3 px-4">
+            <div className="flex gap-3 mb-3 px-4 ">
               <div
-                className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)]
+                className="flex flex-1 flex-col items-center justify-center cursor-pointer bg-[linear-gradient(92.11deg,#19C262_0%,#0C5C2E_98.22%)]
  rounded-[8px] p-0 w-20 h-18"
                 onClick={() => {
                   onClose(), navigate("/deposit");
@@ -162,7 +200,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               </div>
 
               <div
-                className="flex flex-1 flex-col items-center justify-center bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)]
+                className="flex flex-1 flex-col items-center justify-center cursor-pointer bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)]
  rounded-[8px] p-1 w-20 h-18"
                 onClick={() => {
                   onClose(), navigate("/withdraw");
@@ -208,9 +246,9 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
                 </span>
               </div>
             </div>
-            <div className="mx-4 mb-2">
+            <div className="mx-4 mb-2 cursor-pointer">
               <button
-                className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 "
+                className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 cursor-pointer"
                 onClick={() => navigate("/RedeemBonus")}
               >
                 Claim Bonus
@@ -224,7 +262,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               // onClick={() => {onclose;navigate("/needhelp")}}
               onClick={() => {
                 onClose();
@@ -246,7 +284,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Chat With Us
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/downloadAPK");
@@ -267,7 +305,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Download APK
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/Notification");
@@ -319,7 +357,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Transactions
             </li> */}
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/profitLoss");
@@ -340,7 +378,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Betting Profit & Loss
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/accountStatement");
@@ -361,7 +399,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Account Statement
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/depositHistory");
@@ -382,7 +420,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Deposit History
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/withdrawHistory");
@@ -403,7 +441,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Withdrawal History
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/PendingBets");
@@ -424,7 +462,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Pending Bets
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/betHistory");
@@ -445,7 +483,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Bet History
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/PromoteAndEarn");
@@ -475,7 +513,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/rules");
@@ -517,7 +555,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Exclusion Policy
             </li> */}
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/resposibleGambling");
@@ -546,7 +584,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Responsible Gambling
             </li>
             <li
-              className="flex items-center gap-3 p-3"
+              className="flex items-center gap-3 p-3 cursor-pointer"
               onClick={() => {
                 onClose();
                 navigate("/privacy");
@@ -574,7 +612,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
           </div>
           <ul className="divide-y divide-grayBorder font-medium px-4">
             <li
-              className="flex items-center gap-3 p-3 cursor-pointer"
+              className="flex items-center gap-3 p-3 cursor-pointer "
               onClick={() => {
                 onClose();
                 navigate("/changePassword");
@@ -595,7 +633,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
               Change Password
             </li>
             <li
-              className="flex items-center gap-3 p-3  font-semibold"
+              className="flex items-center gap-3 p-3  font-semibold cursor-pointer"
               onClick={() => setOpenSignOutModal(true)}
             >
               <svg

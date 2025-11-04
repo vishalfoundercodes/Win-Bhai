@@ -371,7 +371,7 @@ const GameSection = ({ title, games, icon }) => {
   const shouldShowSecondRow = !noSecondRowTitles.includes(title);
 
   // ✅ Slice into two rows
-  const rowSize = 4; // how many items per row
+  const rowSize = 12; // how many items per row
   const firstRow = filteredGames.slice(0, rowSize);
   const secondRow = filteredGames.slice(rowSize, rowSize * 2);
 
@@ -389,7 +389,7 @@ const GameSection = ({ title, games, icon }) => {
       {items.map((game) => (
         <div
           key={game.id}
-          className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] rounded-[12px] overflow-hidden cursor-pointer"
+          className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] lg2:min-w-[135px] lg2:min-h-[150px] rounded-[12px] overflow-hidden cursor-pointer"
           onClick={() => {
             navigate(game.route || "#");
             handleGameOpen(game.gameID);
@@ -431,9 +431,12 @@ const GameSection = ({ title, games, icon }) => {
       };
       console.log("payload",payload)
       const res = await axios.post(apis.openGame, payload);
+      console.log("game launch:",res?.data)
       if(res?.data?.status===200){
         // setloading(false)
-        window.open(res?.data?.gameUrl, "_blank");
+        // const res2 =await axios.get(res?.data?.gameUrl);
+
+        window.open(res?.data?.apiResponse?.data?.url, "_blank");
       }
       else{
         toast.error("Something went wrong to play the game.")

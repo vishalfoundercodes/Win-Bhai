@@ -1,7 +1,9 @@
 import React from "react";
 import crown from "../../assets/promotion/Crown.png"
 import label from "../../assets/promotion/label.png"
+import { useNavigate } from "react-router-dom";
 const InvitationRules = () => {
+  const navigate=useNavigate()
   const rules = [
     {
       id: 1,
@@ -51,7 +53,7 @@ const InvitationRules = () => {
 
   return (
     <>
-      <div className="relative flex items-center justify-center py-2 ">
+      <div className="relative flex items-center justify-center py-2 lg2:hidden">
         {/* Back arrow (absolutely positioned) */}
         <button
           onClick={() => window.history.back()}
@@ -78,8 +80,33 @@ const InvitationRules = () => {
           Invitation Rules
         </h1>
       </div>
+      <div className="lg2:flex lg2:gap-4 items-center hidden ">
+        <div
+          className="hidden lg2:block cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div className="lg2:flex lg2:flex-col items-center">
+          <h2 className="text-xsm font-semibold text-gray-900 text-center  lg2:-mt-2">
+            Invitation Rules
+          </h2>
+        </div>
+      </div>
       <div className=" min-h-screen flex flex-col items-center pb-6">
-        <div className="w-full text-black rounded-lg">
+        <div className="w-full text-black rounded-lg ">
           {/* Promotion Title */}
           <div className="p-4 text-center text-lg">
             <h2 className="text-red font-bold">【Promotion partner】program</h2>
@@ -94,7 +121,7 @@ const InvitationRules = () => {
             {rules.map((rule) => (
               <div
                 key={rule.id}
-                className="relative bg-white rounded-lg p-4 pt-6 text-[12px] text-[#A8A5A1] shadow-sm"
+                className="relative bg-white rounded-lg p-4 pt-6 text-[12px] text-[#A8A5A1] lg2:text-black shadow-sm"
               >
                 {/* Number badge — half inside, half outside */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -109,7 +136,7 @@ const InvitationRules = () => {
             ))}
           </div>
 
-          <div className="border border-t rounded-[10px]">
+          {/* <div className="border border-t rounded-[10px]">
             <table className="w-full  border-t border-red rounded-[15px]">
               <thead>
                 <tr className="text-xs font-bold  text-white bg-red border border-t border-red rounded-[15px]">
@@ -153,6 +180,64 @@ const InvitationRules = () => {
                       {row.teamBetting}
                     </td>
                     <td className="border border-redLight text-black  text-center">
+                      {row.teamDeposit}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div> */}
+          <div className="rounded-[10px] overflow-hidden border border-red lg2:mx-4">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="bg-red text-white text-xs font-bold">
+                  <th className="px-2 py-3 border-r border-redLight text-nowrap">
+                    Rebate Level
+                  </th>
+                  <th className="px-2 py-3 border-r border-redLight text-nowrap">
+                    Team Number
+                  </th>
+                  <th className="px-2 py-3 border-r border-redLight text-nowrap">
+                    Team Betting
+                  </th>
+                  <th className="px-2 py-3 text-nowrap">Team Deposit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableData.map((row, index) => (
+                  <tr
+                    key={index}
+                    className={`text-xs ${
+                      index % 2 === 0 ? "bg-white" : "bg-white"
+                    }`}
+                  >
+                    <td className="border-t border-r border-redLight py-2 text-center">
+                      <div className="flex items-center justify-center">
+                        <img
+                          src={crown}
+                          alt="crown"
+                          className="w-12 h-8 object-contain"
+                        />
+                        <div className="relative inline-flex items-center top-1">
+                          <img
+                            src={label}
+                            alt="label"
+                            className="w-8 h-4 object-contain"
+                          />
+                          <span className="absolute flex items-center justify-center text-red text-[10px] font-bold inset-0">
+                            {row.level}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="border-t border-r border-redLight text-center text-black">
+                      {row.teamNumber}
+                    </td>
+                    <td className="border-t border-r border-redLight text-center text-black">
+                      {row.teamBetting}
+                    </td>
+                    <td className="border-t border-redLight text-center text-black">
                       {row.teamDeposit}
                     </td>
                   </tr>

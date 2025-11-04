@@ -1,9 +1,36 @@
 import React from "react";
 import { Download, Zap, Lock, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const DownloadApkPage = () => {
+  const navigate=useNavigate()
   return (
     <div className="max-w-m mx-auto p-4">
+      <div className="lg2:flex lg2:gap-4 mb-4 lg2:-mt-4 hidden">
+        <div
+          className="hidden lg2:block cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div className="lg2:flex lg2:flex-col ">
+          <h2 className="text-xsm font-semibold text-gray-900 text-center lg2:text-start ">
+            Download APK
+          </h2>
+        </div>
+      </div>
       {/* Top Red Section */}
       <div className=" p-0 text-white ">
         <div className=" bg-[linear-gradient(108.25deg,#C10932_0.52%,#5B0418_99.48%)] p-6 rounded-xl mb-2">
@@ -15,7 +42,7 @@ const DownloadApkPage = () => {
         </div>
 
         {/* Download Button */}
-        <div className=" flex w-full items-center text-center justify-center mb-0 p-2">
+        <div className=" flex w-full items-center text-center justify-center mb-0 p-2 ">
           <button className=" flex items-center justify-center px-6 py-2 gap-2 bg-red text-white font-semibold rounded-full hover:bg-red shadow-md">
             <Download size={18} />
             Download APK
@@ -30,9 +57,9 @@ const DownloadApkPage = () => {
       {/* Feature List */}
       <div className="mt-6 space-y-4">
         {/* Feature 1 */}
-        <div className="bg-white  rounded-xl py-2 items-start gap-1 shadow-sm flex flex-col w-full">
+        <div className="bg-white  rounded-xl py-2 lg2:py-16 items-start gap-1 shadow-sm flex flex-col w-full">
           <div className=" p-2 rounded-full items-center justify-center flex w-full">
-            <div className="bg-blue-100 text-red p-2 rounded-full">
+            <div className="bg-blue-100 text-red p-2 lg2:p-4 rounded-full">
               <Zap size={20} />
             </div>
           </div>
@@ -45,9 +72,9 @@ const DownloadApkPage = () => {
         </div>
 
         {/* Feature 2 */}
-        <div className="bg-white  rounded-xl py-2 items-start gap-1 shadow-sm flex flex-col w-full">
+        <div className="bg-white  rounded-xl py-2 lg2:py-16 items-start gap-1 shadow-sm flex flex-col w-full">
           <div className="p-2 rounded-full items-center justify-center flex w-full">
-            <div className="bg-blue-100 text-red p-2 rounded-full">
+            <div className="bg-blue-100 text-red p-2 lg2:p-4 rounded-full">
               <Lock size={20} />
             </div>
           </div>
@@ -60,9 +87,9 @@ const DownloadApkPage = () => {
         </div>
 
         {/* Feature 3 */}
-        <div className="bg-white  rounded-xl py-2 items-start gap-1 shadow-sm flex flex-col w-full">
+        <div className="bg-white  rounded-xl py-2 lg2:py-16 items-start gap-1 shadow-sm flex flex-col w-full">
           <div className="p-2 rounded-full items-center justify-center flex w-full">
-            <div className="bg-blue-100 text-red p-2 rounded-full">
+            <div className="bg-blue-100 text-red p-2 lg2:p-4  rounded-full">
               <Sparkles size={20} />
             </div>
           </div>

@@ -129,7 +129,7 @@ export default function ProfitLossTable({ payload }) {
       <div className="w-full justify-between">
         {/* Header Row */}
         <div className="bg-white p-2 text-ssm font-Inter font-semibold">
-          <div className="flex justify-between items-center text-gray-700 py-1 px-3 bg-[#F3F4F6]">
+          <div className="flex justify-between items-center text-gray-700 py-1 px-3 bg-[#F3F4F6]  lg2:rounded-t-2xl">
             <div className="w-2/3">EVENT</div>
             <div className="w-1/3 flex justify-between">
               <div className="text-center w-1/2">TOTAL</div>

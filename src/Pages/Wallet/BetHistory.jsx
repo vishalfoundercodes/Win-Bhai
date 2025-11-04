@@ -7,12 +7,15 @@ import CalendarModal from "../ReusableComponent/Calender";
 import axios from "axios";
 import apis from "../../utils/apis";
 import Loader from "../resuable_component/Loader/Loader";
+import { useNavigate } from "react-router-dom";
+
 export default function BetHistory() {
   const startRef = useRef(null);
   const endRef = useRef(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [openModal, setOpenModal] = useState(null);
+    const naviagte = useNavigate();
 
   const [loading, setloading] = useState(false);
   const [betHistory, setBetHistory] = useState(null);
@@ -208,11 +211,11 @@ export default function BetHistory() {
   }
   return (
     <div className="min-h-screen">
-      <div className="py-2">
+      <div className="py-2 lg2:hidden">
         <SlidingTabs />
       </div>
       <div
-        className="w-full bg-red text-white px-4 py-2 font-medium text-sm"
+        className="w-full bg-red text-white px-4 py-2 font-medium text-sm lg2:hidden"
         style={{
           fontFamily: "Roboto",
           fontWeight: "400",
@@ -279,86 +282,117 @@ export default function BetHistory() {
             Apply Filter
           </button>
         </div> */}
-        <div className="mb-3 p-2 px-4">
-          <div className="flex justify-between mb-3 gap-2">
-            {/* From Date */}
-            <div className="relative">
-              <label className="text-black text-[12px] font-medium">
-                From Date
-              </label>
-              <input
-                type="text"
-                value={startDate}
-                readOnly
-                placeholder="mm/dd/yyyy"
-                className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-                onClick={() => setOpenModal("start")}
+        <div className="w-full lg2:pr-12 lg2:p-0">
+          <div
+            className="hidden lg2:block mb-2 cursor-pointer"
+            onClick={() => naviagte(-1)}
+          >
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 44 44"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="44" height="44" rx="8" fill="#C10932" />
+              <path
+                d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+                fill="white"
               />
-              <img
-                src={calender}
-                alt="calendar"
-                className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
-                onClick={() => setOpenModal("start")}
-              />
+            </svg>
+          </div>
+          <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
+            <h2 className="text-white text-sm font-semibold">Bet History</h2>
+          </div>
+          <div className="lg2:bg-white w-full  lg2:rounded-b-2xl">
+            <div className="py-6 hidden lg2:block">
+              <SlidingTabs />
             </div>
 
-            {/* To Date */}
-            <div className="relative">
-              <label className="text-black text-[12px] font-medium">
-                To Date
-              </label>
-              <input
-                type="text"
-                value={endDate}
-                readOnly
-                placeholder="mm/dd/yyyy"
-                className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
-                onClick={() => setOpenModal("end")}
-              />
-              <img
-                src={calender}
-                alt="calendar"
-                className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
-                onClick={() => setOpenModal("end")}
-              />
+            <div className="lg2:grid lg2:grid-cols-12 lg2:gap-4 lg2:bg-white lg2:rounded-b-2xl lg2:py-3 lg2:px-8">
+              <div className="mb-3 p-2 px-4 lg2:col-span-5 lg2:px-0 lg2:p-0">
+                <div className="flex justify-between mb-3 gap-2 ">
+                  {/* From Date */}
+                  <div className="relative">
+                    <label className="text-black text-[12px] font-medium">
+                      From Date
+                    </label>
+                    <input
+                      type="text"
+                      value={startDate}
+                      readOnly
+                      placeholder="mm/dd/yyyy"
+                      className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
+                      onClick={() => setOpenModal("start")}
+                    />
+                    <img
+                      src={calender}
+                      alt="calendar"
+                      className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
+                      onClick={() => setOpenModal("start")}
+                    />
+                  </div>
+
+                  {/* To Date */}
+                  <div className="relative">
+                    <label className="text-black text-[12px] font-medium">
+                      To Date
+                    </label>
+                    <input
+                      type="text"
+                      value={endDate}
+                      readOnly
+                      placeholder="mm/dd/yyyy"
+                      className="custom-date-input p-2 text-ssm w-full bg-white rounded-[8px] shadow pr-10"
+                      onClick={() => setOpenModal("end")}
+                    />
+                    <img
+                      src={calender}
+                      alt="calendar"
+                      className="w-5 h-5 absolute right-3 top-9 cursor-pointer"
+                      onClick={() => setOpenModal("end")}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between gap-2 mb-2">
+                  <button
+                    className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
+                    onClick={handleToday}
+                  >
+                    Just For Today
+                  </button>
+                  <button
+                    className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
+                    onClick={handleYesterday}
+                  >
+                    From Yesterday
+                  </button>
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm"
+                    onClick={handleApplyFilter}
+                  >
+                    Apply Filter
+                  </button>
+                  <button
+                    type="button"
+                    className="w-1/3 bg-gray-400 text-white py-2 rounded-[8px] font-medium text-ssm"
+                    onClick={handleClearFilter}
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+
+              <div className="pl-4 lg2:col-span-7">
+                <BettingTable data={filteredData} />
+              </div>
             </div>
           </div>
-
-          <div className="flex justify-between gap-2 mb-2">
-            <button
-              className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
-              onClick={handleToday}
-            >
-              Just For Today
-            </button>
-            <button
-              className="w-full bg-lightGray text-white py-2 rounded-[8px] font-medium text-ssm"
-              onClick={handleYesterday}
-            >
-              From Yesterday
-            </button>
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              type="button"
-              className="w-full bg-red text-white py-2 rounded-[8px] font-medium text-ssm"
-              onClick={handleApplyFilter}
-            >
-              Apply Filter
-            </button>
-            <button
-              type="button"
-              className="w-1/3 bg-gray-400 text-white py-2 rounded-[8px] font-medium text-ssm"
-              onClick={handleClearFilter}
-            >
-              Clear
-            </button>
-          </div>
-        </div>
-
-        <div className="pl-4">
-          <BettingTable data={filteredData} />
         </div>
 
         {/* Calendar Modal */}

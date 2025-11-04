@@ -83,7 +83,7 @@ const ChangePassword = () => {
             <button
               type="button"
               onClick={() => setShowCurrent(!showCurrent)}
-              className="absolute right-3 top-3 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500 cursor-pointer"
             >
               {showCurrent ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -111,7 +111,7 @@ const ChangePassword = () => {
             <button
               type="button"
               onClick={() => setShowNew(!showNew)}
-              className="absolute right-3 top-3 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500 cursor-pointer"
             >
               {showNew ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -139,7 +139,7 @@ const ChangePassword = () => {
             <button
               type="button"
               onClick={() => setShowConfirm(!showConfirm)}
-              className="absolute right-3 top-3 text-gray-500"
+              className="absolute right-3 top-3 text-gray-500 cursor-pointer"
             >
               {showConfirm ? <FaEyeSlash /> : <FaEye />}
             </button>
@@ -153,7 +153,7 @@ const ChangePassword = () => {
 
         <button
           type="submit"
-          className="w-full bg-red text-white py-2 rounded-[8px] font-semibold text-ssm hover:bg-red"
+          className="w-full bg-red text-white py-2 rounded-[8px] font-semibold text-ssm hover:bg-red cursor-pointer"
         >
           Update Password
         </button>

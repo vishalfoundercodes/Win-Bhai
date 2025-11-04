@@ -26,6 +26,8 @@ export default function Withdraw() {
   const [amount, setAmount] = useState("");
   const [upiId, setUpiId] = useState("");
       const [selectedCardId, setSelectedCardId] = useState(null);
+      const [slidesPerView, setSlidesPerView] = useState(1.2);
+
   const navigate = useNavigate()
 const [active, setActive] = useState("Option 1");
   const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
@@ -200,6 +202,22 @@ const defaultImages = [image1, image2, image3];
       }    
     }
 
+      useEffect(() => {
+        const updateSlides = () => {
+          if (window.innerWidth >= 1024) {
+            // lg2 breakpoint
+            setSlidesPerView(4.2);
+          } else {
+            setSlidesPerView(1.2);
+          }
+        };
+
+        updateSlides(); // run initially
+        window.addEventListener("resize", updateSlides);
+
+        return () => window.removeEventListener("resize", updateSlides);
+      }, []);
+
   if(loader){
      return (
        <div className="min-h-screen flex items-center justify-center">
@@ -208,8 +226,26 @@ const defaultImages = [image1, image2, image3];
      );
   }
   return (
-    <div className="min-h-screen  flex justify-center items-start py-6 px-0 ">
-      <div className="w-full px-4 space-y-2">
+    <div className="min-h-screen  flex justify-center items-start py-6 px-0 lg2:py-0 lg2:pr-8 ">
+      <div className="w-full px-4 lg2:px-3 space-y-2">
+        <div
+          className="hidden lg2:block mb-2 cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
         <div className="bg-black2 text-white rounded-[8px] p-2 text-ssm font-medium">
           <p>Cashable Amount: 0</p>
         </div>
@@ -218,9 +254,9 @@ const defaultImages = [image1, image2, image3];
           <h2 className="text-gray-800 font-semibold mb-4">
             Withdraw Options :
           </h2>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 lg2:grid-cols-6 gap-3">
             <button
-              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 lg2:py-6  cursor-pointer ${
                 selectedPayment === "manual"
                   ? "border-red-500 bg-red-50"
                   : "border-gray-300"
@@ -244,7 +280,7 @@ const defaultImages = [image1, image2, image3];
             </button>
             {/* crypto */}
             <button
-              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 cursor-pointer ${
                 selectedPayment === "crypto"
                   ? "border-red-500 bg-red-50"
                   : "border-gray-300"
@@ -287,7 +323,7 @@ const defaultImages = [image1, image2, image3];
               <span className="text-ssm font-medium">Crypto</span>
             </button>
             <button
-              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+              className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 cursor-pointer ${
                 selectedPayment === "indianpay"
                   ? "border-red-500 bg-red-50"
                   : "border-gray-300"
@@ -753,13 +789,13 @@ const defaultImages = [image1, image2, image3];
         )}
         {/* account detail manual */}
         {selectedPayment === "manual" && (
-          <container className="mb-2 ">
+          <div className="mb-2">
             <Swiper
+              key={slidesPerView} // ✅ reinitialize when slidesPerView changes
               modules={[Pagination]}
               spaceBetween={20}
-              slidesPerView={1.2}
+              slidesPerView={slidesPerView}
               centeredSlides={false}
-              initialSlide={0}
               loop={false}
               grabCursor={true}
               touchEventsTarget="container"
@@ -774,10 +810,7 @@ const defaultImages = [image1, image2, image3];
                         ? "border-2 border-blue-500"
                         : "border border-transparent"
                     }`}
-                    onClick={() => {
-                      console.log(card);
-                      handleSelectCard(card);
-                    }}
+                    onClick={() => handleSelectCard(card)}
                   >
                     {/* Background image */}
                     <img
@@ -794,15 +827,15 @@ const defaultImages = [image1, image2, image3];
                     <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
                       {/* Top row (IFSC + Buttons) */}
                       <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-semibold text-gray-800 ml-10">
+                        <p className="text-sm font-semibold text-gray-800 ml-10 lg2:ml-0">
                           {card.ifsc}
                         </p>
                         <div className="flex gap-2">
-                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer">
                             <Trash2 className="w-4 h-4 text-gray-600" />
                           </button>
                           <button
-                            className="p-1 bg-white rounded shadow hover:bg-gray-100"
+                            className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer"
                             onClick={() =>
                               navigate("/updateAccount", {
                                 state: { mode: "update" },
@@ -828,16 +861,16 @@ const defaultImages = [image1, image2, image3];
                 </SwiperSlide>
               ))}
             </Swiper>
-          </container>
+          </div>
         )}
         {selectedPayment === "crypto" && (
-          <container className="mb-2 ">
+          <div className="mb-2">
             <Swiper
+              key={slidesPerView} // ✅ Force Swiper to re-init when slidesPerView changes
               modules={[Pagination]}
               spaceBetween={20}
-              slidesPerView={1.2}
+              slidesPerView={slidesPerView}
               centeredSlides={false}
-              initialSlide={0}
               loop={false}
               grabCursor={true}
               touchEventsTarget="container"
@@ -852,35 +885,29 @@ const defaultImages = [image1, image2, image3];
                         ? "border-2 border-blue-500"
                         : "border border-transparent"
                     }`}
-                    onClick={() => {
-                      console.log(card);
-                      handleSelectCard(card);
-                    }}
+                    onClick={() => handleSelectCard(card)}
                   >
-                    {/* Background image */}
                     <img
                       src={card.image}
                       alt="Bank Card"
-                      className={`w-full h-full object-cover rounded-xl ${
+                      className={`w-full h-full object-cover lg2:object-fill rounded-xl ${
                         selectedCardId == card.id
                           ? "border-2 border-blue-500"
                           : "border border-transparent"
                       }`}
                     />
 
-                    {/* Overlay details */}
                     <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
-                      {/* Top row (IFSC + Buttons) */}
                       <div className="flex justify-between items-center mb-2">
-                        <p className="text-sm font-semibold text-gray-800 ml-10">
+                        <p className="text-sm font-semibold text-gray-800 ml-10 lg2:ml-0">
                           {card.ifsc || card.wallet_type}
                         </p>
                         <div className="flex gap-2">
-                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100">
+                          <button className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer">
                             <Trash2 className="w-4 h-4 text-gray-600" />
                           </button>
                           <button
-                            className="p-1 bg-white rounded shadow hover:bg-gray-100"
+                            className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer"
                             onClick={() =>
                               navigate("/CryptoAdd", {
                                 state: { mode: "update" },
@@ -892,12 +919,10 @@ const defaultImages = [image1, image2, image3];
                         </div>
                       </div>
 
-                      {/* Account number */}
                       <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
                         {card.account || card.wallet_address}
                       </p>
 
-                      {/* Name */}
                       <p className="font-medium text-gray-800 text-right mr-4">
                         {card.name}
                       </p>
@@ -906,7 +931,7 @@ const defaultImages = [image1, image2, image3];
                 </SwiperSlide>
               ))}
             </Swiper>
-          </container>
+          </div>
         )}
         {/* add account */}
         {selectedPayment === "manual" && (
@@ -962,7 +987,7 @@ const defaultImages = [image1, image2, image3];
         )}
 
         {/* Amount Section */}
-        <div className="rounded-[8px] shadow p-4 bg-white">
+        <div className="rounded-[8px] shadow p-4 bg-white lg2:px-6">
           <h2 className="text-black font-semibold mb-3">
             Amount<span className="text-red-500">*</span>
           </h2>
@@ -989,7 +1014,7 @@ const defaultImages = [image1, image2, image3];
           )}
 
           {/* Quick Amount Buttons */}
-          <div className="grid grid-cols-3 gap-2 mt-3">
+          <div className="grid grid-cols-3 gap-2 mt-3 ">
             {selectedPayment === "manual" &&
               quickAmounts.map((val, idx) => (
                 <button
@@ -1074,7 +1099,7 @@ const defaultImages = [image1, image2, image3];
                 amount >= manualMin && amount <= manualMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
-              }`}
+              } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
               style={{
                 fontFamily: "Roboto",
                 fontSize: "13.5px",
@@ -1093,7 +1118,7 @@ const defaultImages = [image1, image2, image3];
                 amount >= cryptoMin && amount <= cryptoMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
-              }`}
+              } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
               style={{
                 fontFamily: "Roboto",
                 fontSize: "13.5px",
@@ -1112,7 +1137,7 @@ const defaultImages = [image1, image2, image3];
                 amount >= 100 && amount <= cryptoMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
-              }`}
+              } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
               style={{
                 fontFamily: "Roboto",
                 fontSize: "13.5px",

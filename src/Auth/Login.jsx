@@ -14,6 +14,7 @@ import usFlag from "../assets/Country/us.png";
 import apis from "../utils/apis";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Loader from "../Pages/resuable_component/Loader/Loader";
 export default function Login() {
     const navigate=useNavigate()
     const [showNewPassword, setShowNewPassword] = useState(false);
@@ -41,6 +42,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedOption, setSelectedOption] = useState("Username");
+  const [loading,setLoading]=useState(false)
 
     const handleLogin = async (e) => {
       e.preventDefault(); // Prevent the page reload on form submit
@@ -69,6 +71,7 @@ export default function Login() {
 
       // Add your logic to handle login here, such as sending the data to the server
       try {
+        setLoading(true);
         const res = await axios.post(apis.login, payload);
         // console.log(res); // Log the response from the server
         if(res?.data?.status==="200" || res?.data?.status===200){
@@ -81,8 +84,17 @@ export default function Login() {
       } catch (error) {
         console.error("Login Error:", error?.response?.data?.message); // Handle any errors from the server
         toast.error(error?.response?.data?.message);
+      }finally{
+        setLoading(false)
       }
     };
+
+   if (loading)
+     return (
+       <div className="text-center py-6 text-gray-500 min-h-screen">
+         <Loader />
+       </div>
+     );
 
   return (
     <div
@@ -106,14 +118,11 @@ export default function Login() {
         </div>
 
         {/* Form Content */}
-        <form
-          className="space-y-4"
-          onSubmit={handleLogin}
-        >
+        <form className="space-y-4" onSubmit={handleLogin}>
           {/* Login with + User ID */}
-          <div className="flex flex-col sm:flex-row sm:space-x-2">
+          <div className="flex flex-col sm:flex-col sm:space-x-2">
             {/* Login With */}
-            <div className="sm:w-1/3">
+            <div className="sm:w-1/2">
               <label
                 htmlFor="loginWith"
                 className="block text-sm font-medium text-black2 mb-1"
@@ -127,7 +136,7 @@ export default function Login() {
               </label>
               <button
                 type="button"
-                className="w-full flex justify-between items-center px-3 py-2 rounded-[6px] border border-gray-300 bg-inputBoxBg text-gray-900 text-sm focus:outline-none"
+                className="w-full flex justify-between items-center px-3 py-2 rounded-[6px] border border-gray-300 bg-inputBoxBg text-gray-900 text-sm focus:outline-none cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <span>{selected}</span>
@@ -255,13 +264,25 @@ export default function Login() {
                   </label>
                   <div className="relative w-full">
                     {/* Input Field */}
-                    <input
+                    {/* <input
                       type="text"
                       placeholder="Phone Number"
                       className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
                       style={{ fontFamily: "Roboto, sans-serif" }}
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
+                    /> */}
+                    <input
+                      type="text"
+                      placeholder="Phone Number"
+                      className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
+                      style={{ fontFamily: "Roboto, sans-serif" }}
+                      value={phoneNumber}
+                      maxLength={10}
+                      onChange={(e) => {
+                        const value = e.target.value.replace(/\D/g, ""); // remove non-digits
+                        if (value.length <= 10) setPhoneNumber(value);
+                      }}
                     />
 
                     {/* OTP Button */}
@@ -455,7 +476,7 @@ export default function Login() {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-[#000000] text-white py-2 rounded-md hover:bg-gray-800 transition"
+            className="w-full bg-[#000000] text-white py-2 rounded-md hover:bg-gray-800 transition cursor-pointer"
             style={{
               fontFamily: "Roboto, sans-serif",
               fontWeight: 200,
@@ -471,7 +492,7 @@ export default function Login() {
           {/* Demo Login Button */}
           <button
             type="button"
-            className="w-full bg-buttonRed text-white py-2 rounded-md hover:bg-red-700 transition"
+            className="w-full bg-buttonRed text-white py-2 rounded-md hover:bg-red-700 transition cursor-pointer"
             style={{
               fontFamily: "Roboto, sans-serif",
               fontWeight: 200,
@@ -483,7 +504,7 @@ export default function Login() {
 
           {/* New User Link */}
           <p
-            className="text-center text-gray text-sm"
+            className="text-center text-gray text-sm cursor-pointer"
             style={{
               fontFamily: "Roboto, sans-serif",
               fontWeight: 400,
@@ -503,7 +524,7 @@ export default function Login() {
           {/* WhatsApp Button */}
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-md hover:bg-green-50 text-sm font-medium transition"
+            className="w-full flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-md hover:bg-green-50 text-sm font-medium transition cursor-pointer"
             style={{ fontFamily: "Roboto, sans-serif" }}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

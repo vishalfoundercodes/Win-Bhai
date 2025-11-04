@@ -128,173 +128,201 @@ export default function CryptoAddAccount() {
   };
   return (
     <div
-      className="min-h-screen  p-6 rounded-md "
+      className="min-h-screen  p-6 lg2:p-0 lg2:pr-4 rounded-md "
       style={{
         fontFamily: "Roboto",
       }}
     >
-      {/* Title */}
-      <h2 className="text-[22px] font-semibold text-center mb-6 text-gray-800">
-        {headingText}
-      </h2>
-
-      <form className="space-y-4" onSubmit={handleSubmit}>
-        {/* Select Currency */}
-        <div className="w-full relative">
-          <label className="block text-red text-lg font-medium mb-2">
-            Select Currency
-          </label>
-
-          <div
-            className="flex justify-between w-full bg-white cursor-pointer border border-[#ADADAD] rounded-md px-3 py-2 items-center"
-            onClick={() =>
-              setOpenDropdown(openDropdown === "language" ? null : "language")
-            }
+      <div className="w-full ">
+        <div
+          className="hidden lg2:block mb-2 cursor-pointer "
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
           >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
+          <h2 className="text-white text-sm font-semibold">{headingText}</h2>
+        </div>
+        {/* Title */}
+        <h2 className="text-[22px] font-semibold text-center mb-6 text-gray-800 lg2:hidden">
+          {headingText}
+        </h2>
+
+        <form
+          className="space-y-4 lg2:py-2 lg2:bg-white lg2:px-4"
+          onSubmit={handleSubmit}
+        >
+          {/* Select Currency */}
+          <div className="w-full relative">
+            <label className="block text-red text-lg font-medium mb-2">
+              Select Currency
+            </label>
+
             <div
-              className={`${
-                openDropdown === "language" ? "ring-none" : ""
-              } text-[#969696]`}
-              style={{
-                fontFamily: "Roboto",
-                fontSize: "16px",
-              }}
+              className="flex justify-between w-full bg-white cursor-pointer border border-[#ADADAD] rounded-md px-3 py-2 items-center"
+              onClick={() =>
+                setOpenDropdown(openDropdown === "language" ? null : "language")
+              }
             >
-              {language || "Select crypto"}
+              <div
+                className={`${
+                  openDropdown === "language" ? "ring-none" : ""
+                } text-[#969696]`}
+                style={{
+                  fontFamily: "Roboto",
+                  fontSize: "16px",
+                }}
+              >
+                {language || "Select crypto"}
+              </div>
+              <svg
+                width="14"
+                height="8"
+                viewBox="0 0 14 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12.66 0.433036L13.72 1.49404L7.943 7.27304C7.85043 7.36619 7.74036 7.44012 7.61911 7.49057C7.49786 7.54101 7.36783 7.56699 7.2365 7.56699C7.10517 7.56699 6.97514 7.54101 6.85389 7.49057C6.73264 7.44012 6.62257 7.36619 6.53 7.27304L0.75 1.49404L1.81 0.434036L7.235 5.85804L12.66 0.433036Z"
+                  fill="#969696"
+                />
+              </svg>
             </div>
-            <svg
-              width="14"
-              height="8"
-              viewBox="0 0 14 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.66 0.433036L13.72 1.49404L7.943 7.27304C7.85043 7.36619 7.74036 7.44012 7.61911 7.49057C7.49786 7.54101 7.36783 7.56699 7.2365 7.56699C7.10517 7.56699 6.97514 7.54101 6.85389 7.49057C6.73264 7.44012 6.62257 7.36619 6.53 7.27304L0.75 1.49404L1.81 0.434036L7.235 5.85804L12.66 0.433036Z"
-                fill="#969696"
-              />
-            </svg>
+
+            {openDropdown === "language" && (
+              <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
+                {Crypto.map((item, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-center justify-between px-3 py-2 hover:bg-gray-100 cursor-pointer ${
+                      i !== Crypto.length - 1 ? "border-b border-[#E5E7EB]" : ""
+                    }`}
+                    style={{
+                      fontFamily: "Inter",
+                      fontSize: "14px",
+                    }}
+                    onClick={() => handleSelectCurrency(item)}
+                  >
+                    <span>{item}</span>
+                    <span
+                      className={`w-5 h-5 rounded-full border border-gray-400 flex items-center justify-center`}
+                    >
+                      {language === item && (
+                        <span className="w-2.5 h-2.5 bg-black rounded-full"></span>
+                      )}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {errors.wallet_type && (
+              <p className="text-xs text-red-500 mt-1">{errors.wallet_type}</p>
+            )}
           </div>
 
-          {openDropdown === "language" && (
-            <div className="absolute mt-1 w-full bg-white rounded-md shadow-lg z-10">
-              {Crypto.map((item, i) => (
-                <div
-                  key={i}
-                  className={`flex items-center justify-between px-3 py-2 hover:bg-gray-100 cursor-pointer ${
-                    i !== Crypto.length - 1 ? "border-b border-[#E5E7EB]" : ""
-                  }`}
-                  style={{
-                    fontFamily: "Inter",
-                    fontSize: "14px",
-                  }}
-                  onClick={() => handleSelectCurrency(item)}
-                >
-                  <span>{item}</span>
-                  <span
-                    className={`w-5 h-5 rounded-full border border-gray-400 flex items-center justify-center`}
-                  >
-                    {language === item && (
-                      <span className="w-2.5 h-2.5 bg-black rounded-full"></span>
-                    )}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-          {errors.wallet_type && (
-            <p className="text-xs text-red-500 mt-1">{errors.wallet_type}</p>
-          )}
-        </div>
-
-        {/* Wallet Address */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            Wallet Address
-          </label>
-          <input
-            type="text"
-            name="wallet_address"
-            value={formData.wallet_address}
-            onChange={handleChange}
-            placeholder="Enter wallet address"
-            className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm"
-          />
-          {errors.wallet_address && (
-            <p className="text-xs text-red-500 mt-1">{errors.wallet_address}</p>
-          )}
-        </div>
-
-        {/* Phone Number */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            Phone number
-          </label>
-          <div className="flex gap-2">
+          {/* Wallet Address */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              Wallet Address
+            </label>
             <input
               type="text"
-              name="phone_no"
-              value={formData.phone_no}
+              name="wallet_address"
+              value={formData.wallet_address}
               onChange={handleChange}
-              placeholder="Enter your mobile number"
+              placeholder="Enter wallet address"
+              className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm"
+            />
+            {errors.wallet_address && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.wallet_address}
+              </p>
+            )}
+          </div>
+
+          {/* Phone Number */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              Phone number
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                name="phone_no"
+                value={formData.phone_no}
+                onChange={handleChange}
+                placeholder="Enter your mobile number"
+                className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm"
+              />
+              <button
+                type="button"
+                className="bg-red text-white whitespace-nowrap px-2 rounded-md text-sm"
+                onClick={() => {
+                  console.log("hii");
+                  sendOtp(formData.phone_no);
+                }}
+              >
+                Send OTP
+              </button>
+            </div>
+            {errors.phone_no && (
+              <p className="text-xs text-red-500 mt-1">{errors.phone_no}</p>
+            )}
+          </div>
+
+          {/* OTP */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1 uppercase">
+              Otp
+            </label>
+            <input
+              type="number"
+              name="otp"
+              value={formData.otp}
+              onChange={(e) => {
+                const value = e.target.value.slice(0, 4); // restrict to 4 digits
+                setFormData({ ...formData, otp: value });
+
+                // Auto verify when 4 digits are entered
+                if (value.length === 4 && formData.phone_no) {
+                  handleVerify(formData.phone_no, value);
+                }
+              }}
+              placeholder="Enter OTP"
               className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm"
             />
-            <button
-              type="button"
-              className="bg-red text-white whitespace-nowrap px-2 rounded-md text-sm"
-              onClick={() => {
-                console.log("hii");
-                sendOtp(formData.phone_no);
-              }}
-            >
-              Send OTP
-            </button>
+
+            {errors.otp && (
+              <p className="text-xs text-red-500 mt-1">{errors.otp}</p>
+            )}
           </div>
-          {errors.phone_no && (
-            <p className="text-xs text-red-500 mt-1">{errors.phone_no}</p>
-          )}
-        </div>
 
-        {/* OTP */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1 uppercase">
-            Otp
-          </label>
-          <input
-            type="number"
-            name="otp"
-            value={formData.otp}
-            onChange={(e) => {
-              const value = e.target.value.slice(0, 4); // restrict to 4 digits
-              setFormData({ ...formData, otp: value });
-
-              // Auto verify when 4 digits are entered
-              if (value.length === 4 && formData.phone_no) {
-                handleVerify(formData.phone_no, value);
-              }
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={buttonDisabled}
+            className="w-full bg-red text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
+            style={{
+              fontFamily: "Roboto",
+              fontSize: "13.5px",
             }}
-            placeholder="Enter OTP"
-            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm"
-          />
-
-          {errors.otp && (
-            <p className="text-xs text-red-500 mt-1">{errors.otp}</p>
-          )}
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={buttonDisabled}
-          className="w-full bg-red text-white font-medium py-3 rounded-md"
-          style={{
-            fontFamily: "Roboto",
-            fontSize: "13.5px",
-          }}
-        >
-          SUBMIT
-        </button>
-      </form>
+          >
+            SUBMIT
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -98,104 +98,129 @@ const [selectedPayment, setSelectedPayment] = useState(null);
     };
   return (
     <div
-      className="min-h-screen px-5 py-6 rounded-md "
+      className="min-h-screen px-5 py-6  lg2:py-0 lg2:px-4 rounded-md "
       style={{
         fontFamily: "Roboto",
       }}
     >
-      {/* Title */}
-      <h2 className="text-[22px] font-semibold text-center mb-6 text-gray-800">
-        {headingText}
-      </h2>
-
-      <form className="space-y-4">
-        {/* Full Name */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            Account Holder Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Enter account holder’s name"
-            className="w-full border bg-white  placeholder:text-sm  text-lightGray rounded-md px-3 py-2 text-sm "
-          />
-          {errors.name && (
-            <p className="text-xs text-red-500 mt-1">{errors.name}</p>
-          )}
-        </div>
-
-        {/* Bank Account Number */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            Bank Account Number
-          </label>
-          <input
-            type="text"
-            name="account_number"
-            value={formData.account_number}
-            onChange={handleChange}
-            placeholder="Enter bank account number"
-            className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm "
-          />
-          {errors.account_number && (
-            <p className="text-xs text-red-500 mt-1">{errors.account_number}</p>
-          )}
-        </div>
-
-        {/* Confirm Bank Account Number */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            Confirm Bank Account Number
-          </label>
-          <input
-            type="text"
-            name="confirm_account_number"
-            value={formData.confirm_account_number}
-            onChange={handleChange}
-            placeholder="Re-enter bank account number"
-            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
-          />
-          {errors.confirm_account_number && (
-            <p className="text-xs text-red-500 mt-1">
-              {errors.confirm_account_number}
-            </p>
-          )}
-        </div>
-
-        {/* IFSC Code */}
-        <div>
-          <label className="block text-sm font-medium text-red mb-1">
-            IFSC Code
-          </label>
-          <input
-            type="text"
-            name="ifsc_code"
-            value={formData.ifsc_code}
-            onChange={handleChange}
-            placeholder="Enter IFSC code"
-            className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm  placeholder:text-sm "
-          />
-          {errors.ifsc_code && (
-            <p className="text-xs text-red-500 mt-1">{errors.ifsc_code}</p>
-          )}
-        </div>
-
-        {/* Submit Button */}
-        <button
-          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md "
-          style={{
-            fontFamily: "Roboto",
-            fontSize: "13.5px",
-          }}
-          onClick={handleSubmit}
+      <div className="w-full ">
+        <div
+          className="hidden lg2:block mb-2 cursor-pointer"
+          onClick={() => navigate(-1)}
         >
-          SUBMIT
-        </button>
-      </form>
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
+          <h2 className="text-white text-sm font-semibold">{headingText}</h2>
+        </div>
 
+        {/* Title */}
+        <h2 className="text-[22px] font-semibold text-center mb-6 text-gray-800 lg2:hidden">
+          {headingText}
+        </h2>
+
+        <form className="space-y-4 lg2:py-4 lg2:bg-white lg2:px-4 lg2:rounded-b-2xl">
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              Account Holder Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter account holder’s name"
+              className="w-full border bg-white  placeholder:text-sm  text-lightGray rounded-md px-3 py-2 text-sm "
+            />
+            {errors.name && (
+              <p className="text-xs text-red-500 mt-1">{errors.name}</p>
+            )}
+          </div>
+
+          {/* Bank Account Number */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              Bank Account Number
+            </label>
+            <input
+              type="text"
+              name="account_number"
+              value={formData.account_number}
+              onChange={handleChange}
+              placeholder="Enter bank account number"
+              className="w-full border bg-white text-lightGray placeholder:text-sm rounded-md px-3 py-2 text-sm "
+            />
+            {errors.account_number && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.account_number}
+              </p>
+            )}
+          </div>
+
+          {/* Confirm Bank Account Number */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              Confirm Bank Account Number
+            </label>
+            <input
+              type="text"
+              name="confirm_account_number"
+              value={formData.confirm_account_number}
+              onChange={handleChange}
+              placeholder="Re-enter bank account number"
+              className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm "
+            />
+            {errors.confirm_account_number && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.confirm_account_number}
+              </p>
+            )}
+          </div>
+
+          {/* IFSC Code */}
+          <div>
+            <label className="block text-sm font-medium text-red mb-1">
+              IFSC Code
+            </label>
+            <input
+              type="text"
+              name="ifsc_code"
+              value={formData.ifsc_code}
+              onChange={handleChange}
+              placeholder="Enter IFSC code"
+              className="w-full border bg-white text-lightGray rounded-md px-3 py-2 text-sm  placeholder:text-sm "
+            />
+            {errors.ifsc_code && (
+              <p className="text-xs text-red-500 mt-1">{errors.ifsc_code}</p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <button
+            className="w-full bg-[#969696] text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
+            style={{
+              fontFamily: "Roboto",
+              fontSize: "13.5px",
+            }}
+            onClick={handleSubmit}
+          >
+            SUBMIT
+          </button>
+        </form>
+      </div>
       {/* Payment Options */}
       {/* <div className=" px-4 py-4 bg-white  rounded-[8px] shadow mt-5">
         <h2 className="text-gray-800 font-semibold mb-4">Withdraw Options :</h2>

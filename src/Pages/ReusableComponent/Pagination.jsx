@@ -116,7 +116,7 @@ export default function Pagination({
   const pages = getVisiblePages();
 
   return (
-    <div className="flex items-center justify-center space-x-2 mt-4 mb-6">
+    <div className="flex items-center justify-center lg2:justify-end space-x-2 mt-4 mb-6">
       {/* Prev button */}
       <button
         disabled={currentPage === 1}

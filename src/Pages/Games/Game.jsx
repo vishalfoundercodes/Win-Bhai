@@ -5,6 +5,7 @@ import SlidingCompany from "../Home/HomeComponents/SlidingCompany";
 import GamesOptions from "./GamesOptions";
 import aviator1 from "../../assets/GameIcons/aviator1.jpg";
 import aviaFly from "../../assets/GameIcons/aviaFly.png";
+import GameSlider2 from "../Home/HomeComponents/GameSlider2";
 
 export default function Game() {
   const { tabName } = useParams();
@@ -113,94 +114,103 @@ export default function Game() {
   const IconComp = selected.icon; // component or undefined
 
     const games = [
-      { id: 1, name: "AviaFly", image: aviator1 },
+      { id: 1, name: "AviaFly", image: aviaFly },
       { id: 2, name: "Aviator", image: aviator1 },
-      { id: 3, name: "AviaFly", image: aviator1 },
+      { id: 3, name: "AviaFly", image: aviaFly },
       { id: 4, name: "Aviator", image: aviator1 },
-      { id: 5, name: "AviaFly", image: aviator1 },
+      { id: 5, name: "AviaFly", image: aviaFly },
       { id: 6, name: "Aviator", image: aviator1 },
-      { id: 7, name: "AviaFly", image: aviator1 },
+      { id: 7, name: "AviaFly", image: aviaFly },
       { id: 8, name: "Aviator", image: aviator1 },
-      { id: 9, name: "AviaFly", image: aviator1 },
+      { id: 9, name: "AviaFly", image: aviaFly },
       { id: 10, name: "Aviator", image: aviator1 },
     ];
   return (
     <div className="">
       {/* Header */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-1 px-4 py-2 pt-4">
-          {IconComp && (
-            <IconComp
-              active={false}
-              className="w-6 h-6 text-gray-700" // give explicit size for consistent alignment
-            />
-          )}
-          <h2 className="text-xl font-semibold text-gray-700 -pt-1">
-            {selectedTab} Games
-          </h2>
-        </div>
+      <div className="lg2:w-full lg2:grid lg2:grid-cols-12 lg2:gap-16 ">
+        {/* Sidebar - Game List */}
+        {/* <aside className="lg2:col-span-3 p-1 hidden lg2:block">
+          <GameSlider2 />
+        </aside> */}
 
-        {/* Search Bar */}
-        <div className="relative w-full px-4">
-          {/* Search Icon */}
-          <svg
-            className="absolute left-6 top-1/2 -translate-y-1/2"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11.5748 9.9264C12.3038 8.93392 12.7344 7.70865 12.7344 6.38281C12.7344 3.07342 10.0516 0.390625 6.74219 0.390625C3.43279 0.390625 0.75 3.07342 0.75 6.38281C0.75 9.69221 3.43279 12.375 6.74219 12.375C8.06838 12.375 9.29395 11.9442 10.2866 11.2148L10.2858 11.2154C10.313 11.2523 10.3432 11.2876 10.3766 11.321L13.9263 14.8706C14.2863 15.2306 14.87 15.2306 15.23 14.8706C15.59 14.5106 15.59 13.9269 15.23 13.5669L11.6803 10.0172C11.647 9.98387 11.6117 9.95359 11.5748 9.9264ZM11.8125 6.38281C11.8125 9.18307 9.54245 11.4531 6.74219 11.4531C3.94193 11.4531 1.67188 9.18307 1.67188 6.38281C1.67188 3.58256 3.94193 1.3125 6.74219 1.3125C9.54245 1.3125 11.8125 3.58256 11.8125 6.38281Z"
-              fill="#969696"
-            />
-          </svg>
+        <div className=" lg2:col-span-12">
+          <div className="flex flex-col gap-2 ">
+            <div className="flex items-center gap-1 px-4 py-2 pt-4">
+              {IconComp && (
+                <IconComp
+                  active={false}
+                  className="w-6 h-6 text-gray-700" // give explicit size for consistent alignment
+                />
+              )}
+              <h2 className="text-xl font-semibold text-gray-700 -pt-1">
+                {selectedTab} Games
+              </h2>
+            </div>
 
-          {/* Input Field */}
-          <input
-            type="text"
-            placeholder="Search games"
-            className="w-full pl-9 pr-4 py-2 rounded-md border border-grayBorder bg-white focus:outline-none focus:ring-2 focus:ring-grayBorder"
-          />
-        </div>
-      </div>
+            {/* Search Bar */}
+            <div className="relative w-full px-4 lg2:w-[50%]">
+              {/* Search Icon */}
+              <svg
+                className="absolute left-6 top-1/2 -translate-y-1/2"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.5748 9.9264C12.3038 8.93392 12.7344 7.70865 12.7344 6.38281C12.7344 3.07342 10.0516 0.390625 6.74219 0.390625C3.43279 0.390625 0.75 3.07342 0.75 6.38281C0.75 9.69221 3.43279 12.375 6.74219 12.375C8.06838 12.375 9.29395 11.9442 10.2866 11.2148L10.2858 11.2154C10.313 11.2523 10.3432 11.2876 10.3766 11.321L13.9263 14.8706C14.2863 15.2306 14.87 15.2306 15.23 14.8706C15.59 14.5106 15.59 13.9269 15.23 13.5669L11.6803 10.0172C11.647 9.98387 11.6117 9.95359 11.5748 9.9264ZM11.8125 6.38281C11.8125 9.18307 9.54245 11.4531 6.74219 11.4531C3.94193 11.4531 1.67188 9.18307 1.67188 6.38281C1.67188 3.58256 3.94193 1.3125 6.74219 1.3125C9.54245 1.3125 11.8125 3.58256 11.8125 6.38281Z"
+                  fill="#969696"
+                />
+              </svg>
 
-      {/* Tabs again */}
-      <div className="flex gap-2 mt-4">
-        <SlidingTabs withHeader={true} />
-      </div>
-
-      {/* Provider name */}
-      <div className="py-2 text-gray-700 text-lg font-semibold  px-4">
-        <h2>Choose Provider</h2>
-        <div className="mt-2">
-          <SlidingCompany />
-        </div>
-      </div>
-      {/* Sponser */}
-      <div className=" px-4 py-2">
-        <img src={sponser} alt="" className="w-full h-full rounded-xl" />
-      </div>
-      {/* Sub games list  */}
-      <div className="py-2  px-4">
-        <GamesOptions />
-      </div>
-      {/* Games list */}
-      <div className=" px-4 py-2">
-        <div className="grid grid-cols-3 gap-4 pb-2">
-          {games.map((game) => (
-            <div
-              key={game.id}
-              className="aspect-[3/4] rounded-[8px] overflow-hidden"
-            >
-              <img
-                src={game.image}
-                alt={game.name}
-                className="w-full h-full object-cover rounded-[8px]"
+              {/* Input Field */}
+              <input
+                type="text"
+                placeholder="Search games"
+                className="w-full pl-9 pr-4 py-2 rounded-md border border-grayBorder bg-white focus:outline-none focus:ring-2 focus:ring-grayBorder"
               />
             </div>
-          ))}
+          </div>
+
+          {/* Tabs again */}
+          <div className="flex gap-2 mt-4 ">
+            <SlidingTabs withHeader={true} />
+          </div>
+
+          {/* Provider name */}
+          <div className="py-2 text-gray-700 text-lg font-semibold  px-4 lg2:px-0 ">
+            <h2 className="lg2:px-4">Choose Provider</h2>
+            <div className="mt-2 lg2:pl-4  lg2:w-[100%] overflow-hidden">
+              <SlidingCompany />
+            </div>
+          </div>
+          {/* Sponser */}
+          <div className=" px-4 py-2">
+            <img src={sponser} alt="" className="w-full h-full rounded-xl" />
+          </div>
+          {/* Sub games list  */}
+          <div className="py-2  px-4">
+            <GamesOptions />
+          </div>
+          {/* Games list */}
+          <div className=" px-4 py-2">
+            <div className="grid grid-cols-3 lg2:grid-cols-6 gap-4 pb-2">
+              {games.map((game) => (
+                <div
+                  key={game.id}
+                  className="aspect-[3/4] rounded-[8px] overflow-hidden"
+                >
+                  <img
+                    src={game.image}
+                    alt={game.name}
+                    className="w-full h-full object-cover rounded-[8px]"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

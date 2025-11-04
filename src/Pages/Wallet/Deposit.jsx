@@ -212,21 +212,39 @@ const navigate = useNavigate()
            );
          }
   return (
-    <div className="min-h-screen  flex justify-center items-start py-6 px-1">
+    <div className="min-h-screen  flex justify-center items-start py-6 px-1 lg2:py-0 ">
       <div className="w-full px-3 space-y-2">
+        <div
+          className="hidden lg2:block mb-2 cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
         {/* Payment Options */}
         <div className=" px-4 py-4 bg-white  rounded-[8px] shadow">
           <h2 className="text-gray-800 font-semibold mb-4">
             Payment Options :
           </h2>
           {paymentOptions && (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 lg2:grid-cols-6 gap-3">
               {paymentOptions
                 .filter((item) => item.status === 1)
                 .map((item) => (
                   <>
                     <button
-                      className={`px-4 rounded-xl border flex flex-col items-center justify-center space-y-1 ${
+                      className={`px-4 lg2:py-8 cursor-pointer rounded-xl border flex flex-col items-center justify-center space-y-1 ${
                         selectedPayment === item?.id
                           ? "border-red-500 bg-red-50"
                           : "border-gray-300"
@@ -619,7 +637,7 @@ const navigate = useNavigate()
         )}
 
         {/* Amount Section */}
-        <div className="rounded-[8px] shadow p-4 bg-white">
+        <div className="rounded-[8px] shadow p-4 lg2:px-6 bg-white">
           <h2 className="text-black font-semibold mb-3">
             Amount<span className="text-red-500">*</span>
           </h2>
@@ -644,7 +662,7 @@ const navigate = useNavigate()
               <button
                 key={idx}
                 onClick={() => setAmount(val)}
-                className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+                className="bg-red text-white rounded-[8px] py-2 font-semibold cursor-pointer"
               >
                 +{val.toLocaleString()}
               </button>
@@ -656,7 +674,7 @@ const navigate = useNavigate()
         {selectedPayment === 3 && (
           <button
             type="next"
-            className="w-full bg-red text-white font-medium py-3 rounded-md "
+            className="w-full bg-red text-white font-medium py-3 rounded-md    lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
             style={{
               fontFamily: "Roboto",
               fontSize: "13.5px",
@@ -735,18 +753,19 @@ const navigate = useNavigate()
         {/* Offers Section */}
         {selectedPayment !== 3 && (
           <div className="rounded-[8px] shadow p-4 bg-white">
-            <h2 className="text-lightGray font-semibold mb-0 text-ssm uppercase">
+            <h2 className="text-lightGray font-semibold mb-0 text-ssm uppercase lg2:tracking-[0.04em]">
               Available Offers
             </h2>
             <div className=" flex items-center justify-between px-1 py-0 ">
-              <div className="flex items-center gap-1">
-                <span className="text-green-600 font-bold text-lg">
+              <div className="flex items-center gap-1 lg2:gap-3">
+                <span className="text-green-600 font-bold text-lg ">
                   <svg
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="lg2:hidden"
                   >
                     <rect width="24" height="24" rx="4" fill="#AFEE9A" />
                     <path
@@ -754,20 +773,34 @@ const navigate = useNavigate()
                       fill="#4EB92B"
                     />
                   </svg>
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="lg2:block hidden"
+                  >
+                    <rect width="40" height="40" rx="6.66667" fill="#AFEE9A" />
+                    <path
+                      d="M20 31.6807L22.5471 33.1545C22.8535 33.3316 23.2178 33.3798 23.5597 33.2884C23.9017 33.197 24.1933 32.9736 24.3706 32.6672L25.8444 30.1175H28.7812C29.1353 30.1175 29.4748 29.9768 29.7252 29.7265C29.9755 29.4761 30.1162 29.1366 30.1162 28.7825V25.847L32.6646 24.3746C32.9712 24.1976 33.1949 23.9061 33.2866 23.5642C33.332 23.3949 33.3436 23.2182 33.3207 23.0444C33.2978 22.8705 33.2409 22.7029 33.1531 22.551L31.6794 20.0013L33.1545 17.4515C33.3315 17.1449 33.3795 16.7806 33.2878 16.4386C33.1962 16.0966 32.9725 15.805 32.6659 15.628L30.1162 14.1542V11.2187C30.1162 10.8646 29.9755 10.5251 29.7252 10.2747C29.4748 10.0244 29.1353 9.88374 28.7812 9.88374H25.8457L24.3719 7.334C24.2842 7.18212 24.1673 7.04903 24.0281 6.94233C23.8889 6.83564 23.73 6.75743 23.5605 6.71218C23.391 6.66692 23.2143 6.65552 23.0404 6.67861C22.8665 6.7017 22.6989 6.75883 22.5471 6.84675L20 8.32053L17.453 6.84675C17.1462 6.67052 16.7823 6.62271 16.4404 6.71373C16.0986 6.80476 15.8066 7.02724 15.6281 7.33267L14.1543 9.88241H11.2188C10.8648 9.88241 10.5252 10.0231 10.2749 10.2734C10.0245 10.5238 9.88386 10.8633 9.88386 11.2174V14.1542L7.33413 15.628C7.1321 15.7462 6.96432 15.9149 6.84729 16.1176C6.73026 16.3203 6.668 16.55 6.66666 16.7841C6.66666 17.0163 6.72807 17.2473 6.84688 17.4529L8.32065 19.9999L6.84688 22.5497C6.66975 22.8561 6.62158 23.2204 6.71295 23.5623C6.80432 23.9043 7.02776 24.196 7.33413 24.3732L9.88386 25.8457L9.88386 28.7812C9.88386 29.1353 10.0245 29.4748 10.2749 29.7252C10.5252 29.9755 10.8648 30.1161 11.2188 30.1161L14.1543 30.1161L15.6281 32.6659C15.7159 32.8178 15.8327 32.9509 15.9719 33.0576C16.1112 33.1643 16.2701 33.2425 16.4395 33.2877C16.609 33.333 16.7858 33.3444 16.9596 33.3213C17.1335 33.2982 17.3012 33.2411 17.453 33.1531L20 31.6807ZM26.688 16.6626C26.6879 17.1938 26.4767 17.7033 26.1009 18.0788C25.7251 18.4543 25.2156 18.6652 24.6843 18.665C24.1531 18.6648 23.6436 18.4536 23.2681 18.0778C22.8926 17.7021 22.6817 17.1925 22.6819 16.6613C22.6821 16.13 22.8933 15.6206 23.2691 15.2451C23.6448 14.8695 24.1544 14.6587 24.6856 14.6588C25.2169 14.659 25.7263 14.8702 26.1018 15.246C26.4774 15.6218 26.6882 16.1313 26.688 16.6626ZM13.8727 17.0631L15.4732 14.9272L26.1527 22.9368L24.5521 25.0727L13.8727 17.0631ZM13.3387 23.3373C13.3388 23.0743 13.3907 22.8138 13.4914 22.5708C13.5922 22.3278 13.7398 22.107 13.9258 21.9211C14.1119 21.7352 14.3328 21.5877 14.5758 21.4871C14.8189 21.3865 15.0794 21.3348 15.3424 21.3349C15.6055 21.335 15.8659 21.3869 16.1089 21.4876C16.3519 21.5884 16.5727 21.736 16.7586 21.9221C16.9446 22.1081 17.092 22.329 17.1926 22.572C17.2932 22.8151 17.3449 23.0756 17.3448 23.3386C17.3446 23.8699 17.1334 24.3793 16.7577 24.7548C16.3819 25.1304 15.8723 25.3412 15.3411 25.3411C14.8098 25.3409 14.3004 25.1297 13.9249 24.7539C13.5494 24.3781 13.3385 23.8686 13.3387 23.3373Z"
+                      fill="#4EB92B"
+                    />
+                  </svg>
                 </span>
                 <div>
-                  <p className="text-ssm font-medium text-green-700 -mb-2">
+                  <p className="text-ssm lg2:text-sm font-medium text-green-700 lg2:text-black2 -mb-2 lg2:mb-0">
                     5% extra on this deposit
                   </p>
                   <button
-                    className="text-xs text-lightGray"
+                    className="text-xs lg2:text-ssm text-lightGray cursor-pointer"
                     onClick={() => navigate("/cuppon")}
                   >
                     View all coupons &gt;
                   </button>
                 </div>
               </div>
-              <button className="px-3 py-1  text-green-500 text-vsm rounded-md border border-green-500">
+              <button className="px-3 py-1 lg2:py-1 lg2:px-6  text-green-500 text-vsm lg2:text-sm rounded-md border border-green-500">
                 Apply
               </button>
             </div>
@@ -776,7 +809,7 @@ const navigate = useNavigate()
 
         {/* indian payment */}
         {/* Show Indianpay Wallets (only if selected) */}
-      
+
         {/* Terms Checkbox */}
         {/* <div className="flex items-center gap-2">
           <input
@@ -799,13 +832,14 @@ const navigate = useNavigate()
               amount >= minAmount && amount <= maxAmount
                 ? "bg-red hover:bg-red-600"
                 : "bg-lightGray cursor-not-allowed"
-            }`}
+            }    lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
             onClick={handleManualSubmit}
           >
             SUBMIT
           </button>
         )}
-        {selectedPayment === 1 && (
+        {/*
+         {selectedPayment === 1 && (
           <button
             type="submit"
             onClick={handleBappaVentures}
@@ -818,7 +852,25 @@ const navigate = useNavigate()
           >
             SUBMIT
           </button>
+        )} */}
+        {/* <div className="w-full bg-[#e8e8e8] flex lg2:justify-end px-6 lg2:px-0 py-4 rounded-b-2xl lg2:rounded-b-none"> */}
+        {selectedPayment === 1 && (
+          <button
+            type="submit"
+            onClick={handleBappaVentures}
+            className={`w-full text-white text-ssm font-medium py-3 rounded-md text-center transition-colors duration-300
+    ${
+      amount >= minAmount && amount <= maxAmount
+        ? "bg-red hover:bg-red-600"
+        : "bg-lightGray cursor-not-allowed"
+    }
+    lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block
+  `}
+          >
+            Submit
+          </button>
         )}
+        {/* </div> */}
 
         {selectedPayment === 2 && (
           <div className="w-full  mt-4 hide-scrollbar">

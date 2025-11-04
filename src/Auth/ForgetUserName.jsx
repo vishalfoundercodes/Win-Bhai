@@ -135,7 +135,7 @@ export default function ForgetUserName() {
               </label>
               <div
                 onClick={() => setIsOpen(!isOpen)}
-                className=" border-2 border-gray-300 rounded-xl px-1 py-2 flex items-center justify-between cursor-pointer bg-inputBoxBg"
+                className=" border-2 border-gray-300 rounded-xl px-1 py-2 flex items-center justify-between cursor-pointer bg-inputBoxBg cursor-pointer"
               >
                 <span className="text-black font-medium bg-inputBoxBg">
                   {selected.code}
@@ -162,7 +162,7 @@ export default function ForgetUserName() {
                   {countries.map((country, idx) => (
                     <div
                       key={idx}
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer  rounded-[6px]
+                      className={`flex items-center justify-between px-4 py-3 cursor-pointer  rounded-[6px] cursor-pointer
           hover:bg-gray-100 ${
             selected.code === country.code ? "bg-red-100" : ""
           }`}
@@ -221,7 +221,7 @@ export default function ForgetUserName() {
                 {/* OTP Button */}
                 <button
                   type="button"
-                  className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600"
+                  className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600 cursor-pointer"
                   onClick={() => {
                     if (phoneNumber.length === 10) {
                       sendOtp(phoneNumber);
@@ -395,7 +395,7 @@ export default function ForgetUserName() {
           {/* Confirm Button */}
           <button
             type="submit"
-            className="w-full bg-[#000000] text-white py-2 rounded-md text-ssm font-medium hover:bg-gray-800 transition"
+            className="w-full bg-[#000000] text-white py-2 rounded-md text-ssm font-medium hover:bg-gray-800 transition cursor-pointer"
           >
             Confirm
           </button>

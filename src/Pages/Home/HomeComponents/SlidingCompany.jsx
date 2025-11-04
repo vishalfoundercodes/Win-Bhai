@@ -25,7 +25,7 @@ export default function SlidingCompany() {
             <button
               key={cat.id}
               onClick={() => setActive(cat.id)}
-              className={`flex items-center justify-center w-[80px] xsm4:w-[85px] xsm3:w-[90px] xxs:w-[105px] h-[40px] rounded-[8px] border transition-all duration-200 px-4 py-2
+              className={`flex items-center justify-center w-[80px] xsm4:w-[85px] xsm3:w-[90px] xxs:w-[105px] h-[40px] lg2:w-[255px] lg2:h-[50px] rounded-[8px] border transition-all duration-200 px-4 py-2
                 ${
                   active === cat.id
                     ? "bg- border-maroon"
@@ -45,7 +45,7 @@ export default function SlidingCompany() {
       {/* ✅ Fixed Search Button */}
       <button
         className="absolute right-0 top-0 bottom-0 my-auto flex items-center justify-center w-[40px] h-[40px] 
-        bg-[#c8102e] text-white border border-[#c8102e] rounded-l-[25px] shrink-0"
+        bg-[#c8102e] text-white border border-[#c8102e] rounded-l-[25px] shrink-0 lg2:hidden"
       >
         <FaSearch className="text-lg" />
       </button>

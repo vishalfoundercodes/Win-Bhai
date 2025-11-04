@@ -192,9 +192,29 @@ function PromotionHome() {
           />
         </div>
       )}
+          <div
+            className="hidden lg2:block mb-2 cursor-pointer"
+            onClick={() => navigate(-1)}
+          >
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 44 44"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect width="44" height="44" rx="8" fill="#C10932" />
+              <path
+                d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+                fill="white"
+              />
+            </svg>
+          </div>
+       
+
       <div className="bg-  h-full w-full overflow-y-auto mb-24 hide-scrollbar">
         <div
-          className="w-full flex flex-col px-3 items-center bg-red h-64 bg-center bg-cover"
+          className="w-full flex flex-col px-3 items-center bg-red h-64 bg-center bg-cover lg2:hidden"
           //   style={{
           //     // backgroundImage: `url(${promotionbg})`,
           //     // backgroundColor:"red"
@@ -285,46 +305,148 @@ function PromotionHome() {
             </div>
           </div>
         </div>
-        <div className="px-5 text-[15px] mt-32 pb-0 bg-[] w-full">
-          <button
-            onClick={() => setCopyInvitation(true)}
-            className="w-full font-semibold py-1.5 rounded-[5px] bg-red text-white"
-          >
-            INVITATION LINK
-          </button>
+
+        {/* lg2 screens  */}
+        {/* 🔴 First Div - Red Section */}
+        <div className="hidden lg2:flex flex-col items-center justify-center bg-gradient-to-r from-[#C10932] to-[#5B0418] rounded-[15px] h-40 px-5 shadow-md mr-4">
+          <p className="text-2xl font-semibold mt-5 text-white">
+            {promotionData?.yesterday_total_commission
+              ? Number(promotionData?.yesterday_total_commission).toFixed(2)
+              : "0.00"}
+          </p>
+
+          <p className="bg-white text-[15px] mt-2 rounded-full px-3 py-1 text-[#b31217] font-semibold">
+            Yesterday&apos;s total commission
+          </p>
+
+          <p className="text-xs mt-2 text-white opacity-90">
+            Upgrade the level to increase commission income
+          </p>
+        </div>
+
+        {/* ⚪ Second Div - White Stats Card */}
+        <div className="hidden lg2:block bg-white shadow-md mt-4 rounded-[12px] overflow-hidden mr-4">
+          {/* Header */}
+          <div className="flex text-xs w-full text-[#b31217] font-semibold">
+            <div className="bg-[#ffe1e3] py-3 text-center w-1/2 rounded-tl-[12px] border-r border-white">
+              Direct subordinates
+            </div>
+            <div className="bg-[#ffe1e3] py-3 text-center w-1/2 rounded-tr-[12px]">
+              Team subordinates
+            </div>
+          </div>
+
+          {/* Grid Data */}
+          <div className="grid grid-cols-2 w-full text-xs text-black">
+            {/* Left Column */}
+            <div className="col-span-1 flex flex-col items-center py-3 gap-2">
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.register || "0"}
+                </p>
+                <p className="opacity-70">Number of Register</p>
+              </div>
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.deposit_number || "0"}
+                </p>
+                <p className="opacity-70">Deposit Number</p>
+              </div>
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.deposit_amount || "0"}
+                </p>
+                <p className="opacity-70">Deposit Amount</p>
+              </div>
+              <div className="text-center px-2">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.first_deposit || "0"}
+                </p>
+                <p className="opacity-70">
+                  Number of People Making First Deposit
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column */}
+            <div className="col-span-1 flex flex-col items-center py-3 gap-2">
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.subordinates_register || "0"}
+                </p>
+                <p className="opacity-70">Number of Register</p>
+              </div>
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.subordinates_deposit_number || "0"}
+                </p>
+                <p className="opacity-70">Deposit Number</p>
+              </div>
+              <div className="text-center">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.subordinates_deposit_amount || "0"}
+                </p>
+                <p className="opacity-70">Deposit Amount</p>
+              </div>
+              <div className="text-center px-2">
+                <p className="font-semibold text-[13px]">
+                  {promotionData?.subordinates_first_deposit || "0"}
+                </p>
+                <p className="opacity-70">
+                  Number of People Making First Deposit
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-5 lg2:px-4 text-[15px] mt-32 lg2:mt-2 pb-0 bg-[] w-full">
+          <div className="flex w-full justify-center lg2:justify-end">
+            <button
+              onClick={() => setCopyInvitation(true)}
+              className="w-full lg2:w-auto lg2:px-4 font-semibold py-1.5 rounded-[5px] bg-red text-white"
+            >
+              INVITATION LINK
+            </button>
+          </div>
+
           <div
             onClick={() => setCopyInvitationCode(true)}
             className="w-full cursor-pointer flex items-center justify-between mt-4 bg-white p-4 rounded-md"
           >
-            <div className="flex items-center gap-2 text-black whitespace-nowrap overflow-hidden">
-              <img
-                className="w-6 h-6 shrink-0"
-                src={invitation_code}
-                alt="Invitation"
-              />
-
-              <p className="text-[14px] text-black font-medium">
-                Copy invitation code
-              </p>
-
-              <div className="flex items-center gap-1 ml-2">
-                <p className="text-[#A8A5A1] text-[14px] truncate max-w-[120px]">
-                  {myDetails?.data?.referral_code || "------"}
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="#A8A5A1"
-                  className="w-5 h-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M8 16.5H6.75A2.25 2.25 0 014.5 14.25v-9A2.25 2.25 0 016.75 3h9A2.25 2.25 0 0118 5.25V6m-5.25 4.5h5.25m0 0v5.25A2.25 2.25 0 0115.75 18H9a2.25 2.25 0 01-2.25-2.25v-5.25A2.25 2.25 0 019 8.25h6.75A2.25 2.25 0 0118 10.5z"
+            <div className="flex w-full items-center gap-2 text-black whitespace-nowrap overflow-hidden">
+              <div className=" flex w-full lg2:justify-between lg2:items-center">
+                <div className="flex items-center">
+                  <img
+                    className="w-6 h-6 shrink-0"
+                    src={invitation_code}
+                    alt="Invitation"
                   />
-                </svg>
+
+                  <p className="text-[14px] text-black font-medium">
+                    Copy invitation code
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1 ml-2 ">
+                  <p className="text-[#A8A5A1] text-[14px] truncate max-w-[120px]">
+                    {myDetails?.data?.referral_code || "------"}
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="#A8A5A1"
+                    className="w-5 h-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8 16.5H6.75A2.25 2.25 0 014.5 14.25v-9A2.25 2.25 0 016.75 3h9A2.25 2.25 0 0118 5.25V6m-5.25 4.5h5.25m0 0v5.25A2.25 2.25 0 0115.75 18H9a2.25 2.25 0 01-2.25-2.25v-5.25A2.25 2.25 0 019 8.25h6.75A2.25 2.25 0 0118 10.5z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>

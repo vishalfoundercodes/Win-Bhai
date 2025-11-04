@@ -13,10 +13,10 @@ export default function AccountStatementTable({ data }) {
   return (
     <div>
       <div className="w-full overflow-x-auto hide-scrollbar">
-        <table className="w-full border-collapse min-w-[600px]">
+        <table className="w-full border-collapse min-w-[600px] lg2:min-w-[400px]">
           <thead>
             <tr className="bg-red text-white text-ssm font-medium">
-              <th className="px-3 py-4 text-left font-medium border-r border-b border-lightBorder">
+              <th className="px-3 py-4 text-left font-medium border-r border-b border-lightBorder rounded-tl-[10px]">
                 DATE/TIME
               </th>
               <th className="px-3 py-4 text-left font-medium border-r border-b border-lightBorder">
@@ -25,11 +25,11 @@ export default function AccountStatementTable({ data }) {
               <th className="px-3 py-4 text-left font-medium border-r border-b border-lightBorder">
                 DEBIT
               </th>
-              <th className="px-3 py-4 text-left font-mediumborder-r border-b border-lightBorder">
+              <th className="px-3 py-4 text-left font-medium border-r border-b border-lightBorder">
                 BALANCE
               </th>
               {/* Extra columns only visible on md+ screens */}
-              <th className="px-3 py-2 text-left border-r border-b border-lightBorder">
+              <th className="px-3 py-2 text-left border-r border-b border-lightBorder rounded-tr-[10px]">
                 DESCRIPTION
               </th>
               {/* <th className="px-3 py-2 text-left border-r border-b border-lightBorder">
@@ -41,7 +41,7 @@ export default function AccountStatementTable({ data }) {
             {data?.map((row, idx) => (
               <tr
                 key={idx}
-                className="text-ssm border-b border-gray-200 bg-gray-50 "
+                className="text-ssm border-b border-gray-200 bg-gray-50 lg2:bg-lgGray"
               >
                 <td className="px-3 py-2 whitespace-nowrap border-r border-b border-lightBorder">
                   {row.date_time}
