@@ -122,7 +122,7 @@
 //   );
 // }
 
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useRef,useState} from "react";
 import ActionButtons from "./HomeComponents/ActionButtons";
 import SlidingTabs from "./HomeComponents/SlidingTabs";
 import SlidingTabs2 from "./HomeComponents/SlidingTabs2";
@@ -171,13 +171,20 @@ import { gameDetails } from "./gameDetail";
 import GameSlider from "./HomeComponents/GameSlider";
 import GameSlider2 from "./HomeComponents/GameSlider2";
 import GameHeader2 from "./HomeComponents/GameHeader2";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { useScroll } from "../../Context/ScrollContext";
+
 export default function Home() {
   const { profileDetails, setprofileDetails } = useProfile();
   const [allGames, setAllGames] = useState([]);
   const [slotGames, setSlotGames] = useState([]);
-  const [isOpen,setIsOpen]=useState(true)
-  const [onClose,setonClose]=useState(true)
-
+  const [hotGames, setHotGames] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [onClose, setonClose] = useState(true);
+  const { registerSection, activeSection } = useScroll();
 
   const games = [
     { id: 1, name: "AviaFly", image: aviaFly },
@@ -346,7 +353,6 @@ export default function Home() {
 
   const userId = localStorage.getItem("userId");
 
-
   const allowed_games = [
     "112",
     "49",
@@ -366,15 +372,449 @@ export default function Home() {
     "59",
   ];
 
+  const [brandGames, setBrandGames] = useState([]);
+  const [loading, setLoading] = useState(true);
+  //  const [slotGames, setSlotGames] = useState([]);
+  // Function to fetch brands and games
+  // useEffect(() => {
+  //   const fetchBrandsAndGames = async () => {
+  //     try {
+  //       // Step 1: Fetch the list of brands
+  //       const brandRes = await axios.get(`${apis.all_game_list}`);
+  //       const brands = brandRes?.data?.games || [];
+  //       // console.log("Brands:", brands);
 
+  //       // Filter the brands to only include those with allowed `brand_id`
+  //       const filteredBrands = brands.filter((brand) =>
+  //         allowed_games.includes(brand.brand_id)
+  //       );
 
- const [brandGames, setBrandGames] = useState([]);
- const [loading, setLoading] = useState(true);
-//  const [slotGames, setSlotGames] = useState([]);
- // Function to fetch brands and games
+  //       // Step 2: Fetch games for each allowed brand
+  //       const gamePromises = filteredBrands.map(async (brand) => {
+  //         try {
+  //           const gameRes = await axios.get(
+  //             `${configModalWinBhai}brand-details/${brand.brand_id}`
+  //           );
+  //           // console.log("Game Data for Brand ID:", brand.brand_id);
+  //           // console.log("Games:", gameRes?.data?.data?.games);
+
+  //           // Extract games data
+  //           const games = gameRes?.data?.data?.games || [];
+
+  //           if(brand.brand_id==="57"){
+  //             const hotGames = games.filter(
+  //               (game) => game.category === "CasinoTable"
+  //             );
+  //              setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //           }
+  //           if(brand.brand_id==="52"){
+  //             const hotGames = games.filter(
+  //               (game) => game.category === "chess"
+  //             );
+  //              setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //           }
+  //           // Filter out "slot" category games for brand_id 49
+  //           if (brand.brand_id === "49") {
+  //             // Filter out slot category games for this brand
+  //             const slotCategoryGames = games.filter(
+  //               (game) => game.category === "slot"
+  //             );
+  //             const hotGames = games.filter((game) => game.category === "fish");
+  //             const nonSlotGames = games.filter(
+  //               (game) => game.category !== "slot"
+  //             );
+
+  //             // Store the slot games separately
+  //             setSlotGames((prevSlotGames) => [
+  //               ...prevSlotGames,
+  //               ...slotCategoryGames,
+  //             ]);
+  //             setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //             // Store the slot games separately
+  //             setAllGames((prevNonSlotGames) => [
+  //               ...prevNonSlotGames,
+  //               ...nonSlotGames,
+  //             ]);
+
+  //             // Return non-slot games for other usage
+  //             return { brand, games: nonSlotGames };
+  //           }
+
+  //           // For other brands, return all the games as usual
+  //           return { brand, games };
+  //         } catch (err) {
+  //           console.error(`Error fetching games for ${brand.brand_id}:`, err);
+  //           return { brand, games: [] }; // Return empty games if error occurs
+  //         }
+  //       });
+
+  //       // Step 3: Wait for all the game data to be fetched
+  //       const brandGamesData = await Promise.all(gamePromises);
+
+  //       // Step 4: Set the state with the combined brand and games data
+  //       setBrandGames(brandGamesData);
+  //     } catch (error) {
+  //       console.error("Error fetching brands or games:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBrandsAndGames();
+  // }, []);
+  // Helper function to add delay between requests
+  // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Your useEffect - Replace your existing one with this
+  // useEffect(() => {
+  //   const fetchBrandsAndGames = async () => {
+  //     try {
+  //       setLoading(true);
+
+  //       // Step 1: Fetch the list of brands
+  //       const brandRes = await axios.get(`${apis.all_game_list}`);
+  //       const brands = brandRes?.data?.games || [];
+  //       console.log("Brands:", brands);
+
+  //       // Filter the brands to only include those with allowed `brand_id`
+  //       const filteredBrands = brands.filter((brand) =>
+  //         allowed_games.includes(brand.brand_id)
+  //       );
+
+  //       console.log(
+  //         `📋 Processing ${filteredBrands.length} brands sequentially...`
+  //       );
+
+  //       // Step 2: Fetch games for each allowed brand SEQUENTIALLY
+  //       const brandGamesData = [];
+
+  //       for (let i = 0; i < filteredBrands.length; i++) {
+  //         const brand = filteredBrands[i];
+  //         let retryCount = 0;
+  //         const maxRetries = 3;
+  //         const delayMs = 200; // 200ms delay between requests
+
+  //         while (retryCount < maxRetries) {
+  //           try {
+  //             console.log(
+  //               `Fetching games for brand ${brand.brand_id} (${i + 1}/${
+  //                 filteredBrands.length
+  //               })`
+  //             );
+
+  //             const gameRes = await axios.get(
+  //               `${configModalWinBhai}brand-details/${brand.brand_id}`
+  //             );
+  //             console.log("Game Data for Brand ID:", brand.brand_id);
+  //             console.log("Games:", gameRes?.data?.data?.games);
+
+  //             // Extract games data
+  //             const games = gameRes?.data?.data?.games || [];
+
+  //             // Brand ID 57 - Casino Table games
+  //             if (brand.brand_id === "57") {
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "CasinoTable"
+  //               );
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //             }
+
+  //             // Brand ID 52 - Chess games
+  //             if (brand.brand_id === "52") {
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "chess"
+  //               );
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //             }
+
+  //             // Filter out "slot" category games for brand_id 49
+  //             if (brand.brand_id === "49") {
+  //               // Filter out slot category games for this brand
+  //               const slotCategoryGames = games.filter(
+  //                 (game) => game.category === "slot"
+  //               );
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "fish"
+  //               );
+  //               const nonSlotGames = games.filter(
+  //                 (game) => game.category !== "slot"
+  //               );
+
+  //               // Store the slot games separately
+  //               setSlotGames((prevSlotGames) => [
+  //                 ...prevSlotGames,
+  //                 ...slotCategoryGames,
+  //               ]);
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //               // Store the slot games separately
+  //               setAllGames((prevNonSlotGames) => [
+  //                 ...prevNonSlotGames,
+  //                 ...nonSlotGames,
+  //               ]);
+
+  //               // Return non-slot games for other usage
+  //               brandGamesData.push({ brand, games: nonSlotGames });
+  //             } else {
+  //               // For other brands, return all the games as usual
+  //               brandGamesData.push({ brand, games });
+  //             }
+
+  //             console.log(
+  //               `✓ Successfully fetched games for brand ${brand.brand_id}`
+  //             );
+
+  //             // Success - break retry loop
+  //             break;
+  //           } catch (err) {
+  //             retryCount++;
+
+  //             if (err.response?.status === 429) {
+  //               // Rate limit hit - increase delay with exponential backoff
+  //               const retryDelay = delayMs * Math.pow(2, retryCount);
+  //               console.warn(
+  //                 `⚠ Rate limit hit for brand ${brand.brand_id}. Retrying in ${retryDelay}ms... (Attempt ${retryCount}/${maxRetries})`
+  //               );
+  //               await delay(retryDelay);
+  //             } else {
+  //               console.error(
+  //                 `Error fetching games for ${brand.brand_id}:`,
+  //                 err
+  //               );
+
+  //               if (retryCount >= maxRetries) {
+  //                 // Max retries reached, add empty games
+  //                 brandGamesData.push({ brand, games: [] });
+  //                 break;
+  //               }
+
+  //               await delay(delayMs);
+  //             }
+  //           }
+  //         }
+
+  //         // Add delay before next request (only if not the last item)
+  //         if (i < filteredBrands.length - 1) {
+  //           await delay(delayMs);
+  //         }
+  //       }
+
+  //       // Step 3: Set the state with the combined brand and games data
+  //       setBrandGames(brandGamesData);
+  //       console.log("✅ All games fetched successfully!");
+  //     } catch (error) {
+  //       console.error("Error fetching brands or games:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBrandsAndGames();
+  // }, []);
+  // Helper function to add delay between requests
+
+  // LocalStorage Keys
+  const FIRST_TIME_LOAD_KEY = "first_time_load";
+  const BRAND_DATA_PREFIX = "brand_data_";
+  const BANNER_DATA_KEY = "banner_data";
+  const SPONSER_DATA_KEY = "sponser_data";
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const [banner, setbanner] = useState(null);
+  const [sponser, setSponser] = useState(null);
+  // Your useEffect - Replace your existing one with this
+  // useEffect(() => {
+  //   const fetchBrandsAndGames = async () => {
+  //     try {
+  //       setLoading(true);
+
+  //       // Step 1: Fetch the list of brands
+  //       const brandRes = await axios.get(`${apis.all_game_list}`);
+  //       const brands = brandRes?.data?.games || [];
+  //       console.log("Brands:", brands);
+
+  //       // Filter the brands to only include those with allowed `brand_id`
+  //       const filteredBrands = brands.filter((brand) =>
+  //         allowed_games.includes(brand.brand_id)
+  //       );
+
+  //       console.log(
+  //         `📋 Processing ${filteredBrands.length} brands sequentially...`
+  //       );
+
+  //       // Step 2: Fetch games for each allowed brand SEQUENTIALLY
+  //       const brandGamesData = [];
+
+  //       for (let i = 0; i < filteredBrands.length; i++) {
+  //         const brand = filteredBrands[i];
+  //         let retryCount = 0;
+  //         const maxRetries = 3;
+  //         const delayMs = 800; // 200ms delay between requests
+
+  //         while (retryCount < maxRetries) {
+  //           try {
+  //             console.log(
+  //               `Fetching games for brand ${brand.brand_id} (${i + 1}/${
+  //                 filteredBrands.length
+  //               })`
+  //             );
+
+  //             const gameRes = await axios.get(
+  //               `${configModalWinBhai}brand-details/${brand.brand_id}`
+  //             );
+  //             console.log("Game Data for Brand ID:", brand.brand_id);
+  //             console.log("Games:", gameRes?.data?.data?.games);
+
+  //             // Extract games data
+  //             const games = gameRes?.data?.data?.games || [];
+
+  //             // Brand ID 57 - Casino Table games
+  //             if (brand.brand_id === "57") {
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "CasinoTable"
+  //               );
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //             }
+
+  //             // Brand ID 52 - Chess games
+  //             if (brand.brand_id === "52") {
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "chess"
+  //               );
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //             }
+
+  //             // Filter out "slot" category games for brand_id 49
+  //             if (brand.brand_id === "49") {
+  //               // Filter out slot category games for this brand
+  //               const slotCategoryGames = games.filter(
+  //                 (game) => game.category === "slot"
+  //               );
+  //               const hotGames = games.filter(
+  //                 (game) => game.category === "fish"
+  //               );
+  //               const nonSlotGames = games.filter(
+  //                 (game) => game.category !== "slot"
+  //               );
+
+  //               // Store the slot games separately
+  //               setSlotGames((prevSlotGames) => [
+  //                 ...prevSlotGames,
+  //                 ...slotCategoryGames,
+  //               ]);
+  //               setHotGames((prevHotGames) => [...prevHotGames, ...hotGames]);
+  //               // Store the slot games separately
+  //               setAllGames((prevNonSlotGames) => [
+  //                 ...prevNonSlotGames,
+  //                 ...nonSlotGames,
+  //               ]);
+
+  //               // Return non-slot games for other usage
+  //               brandGamesData.push({ brand, games: nonSlotGames });
+  //             } else {
+  //               // For other brands, return all the games as usual
+  //               brandGamesData.push({ brand, games });
+  //             }
+
+  //             console.log(
+  //               `✓ Successfully fetched games for brand ${brand.brand_id}`
+  //             );
+
+  //             // Success - break retry loop
+  //             break;
+  //           } catch (err) {
+  //             retryCount++;
+
+  //             if (err.response?.status === 429) {
+  //               // Rate limit hit - increase delay with exponential backoff
+  //               const retryDelay = delayMs * Math.pow(2, retryCount);
+  //               console.warn(
+  //                 `⚠ Rate limit hit for brand ${brand.brand_id}. Retrying in ${retryDelay}ms... (Attempt ${retryCount}/${maxRetries})`
+  //               );
+  //               await delay(retryDelay);
+  //             } else {
+  //               console.error(
+  //                 `Error fetching games for ${brand.brand_id}:`,
+  //                 err
+  //               );
+
+  //               if (retryCount >= maxRetries) {
+  //                 // Max retries reached, add empty games
+  //                 brandGamesData.push({ brand, games: [] });
+  //                 break;
+  //               }
+
+  //               await delay(delayMs);
+  //             }
+  //           }
+  //         }
+
+  //         // Add delay before next request (only if not the last item)
+  //         if (i < filteredBrands.length - 1) {
+  //           await delay(delayMs);
+  //         }
+  //       }
+
+  //       // Step 3: Set the state with the combined brand and games data
+  //       setBrandGames(brandGamesData);
+  //       console.log("✅ All games fetched successfully!");
+
+  //       // Step 4: Fetch banner images after all games are loaded
+  //       console.log("📸 Fetching banner images...");
+  //       try {
+  //         const bannerRes = await axios.get(apis.bannerImage);
+  //         console.log("Banner response:", bannerRes?.data);
+  //         setbanner(bannerRes?.data);
+
+  //         // Set banner data in state (assuming you have a state for it)
+  //         setBannerImages(bannerRes?.data?.data);
+
+  //         console.log("✅ Banner images fetched successfully!");
+  //       } catch (bannerError) {
+  //         console.error("❌ Error fetching banner images:", bannerError);
+  //       }
+  //       console.log("Fetching sponser images ............");
+  //       try {
+  //         const sponser = await axios.get(apis.sponserImage);
+  //         console.log("Sponser response:", sponser?.data);
+  //         setSponser(sponser?.data?.data);
+
+  //         // Set banner data in state (assuming you have a state for it)
+  //         //  setBannerImages(sponser?.data?.);
+
+  //         console.log("✅ Sponser images fetched successfully!");
+  //       } catch (sponserError) {
+  //         console.error("❌ Error fetching sponser images:", sponserError);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching brands or games:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchBrandsAndGames();
+  // }, []);
+
   useEffect(() => {
     const fetchBrandsAndGames = async () => {
       try {
+        setLoading(true);
+
+        // Check if first time load parameter
+        const isFirstTimeLoad = localStorage.getItem(FIRST_TIME_LOAD_KEY);
+
+        if (isFirstTimeLoad === "true") {
+          // Data already stored hai, localStorage se load karo
+          console.log("🔄 Loading data from localStorage...");
+          loadDataFromLocalStorage();
+          setLoading(false);
+          return;
+        }
+
+        // First time load hai, API calls karo
+        console.log("🆕 First time load - Fetching from API...");
+
         // Step 1: Fetch the list of brands
         const brandRes = await axios.get(`${apis.all_game_list}`);
         const brands = brandRes?.data?.games || [];
@@ -385,56 +825,192 @@ export default function Home() {
           allowed_games.includes(brand.brand_id)
         );
 
-        // Step 2: Fetch games for each allowed brand
-        const gamePromises = filteredBrands.map(async (brand) => {
-          try {
-            const gameRes = await axios.get(
-              `${configModalWinBhai}brand-details/${brand.brand_id}`
-            );
-            console.log("Game Data for Brand ID:", brand.brand_id);
-            console.log("Games:", gameRes?.data?.data?.games);
+        console.log(
+          `📋 Processing ${filteredBrands.length} brands sequentially...`
+        );
 
-            // Extract games data
-            const games = gameRes?.data?.data?.games || [];
+        // Step 2: Fetch games for each allowed brand SEQUENTIALLY
+        const brandGamesData = [];
 
-            // Filter out "slot" category games for brand_id 49
-            if (brand.brand_id === "49") {
-              // Filter out slot category games for this brand
-              const slotCategoryGames = games.filter(
-                (game) => game.category === "slot"
+        for (let i = 0; i < filteredBrands.length; i++) {
+          const brand = filteredBrands[i];
+          let retryCount = 0;
+          const maxRetries = 3;
+          const delayMs = 800;
+
+          while (retryCount < maxRetries) {
+            try {
+              console.log(
+                `Fetching games for brand ${brand.brand_id} (${i + 1}/${
+                  filteredBrands.length
+                })`
               );
-              const nonSlotGames = games.filter(
-                (game) => game.category !== "slot"
+
+              const gameRes = await axios.get(
+                `${configModalWinBhai}brand-details/${brand.brand_id}`
+              );
+              console.log("Game Data for Brand ID:", brand.brand_id);
+              console.log("Games:", gameRes?.data?.data?.games);
+
+              // Extract games data
+              const games = gameRes?.data?.data?.games || [];
+
+              // Brand ID 57 - Casino Table games
+              if (brand.brand_id === "57") {
+                const hotGamesFiltered = games.filter(
+                  (game) => game.category === "CasinoTable"
+                );
+                setHotGames((prevHotGames) => [
+                  ...prevHotGames,
+                  ...hotGamesFiltered,
+                ]);
+              }
+
+              // Brand ID 52 - Chess games
+              if (brand.brand_id === "52") {
+                const hotGamesFiltered = games.filter(
+                  (game) => game.category === "chess"
+                );
+                setHotGames((prevHotGames) => [
+                  ...prevHotGames,
+                  ...hotGamesFiltered,
+                ]);
+              }
+
+              // Filter out "slot" category games for brand_id 49
+              if (brand.brand_id === "49") {
+                const slotCategoryGames = games.filter(
+                  (game) => game.category === "slot"
+                );
+                const hotGamesFiltered = games.filter(
+                  (game) => game.category === "fish"
+                );
+                const nonSlotGames = games.filter(
+                  (game) => game.category !== "slot"
+                );
+
+                setSlotGames((prevSlotGames) => [
+                  ...prevSlotGames,
+                  ...slotCategoryGames,
+                ]);
+                setHotGames((prevHotGames) => [
+                  ...prevHotGames,
+                  ...hotGamesFiltered,
+                ]);
+                setAllGames((prevNonSlotGames) => [
+                  ...prevNonSlotGames,
+                  ...nonSlotGames,
+                ]);
+
+                brandGamesData.push({ brand, games: nonSlotGames });
+              } else {
+                brandGamesData.push({ brand, games });
+              }
+
+              // ✅ Brand ka data localStorage mein store karo
+              const brandStorageKey = `${BRAND_DATA_PREFIX}${brand.brand_id}`;
+              const brandDataToStore = {
+                brand,
+                games,
+                timestamp: Date.now(),
+              };
+              localStorage.setItem(
+                brandStorageKey,
+                JSON.stringify(brandDataToStore)
+              );
+              console.log(
+                `💾 Brand ${brand.brand_id} data stored in localStorage ✅`
               );
 
-              // Store the slot games separately
-              setSlotGames((prevSlotGames) => [
-                ...prevSlotGames,
-                ...slotCategoryGames,
-              ]);
-              // Store the slot games separately
-              setAllGames((prevNonSlotGames) => [
-                ...prevNonSlotGames,
-                ...nonSlotGames,
-              ]);
+              console.log(
+                `✓ Successfully fetched games for brand ${brand.brand_id}`
+              );
 
-              // Return non-slot games for other usage
-              return { brand, games: nonSlotGames };
+              break;
+            } catch (err) {
+              retryCount++;
+
+              if (err.response?.status === 429) {
+                const retryDelay = delayMs * Math.pow(2, retryCount);
+                console.warn(
+                  `⚠ Rate limit hit for brand ${brand.brand_id}. Retrying in ${retryDelay}ms... (Attempt ${retryCount}/${maxRetries})`
+                );
+                await delay(retryDelay);
+              } else {
+                console.error(
+                  `Error fetching games for ${brand.brand_id}:`,
+                  err
+                );
+
+                if (retryCount >= maxRetries) {
+                  brandGamesData.push({ brand, games: [] });
+                  break;
+                }
+
+                await delay(delayMs);
+              }
             }
-
-            // For other brands, return all the games as usual
-            return { brand, games };
-          } catch (err) {
-            console.error(`Error fetching games for ${brand.brand_id}:`, err);
-            return { brand, games: [] }; // Return empty games if error occurs
           }
-        });
 
-        // Step 3: Wait for all the game data to be fetched
-        const brandGamesData = await Promise.all(gamePromises);
+          if (i < filteredBrands.length - 1) {
+            await delay(delayMs);
+          }
+        }
 
-        // Step 4: Set the state with the combined brand and games data
         setBrandGames(brandGamesData);
+        console.log("✅ All games fetched successfully!");
+
+        // Step 4: Fetch banner images
+        console.log("📸 Fetching banner images...");
+        try {
+          const bannerRes = await axios.get(apis.bannerImage);
+          console.log("Banner response:", bannerRes?.data);
+          setbanner(bannerRes?.data);
+          setBannerImages(bannerRes?.data?.data);
+
+          // Store banner in localStorage
+          localStorage.setItem(
+            BANNER_DATA_KEY,
+            JSON.stringify({
+              banner: bannerRes?.data,
+              bannerImages: bannerRes?.data?.data,
+              timestamp: Date.now(),
+            })
+          );
+          console.log("💾 Banner data stored in localStorage ✅");
+
+          console.log("✅ Banner images fetched successfully!");
+        } catch (bannerError) {
+          console.error("❌ Error fetching banner images:", bannerError);
+        }
+
+        // Fetch sponser images
+        console.log("Fetching sponser images ............");
+        try {
+          const sponserRes = await axios.get(apis.sponserImage);
+          console.log("Sponser response:", sponserRes?.data);
+          setSponser(sponserRes?.data?.data);
+
+          // Store sponser in localStorage
+          localStorage.setItem(
+            SPONSER_DATA_KEY,
+            JSON.stringify({
+              sponser: sponserRes?.data?.data,
+              timestamp: Date.now(),
+            })
+          );
+          console.log("💾 Sponser data stored in localStorage ✅");
+
+          console.log("✅ Sponser images fetched successfully!");
+        } catch (sponserError) {
+          console.error("❌ Error fetching sponser images:", sponserError);
+        }
+
+        // ✅ Sab kuch successfully store ho gaya, ab first_time_load ko true karo
+        localStorage.setItem(FIRST_TIME_LOAD_KEY, "true");
+        console.log(
+          "🎉 All data stored successfully! First time load complete."
+        );
       } catch (error) {
         console.error("Error fetching brands or games:", error);
       } finally {
@@ -442,8 +1018,117 @@ export default function Home() {
       }
     };
 
+    // Function to load data from localStorage
+    const loadDataFromLocalStorage = () => {
+      const brandGamesData = [];
+      const hotGamesTemp = [];
+      const slotGamesTemp = [];
+      const allGamesTemp = [];
+
+      // Load each brand's data
+      allowed_games.forEach((brandId) => {
+        const brandStorageKey = `${BRAND_DATA_PREFIX}${brandId}`;
+        const storedData = localStorage.getItem(brandStorageKey);
+
+        if (storedData) {
+          const { brand, games } = JSON.parse(storedData);
+          console.log(`📦 Loaded brand ${brandId} from localStorage`);
+
+          // Brand ID 57 - Casino Table games
+          if (brand.brand_id === "57") {
+            const hotGamesFiltered = games.filter(
+              (game) => game.category === "CasinoTable"
+            );
+            hotGamesTemp.push(...hotGamesFiltered);
+          }
+
+          // Brand ID 52 - Chess games
+          if (brand.brand_id === "52") {
+            const hotGamesFiltered = games.filter(
+              (game) => game.category === "chess"
+            );
+            hotGamesTemp.push(...hotGamesFiltered);
+          }
+
+          // Filter out "slot" category games for brand_id 49
+          if (brand.brand_id === "49") {
+            const slotCategoryGames = games.filter(
+              (game) => game.category === "slot"
+            );
+            const hotGamesFiltered = games.filter(
+              (game) => game.category === "fish"
+            );
+            const nonSlotGames = games.filter(
+              (game) => game.category !== "slot"
+            );
+
+            slotGamesTemp.push(...slotCategoryGames);
+            hotGamesTemp.push(...hotGamesFiltered);
+            allGamesTemp.push(...nonSlotGames);
+
+            brandGamesData.push({ brand, games: nonSlotGames });
+          } else {
+            brandGamesData.push({ brand, games });
+          }
+        }
+      });
+
+      // Load banner data
+      const bannerData = localStorage.getItem(BANNER_DATA_KEY);
+      if (bannerData) {
+        const { banner, bannerImages } = JSON.parse(bannerData);
+        setbanner(banner);
+        setBannerImages(bannerImages);
+        console.log("📦 Loaded banner data from localStorage");
+      }
+
+      // Load sponser data
+      const sponserData = localStorage.getItem(SPONSER_DATA_KEY);
+      if (sponserData) {
+        const { sponser } = JSON.parse(sponserData);
+        setSponser(sponser);
+        console.log("📦 Loaded sponser data from localStorage");
+      }
+
+      // Set all states
+      setBrandGames(brandGamesData);
+      setHotGames(hotGamesTemp);
+      setSlotGames(slotGamesTemp);
+      setAllGames(allGamesTemp);
+
+      console.log("✅ All data loaded from localStorage successfully!");
+    };
+
     fetchBrandsAndGames();
   }, []);
+
+
+
+  const sectionRefs = useRef({});
+  // const [activeSection, setActiveSection] = useState(null);
+
+  // Function to scroll to specific brand section
+  // const scrollToSection = (brandId) => {
+  //   const sectionRef = sectionRefs.current[brandId];
+  //   if (sectionRef) {
+  //     setActiveSection(brandId);
+
+  //     // Smooth scroll with offset for fixed headers
+  //     sectionRef.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start",
+  //     });
+
+  //     // Highlight effect
+  //     setTimeout(() => {
+  //       sectionRef.style.transform = "scale(1.02)";
+  //       sectionRef.style.transition = "transform 0.3s ease";
+  //       setTimeout(() => {
+  //         sectionRef.style.transform = "scale(1)";
+  //       }, 300);
+  //     }, 500);
+  //   }
+  // };
 
   if (loading)
     return (
@@ -493,7 +1178,7 @@ export default function Home() {
                 />
               </svg>
             }
-            games={games}
+            games={hotGames}
             onSeeAll={() => alert("See All clicked")}
           />
           <TrendingGames
@@ -748,6 +1433,7 @@ export default function Home() {
             <GameHeader2 />
             <div className="hidden lg:block">
               {/* <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} /> */}
+              {/* <GameCategories /> */}
               <GameCategories />
             </div>
 
@@ -770,11 +1456,11 @@ export default function Home() {
                     />
                   </svg>
                 }
-                games={games}
+                games={hotGames}
                 onSeeAll={() => alert("See All clicked")}
               />
 
-              <GameSection
+              <TrendingGames
                 title="Trending Games"
                 icon={
                   <svg
@@ -793,11 +1479,53 @@ export default function Home() {
                 games={trendingGames}
                 onSeeAll={() => alert("See All clicked")}
               />
-              <div className="h-[395px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
+              {/* <div className="h-[395px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
                 <span className="text-gray-400 text-sm font-medium">
-                  {/* {game.name} */}
+                  
                 </span>
-              </div>
+              </div> */}
+              {/* 🧩 SPONSOR SECTION */}
+              {loading ? (
+                <p className="text-center">Loading...</p>
+              ) : !sponser || sponser.length === 0 ? (
+                // 🟥 CASE 1: No image → placeholder box
+                <div className="h-[395px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">
+                  <span className="text-gray-400 text-sm font-medium">
+                    No Sponsor Available
+                  </span>
+                </div>
+              ) : sponser.length === 1 ? (
+                // 🟩 CASE 2: Single image → show static image
+                <div className="h-[395px] w-full flex items-center justify-center rounded-[12px]">
+                  <img
+                    src={sponser[0].image}
+                    alt={sponser[0].title || "Sponsor"}
+                    className="h-[395px] w-full object-fill rounded-[12px]"
+                  />
+                </div>
+              ) : (
+                // 🟦 CASE 3: Multiple images → Swiper slider
+                <div className="h-[395px] w-full flex items-center justify-center rounded-[12px]">
+                  <Swiper
+                    modules={[Pagination, Autoplay]}
+                    pagination={{ clickable: true }}
+                    autoplay={{ delay: 3000 }}
+                    loop={true}
+                    className="h-[395px] w-full rounded-[12px]"
+                  >
+                    {sponser.map((item, index) => (
+                      <SwiperSlide key={index}>
+                        <img
+                          src={item.image}
+                          alt={item.title || `sponsor-${index}`}
+                          className="h-[395px] w-full object-fill rounded-[12px]"
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </div>
+              )}
+
               <GameSection
                 title="Slot Games "
                 icon={
@@ -817,7 +1545,7 @@ export default function Home() {
                 games={slotGames}
                 onSeeAll={() => alert("See All clicked")}
               />
-              {brandGames.length > 0 ? (
+              {/* {brandGames.length > 0 ? (
                 brandGames.map(({ brand, games }) => {
                   if (!brand || !brand.brand_title) {
                     console.error("Invalid brand data", brand);
@@ -840,6 +1568,46 @@ export default function Home() {
                       onSeeAll={() =>
                         alert(`See all games for ${brand.brand_title}`)
                       }
+                      // sectionRef={(el) =>
+                      //   (sectionRefs.current[brand.brand_id] = el)
+                      // }
+                      sectionRef={(el) => registerSection(brand.brand_id, el)}
+                    />
+                  );
+                })
+              ) : (
+                <p>No brands available</p>
+              )} */}
+              {brandGames.length > 0 ? (
+                brandGames.map(({ brand, games }) => {
+                  if (!brand || !brand.brand_title) {
+                    console.error("Invalid brand data", brand);
+                    return null;
+                  }
+
+                  return (
+                    <GameSection
+                      key={brand.brand_id}
+                      title={brand.brand_title}
+                      brand={brand} // ✅ Pass full brand object
+                      icon={
+                        <img
+                          src={brand.logo}
+                          alt={brand.brand_title}
+                          width={24}
+                          height={24}
+                        />
+                      }
+                      games={games}
+                      onSeeAll={() =>
+                        alert(`See all games for ${brand.brand_title}`)
+                      }
+                      sectionRef={(el) => {
+                        if (el) {
+                          console.log(`Registering ${brand.brand_id}:`, el);
+                          registerSection(brand.brand_id, el);
+                        }
+                      }}
                     />
                   );
                 })

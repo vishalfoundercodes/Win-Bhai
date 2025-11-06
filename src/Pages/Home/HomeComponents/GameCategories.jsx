@@ -24,8 +24,9 @@ import BG18 from "../../../assets/JPEG/Background+Shadow-18.jpg";
 import BG19 from "../../../assets/JPEG/Background+Shadow-19.jpg";
 import BG20 from "../../../assets/JPEG/Background+Shadow-20.jpg";
 import BG from "../../../assets/JPEG/Background+Shadow.jpg";
+import { useScroll } from "../../../Context/ScrollContext";
 const categories = [
-  { name: "Crash Games", icon: "🎮", image: BG },
+  { name: "Crash Games 1",brandId: "78", icon: "🎮", image: BG },
   { name: "Crash Games", icon: "🎮", image: BG1 },
   { name: "Crash Games", icon: "🎮", image: BG2 },
   { name: "Crash Games", icon: "🎮", image: BG3 },
@@ -51,7 +52,40 @@ const categories = [
   // { name: "Card Games", icon: "🃏", image: evolution },
 ];
 
-export default function GameCategories() {
+// Sample brand games data
+const brandGames = [
+  { 
+    brand: { brand_id: "78", brand_title: "Crash Games 1", logo: "🚀" },
+    games: [
+      { id: 1, name: "Aviator", image: "🛩️" },
+      { id: 2, name: "Rocket", image: "🚀" },
+      { id: 3, name: "JetX", image: "✈️" },
+    ]
+  },
+  { 
+    brand: { brand_id: "49", brand_title: "Jili Games", logo: "🎮" },
+    games: [
+      { id: 4, name: "Fortune Tree", image: "🌳" },
+      { id: 5, name: "Lucky Slots", image: "🎰" },
+    ]
+  },
+  { 
+    brand: { brand_id: "57", brand_title: "Slot Masters", logo: "🎰" },
+    games: [
+      { id: 6, name: "Mega Spin", image: "💎" },
+      { id: 7, name: "Wild West", image: "🤠" },
+    ]
+  },
+  { 
+    brand: { brand_id: "52", brand_title: "Card Pro", logo: "🃏" },
+    games: [
+      { id: 8, name: "Poker", image: "♠️" },
+      { id: 9, name: "Blackjack", image: "♥️" },
+    ]
+  },
+];
+export default function GameCategories({ onCategoryClick }) {
+  const { scrollToSection } = useScroll();
   // 2 rows banane ke liye split karenge
   const firstRow = categories.filter((_, i) => i % 2 === 0);
   const secondRow = categories.filter((_, i) => i % 2 !== 0);
@@ -61,6 +95,7 @@ export default function GameCategories() {
       {row.map((cat, i) => (
         <div
           key={i}
+          onClick={() => scrollToSection(cat.brandId)}
           className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-38 xsm4:w-40 xsm3:w-42 xxs:w-48  flex-shrink-0"
         >
           {/* Background image */}

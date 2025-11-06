@@ -125,3 +125,16 @@ input:-webkit-autofill:active {
   scrollbar-width: none;     /* Firefox */
 }
 
+/* In your global CSS or index.css */
+html {
+  scroll-behavior: smooth;
+}
+
+#main-scroll-container {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+.w-\[80\%\] {
+  scroll-behavior: smooth;
+}

@@ -20,7 +20,7 @@ function BetButtonOne({ setBtn, setBetApiHitted,  }) {
   const [isAuto, setIsAuto] = useState(false);
   const [predictedCashoutValue, setPredictedCashoutValue] = useState(1.1);
     // const userId = localStorage.getItem("userId");
-      const { myDetails} = useProfile(userId);
+      const { myDetails, fetchProfileDetails } = useProfile(userId);
       // console.log("my details on bet one:", myDetails?.data.total_wallet);
   const [isAutoBetAndCashout, setIsAutoBetAndCashout] = useState({
     autoBet: false,

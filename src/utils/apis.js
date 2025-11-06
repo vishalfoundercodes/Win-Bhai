@@ -12,9 +12,12 @@ export const configModalApk = `${baseUrlWinBhai}/apk/`;
 
 const apis = {
   sendOtp:
-    "https://otp.fctechteam.org/send_otp.php?mode=test&digit=4&mobile=$phoneNumber=",
+    "https://otp.fctechteam.org/send_otp.php?mode=test&digit=4&mobile=",
   verifyOtp: "https://otp.fctechteam.org/verifyotp.php?mobile=",
-
+// https://root.winbhai.in/api/slider_image_view
+// https://root.winbhai.in/api/getAllNotices
+  sponserImage:`${configModalWinBhai}getAllNotices`,
+  bannerImage:`${configModalWinBhai}slider_image_view`,
   createUserId: `${configModalWinBhai}otp-register`,
   register: `${configModalWinBhai}register`,
   login: `${configModalWinBhai}login`,

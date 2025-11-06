@@ -15,7 +15,7 @@ const Header = ({ profileDetails2}) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
   const userId = localStorage.getItem("userId");
-
+    const isWingoPath = location.pathname === "/lottery/wingo";
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -52,7 +52,11 @@ const Header = ({ profileDetails2}) => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#c8102e] text-white px-3 py-2 flex items-center justify-between md:px-16 sm:px-28 lg2:px-16 3xl:px-60">
+      <header
+        className={`sticky top-0 z-50 bg-[#c8102e] text-white px-3 py-2 flex items-center justify-between md:px-16 sm:px-28  3xl:px-60 ${
+          isWingoPath ? "lg2:px-3" : "lg2:px-16"
+        }`}
+      >
         {/* Left Section - Hamburger & Logo */}
         <div className="flex items-center gap-2 justify-center">
           <button
@@ -278,7 +282,7 @@ const Header = ({ profileDetails2}) => {
                 <FaUser className="text-ssm" />
               </div>
               <div className="hidden lg2:block lg2:flex gap-2">
-                <ActionButtons />
+                {!isWingoPath && <ActionButtons />}
                 {/* Account Button */}
                 {/* <button className="flex items-center justify-center bg-red text-white border-2 border-white px-4 py-1 rounded-3xl hover:text-white transition-all ease-in-out gap-2">
                   <svg

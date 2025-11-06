@@ -3,6 +3,16 @@ import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 export default function SignOutModal({ isOpen, onClose }) {
   if (!isOpen) return null;
+    // Function to clear cache manually (Optional - for testing/admin)
+    const clearCache = () => {
+      localStorage.removeItem(FIRST_TIME_LOAD_KEY);
+      allowed_games.forEach((brandId) => {
+        localStorage.removeItem(`${BRAND_DATA_PREFIX}${brandId}`);
+      });
+      localStorage.removeItem(BANNER_DATA_KEY);
+      localStorage.removeItem(SPONSER_DATA_KEY);
+      console.log("🗑️ Cache cleared - Next load will fetch fresh data");
+    };
 const navigate=useNavigate()
   return (
     <div
@@ -30,6 +40,7 @@ const navigate=useNavigate()
               onClose();
               localStorage.clear();
               navigate("/");
+              clearCache()
               window.location.reload();
               // alert("Signed out!"); // yaha tumhara signout logic ayega
             }}

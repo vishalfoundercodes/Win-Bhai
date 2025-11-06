@@ -15,8 +15,10 @@ import apis from "../utils/apis";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../Pages/resuable_component/Loader/Loader";
+import { useProfile } from "../Context/ProfileContext";
 export default function Login() {
     const navigate=useNavigate()
+    const {fetchProfile}=useProfile()
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showUserName, setShowUserName] = useState(false);
      const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +80,7 @@ export default function Login() {
           toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);
              localStorage.setItem("token", res?.data?.login_token);
+             fetchProfile()
              navigate("/");
         }
         // Handle server response here, like redirecting on successful login

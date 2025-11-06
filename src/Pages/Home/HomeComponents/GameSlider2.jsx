@@ -12,11 +12,13 @@ import sidebarImage9 from "../../../assets/GameIcons/aviator.png";
 import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useScroll } from "../../../Context/ScrollContext";
 
-export default function GameSlider2({ profileDetails }) {
+export default function GameSlider2({ profileDetails, onCategoryClick }) {
   const [selected, setSelected] = useState(null);
-  const [isOpen,setIsOpen]=useState(true)
-  const [onClose,setonClose]=useState(true)
+  const [isOpen, setIsOpen] = useState(true);
+  const [onClose, setonClose] = useState(true);
+  const { scrollToSection } = useScroll();
 
   const navigate = useNavigate();
   const Cricket = ({ active }) => (
@@ -289,33 +291,66 @@ export default function GameSlider2({ profileDetails }) {
       />
     </svg>
   );
- 
-const games = [
-  { id: 1, name: "Cricket", image: Cricket, route: "" },
-  { id: 2, name: "Aviator", image: aviator, route: "" },
-  { id: 3, name: "Card Games", image: CardGames, route: "" },
-  { id: 4, name: "Live Casino", image: LiveCassino, route: "" },
-  { id: 5, name: "Trending Games", image: TrendingGames, route: "" },
-  { id: 6, name: "Football", image: Football, route: "" },
-  { id: 7, name: "Tennis", image: Tennis, route: "" },
-  { id: 8, name: "Slot Games", image: SlotGames, route: "" },
-  { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
-  { id: 10, name: "Profile", image: Profile, route: "/Info" },
-  { id: 11, name: "Language Change", image: LanguageChange, route: "" },
-  {
-    id: 12,
-    name: "Club Info",
-    image: ClubInfo,
-    route: "",
-  },
-  {
-    id: 13,
-    name: "Download Apk",
-    image: DownloadAPK,
-    route: "/downloadAPK",
-  },
-  { id: 14, name: "Logout", image: Logout, route: "" },
-];
+
+  const games = [
+    { id: 1, name: "Cricket", image: Cricket, brandId: "46", route: "" },
+    { id: 2, name: "Aviator", image: aviator, route: "" },
+    { id: 3, name: "Card Games", image: CardGames, route: "" },
+    { id: 4, name: "Live Casino", image: LiveCassino, route: "" },
+    { id: 5, name: "Trending Games", image: TrendingGames, route: "" },
+    { id: 6, name: "Football", image: Football, route: "" },
+    { id: 7, name: "Tennis", image: Tennis, route: "" },
+    { id: 8, name: "Slot Games", image: SlotGames, route: "" },
+    { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
+    { id: 10, name: "Profile", image: Profile, route: "/Info" },
+    { id: 11, name: "Language Change", image: LanguageChange, route: "" },
+    {
+      id: 12,
+      name: "Club Info",
+      image: ClubInfo,
+      route: "",
+    },
+    {
+      id: 13,
+      name: "Download Apk",
+      image: DownloadAPK,
+      route: "/downloadAPK",
+    },
+    { id: 14, name: "Logout", image: Logout, route: "" },
+  ];
+
+  // Sample brand games data
+  const brandGames = [
+    {
+      brand: { brand_id: "78", brand_title: "Crash Games 1", logo: "🚀" },
+      games: [
+        { id: 1, name: "Aviator", image: "🛩️" },
+        { id: 2, name: "Rocket", image: "🚀" },
+        { id: 3, name: "JetX", image: "✈️" },
+      ],
+    },
+    {
+      brand: { brand_id: "49", brand_title: "Jili Games", logo: "🎮" },
+      games: [
+        { id: 4, name: "Fortune Tree", image: "🌳" },
+        { id: 5, name: "Lucky Slots", image: "🎰" },
+      ],
+    },
+    {
+      brand: { brand_id: "57", brand_title: "Slot Masters", logo: "🎰" },
+      games: [
+        { id: 6, name: "Mega Spin", image: "💎" },
+        { id: 7, name: "Wild West", image: "🤠" },
+      ],
+    },
+    {
+      brand: { brand_id: "52", brand_title: "Card Pro", logo: "🃏" },
+      games: [
+        { id: 8, name: "Poker", image: "♠️" },
+        { id: 9, name: "Blackjack", image: "♥️" },
+      ],
+    },
+  ];
 
   return (
     <div
@@ -394,6 +429,10 @@ const games = [
                 onClick={() => {
                   setSelected(game.id);
                   navigate(game.route);
+                     if (game.brandId) {
+                       scrollToSection(game.brandId);
+                       console.log("Clicked brand:", game.brandId);
+                     }
                 }}
               >
                 {/* Keep same circle size always */}

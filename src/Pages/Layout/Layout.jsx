@@ -214,6 +214,7 @@ import apis from "../../utils/apis";
 import { ProfileProvider } from "../../Context/ProfileContext";
 import { toast } from "react-toastify";
 import GameSlider2 from "../Home/HomeComponents/GameSlider2";
+import { ScrollProvider, useScroll } from "../../Context/ScrollContext";
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -372,6 +373,7 @@ export default function Layout({ children }) {
     "/signup",
     "/forgetPassword",
     "/ForgetUserName",
+    "/lottery/wingo"
   ];
     const hideLayout = hideLayoutPaths.includes(location.pathname);
   
@@ -446,29 +448,121 @@ export default function Layout({ children }) {
       navigate("/", { replace: true });
     }
   }, [location.pathname, navigate]);
+
+
+      const [activeSection, setActiveSection] = useState(null);
+
+      // Refs for scrolling to sections
+      const sectionRefs = useRef({});
+
+      // Sample brand games data
+      const brandGames = [
+        {
+          brand: { brand_id: "46", brand_title: "Cricket Games", logo: "🏏" },
+          games: [
+            { id: 1, name: "Cricket World", image: "🏏" },
+            { id: 2, name: "T20 Blast", image: "🏆" },
+            { id: 3, name: "Super League", image: "⭐" },
+            { id: 4, name: "IPL Cricket", image: "🎯" },
+          ],
+        },
+        {
+          brand: { brand_id: "78", brand_title: "Crash Games", logo: "🚀" },
+          games: [
+            { id: 5, name: "Aviator", image: "✈️" },
+            { id: 6, name: "Rocket", image: "🚀" },
+            { id: 7, name: "JetX", image: "🛩️" },
+            { id: 8, name: "Space Race", image: "🛸" },
+          ],
+        },
+        {
+          brand: { brand_id: "49", brand_title: "Jili Games", logo: "🎮" },
+          games: [
+            { id: 9, name: "Fortune Tree", image: "🌳" },
+            { id: 10, name: "Lucky Slots", image: "🎰" },
+            { id: 11, name: "Golden Eggs", image: "🥚" },
+            { id: 12, name: "Treasure Hunt", image: "💎" },
+          ],
+        },
+        {
+          brand: { brand_id: "57", brand_title: "Slot Masters", logo: "🎰" },
+          games: [
+            { id: 13, name: "Mega Spin", image: "💎" },
+            { id: 14, name: "Wild West", image: "🤠" },
+            { id: 15, name: "Egyptian Gold", image: "🔱" },
+            { id: 16, name: "Fruit Mania", image: "🍒" },
+          ],
+        },
+        {
+          brand: { brand_id: "52", brand_title: "Card Pro", logo: "🃏" },
+          games: [
+            { id: 17, name: "Poker", image: "♠️" },
+            { id: 18, name: "Blackjack", image: "♥️" },
+            { id: 19, name: "Teen Patti", image: "🎴" },
+            { id: 20, name: "Rummy", image: "🎲" },
+          ],
+        },
+      ];
+
+      // Scroll to section function
+      const scrollToSection = (brandId) => {
+        console.log("🎯 Scrolling to brand:", brandId);
+        const sectionRef = sectionRefs.current[brandId];
+
+        if (sectionRef) {
+          setActiveSection(brandId);
+
+          // Smooth scroll with offset for fixed headers
+          sectionRef.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+
+          // Highlight effect
+          setTimeout(() => {
+            sectionRef.style.transform = "scale(1.02)";
+            sectionRef.style.transition = "transform 0.3s ease";
+            setTimeout(() => {
+              sectionRef.style.transform = "scale(1)";
+            }, 300);
+          }, 500);
+        } else {
+          console.log("❌ Section ref not found for brand:", brandId);
+        }
+      };
+
+      // Simulate loading
+      useEffect(() => {
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }, []);
+
   return (
     <>
-      <ProfileProvider>
-        {location.pathname === "/aviator" ? (
-          <AvitatorLayout
-            component={<AviatorHome profileDetails={profileDetails2} />}
-          />
-        ) : location?.pathname === "/chickenRoadGame" ? (
-          <ChickenRoadLayout
-            component={<Game profileDetails={profileDetails2} />}
-          />
-        ) : (
-          <div
-            className={`min-h-screen w-full ${
-              isWingoPath ? "flex justify-center bg-grayBg" : "bg-grayBg"
-            }`}
-          >
+      <ScrollProvider>
+        <ProfileProvider>
+          {location.pathname === "/aviator" ? (
+            <AvitatorLayout
+              component={<AviatorHome profileDetails={profileDetails2} />}
+            />
+          ) : location?.pathname === "/chickenRoadGame" ? (
+            <ChickenRoadLayout
+              component={<Game profileDetails={profileDetails2} />}
+            />
+          ) : (
             <div
-              className={`flex flex-col min-h-screen hide-scrollbar w-full ${
-                isWingoPath ? "xsm:w-[400px] bg-red2" : ""
+              className={`min-h-screen w-full ${
+                isWingoPath ? "flex justify-center bg-grayBg" : "bg-grayBg"
               }`}
             >
-              {/* <div className="lg2:hidden">
+              <div
+                className={`flex flex-col min-h-screen hide-scrollbar w-full ${
+                  isWingoPath ? "xsm:w-[400px] bg-red2" : ""
+                }`}
+              >
+                {/* <div className="lg2:hidden">
                 {!shouldHideHeader &&
                   (shouldShowHeader2 ? (
                     <Header2 className="sticky top-0 z-50" />
@@ -479,80 +573,102 @@ export default function Layout({ children }) {
                     />
                   ))}
               </div> */}
-              {!shouldHideHeader && (
-                <>
-                  {/* Desktop header */}
-                  <div className="hidden lg2:block sticky top-0 z-50">
-                    {shouldShowHeader2 ? (
-                      <Header profileDetails2={profileDetails2} />
-                    ) : (
-                      <Header profileDetails2={profileDetails2} />
-                    )}
-                  </div>
+                {!shouldHideHeader && (
+                  <>
+                    {/* Desktop header */}
+                    <div className="hidden lg2:block sticky top-0 z-50">
+                      {shouldShowHeader2 ? (
+                        <Header profileDetails2={profileDetails2} />
+                      ) : (
+                        <Header profileDetails2={profileDetails2} />
+                      )}
+                    </div>
 
-                  {/* Mobile header */}
-                  <div className="lg2:hidden sticky top-0 z-50">
-                    {shouldShowHeader2 ? (
-                      <Header2 />
-                    ) : (
-                      <Header profileDetails2={profileDetails2} />
-                    )}
-                  </div>
-                </>
-              )}
+                    {/* Mobile header */}
+                    <div className="lg2:hidden sticky top-0 z-50">
+                      {shouldShowHeader2 ? (
+                        <Header2 />
+                      ) : (
+                        <Header profileDetails2={profileDetails2} />
+                      )}
+                    </div>
+                  </>
+                )}
 
-              {/* <div className="hidden lg2:block">
+                {/* <div className="hidden lg2:block">
                 <Header
                   className="sticky top-0 z-50"
                   profileDetails2={profileDetails2}
                 />
               </div> */}
 
-              {!hideLayout && (
-                <div className="lg2:flex gap-16 px-12 py-6 hidden lg2:block">
-                  <div className="w-[20%]">
-                    <div>
-                      <GameSlider2 profileDetails={profileDetails2} />
+                {/* {!hideLayout && (
+                  <div className="lg2:flex gap-16 px-12 py-6 hidden ">
+                    <div className="w-[20%]">
+                      <div>
+                        <GameSlider2
+                          profileDetails={profileDetails2}
+                          
+                        />
+                      </div>
+                    </div>
+                    <div className="w-[80%]">
+                      {isLoading && <Loader />}
+                      {children}
                     </div>
                   </div>
-                  <div className="w-[80%]">
-                    {isLoading && <Loader />}
-                    {children}
+                )} */}
+                {!hideLayout && (
+                  <div className="lg2:flex gap-16 px-12 py-6 hidden">
+                    {/* Sidebar - Fixed/Sticky */}
+                    <div className="w-[20%] sticky top-20 self-start">
+                      <div className="max-h-[calc(100vh-6rem)] overflow-y-auto">
+                        <GameSlider2 profileDetails={profileDetails2} />
+                      </div>
+                    </div>
+
+                    {/* Main Content - SCROLLABLE */}
+                    <div
+                      className="w-[80%] overflow-y-auto max-h-[calc(100vh-6rem)]"
+                      id="main-scroll-container" // ✅ Add ID for debugging
+                    >
+                      {isLoading && <Loader />}
+                      {children}
+                    </div>
                   </div>
+                )}
+                <div className="hidden lg2:block">
+                  {hideLayout && <>{children}</>}
                 </div>
-              )}
-              <div className="hidden lg2:block">
-                {hideLayout && <>{children}</>}
-              </div>
 
-              <div className="lg2:hidden">
-                {isLoading && <Loader />}
-                {children}
-              </div>
-              {/* Draggable WhatsApp and Telegram Images */}
-              {location.pathname === "/" && !sidebar && (
-                <div className="fixed inset-0 pointer-events-none z-50 lg2:hidden">
-                  {/* WhatsApp Image */}
-                  <img
-                    // src={whatsapp}
-                    src={telegram}
-                    // alt="WhatsApp"
-                    alt="telegram"
-                    className="w-20 h-32  cursor-grab active:cursor-grabbing pointer-events-auto"
-                    // onMouseDown={(e) => handleMouseDown(e, "left")}
-                    // onTouchStart={(e) => handleTouchStart(e, "left")}
-                    style={{
-                      position: "fixed",
-                      left: `${leftPosition.x}px`,
-                      top: `${leftPosition.y}px`,
-                      userSelect: "none",
-                      touchAction: "none",
-                    }}
-                    draggable="false"
-                  />
+                <div className="lg2:hidden">
+                  {isLoading && <Loader />}
+                  {children}
+                </div>
+                {/* Draggable WhatsApp and Telegram Images */}
+                {location.pathname === "/" && !sidebar && (
+                  <div className="fixed inset-0 pointer-events-none z-50 lg2:hidden">
+                    {/* WhatsApp Image */}
+                    <img
+                      // src={whatsapp}
+                      src={telegram}
+                      // alt="WhatsApp"
+                      alt="telegram"
+                      className="w-20 h-32  cursor-grab active:cursor-grabbing pointer-events-auto"
+                      // onMouseDown={(e) => handleMouseDown(e, "left")}
+                      // onTouchStart={(e) => handleTouchStart(e, "left")}
+                      style={{
+                        position: "fixed",
+                        left: `${leftPosition.x}px`,
+                        top: `${leftPosition.y}px`,
+                        userSelect: "none",
+                        touchAction: "none",
+                      }}
+                      draggable="false"
+                    />
 
-                  {/* Telegram Image */}
-                  {/* <img
+                    {/* Telegram Image */}
+                    {/* <img
                     // src="https://static.vecteezy.com/system/resources/previews/016/716/472/non_2x/telegram-icon-free-png.png"
                     src={telegram}
                     alt="Telegram"
@@ -568,23 +684,24 @@ export default function Layout({ children }) {
                     }}
                     draggable="false"
                   /> */}
-                </div>
-              )}
+                  </div>
+                )}
 
-              {!shouldHideFooter && (
-                <div className="sticky bottom-0 z-40">
-                  <div className="md:hidden">
-                    <Footer />
+                {!shouldHideFooter && (
+                  <div className="sticky bottom-0 z-40">
+                    <div className="md:hidden">
+                      <Footer />
+                    </div>
+                    <div className="hidden md:block lg:hidden">
+                      <Footer2 />
+                    </div>
                   </div>
-                  <div className="hidden md:block lg:hidden">
-                    <Footer2 />
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </ProfileProvider>
+          )}
+        </ProfileProvider>
+      </ScrollProvider>
     </>
   );
 }

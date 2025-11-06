@@ -65,10 +65,10 @@ export default function SignUp() {
          toast.error("Password and confirm password must be same.");
          return; // Exit the function if validation fails
        }
-       if(checkbox!==true){
-        toast.error("Accept the terms and condition.")
-        return
-       }
+      //  if(checkbox!==true){
+      //   toast.error("Accept the terms and condition.")
+      //   return
+      //  }
 
       // Create payload
       const payload = {
@@ -99,6 +99,7 @@ export default function SignUp() {
 
           const sendOtp = async (number) => {
             const res = await axios.post(`${apis.sendOtp}${number}`);
+            console.log(`${apis.sendOtp}${number}`);
             console.log(res?.data);
             if (res?.data?.error === 200 || res?.data?.error === "200") {
               toast.success(res?.data?.msg);
@@ -509,7 +510,7 @@ useEffect(() => {
           </div>
 
           {/* Terms */}
-          <div className="flex items-start gap-2 text-ssm mt-2">
+          {/* <div className="flex items-start gap-2 text-ssm mt-2">
             <input
               type="checkbox"
               className="mt-1"
@@ -530,7 +531,7 @@ useEffect(() => {
               </span>
               .
             </p>
-          </div>
+          </div> */}
 
           {/* Register Button */}
           <button
