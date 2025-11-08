@@ -329,7 +329,7 @@
 
 // export default GameSection;
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -337,13 +337,59 @@ import apis from "../../utils/apis";
 import { toast } from "react-toastify";
 import Loader from "../resuable_component/Loader/Loader";
 import { useProfile } from "../../Context/ProfileContext";
+import { useScroll } from "../../Context/ScrollContext";
 
-const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
+const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) => {
   const { profileDetails, setprofileDetails } = useProfile();
-
+  const { registerSection } = useScroll();
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [loading, setloading] = useState(false);
+  const sectionElement = useRef(null);
+   const sectionBrandId =
+     brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
+  // if(brand){
+  //   console.log("Get brand:", brand.brand_title);
+  //   console.log("Get Brand id:", brand.brand_id);
+  // }
+  // console.log("games in section:", gamesDetails);
+  // console.log("brand in section:", brand);
+  //  useEffect(() => {
+  //    if (brand?.brand_id && sectionElement.current) {
+  //      registerSection(brand.brand_id, sectionElement.current);
+  //    }
+  //  }, [brand?.brand_id, registerSection]);
+  // ✅ FIX: Proper registration with effect cleanup
+  // useEffect(() => {
+  //   const brandId = brand?.brand_id || gamesDetails?.brand_id;
+
+  //   if (brandId && sectionElement.current) {
+  //     // console.log(
+  //     //   "🔗 Registering GameSection:",
+  //     //   brandId,
+  //     //   sectionElement.current
+  //     // );
+  //     registerSection(brandId, sectionElement.current);
+
+  //     // ✅ Pass ref to parent if provided
+  //     if (sectionRef && typeof sectionRef === "function") {
+  //       sectionRef(sectionElement.current);
+  //     }
+  //   }
+
+  // }, [brand?.brand_id, gamesDetails?.brand_id, registerSection, sectionRef]);
+
+  // Register on mount
+  useEffect(() => {
+    if (sectionElement.current && sectionBrandId) {
+      registerSection(sectionBrandId, sectionElement.current);
+
+      // Also call the prop sectionRef if provided (for backward compatibility)
+      if (sectionRef && typeof sectionRef === "function") {
+        sectionRef(sectionElement.current);
+      }
+    }
+  }, [sectionBrandId, registerSection, sectionRef]);
 
   const scrollRow = (rowId, direction) => {
     const container = document.getElementById(rowId);
@@ -389,7 +435,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
       {items.map((game) => (
         <div
           key={game.id}
-          className="min-w-[80px] h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] lg2:min-w-[135px] lg2:min-h-[150px] rounded-[12px] overflow-hidden cursor-pointer"
+          className="min-w-[80px] min-h-[100px] xsm3:min-w-[105px] xsm3:h-[125px] lg2:min-w-[135px] lg2:min-h-[150px] rounded-[12px]  cursor-pointer"
           onClick={() => {
             navigate(game.route || "#");
             handleGameOpen(game.gameID);
@@ -400,7 +446,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
               <img
                 src={game.image || game.imgUrl || game.game_img}
                 alt={game.name}
-                className="w-full h-full object-cover rounded-[8px] border-3 border-red"
+                className="w-full h-full object-cover rounded-[8px] "
               />
             </>
           ) : (
@@ -426,19 +472,19 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
       const userId = localStorage.getItem("userId");
       const payload = {
         user_id: userId,
-        amount: profileDetails?.wallet || 0,
+        // amount: profileDetails?.wallet || 0,
+        amount: 10,
         game_id: id,
       };
       console.log("payload", payload);
       const res = await axios.post(apis.openGame, payload);
       console.log("game launch:", res?.data);
       if (res?.data?.status === 200) {
-        // setloading(false)
-        // const res2 =await axios.get(res?.data?.gameUrl);
         if (res?.data?.apiResponse?.data?.url) {
-          window.open(res?.data?.apiResponse?.data?.url, "_blank");
+          // window.open(res?.data?.apiResponse?.data?.url, "_blank");
+          window.location.href = res?.data?.apiResponse?.data?.url;
         } else {
-          toast.error("Something went wrong to play the game.");
+          toast.error(res?.data?.apiResponse?.error);
         }
       }
     } catch (error) {
@@ -455,16 +501,21 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
         <Loader />
       </div>
     );
+
+  // ✅ Get brand ID for the section
+  // const sectionBrandId = brand?.brand_id || gamesDetails?.brand_id || "unknown";
   return (
     <div
+      ref={sectionElement}
+      id={`brand-${sectionBrandId}`}
+      data-device={window.innerWidth <= 768 ? "mobile" : "desktop"}
       className="w-full px-4 py-3 rounded-[25px] bg-white mt-4"
-      // ref={sectionRef}
-      // ref={sectionRef}
-      ref={sectionRef}
-      id={`brand-${brand?.brand_id || "unknown"}`}
       style={{
-        scrollMarginTop: "120px", // ✅ Space for header
-        scrollMarginBottom: "20px",
+        scrollMarginTop: "120px",
+        minHeight: "200px",
+        display: "block",
+        visibility: "visible",
+        position: "relative",
       }}
     >
       {/* Header */}
@@ -530,7 +581,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
           filteredGames.map((game) => (
             <div
               key={game.id}
-              className="min-w-[85px] h-[115px] xsm3:min-w-[100px] lg2:w-[150px] xsm3:h-[125px] lg2:h-[150px] rounded-[12px] overflow-hidden cursor-pointer"
+              className="min-w-[85px] h-[115px] xsm3:min-w-[100px] lg2:w-[150px] xsm3:h-[125px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
               onClick={() => {
                 navigate(game.route || "#");
                 handleGameOpen(game.gameID);
@@ -540,7 +591,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef }) => {
                 <img
                   src={game.image || game.imgUrl || game.game_img}
                   alt={game.name}
-                  className="w-full h-full object-cover lg2:object-fill rounded-[8px] border-3 border-red"
+                  className="w-full h-full object-cover lg2:object-fill rounded-[8px] "
                 />
               ) : (
                 <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]" />

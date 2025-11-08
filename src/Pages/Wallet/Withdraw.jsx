@@ -24,6 +24,7 @@ export default function Withdraw() {
   const [selectedPayment, setSelectedPayment] = useState("manual");
   const [loader,setLoader]=useState(false)
   const [amount, setAmount] = useState("");
+  const [usdtAmount, setUsdtAmount] = useState("");
   const [upiId, setUpiId] = useState("");
       const [selectedCardId, setSelectedCardId] = useState(null);
       const [slidesPerView, setSlidesPerView] = useState(1.2);
@@ -113,8 +114,8 @@ const defaultImages = [image1, image2, image3];
       const payload = {
         user_id: localStorage.getItem("userId"),
         usdt_wallet_address_id: selectedCardId,
-        amount_inr: amount,
-        amount: amount / profileDetails?.withdraw_conversion_rate,
+        amount_inr: profileDetails?.withdraw_conversion_rate * usdtAmount,
+        amount: usdtAmount,
         type: 0,
       };
       console.log(payload)
@@ -145,7 +146,7 @@ const defaultImages = [image1, image2, image3];
 
   const cryptoMin=940
   const cryptoMax=188000
-  const manualMin=200
+  const manualMin=500
   const manualMax = 1000000
 
     const handleSelectCard = (card) => {
@@ -991,18 +992,39 @@ const defaultImages = [image1, image2, image3];
           <h2 className="text-black font-semibold mb-3">
             Amount<span className="text-red-500">*</span>
           </h2>
-          <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
-            <span className="text-gray-500">₹</span>
-            <input
-              type="number"
-              placeholder="Enter Amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full outline-none text-gray-700 font-normal"
-            />
-            <span className="text-black font-medium">INR</span>
-          </div>
-          {selectedPayment === "manual" && (
+          {selectedPayment !== "crypto" && (
+            <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
+              <span className="text-gray-500">₹</span>
+              <input
+                type="number"
+                placeholder="Enter Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full outline-none text-gray-700 font-normal"
+              />
+              <span className="text-black font-medium">INR</span>
+            </div>
+          )}
+          {selectedPayment == "crypto" && (
+            <div className="items-center gap-2  rounded-[8px] ">
+              <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
+                <span className="text-gray-500">₮</span>
+                <input
+                  type="number"
+                  placeholder="Enter Amount"
+                  value={usdtAmount}
+                  onChange={(e) => setUsdtAmount(e.target.value)}
+                  className="w-full outline-none text-gray-700 font-normal"
+                />
+                <span className="text-black font-medium">USDT</span>
+              </div>
+              <p className="text-sm text-lightGray mt-1 font-bold">
+                Amount In INR{" "}
+                {profileDetails?.withdraw_conversion_rate * usdtAmount}
+              </p>
+            </div>
+          )}
+          {selectedPayment !== "manual" && (
             <p className="text-ssm text-lightGray mt-1 font-semibold">
               Min {manualMin} - Max {manualMax}
             </p>
@@ -1037,6 +1059,8 @@ const defaultImages = [image1, image2, image3];
               ))}
           </div>
         </div>
+
+        {/* usdt account  */}
 
         {/* Terms Checkbox */}
         {/* <div className="flex items-center gap-2">
@@ -1115,7 +1139,10 @@ const defaultImages = [image1, image2, image3];
               // type="submit"
               onClick={handleUsdtPayment}
               className={`w-full  text-white font-medium py-3 rounded-md ${
-                amount >= cryptoMin && amount <= cryptoMax
+                profileDetails?.withdraw_conversion_rate * usdtAmount >=
+                  cryptoMin &&
+                profileDetails?.withdraw_conversion_rate * usdtAmount <=
+                  cryptoMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
               } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}

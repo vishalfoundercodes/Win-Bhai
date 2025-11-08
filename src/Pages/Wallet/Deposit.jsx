@@ -8,10 +8,13 @@ import axios from "axios";
 import apis from "../../utils/apis";
 import { toast } from "react-toastify";
 import Loader from "../resuable_component/Loader/Loader"
+import { useProfile } from "../../Context/ProfileContext";
 export default function DepositPage() {
   const [loading, setLoading]=useState(false)
   const [selectedPayment, setSelectedPayment] = useState(1);
   const [amount, setAmount] = useState("");
+  const [usdtAmount,setusdtAmout]=useState("")
+  const {profileDetails}=useProfile()
   
 const navigate = useNavigate()
   const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
@@ -26,7 +29,7 @@ const navigate = useNavigate()
 
   const options = ["Option 1", "Option 2", "Option 3"];
     const Crypto = [ "USDT BEP20"];
-      const [language, setLanguage] = useState("");
+      const [language, setLanguage] = useState("USDT BEP20");
       const [openDropdown, setOpenDropdown] = useState(null); //
 
       const [paymentOptions,setPaymentOptons]=useState([])
@@ -80,18 +83,18 @@ const navigate = useNavigate()
       }
       const handlecrypto = async () => {
         try {
-          if (amount < minAmount) {
-            toast.warn(`Minimum amount ${minAmount}`);
+          if (usdtAmount < cryptoMin) {
+            toast.warn(`Minimum amount ${cryptoMin}`);
             return;
           }
-          if (amount > maxAmount) {
-            toast.warn(`Maximum amount ${maxAmount}`);
+          if (usdtAmount > cryptoMax) {
+            toast.warn(`Maximum amount ${cryptoMax}`);
             return;
           }
           setLoading(true);
           const payload = {
             user_id: localStorage.getItem("userId"),
-            amount: amount,
+            amount: usdtAmount,
             type: "0",
           };
           console.log(payload)
@@ -104,11 +107,13 @@ const navigate = useNavigate()
           else if(res?.data?.status===200){
             toast.success(res?.data?.message)
             if(res?.data?.data?.status_url){
-              window.open(
-                res.data.data.status_url,
-                "_blank",
-                "noopener,noreferrer"
-              );
+              // window.open(
+              //   res.data.data.status_url,
+              //   "_blank",
+              //   "noopener,noreferrer"
+              // );
+              window.location.href = res.data.data.status_url;
+
             }
           }
           setLoading(false);
@@ -136,7 +141,8 @@ const navigate = useNavigate()
         }
       }
 
-   
+     const cryptoMin = 10;
+     const cryptoMax = 1880000;
       const minAmount = 100;
       const maxAmount = 100000;
 
@@ -615,6 +621,7 @@ const navigate = useNavigate()
                     }}
                     onClick={() => {
                       setLanguage(lang);
+                      console.log("lang", lang);
                       setOpenDropdown(null);
                     }}
                   >
@@ -637,38 +644,79 @@ const navigate = useNavigate()
         )}
 
         {/* Amount Section */}
-        <div className="rounded-[8px] shadow p-4 lg2:px-6 bg-white">
-          <h2 className="text-black font-semibold mb-3">
-            Amount<span className="text-red-500">*</span>
-          </h2>
-          <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
-            <span className="text-gray-500">₹</span>
-            <input
-              type="number"
-              placeholder="Enter Amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full outline-none text-gray-700 font-normal"
-            />
-            <span className="text-black font-medium">INR</span>
-          </div>
-          <p className="text-ssm text-lightGray mt-1 font-semibold">
-            Min {minAmount} - Max {maxAmount}
-          </p>
+        {selectedPayment !== 3 && (
+          <div className="rounded-[8px] shadow p-4 lg2:px-6 bg-white">
+            <h2 className="text-black font-semibold mb-3">
+              Amount<span className="text-red-500">*</span>
+            </h2>
+            <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
+              <span className="text-gray-500">₹</span>
+              <input
+                type="number"
+                placeholder="Enter Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full outline-none text-gray-700 font-normal"
+              />
+              <span className="text-black font-medium">INR</span>
+            </div>
+            <p className="text-ssm text-lightGray mt-1 font-semibold">
+              Min {minAmount} - Max {maxAmount}
+            </p>
 
-          {/* Quick Amount Buttons */}
-          <div className="grid grid-cols-3 gap-2 mt-3">
-            {quickAmounts.map((val, idx) => (
-              <button
-                key={idx}
-                onClick={() => setAmount(val)}
-                className="bg-red text-white rounded-[8px] py-2 font-semibold cursor-pointer"
-              >
-                +{val.toLocaleString()}
-              </button>
-            ))}
+            {/* Quick Amount Buttons */}
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {quickAmounts.map((val, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setAmount(val)}
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold cursor-pointer"
+                >
+                  +{val.toLocaleString()}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {selectedPayment == 3 && (
+          <div className="rounded-[8px] shadow p-4 lg2:px-6 bg-white">
+            <h2 className="text-black font-semibold mb-3">
+              Amount<span className="text-red-500">*</span>
+            </h2>
+            <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
+              <span className="text-gray-500">₮</span>
+              <input
+                type="number"
+                placeholder="Enter Amount"
+                value={usdtAmount}
+                onChange={(e) => setusdtAmout(e.target.value)}
+                className="w-full outline-none text-gray-700 font-normal"
+              />
+              <span className="text-black font-medium">USDT</span>
+            </div>
+            <p className="text-sm text-lightGray mt-1 font-bold">
+              Amount In INR{" "}
+              {profileDetails?.withdraw_conversion_rate * usdtAmount}
+            </p>
+            <p className="text-ssm text-lightGray mt-1 font-semibold">
+              Min {cryptoMin} - Max {cryptoMax}
+            </p>
+
+            {/* Quick Amount Buttons */}
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {quickAmounts.map((val, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setusdtAmout(val)}
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold cursor-pointer"
+                >
+                  +{val.toLocaleString()}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
         {/* next for crypto */}
         {/* Submit Button */}
         {selectedPayment === 3 && (

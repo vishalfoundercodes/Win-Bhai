@@ -25,28 +25,47 @@ import BG19 from "../../../assets/JPEG/Background+Shadow-19.jpg";
 import BG20 from "../../../assets/JPEG/Background+Shadow-20.jpg";
 import BG from "../../../assets/JPEG/Background+Shadow.jpg";
 import { useScroll } from "../../../Context/ScrollContext";
+import { useNavigate } from "react-router-dom";
 const categories = [
-  { name: "Crash Games 1",brandId: "78", icon: "🎮", image: BG },
-  { name: "Crash Games", icon: "🎮", image: BG1 },
-  { name: "Crash Games", icon: "🎮", image: BG2 },
-  { name: "Crash Games", icon: "🎮", image: BG3 },
-  { name: "Crash Games", icon: "🎮", image: BG4 },
-  { name: "Crash Games", icon: "🎮", image: BG5 },
-  { name: "Crash Games", icon: "🎮", image: BG6 },
-  { name: "Crash Games", icon: "🎮", image: BG7 },
-  { name: "Crash Games", icon: "🎮", image: BG8 },
-  { name: "Crash Games", icon: "🎮", image: BG9 },
-  { name: "Crash Games", icon: "🎮", image: BG10 },
-  { name: "Crash Games", icon: "🎮", image: BG11 },
-  { name: "Crash Games", icon: "🎮", image: BG12 },
-  { name: "Crash Games", icon: "🎮", image: BG13 },
-  { name: "Crash Games", icon: "🎮", image: BG14 },
-  { name: "Crash Games", icon: "🎮", image: BG15 },
-  { name: "Crash Games", icon: "🎮", image: BG16 },
-  { name: "Crash Games", icon: "🎮", image: BG17 },
-  { name: "Crash Games", icon: "🎮", image: BG18 },
-  { name: "Crash Games", icon: "🎮", image: BG19 },
-  { name: "Crash Games", icon: "🎮", image: BG20 },
+  { name: "Card games", icon: "🎮", image: BG, brandId: "78", id: "casino" },
+  {
+    name: "Crash Games",
+    icon: "🎮",
+    image: BG1,
+    brandId: "104",
+    id: "CrashGames",
+  },
+  { name: "Evolution", icon: "🎮", image: BG2, brandId: "58", id: "Evolution" },
+  { name: "Mac88", icon: "🎮", image: BG3, id: "Mac88" },
+  { name: "Live Cassino", icon: "🎮", image: BG4, brandId: "78", id: "casino" },
+  { name: "Fishing games", icon: "🎮", image: BG5, id: "FishingGames" },
+  { name: "Mines", icon: "🎮", image: BG6, brandId: "104", id: "Mines" },
+  { name: "Jilli", icon: "🎮", image: BG7, brandId: "49", id: "Jili" },
+  { name: "Ezugi", icon: "🎮", image: BG8, brandId: "78", id: "Ezugi" },
+  { name: "PG Games", icon: "🎮", image: BG9, brandId: "123" },
+  { name: "Aura", icon: "🎮", image: BG10 },
+  { name: "Cassino", icon: "🎮", image: BG11, brandId: "78", id: "casino" },
+  {
+    name: "Turbo Games",
+    icon: "🎮",
+    image: BG12,
+    brandId: "100",
+    id: "TurboGames",
+  },
+  {
+    name: "Color Prediction",
+    icon: "🎮",
+    image: BG13,
+    brandId: "2",
+    id: "ColorPrediction",
+  },
+  { name: "Sport book ", icon: "🎮", image: BG14, id: "SportsBook" },
+  { name: "Slot Games", icon: "🎮", image: BG15, brandId: "1", id: "slot" },
+  { name: "Fun Games", icon: "🎮", image: BG16, brandId: "49", id: "FunGames" },
+  { name: "Plinko", icon: "🎮", image: BG17, brandId: "57", id: "Plinko" },
+  { name: "Spribe", icon: "🎮", image: BG18, brandId: "57", id: "Spribe" },
+  { name: "Inout", icon: "🎮", image: BG19, brandId: "112" },
+  { name: "MiniGames", icon: "🎮", image: BG20, brandId: "104", id: "Mines" },
   // { name: "Live Casinos", icon: "👑", image: cardGames },
   // { name: "Evolution", icon: "🍃", image: crashGames },
   // { name: "Card Games", icon: "🃏", image: evolution },
@@ -84,8 +103,17 @@ const brandGames = [
     ]
   },
 ];
-export default function GameCategories({ onCategoryClick }) {
+export default function GameCategories() {
   const { scrollToSection } = useScroll();
+  const navigate = useNavigate();
+    const handleClick=(id)=>{
+// setActive(id)
+if(id=="home"){
+navigate("/");
+}
+else{
+navigate(`/game/${id}`);
+}}
   // 2 rows banane ke liye split karenge
   const firstRow = categories.filter((_, i) => i % 2 === 0);
   const secondRow = categories.filter((_, i) => i % 2 !== 0);
@@ -95,8 +123,11 @@ export default function GameCategories({ onCategoryClick }) {
       {row.map((cat, i) => (
         <div
           key={i}
-          onClick={() => scrollToSection(cat.brandId)}
-          className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-38 xsm4:w-40 xsm3:w-42 xxs:w-48  flex-shrink-0"
+          onClick={() => {
+            // scrollToSection(cat.brandId)
+            handleClick(cat.id)
+          }}
+          className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-38 xsm4:w-40 xsm3:w-42 xxs:w-48  flex-shrink-0 cursor-pointer"
         >
           {/* Background image */}
           <img

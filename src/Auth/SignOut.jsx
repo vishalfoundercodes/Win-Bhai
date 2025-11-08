@@ -3,6 +3,29 @@ import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 export default function SignOutModal({ isOpen, onClose }) {
   if (!isOpen) return null;
+   const FIRST_TIME_LOAD_KEY = "first_time_load";
+    const allowed_games = [
+      "112",
+      "49",
+      "52",
+      "50",
+      "123",
+      "58",
+      "57",
+      "107",
+      "104",
+      "89",
+      "82",
+      "72",
+      "46",
+      "100",
+      "78",
+      "59",
+      "112",
+    ];
+      const BRAND_DATA_PREFIX = "brand_data_";
+      const BANNER_DATA_KEY = "banner_data";
+      const SPONSER_DATA_KEY = "sponser_data";
     // Function to clear cache manually (Optional - for testing/admin)
     const clearCache = () => {
       localStorage.removeItem(FIRST_TIME_LOAD_KEY);

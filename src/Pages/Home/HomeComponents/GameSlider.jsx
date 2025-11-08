@@ -12,11 +12,8 @@ import sidebarImage9 from "../../../assets/GameIcons/aviator.png";
 import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useScroll } from "../../../Context/ScrollContext";
 
-export default function GameSlider({ isOpen, onClose, profileDetails }) {
-  const [selected, setSelected] = useState(null);
-
-  const navigate = useNavigate();
   const Cricket = ({ active }) => (
     <svg
       width="24"
@@ -269,26 +266,77 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
       />
     </svg>
   );
-  const games = [
-    { id: 1, name: "Cricket", image: Cricket, route: "" },
-    { id: 2, name: "Aviator", image: aviator, route: "" },
-    { id: 3, name: "Card Games", image: CardGames, route: "" },
-    { id: 4, name: "Live Casino", image: LiveCassino, route: "" },
-    { id: 5, name: "Trending Games", image: TrendingGames, route: "" },
-    { id: 6, name: "Football", image: Football, route: "" },
-    { id: 7, name: "Tennis", image: Tennis, route: "" },
-    { id: 8, name: "Slot Games", image: SlotGames, route: "" },
-    { id: 9, name: "Affiliate", image: Affiliate, route: "" },
-    { id: 10, name: "Profile", image: Profile, route: "/Info" },
-    { id: 11, name: "Language Change", image: LanguageChange, route: "" },
-    {
-      id: 12,
-      name: "Download APK",
-      image: DownloadAPK,
-      route: "/downloadAPK",
-    },
-    { id: 13, name: "Logout", image: Logout, route: "" },
-  ];
+
+export default function GameSlider({ isOpen, onClose, profileDetails }) {
+  const [selected, setSelected] = useState(null);
+ const { scrollToSection } = useScroll();
+  const navigate = useNavigate();
+
+   const games = [
+     { id: 1, name: "Cricket", image: Cricket, brandId: "46", route: "" },
+     { id: 2, name: "Aviator", image: aviator, route: "", brandId: "2" },
+     { id: 3, name: "Card Games", image: CardGames, route: "", brandId: "78" },
+     {
+       id: 4,
+       name: "Live Casino",
+       image: LiveCassino,
+       route: "",
+       brandId: "58",
+     },
+     {
+       id: 5,
+       name: "Trending Games",
+       image: TrendingGames,
+       route: "",
+       brandId: "2",
+     },
+     { id: 6, name: "Football", image: Football, route: "", brandId: "46" },
+     { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "" },
+     { id: 8, name: "Slot Games", image: SlotGames, route: "", brandId: "1" },
+     { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
+     { id: 10, name: "Profile", image: Profile, route: "/Info" },
+     { id: 11, name: "Language Change", image: LanguageChange, route: "" },
+     {
+       id: 13,
+       name: "Download Apk",
+       image: DownloadAPK,
+       route: "/downloadAPK",
+     },
+     { id: 14, name: "Logout", image: Logout, route: "" },
+   ];
+
+   // Sample brand games data
+   const brandGames = [
+     {
+       brand: { brand_id: "78", brand_title: "Crash Games 1", logo: "🚀" },
+       games: [
+         { id: 1, name: "Aviator", image: "🛩️" },
+         { id: 2, name: "Rocket", image: "🚀" },
+         { id: 3, name: "JetX", image: "✈️" },
+       ],
+     },
+     {
+       brand: { brand_id: "49", brand_title: "Jili Games", logo: "🎮" },
+       games: [
+         { id: 4, name: "Fortune Tree", image: "🌳" },
+         { id: 5, name: "Lucky Slots", image: "🎰" },
+       ],
+     },
+     {
+       brand: { brand_id: "57", brand_title: "Slot Masters", logo: "🎰" },
+       games: [
+         { id: 6, name: "Mega Spin", image: "💎" },
+         { id: 7, name: "Wild West", image: "🤠" },
+       ],
+     },
+     {
+       brand: { brand_id: "52", brand_title: "Card Pro", logo: "🃏" },
+       games: [
+         { id: 8, name: "Poker", image: "♠️" },
+         { id: 9, name: "Blackjack", image: "♥️" },
+       ],
+     },
+   ];
 
   return (
     <div
@@ -373,10 +421,84 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
             ? "bg-[#FFE1E1] text-red" // active row background
             : "hover:bg-gray-100 text-darkGray" // default row background
         }`}
+                // onClick={() => {
+                //   setSelected(game.id);
+                //   navigate(game.route);
+                //     if (game.brandId) {
+                //       scrollToSection(game.brandId);
+                //       console.log("Clicked brand:", game.brandId);
+                //     }
+                // }}
                 onClick={() => {
                   setSelected(game.id);
                   navigate(game.route);
+                  if (game.brandId) {
+                    console.log(
+                      "🔍 Searching for element:",
+                      `brand-${game.brandId}`
+                    );
+                    const element = document.getElementById(
+                      `brand-${game.brandId}`
+                    );
+                    console.log("📍 Found element:", element);
+                    scrollToSection(game.brandId);
+                  }
                 }}
+                // onClick={() => {
+                //   setSelected(game.id);
+                //   navigate(game.route);
+
+                //   if (game.brandId) {
+                //     console.log(
+                //       "🔍 Searching for element:",
+                //       `brand-${game.brandId}`
+                //     );
+
+                //     // ✅ Close sidebar first
+                //     onClose(); // Sidebar close karo
+
+                //     // ✅ Wait for sidebar animation to complete
+                //     setTimeout(() => {
+                //       const isMobile = window.innerWidth < 1024;
+
+                //       // ✅ Try to find the element
+                //       const target = document.getElementById(
+                //         `brand-${game.brandId}`
+                //       );
+                //       console.log("📍 Found element:", target);
+                //       console.log(
+                //         "👁️ Is visible:",
+                //         target?.offsetParent !== null
+                //       );
+
+                //       if (target && target.offsetParent !== null) {
+                //         // ✅ Element visible hai to scroll karo
+                //         if (isMobile) {
+                //           // Mobile: Direct scrollIntoView use karo
+                //           target.scrollIntoView({
+                //             behavior: "smooth",
+                //             block: "start",
+                //             inline: "nearest",
+                //           });
+
+                //           // Add highlight effect
+                //           setTimeout(() => {
+                //             target.style.border = "2px solid #ef4444";
+                //             setTimeout(
+                //               () => (target.style.border = "none"),
+                //               1000
+                //             );
+                //           }, 500);
+                //         } else {
+                //           // Desktop: Context wala use karo
+                //           scrollToSection(game.brandId);
+                //         }
+                //       } else {
+                //         console.warn("⚠️ Element not found or hidden!");
+                //       }
+                //     }, 300); // Sidebar close hone ka wait karo
+                //   }
+                // }}
               >
                 {/* Keep same circle size always */}
                 <div

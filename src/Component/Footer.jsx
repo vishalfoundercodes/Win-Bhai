@@ -3,8 +3,11 @@ import { Home, Trophy, BookOpen, Dice5, CircleDot } from "lucide-react"; // temp
 import { useState } from "react";
 import DepositBonusModal from "../Pages/ReusableComponent/FirstDepositBonus";
 import { useNavigate } from "react-router-dom";
+import { useScroll } from "../Context/ScrollContext";
 export default function Footer() {
   const [isOpen, setIsOpen] = useState(false);
+  const { scrollToSection } = useScroll();
+  const game="46"
   const navigate=useNavigate()
   return (
     <div className="sticky bottom-0 z-50 left-0 w-full">
@@ -21,7 +24,14 @@ export default function Footer() {
         <div
           className="flex flex-col items-center text-white text-sm"
           // onClick={() => setIsOpen(true)}
-          onClick={() => navigate("/game/sports")}
+          onClick={() => {
+            if (window.location.pathname !== "/") {
+              navigate("/"); // go to homepage first
+              setTimeout(() => scrollToSection("112"), 800); // scroll after render
+            } else {
+              scrollToSection("112");
+            }
+          }}
         >
           {/* <CircleDot className="w-6 h-6" /> */}
           <svg
@@ -63,8 +73,9 @@ export default function Footer() {
         </div>
 
         {/* Home (now inside flex flow, lifted with negative margin) */}
-        <div className="flex flex-col items-center -mt-6"
-        onClick={()=>navigate("/")}
+        <div
+          className="flex flex-col items-center -mt-6"
+          onClick={() => navigate("/")}
         >
           <div className="bg-white rounded-full p-3 shadow-lg">
             <Home className="w-10 h-10 text-[#C10932]" />

@@ -177,204 +177,33 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useScroll } from "../../Context/ScrollContext";
 
-export default function Home() {
-  const { profileDetails, setprofileDetails } = useProfile();
-  const [allGames, setAllGames] = useState([]);
-  const [slotGames, setSlotGames] = useState([]);
-  const [hotGames, setHotGames] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
-  const [onClose, setonClose] = useState(true);
-  const { registerSection, activeSection } = useScroll();
 
-  const games = [
-    { id: 1, name: "AviaFly", image: aviaFly },
-    { id: 2, name: "Aviator", image: aviator1 },
-    { id: 3, name: "AviaFly", image: aviaFly },
-    { id: 4, name: "Aviator", image: aviator1 },
-    { id: 5, name: "AviaFly", image: aviaFly },
-    { id: 6, name: "Aviator", image: aviator1 },
-    { id: 7, name: "AviaFly", image: aviaFly },
-    { id: 8, name: "Aviator", image: aviator1 },
-    { id: 9, name: "AviaFly", image: aviaFly },
-    { id: 10, name: "Aviator", image: aviator1 },
-    { id: 11, name: "AviaFly", image: aviaFly },
-    { id: 12, name: "Aviator", image: aviator1 },
-    { id: 13, name: "AviaFly", image: aviaFly },
-    { id: 14, name: "Aviator", image: aviator1 },
-  ];
-  const games4 = [
-    { id: 1, name: "AviaFly", image: "" },
-    { id: 2, name: "Aviator", image: "" },
-    { id: 3, name: "AviaFly", image: "" },
-    { id: 4, name: "Aviator", image: "" },
-    { id: 5, name: "AviaFly", image: "" },
-    { id: 6, name: "Aviator", image: "" },
-    { id: 7, name: "AviaFly", image: "" },
-    { id: 8, name: "Aviator", image: "" },
-    { id: 9, name: "AviaFly", image: "" },
-    { id: 10, name: "Aviator", image: "" },
-  ];
-  const trendingGames = [
-    {
-      id: 1,
-      name: "Win Go",
-      bgimage: alllotterybg,
-      image: alllotterybg,
-      route: "/lottery/wingo",
-      description1: "Guess Number",
-      description2: "Green/Red/Violet to win",
-      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
-    },
-    {
-      id: 2,
-      name: "Avaitor",
-      bgimage: aviatornew,
-      image: aviatornew,
-      route: "/aviator",
-      description1: "Guess Number",
-      description2: "Green/Red/Violet to win",
-      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
-    },
-    {
-      id: 3,
-      name: "Chicken Road Game",
-      bgimage: chickenRoadImage,
-      image: chickenRoadImage,
-      route: "/chickenRoadGame",
-      description1: "Guess Number",
-      description2: "Green/Red/Violet to win",
-      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
-    },
-  ];
+  // const [activeSection, setActiveSection] = useState(null);
 
-  const games2 = [
-    {
-      id: 1,
-      name: "Slot Games",
-      image: slotGames,
-      icon: slotGamesIcon,
-      bg: "bg-gradient-to-r from-[#A21518] via-[#880100] to-[#4B0102]",
-    },
-    {
-      id: 2,
-      name: "Aura",
-      image: aura,
-      icon: auraIcon,
-      bg: "bg-gradient-to-r from-[#B980CA] via-[#86429C] to-[#631877]",
-    },
-    {
-      id: 3,
-      name: "Fishing Games",
-      image: finishingGames,
-      icon: fishingIcon,
-      bg: "bg-gradient-to-r from-[#5DF3ED] via-[#00C0F3] to-[#0F9AC3]",
-    },
-    {
-      id: 4,
-      name: "Game Show",
-      image: gameshow,
-      icon: gameshowIcon,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-  ];
+  // Function to scroll to specific brand section
+  // const scrollToSection = (brandId) => {
+  //   const sectionRef = sectionRefs.current[brandId];
+  //   if (sectionRef) {
+  //     setActiveSection(brandId);
 
-  const games3 = [
-    {
-      id: 1,
-      name: "cricket",
-      image: sidebarImage1,
-      icon: sidebarImage1,
-      bg: "bg-gradient-to-r from-[#A21518] via-[#880100] to-[#4B0102]",
-    },
-    {
-      id: 2,
-      name: "Politics",
-      image: sidebarImage2,
-      icon: sidebarImage2,
-      bg: "bg-gradient-to-r from-[#B980CA] via-[#86429C] to-[#631877]",
-    },
-    {
-      id: 3,
-      name: "tennis",
-      image: sidebarImage3,
-      icon: sidebarImage3,
-      bg: "bg-gradient-to-r from-[#5DF3ED] via-[#00C0F3] to-[#0F9AC3]",
-    },
-    {
-      id: 4,
-      name: "football",
-      image: sidebarImage4,
-      icon: sidebarImage4,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 5,
-      name: "Horse Racing",
-      image: sidebarImage5,
-      icon: sidebarImage5,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 6,
-      name: "Card Games",
-      image: sidebarImage6,
-      icon: sidebarImage6,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 7,
-      name: "Sports",
-      image: sidebarImage7,
-      icon: sidebarImage7,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 8,
-      name: "Live Cassino",
-      image: sidebarImage8,
-      icon: sidebarImage8,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 9,
-      name: "Aviator",
-      image: sidebarImage9,
-      icon: sidebarImage9,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-    {
-      id: 10,
-      name: "Slot Games",
-      image: sidebarImage10,
-      icon: sidebarImage10,
-      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
-    },
-  ];
+  //     // Smooth scroll with offset for fixed headers
+  //     sectionRef.scrollIntoView({
+  //       behavior: "smooth",
+  //       block: "start",
+  //     });
 
-  const userId = localStorage.getItem("userId");
+  //     // Highlight effect
+  //     setTimeout(() => {
+  //       sectionRef.style.transform = "scale(1.02)";
+  //       sectionRef.style.transition = "transform 0.3s ease";
+  //       setTimeout(() => {
+  //         sectionRef.style.transform = "scale(1)";
+  //       }, 300);
+  //     }, 500);
+  //   }
+  // };
 
-  const allowed_games = [
-    "112",
-    "49",
-    "52",
-    "50",
-    "123",
-    "58",
-    "57",
-    "107",
-    "104",
-    "89",
-    "82",
-    "72",
-    "46",
-    "100",
-    "78",
-    "59",
-  ];
-
-  const [brandGames, setBrandGames] = useState([]);
-  const [loading, setLoading] = useState(true);
-  //  const [slotGames, setSlotGames] = useState([]);
+    //  const [slotGames, setSlotGames] = useState([]);
   // Function to fetch brands and games
   // useEffect(() => {
   //   const fetchBrandsAndGames = async () => {
@@ -613,15 +442,7 @@ export default function Home() {
   // Helper function to add delay between requests
 
   // LocalStorage Keys
-  const FIRST_TIME_LOAD_KEY = "first_time_load";
-  const BRAND_DATA_PREFIX = "brand_data_";
-  const BANNER_DATA_KEY = "banner_data";
-  const SPONSER_DATA_KEY = "sponser_data";
-
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  const [banner, setbanner] = useState(null);
-  const [sponser, setSponser] = useState(null);
+ 
   // Your useEffect - Replace your existing one with this
   // useEffect(() => {
   //   const fetchBrandsAndGames = async () => {
@@ -796,6 +617,140 @@ export default function Home() {
   //   fetchBrandsAndGames();
   // }, []);
 
+export default function Home() {
+  const { profileDetails, setprofileDetails } = useProfile();
+  const [allGames, setAllGames] = useState([]);
+  const [slotGames, setSlotGames] = useState([]);
+  const [hotGames, setHotGames] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [onClose, setonClose] = useState(true);
+  const { registerSection, activeSection } = useScroll();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
+  const games4 = [
+    { id: 1, name: "AviaFly", image: "" },
+    { id: 2, name: "Aviator", image: "" },
+    { id: 3, name: "AviaFly", image: "" },
+    { id: 4, name: "Aviator", image: "" },
+    { id: 5, name: "AviaFly", image: "" },
+    { id: 6, name: "Aviator", image: "" },
+    { id: 7, name: "AviaFly", image: "" },
+    { id: 8, name: "Aviator", image: "" },
+    { id: 9, name: "AviaFly", image: "" },
+    { id: 10, name: "Aviator", image: "" },
+  ];
+  const trendingGames = [
+    {
+      id: 1,
+      name: "Win Go",
+      bgimage: alllotterybg,
+      image: alllotterybg,
+      route: "/lottery/wingo",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
+    {
+      id: 2,
+      name: "Avaitor",
+      bgimage: aviatornew,
+      image: aviatornew,
+      route: "/aviator",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
+    {
+      id: 3,
+      name: "Chicken Road Game",
+      bgimage: chickenRoadImage,
+      image: chickenRoadImage,
+      route: "/chickenRoadGame",
+      description1: "Guess Number",
+      description2: "Green/Red/Violet to win",
+      bgColor: "bg-gradient-to-l from-[#ff9a8e] to-[#f95959]",
+    },
+  ];
+
+  const games2 = [
+    {
+      id: 1,
+      name: "Slot Games",
+      image: slotGames,
+      icon: slotGamesIcon,
+      bg: "bg-gradient-to-r from-[#A21518] via-[#880100] to-[#4B0102]",
+    },
+    {
+      id: 2,
+      name: "Aura",
+      image: aura,
+      icon: auraIcon,
+      bg: "bg-gradient-to-r from-[#B980CA] via-[#86429C] to-[#631877]",
+    },
+    {
+      id: 3,
+      name: "Fishing Games",
+      image: finishingGames,
+      icon: fishingIcon,
+      bg: "bg-gradient-to-r from-[#5DF3ED] via-[#00C0F3] to-[#0F9AC3]",
+    },
+    {
+      id: 4,
+      name: "Game Show",
+      image: gameshow,
+      icon: gameshowIcon,
+      bg: "bg-gradient-to-r from-[#025963] via-[#2894A1] to-[#277F8A]",
+    },
+  ];
+
+
+  const userId = localStorage.getItem("userId");
+
+  const allowed_games = [
+    "112",
+    "49",
+    "52",
+    "50",
+    "123",
+    "58",
+    "57",
+    "107",
+    "104",
+    "89",
+    "82",
+    "72",
+    "46",
+    "100",
+    "78",
+    "59"
+  ];
+
+  const slotDetails = { brand_id: "1" };
+  const trendingDetails = { brand_id: "2" };
+  const [brandGames, setBrandGames] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+ 
+  const FIRST_TIME_LOAD_KEY = "first_time_load";
+  const BRAND_DATA_PREFIX = "brand_data_";
+  const BANNER_DATA_KEY = "banner_data";
+  const SPONSER_DATA_KEY = "sponser_data";
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  const [banner, setbanner] = useState(null);
+  const [sponser, setSponser] = useState(null);
+
   useEffect(() => {
     const fetchBrandsAndGames = async () => {
       try {
@@ -825,9 +780,9 @@ export default function Home() {
           allowed_games.includes(brand.brand_id)
         );
 
-        console.log(
-          `📋 Processing ${filteredBrands.length} brands sequentially...`
-        );
+        // console.log(
+        //   `📋 Processing ${filteredBrands.length} brands sequentially...`
+        // );
 
         // Step 2: Fetch games for each allowed brand SEQUENTIALLY
         const brandGamesData = [];
@@ -840,17 +795,17 @@ export default function Home() {
 
           while (retryCount < maxRetries) {
             try {
-              console.log(
-                `Fetching games for brand ${brand.brand_id} (${i + 1}/${
-                  filteredBrands.length
-                })`
-              );
+              // console.log(
+              //   `Fetching games for brand ${brand.brand_id} (${i + 1}/${
+              //     filteredBrands.length
+              //   })`
+              // );
 
               const gameRes = await axios.get(
                 `${configModalWinBhai}brand-details/${brand.brand_id}`
               );
-              console.log("Game Data for Brand ID:", brand.brand_id);
-              console.log("Games:", gameRes?.data?.data?.games);
+              // console.log("Game Data for Brand ID:", brand.brand_id);
+              // console.log("Games:", gameRes?.data?.data?.games);
 
               // Extract games data
               const games = gameRes?.data?.data?.games || [];
@@ -880,13 +835,13 @@ export default function Home() {
               // Filter out "slot" category games for brand_id 49
               if (brand.brand_id === "49") {
                 const slotCategoryGames = games.filter(
-                  (game) => game.category === "slot"
+                  (game) => game.category == "Slots"
                 );
                 const hotGamesFiltered = games.filter(
                   (game) => game.category === "fish"
                 );
                 const nonSlotGames = games.filter(
-                  (game) => game.category !== "slot"
+                  (game) => game.category != "Slots"
                 );
 
                 setSlotGames((prevSlotGames) => [
@@ -918,13 +873,13 @@ export default function Home() {
                 brandStorageKey,
                 JSON.stringify(brandDataToStore)
               );
-              console.log(
-                `💾 Brand ${brand.brand_id} data stored in localStorage ✅`
-              );
+              // console.log(
+              //   `💾 Brand ${brand.brand_id} data stored in localStorage ✅`
+              // );
 
-              console.log(
-                `✓ Successfully fetched games for brand ${brand.brand_id}`
-              );
+              // console.log(
+              //   `✓ Successfully fetched games for brand ${brand.brand_id}`
+              // );
 
               break;
             } catch (err) {
@@ -932,9 +887,9 @@ export default function Home() {
 
               if (err.response?.status === 429) {
                 const retryDelay = delayMs * Math.pow(2, retryCount);
-                console.warn(
-                  `⚠ Rate limit hit for brand ${brand.brand_id}. Retrying in ${retryDelay}ms... (Attempt ${retryCount}/${maxRetries})`
-                );
+                // console.warn(
+                //   `⚠ Rate limit hit for brand ${brand.brand_id}. Retrying in ${retryDelay}ms... (Attempt ${retryCount}/${maxRetries})`
+                // );
                 await delay(retryDelay);
               } else {
                 console.error(
@@ -961,7 +916,7 @@ export default function Home() {
         console.log("✅ All games fetched successfully!");
 
         // Step 4: Fetch banner images
-        console.log("📸 Fetching banner images...");
+        // console.log("📸 Fetching banner images...");
         try {
           const bannerRes = await axios.get(apis.bannerImage);
           console.log("Banner response:", bannerRes?.data);
@@ -977,7 +932,7 @@ export default function Home() {
               timestamp: Date.now(),
             })
           );
-          console.log("💾 Banner data stored in localStorage ✅");
+          // console.log("💾 Banner data stored in localStorage ✅");
 
           console.log("✅ Banner images fetched successfully!");
         } catch (bannerError) {
@@ -985,7 +940,7 @@ export default function Home() {
         }
 
         // Fetch sponser images
-        console.log("Fetching sponser images ............");
+        // console.log("Fetching sponser images ............");
         try {
           const sponserRes = await axios.get(apis.sponserImage);
           console.log("Sponser response:", sponserRes?.data);
@@ -999,7 +954,7 @@ export default function Home() {
               timestamp: Date.now(),
             })
           );
-          console.log("💾 Sponser data stored in localStorage ✅");
+          // console.log("💾 Sponser data stored in localStorage ✅");
 
           console.log("✅ Sponser images fetched successfully!");
         } catch (sponserError) {
@@ -1032,7 +987,7 @@ export default function Home() {
 
         if (storedData) {
           const { brand, games } = JSON.parse(storedData);
-          console.log(`📦 Loaded brand ${brandId} from localStorage`);
+          // console.log(`📦 Loaded brand ${brandId} from localStorage`);
 
           // Brand ID 57 - Casino Table games
           if (brand.brand_id === "57") {
@@ -1102,33 +1057,20 @@ export default function Home() {
     fetchBrandsAndGames();
   }, []);
 
-
-
   const sectionRefs = useRef({});
-  // const [activeSection, setActiveSection] = useState(null);
 
-  // Function to scroll to specific brand section
-  // const scrollToSection = (brandId) => {
-  //   const sectionRef = sectionRefs.current[brandId];
-  //   if (sectionRef) {
-  //     setActiveSection(brandId);
-
-  //     // Smooth scroll with offset for fixed headers
-  //     sectionRef.scrollIntoView({
-  //       behavior: "smooth",
-  //       block: "start",
-  //     });
-
-  //     // Highlight effect
-  //     setTimeout(() => {
-  //       sectionRef.style.transform = "scale(1.02)";
-  //       sectionRef.style.transition = "transform 0.3s ease";
-  //       setTimeout(() => {
-  //         sectionRef.style.transform = "scale(1)";
-  //       }, 300);
-  //     }, 500);
-  //   }
-  // };
+  useEffect(() => {
+    const container = document.getElementById("main-scroll-container-mobile");
+    if (container) {
+      console.log("✅ Mobile container exists:", {
+        height: container.offsetHeight,
+        scrollHeight: container.scrollHeight,
+        overflow: window.getComputedStyle(container).overflow,
+      });
+    } else {
+      console.error("❌ Mobile container NOT FOUND");
+    }
+  }, []);
 
   if (loading)
     return (
@@ -1138,7 +1080,7 @@ export default function Home() {
     );
 
   return (
-    <div className="flex flex-col justify-center bg-grayBg">
+    <div className="flex flex-col justify-center bg-grayBg overflow-auto">
       {/* ------------------ Mobile + Tablet ------------------ */}
       <div className="xsm:hidden pt-2 pb-2">
         <div>{userId && <ActionButtons />}</div>
@@ -1225,102 +1167,10 @@ export default function Home() {
             games={slotGames}
             onSeeAll={() => alert("See All clicked")}
           />
-          {/* <GameSection
-            title="Best Casino"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.9719 1.99677C9.17346 1.98974 6.37971 2.50631 3.83721 3.56802L4.3369 5.40084H19.6078L20.1047 3.56802C17.5594 2.53443 14.7657 2.00381 11.9719 1.99677ZM5.16565 6.48834V15.4227H18.7782V6.48834H5.16565ZM6.33753 7.66021H17.6063V14.2508H6.33753V7.66021ZM21.5719 7.86177C21.0328 7.86177 20.5922 8.29771 20.5922 8.84146C20.5922 9.38052 21.0328 9.81646 21.5719 9.81646C22.111 9.81646 22.5516 9.38052 22.5516 8.84146C22.5516 8.29771 22.111 7.86177 21.5719 7.86177ZM7.42034 8.61177V13.4305H9.93284V8.61177H7.42034ZM10.7157 8.61177V13.4305H13.2282V8.61177H10.7157ZM14.011 8.61177V13.4305H16.5235V8.61177H14.011ZM20.7797 10.4118L20.4094 12.4086C20.0766 12.2586 19.8047 12.2118 19.8047 12.2118V15.4227L21.2157 16.1727L21.6657 13.843C21.6141 13.5102 21.4735 13.243 21.286 13.0274L21.7407 10.5899C21.6844 10.5993 21.6282 10.5993 21.5719 10.5993C21.286 10.5993 21.0188 10.5336 20.7797 10.4118ZM4.91253 16.693L2.73846 19.0368L3.20721 23.4055H20.7375L21.2063 19.0368L19.0313 16.693H4.91253ZM16.636 17.2321C16.9086 17.232 17.1786 17.2542 17.4306 17.2973C17.6825 17.3404 17.9114 17.4035 18.1043 17.4832C18.2971 17.5629 18.4501 17.6574 18.5544 17.7615C18.6588 17.8656 18.7125 17.9772 18.7125 18.0899C18.7101 18.1024 18.7069 18.1149 18.7032 18.1274C18.7078 18.1368 18.7078 18.1415 18.7078 18.1461C18.7078 18.2633 18.6235 18.3758 18.4828 18.4743C18.3109 18.616 18.0473 18.7353 17.7213 18.8189C17.3953 18.9024 17.0196 18.947 16.636 18.9477C16.2941 18.9473 15.9577 18.912 15.6568 18.845C15.3559 18.7779 15.0997 18.6812 14.911 18.5633C14.8795 18.5451 14.8498 18.5263 14.8219 18.5071C14.6578 18.3993 14.5547 18.2774 14.5547 18.1461C14.5547 18.1321 14.5594 18.1133 14.5594 18.0993C14.5594 18.0961 14.5594 18.093 14.5594 18.0899C14.5594 17.9772 14.6131 17.8656 14.7175 17.7615C14.8219 17.6574 14.9748 17.5629 15.1677 17.4832C15.3605 17.4035 15.5894 17.3404 15.8414 17.2973C16.0933 17.2542 16.3633 17.232 16.636 17.2321ZM6.08909 17.4008H8.5594L7.9594 18.8915H4.87503L6.08909 17.4008ZM9.61409 17.4008H12.5907L12 18.8915H9.0094L9.61409 17.4008Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          />
-          <GameSection
-            title="Macc88"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          /> */}
-          {/* <GameSection
-            title="Jili"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={allGames}
-            onSeeAll={() => alert("See All clicked")}
-          /> */}
-          {/* <GameSection
-            title="Spribe"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          /> */}
-          {/* <GameSection
-            title="Evolution"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          /> */}
+
+          {/* ✅ FIX 3: Ensure proper brand_id usage without duplicates */}
           {brandGames.length > 0 ? (
+            isMobile &&
             brandGames.map(({ brand, games }) => {
               if (!brand || !brand.brand_title) {
                 console.error("Invalid brand data", brand);
@@ -1329,7 +1179,7 @@ export default function Home() {
 
               return (
                 <GameSection
-                  key={brand.brand_id}
+                  key={`mobile-${brand.brand_id}`} // ✅ Unique key with prefix
                   title={brand.brand_title}
                   icon={
                     <img
@@ -1339,10 +1189,16 @@ export default function Home() {
                       height={24}
                     />
                   }
-                  games={games} // Pass the games array to the GameSection
+                  brand={brand}
+                  games={games}
                   onSeeAll={() =>
                     alert(`See all games for ${brand.brand_title}`)
                   }
+                  sectionRef={(el) => {
+                    if (el) {
+                      registerSection(brand.brand_id, el);
+                    }
+                  }}
                 />
               );
             })
@@ -1350,44 +1206,6 @@ export default function Home() {
             <p>No brands available</p>
           )}
 
-          {/* <GameSection
-            title="Ezugi"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          />
-          <GameSection
-            title="Turbo games"
-            icon={
-              <svg
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
-                  fill="#C10932"
-                />
-              </svg>
-            }
-            games={games4}
-            onSeeAll={() => alert("See All clicked")}
-          /> */}
           <TrendingGames
             title="Casino Lobby"
             icon={
@@ -1409,6 +1227,7 @@ export default function Home() {
           />
         </div>
       </div>
+      
 
       {/* ------------------ Laptop / Desktop ------------------ */}
       <div className="hidden lg2:flex lg2:justify-center lg2:pt-0">
@@ -1431,13 +1250,15 @@ export default function Home() {
             </div>
 
             <GameHeader2 />
-            <div className="hidden lg:block">
+            <div className="hidden lg2:block">
               {/* <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} /> */}
               {/* <GameCategories /> */}
               <GameCategories />
             </div>
 
             <SlidingCompany />
+
+            
             {/* ------------------ Categories + Sections (Below Both) ------------------ */}
             <div className="hidden lg2:block w-[94%] lg2:w-[100%] py-6 lg2:py-0 space-y-4 lg2:justify-start">
               <GameSection
@@ -1477,13 +1298,17 @@ export default function Home() {
                   </svg>
                 }
                 games={trendingGames}
+                brand={trendingDetails}
                 onSeeAll={() => alert("See All clicked")}
+                // onClick={console.log("slot details:", slotDetails)}
+                sectionRef={(el) => {
+                  if (el) {
+                    // console.log(`Registering ${trendingDetails.brand_id}:`, el);
+                    registerSection(trendingDetails.brand_id, el);
+                  }
+                }}
               />
-              {/* <div className="h-[395px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
-                <span className="text-gray-400 text-sm font-medium">
-                  
-                </span>
-              </div> */}
+
               {/* 🧩 SPONSOR SECTION */}
               {loading ? (
                 <p className="text-center">Loading...</p>
@@ -1543,42 +1368,19 @@ export default function Home() {
                   </svg>
                 }
                 games={slotGames}
+                brand={slotDetails}
                 onSeeAll={() => alert("See All clicked")}
-              />
-              {/* {brandGames.length > 0 ? (
-                brandGames.map(({ brand, games }) => {
-                  if (!brand || !brand.brand_title) {
-                    console.error("Invalid brand data", brand);
-                    return null;
+                // onClick={console.log("slot details:", slotDetails)}
+                sectionRef={(el) => {
+                  if (el) {
+                    // console.log(`Registering ${slotDetails.brand_id}:`, el);
+                    registerSection(slotDetails.brand_id, el);
                   }
+                }}
+              />
 
-                  return (
-                    <GameSection
-                      key={brand.brand_id}
-                      title={brand.brand_title}
-                      icon={
-                        <img
-                          src={brand.logo}
-                          alt={brand.brand_title}
-                          width={24}
-                          height={24}
-                        />
-                      }
-                      games={games} // Pass the games array to the GameSection
-                      onSeeAll={() =>
-                        alert(`See all games for ${brand.brand_title}`)
-                      }
-                      // sectionRef={(el) =>
-                      //   (sectionRefs.current[brand.brand_id] = el)
-                      // }
-                      sectionRef={(el) => registerSection(brand.brand_id, el)}
-                    />
-                  );
-                })
-              ) : (
-                <p>No brands available</p>
-              )} */}
               {brandGames.length > 0 ? (
+                !isMobile &&
                 brandGames.map(({ brand, games }) => {
                   if (!brand || !brand.brand_title) {
                     console.error("Invalid brand data", brand);
@@ -1604,7 +1406,7 @@ export default function Home() {
                       }
                       sectionRef={(el) => {
                         if (el) {
-                          console.log(`Registering ${brand.brand_id}:`, el);
+                          // console.log(`Registering ${brand.brand_id}:`, el);
                           registerSection(brand.brand_id, el);
                         }
                       }}

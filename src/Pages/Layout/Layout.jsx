@@ -226,7 +226,7 @@ export default function Layout({ children }) {
   });
   const [rightPosition, setRightPosition] = useState({
     x: window.innerWidth - 80,
-    y: window.innerHeight - 160,
+    y: window.innerHeight - 170,
   });
   const [dragging, setDragging] = useState(null);
   const dragOffset = useRef({ x: 0, y: 0 });
@@ -241,7 +241,7 @@ export default function Layout({ children }) {
       }));
       setRightPosition((prev) => ({
         x: window.innerWidth - 80,
-        y: window.innerHeight - 150,
+        y: window.innerHeight - 170,
       }));
     };
 
@@ -561,6 +561,7 @@ export default function Layout({ children }) {
                 className={`flex flex-col min-h-screen hide-scrollbar w-full ${
                   isWingoPath ? "xsm:w-[400px] bg-red2" : ""
                 }`}
+                style={{ height: "100vh" }} // Add this
               >
                 {/* <div className="lg2:hidden">
                 {!shouldHideHeader &&
@@ -594,14 +595,12 @@ export default function Layout({ children }) {
                     </div>
                   </>
                 )}
-
                 {/* <div className="hidden lg2:block">
                 <Header
                   className="sticky top-0 z-50"
                   profileDetails2={profileDetails2}
                 />
               </div> */}
-
                 {/* {!hideLayout && (
                   <div className="lg2:flex gap-16 px-12 py-6 hidden ">
                     <div className="w-[20%]">
@@ -618,38 +617,50 @@ export default function Layout({ children }) {
                     </div>
                   </div>
                 )} */}
-                {!hideLayout && (
-                  <div className="lg2:flex gap-16 px-12 py-6 hidden">
-                    {/* Sidebar - Fixed/Sticky */}
-                    <div className="w-[20%] sticky top-20 self-start">
-                      <div className="max-h-[calc(100vh-6rem)] overflow-y-auto">
-                        <GameSlider2 profileDetails={profileDetails2} />
+
+                <div className="hidden lg2:block">
+                  {!hideLayout && (
+                    <div className="lg2:flex gap-16 px-12 py-6 hidden hide-scrollbar">
+                      {/* Sidebar - Fixed/Sticky */}
+                      <div className="w-[20%] sticky top-20 self-start">
+                        <div className="max-h-[calc(100vh-6rem)] overflow-y-auto hide-scrollbar">
+                          <GameSlider2 profileDetails={profileDetails2} />
+                        </div>
+                      </div>
+
+                      {/* Main Content - SCROLLABLE */}
+                      <div
+                        className="w-[80%] overflow-y-auto max-h-[calc(100vh-6rem)] hide-scrollbar"
+                        id="main-scroll-container-desktop" // ✅ Add ID for debugging
+                      >
+                        {isLoading && <Loader />}
+                        {children}
                       </div>
                     </div>
+                  )}
+                </div>
 
-                    {/* Main Content - SCROLLABLE */}
-                    <div
-                      className="w-[80%] overflow-y-auto max-h-[calc(100vh-6rem)]"
-                      id="main-scroll-container" // ✅ Add ID for debugging
-                    >
-                      {isLoading && <Loader />}
-                      {children}
-                    </div>
-                  </div>
-                )}
                 <div className="hidden lg2:block">
                   {hideLayout && <>{children}</>}
                 </div>
-
-                <div className="lg2:hidden">
+                {/* // ✅ NEW CODE (FIXES SCROLL): */}
+                <div
+                  id="main-scroll-container-mobile"
+                  className="flex-1 overflow-y-auto lg2:hidden"
+                  style={{
+                    minHeight: 0, // Important for flex children
+                    position: "relative",
+                  }}
+                >
                   {isLoading && <Loader />}
                   {children}
                 </div>
+
                 {/* Draggable WhatsApp and Telegram Images */}
                 {location.pathname === "/" && !sidebar && (
                   <div className="fixed inset-0 pointer-events-none z-50 lg2:hidden">
                     {/* WhatsApp Image */}
-                    <img
+                    {/* <img
                       // src={whatsapp}
                       src={telegram}
                       // alt="WhatsApp"
@@ -665,28 +676,27 @@ export default function Layout({ children }) {
                         touchAction: "none",
                       }}
                       draggable="false"
-                    />
+                    /> */}
 
                     {/* Telegram Image */}
-                    {/* <img
-                    // src="https://static.vecteezy.com/system/resources/previews/016/716/472/non_2x/telegram-icon-free-png.png"
-                    src={telegram}
-                    alt="Telegram"
-                    className="w-20 h-32 cursor-grab active:cursor-grabbing pointer-events-auto"
-                    // onMouseDown={(e) => handleMouseDown(e, "right")}
-                    // onTouchStart={(e) => handleTouchStart(e, "right")}
-                    style={{
-                      position: "fixed",
-                      left: `${rightPosition.x}px`,
-                      top: `${rightPosition.y}px`,
-                      userSelect: "none",
-                      touchAction: "none",
-                    }}
-                    draggable="false"
-                  /> */}
+                    <img
+                      // src="https://static.vecteezy.com/system/resources/previews/016/716/472/non_2x/telegram-icon-free-png.png"
+                      src={telegram}
+                      alt="Telegram"
+                      className="w-20 h-32 cursor-grab active:cursor-grabbing pointer-events-auto"
+                      // onMouseDown={(e) => handleMouseDown(e, "right")}
+                      // onTouchStart={(e) => handleTouchStart(e, "right")}
+                      style={{
+                        position: "fixed",
+                        left: `${rightPosition.x}px`,
+                        top: `${rightPosition.y}px`,
+                        userSelect: "none",
+                        touchAction: "none",
+                      }}
+                      draggable="false"
+                    />
                   </div>
                 )}
-
                 {!shouldHideFooter && (
                   <div className="sticky bottom-0 z-40">
                     <div className="md:hidden">

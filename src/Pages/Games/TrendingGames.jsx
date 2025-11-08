@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const TrendingGames = ({ title, games, icon }) => {
+const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 
@@ -73,12 +73,22 @@ const TrendingGames = ({ title, games, icon }) => {
 
   // ✅ Then call it here:
   return (
-    <div className="w-full px-4 py-3 rounded-[25px] bg-white mt-2">
+    <div
+      className="w-full px-4 py-3 rounded-[25px] bg-white mt-2"
+      ref={sectionRef}
+      id={`brand-${brand?.brand_id || "unknown"}`}
+      style={{
+        scrollMarginTop: "120px", // ✅ Space for header
+        scrollMarginBottom: "20px",
+      }}
+    >
       {/* Header */}
       <div className="flex justify-between items-center px-3 py-2 bg-[#F4F4F4] rounded-[8px] shadow-md mb-3">
         <div className={`flex items-center gap-1 xsm3:gap-2`}>
           <span className="w-6 h-6">{icon || "🎮"}</span>
-          <h2 className="text-ssm xsm3:text-sm font-semibold">{title || "Trending Games"}</h2>
+          <h2 className="text-ssm xsm3:text-sm font-semibold">
+            {title || "Trending Games"}
+          </h2>
         </div>
 
         <div className="flex items-center gap-2">

@@ -294,13 +294,25 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
 
   const games = [
     { id: 1, name: "Cricket", image: Cricket, brandId: "46", route: "" },
-    { id: 2, name: "Aviator", image: aviator, route: "" },
-    { id: 3, name: "Card Games", image: CardGames, route: "" },
-    { id: 4, name: "Live Casino", image: LiveCassino, route: "" },
-    { id: 5, name: "Trending Games", image: TrendingGames, route: "" },
-    { id: 6, name: "Football", image: Football, route: "" },
-    { id: 7, name: "Tennis", image: Tennis, route: "" },
-    { id: 8, name: "Slot Games", image: SlotGames, route: "" },
+    { id: 2, name: "Aviator", image: aviator, route: "", brandId: "2" },
+    { id: 3, name: "Card Games", image: CardGames, route: "", brandId: "78" },
+    {
+      id: 4,
+      name: "Live Casino",
+      image: LiveCassino,
+      route: "",
+      brandId: "58",
+    },
+    {
+      id: 5,
+      name: "Trending Games",
+      image: TrendingGames,
+      route: "",
+      brandId: "2",
+    },
+    { id: 6, name: "Football", image: Football, route: "", brandId: "46" },
+    { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "" },
+    { id: 8, name: "Slot Games", image: SlotGames, route: "", brandId: "1" },
     { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
     { id: 10, name: "Profile", image: Profile, route: "/Info" },
     { id: 11, name: "Language Change", image: LanguageChange, route: "" },
@@ -354,7 +366,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
 
   return (
     <div
-      className={` flex justify-start transition-all duration-300 ${
+      className={` flex justify-start transition-all duration-300 hide-scrollbar ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
@@ -363,7 +375,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
 
       {/* Sidebar */}
       <div
-        className={`relative bg-white w-[70%] md:w-[50%] lg2:w-[100%] h-full rounded-2xl overflow-y-auto z-50 transition-transform duration-300 ${
+        className={`relative bg-white w-[70%] md:w-[50%] lg2:w-[100%] h-full rounded-2xl overflow-y-auto z-50 transition-transform duration-300 hide-scrollbar ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -420,7 +432,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
             return (
               <li
                 key={game.id}
-                className={`flex items-center gap-1 px-1 py-2 cursor-pointer rounded-md mx-1 mt-1
+                className={`flex items-center gap-1 px-1 py-2 cursor-pointer rounded-md mx-1 mt-1 hide-scrollbar
         ${
           selected === game.id
             ? "bg-[#FFE1E1] text-red" // active row background
@@ -429,10 +441,14 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
                 onClick={() => {
                   setSelected(game.id);
                   navigate(game.route);
-                     if (game.brandId) {
-                       scrollToSection(game.brandId);
-                       console.log("Clicked brand:", game.brandId);
-                     }
+                  if (game.brandId) {
+                     const element = document.getElementById(
+                       `brand-${game.brandId}`
+                     );
+                     console.log("📍 Found element:", element);
+                    scrollToSection(game.brandId);
+                    console.log("Clicked brand:", game.brandId);
+                  }
                 }}
               >
                 {/* Keep same circle size always */}
