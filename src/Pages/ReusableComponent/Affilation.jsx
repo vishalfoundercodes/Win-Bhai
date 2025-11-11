@@ -1,18 +1,53 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Calendar, Clock, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import apis from "../../utils/apis";
+import Loader from "../resuable_component/Loader/Loader";
 export default function AffiliatePage() {
   const [open, setOpen] = useState(false);
+  const {id}=useParams()
   const [selected, setSelected] = useState("For all time");
   const navigate=useNavigate()
   const options = ["For all time", "Month", "Week", "Today"];
+  const [details, setDetalis]=useState(null)
+  const [loading, setLoading]=useState(false)
+
 
   const handleSelect = (option) => {
     setSelected(option);
     setOpen(false);
   };
+
+  const data=async()=>{
+    try {
+      setLoading(true)
+      console.log("id:",id)
+      const payload = {
+        campaign_id: id,
+      };
+      const res = await axios.post(`${apis.affiliateDashboard}`,payload);
+      // console.log("Affiliate Data:", res?.data);
+      setDetalis(res?.data?.data || null)
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  useEffect(()=>{
+    data()
+  },[])
+
+  if(loading){
+    return <div className="min-h-screen flex items-center justify-center">
+     <Loader></Loader>
+    </div>
+
+  }
 
   return (
     <>
@@ -42,9 +77,14 @@ export default function AffiliatePage() {
               {/* Left side - Avatar + Name */}
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
-                  <span className="text-pink-600 font-semibold">S</span>
+                  <span className="text-pink-600 font-semibold">
+                    {" "}
+                    {details?.Campaign_Name?.[0]?.toUpperCase() || "?"}
+                  </span>
                 </div>
-                <span className="text-gray-800 font-medium">shivamtrakwin</span>
+                <span className="text-gray-800 font-medium">
+                  {details?.Campaign_Name || "User"}
+                </span>
               </div>
 
               {/* Right arrow */}
@@ -134,42 +174,42 @@ export default function AffiliatePage() {
             >
               <div className="flex justify-between border-b pb-1 border-[#DBDBDB]">
                 <span>Transition:</span>
-                <span>0</span>
+                <span>{details?.Transaction || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Registration:</span>
-                <span>0</span>
+                <span>{details?.Registrations || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>First Deposits:</span>
-                <span>0</span>
+                <span>{details?.First_Deposits || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Number Deposits:</span>
-                <span>0</span>
+                <span>{details?.Number_Deposits || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Link Clicks:</span>
-                <span>0</span>
+                <span>{details?.Link_Clicks || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Total Deposit:</span>
-                <span>0</span>
+                <span>{details?.Total_Deposit || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Total Withdrawal:</span>
-                <span>0</span>
+                <span>{details?.Total_Withdrawal || "0"}</span>
               </div>
               <div className="flex justify-between border-b border-[#DBDBDB] pb-1">
                 <span>Your Commission:</span>
-                <span>0</span>
+                <span>{details?.Your_Commission || "0"}</span>
               </div>
             </div>
           </div>
 
           {/* Income Section */}
           <div className="p-4 bg-gradient-to-l from-[#C10932] to-[#5B0418] text-white text-center font-semibold rounded-b-2xl">
-            Income: 0 $
+            Income: ₹ 0
           </div>
 
           {/* Filters Section */}

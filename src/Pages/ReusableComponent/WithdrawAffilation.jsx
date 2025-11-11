@@ -1,7 +1,15 @@
 import React, {useState,useEffect} from 'react'
 import { DollarSign, CreditCard } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import apis from '../../utils/apis';
+import { details } from 'framer-motion/client';
+import Loader from '../resuable_component/Loader/Loader';
 export default function WithdrawAffilation() {
+  const [datails,setDetails]=useState(null)
+
+
+  const [loading,setLoading]=useState(false)
     const navigate=useNavigate()
       const offers = [
         {
@@ -54,6 +62,32 @@ export default function WithdrawAffilation() {
         },
       ];
 
+      const fetchData=async()=>{
+        try {
+          setLoading(true);
+          const payload = {
+            user_id: localStorage.getItem("userId"),
+          }
+          const res = await axios.post(apis.affiliateWithdrawHome, payload);
+          // console.log("Affiliate Withdraw Home Data:", res.data);
+          setDetails(res.data.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }finally{
+          setLoading(false);
+        }
+      }
+      useEffect(() => {
+        fetchData();
+      }, []);
+
+    if (loading) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader />
+        </div>
+      );
+    }
   return (
     <>
       <div
@@ -117,7 +151,7 @@ export default function WithdrawAffilation() {
                       </h3>
                     </div>
                     <p className="text-2xl font-bold text-gray-900 mt-3">
-                      $12,845.50
+                      ₹{details?.total_commission || 0}
                     </p>
                     <p className="text-ssm text-gray-500">Lifetime earnings</p>
                   </div>
@@ -133,7 +167,7 @@ export default function WithdrawAffilation() {
                       </h3>
                     </div>
                     <p className="text-2xl font-bold text-red mt-3">
-                      $8,320.75
+                      ₹{details?.available_to_withdraw || 0}
                     </p>
                     <p className="text-ssm text-gray-500">
                       Ready for withdrawal

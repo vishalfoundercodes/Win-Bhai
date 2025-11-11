@@ -20,7 +20,7 @@ const CreateCampaign = () => {
             user_id:userId
           }
           const res = await axios.post(apis.campaign_list, payload);
-          console.log(res?.data?.data)
+          // console.log(res?.data?.data)
           setCampaigns(res?.data?.data || []);
         } catch (error) {
           console.log(error)
@@ -132,6 +132,9 @@ const CreateCampaign = () => {
                             viewBox="0 0 8 13"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
+                            onClick={() =>
+                              navigate(`/affilationDashboard/${item.id}`)
+                            }
                           >
                             <path
                               d="M1.69922 11.8008L6.69922 6.80078L1.69922 1.80078"

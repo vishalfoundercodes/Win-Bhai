@@ -380,38 +380,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
         <ul>
           {games.map((game) => {
             const IconComp = game.image;
-            //        if (game.id === 11) {
-            // return (
-            //   <li
-            //     key={game.id}
-            //     className={`flex items-center gap-2 px-3 py-2 cursor-pointer rounded-md mx-2 mt-1
-            //       ${selected === game.id ? "bg-[#FFE1E1] text-red" : "hover:bg-gray-100 text-darkGray"}
-            //     `}
-            //   >
-            //     <div className="w-8 h-8 p-1 rounded-full flex items-center justify-center">
-            //       {IconComp && <IconComp active={selected === game.id} />}
-            //     </div>
-
-            //     <span className="text-sm font-medium text-darkGray flex-1">
-            //       {game.name}
-            //     </span>
-
-            //     {/* ✅ Language Dropdown */}
-            //     <select
-            //       className="border rounded-md px-2 py-1 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-red-500"
-            //       onChange={(e) => {
-            //         console.log("Language Changed:", e.target.value);
-            //         // TODO: handle language change logic here
-            //       }}
-            //     >
-            //       <option value="en">English</option>
-            //       <option value="hi">हिंदी</option>
-            //       <option value="bn">বাংলা</option>
-            //       <option value="te">తెలుగు</option>
-            //       <option value="ta">தமிழ்</option>
-            //     </select>
-            //   </li>
-            // )}
+       
             return (
               <li
                 key={game.id}
@@ -421,14 +390,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
             ? "bg-[#FFE1E1] text-red" // active row background
             : "hover:bg-gray-100 text-darkGray" // default row background
         }`}
-                // onClick={() => {
-                //   setSelected(game.id);
-                //   navigate(game.route);
-                //     if (game.brandId) {
-                //       scrollToSection(game.brandId);
-                //       console.log("Clicked brand:", game.brandId);
-                //     }
-                // }}
+               
                 onClick={() => {
                   setSelected(game.id);
                   navigate(game.route);
@@ -442,63 +404,10 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
                     );
                     console.log("📍 Found element:", element);
                     scrollToSection(game.brandId);
+                    onClose()
                   }
                 }}
-                // onClick={() => {
-                //   setSelected(game.id);
-                //   navigate(game.route);
-
-                //   if (game.brandId) {
-                //     console.log(
-                //       "🔍 Searching for element:",
-                //       `brand-${game.brandId}`
-                //     );
-
-                //     // ✅ Close sidebar first
-                //     onClose(); // Sidebar close karo
-
-                //     // ✅ Wait for sidebar animation to complete
-                //     setTimeout(() => {
-                //       const isMobile = window.innerWidth < 1024;
-
-                //       // ✅ Try to find the element
-                //       const target = document.getElementById(
-                //         `brand-${game.brandId}`
-                //       );
-                //       console.log("📍 Found element:", target);
-                //       console.log(
-                //         "👁️ Is visible:",
-                //         target?.offsetParent !== null
-                //       );
-
-                //       if (target && target.offsetParent !== null) {
-                //         // ✅ Element visible hai to scroll karo
-                //         if (isMobile) {
-                //           // Mobile: Direct scrollIntoView use karo
-                //           target.scrollIntoView({
-                //             behavior: "smooth",
-                //             block: "start",
-                //             inline: "nearest",
-                //           });
-
-                //           // Add highlight effect
-                //           setTimeout(() => {
-                //             target.style.border = "2px solid #ef4444";
-                //             setTimeout(
-                //               () => (target.style.border = "none"),
-                //               1000
-                //             );
-                //           }, 500);
-                //         } else {
-                //           // Desktop: Context wala use karo
-                //           scrollToSection(game.brandId);
-                //         }
-                //       } else {
-                //         console.warn("⚠️ Element not found or hidden!");
-                //       }
-                //     }, 300); // Sidebar close hone ka wait karo
-                //   }
-                // }}
+               
               >
                 {/* Keep same circle size always */}
                 <div

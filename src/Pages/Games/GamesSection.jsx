@@ -341,13 +341,13 @@ import { useScroll } from "../../Context/ScrollContext";
 
 const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) => {
   const { profileDetails, setprofileDetails } = useProfile();
-  const { registerSection } = useScroll();
+  // const { registerSection } = useScroll();
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [loading, setloading] = useState(false);
-  const sectionElement = useRef(null);
-   const sectionBrandId =
-     brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
+  // const sectionElement = useRef(null);
+  //  const sectionBrandId =
+  //    brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
   // if(brand){
   //   console.log("Get brand:", brand.brand_title);
   //   console.log("Get Brand id:", brand.brand_id);
@@ -380,16 +380,37 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
   // }, [brand?.brand_id, gamesDetails?.brand_id, registerSection, sectionRef]);
 
   // Register on mount
-  useEffect(() => {
-    if (sectionElement.current && sectionBrandId) {
-      registerSection(sectionBrandId, sectionElement.current);
+  // const sectionBrandId =
+  //   brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
+  // const sectionElement = useRef(null);
+  // const { registerSection } = useScroll();
 
-      // Also call the prop sectionRef if provided (for backward compatibility)
-      if (sectionRef && typeof sectionRef === "function") {
-        sectionRef(sectionElement.current);
-      }
-    }
-  }, [sectionBrandId, registerSection, sectionRef]);
+  // Determine device type at render time
+  // const isMobile = window.innerWidth <= 768;
+  // const deviceType = isMobile ? "mobile" : "desktop";
+
+ const sectionBrandId =
+   brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
+ const sectionElement = useRef(null);
+ const { registerSection } = useScroll();
+
+ // Determine device type at render time
+ const isMobile = window.innerWidth <= 768;
+ const deviceType = isMobile ? "mobile" : "desktop";
+
+ useEffect(() => {
+   if (sectionElement.current && sectionBrandId) {
+     registerSection(sectionBrandId, sectionElement.current);
+
+     if (sectionRef && typeof sectionRef === "function") {
+       sectionRef(sectionElement.current);
+     }
+   }
+ }, [sectionBrandId, registerSection, sectionRef]);
+
+ if (!games || games.length === 0) {
+   return null;
+ }
 
   const scrollRow = (rowId, direction) => {
     const container = document.getElementById(rowId);

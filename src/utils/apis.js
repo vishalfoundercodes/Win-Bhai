@@ -1,3 +1,4 @@
+import AffiliateModal from "../Pages/ReusableComponent/AddAffiliation";
 
 export const baseUrlWinBhai = "https://root.winbhai.in";
 export const configModalWinBhai = `${baseUrlWinBhai}/api/`
@@ -11,13 +12,22 @@ export const configModalApk = `${baseUrlWinBhai}/apk/`;
 // https://root.winbhai.in/api/customer_service
 
 const apis = {
-  sendOtp:
-    "https://otp.fctechteam.org/send_otp.php?mode=test&digit=4&mobile=",
+  sendOtp: "https://otp.fctechteam.org/send_otp.php?mode=test&digit=4&mobile=",
   verifyOtp: "https://otp.fctechteam.org/verifyotp.php?mobile=",
-// https://root.winbhai.in/api/slider_image_view
-// https://root.winbhai.in/api/getAllNotices
-  sponserImage:`${configModalWinBhai}getAllNotices`,
-  bannerImage:`${configModalWinBhai}slider_image_view`,
+  // https://root.winbhai.in/api/slider_image_view
+  // https://root.winbhai.in/api/getAllNotices
+  // https://root.winbhai.in/api/get-category-language-data?category_id=
+  learn: `${configModalWinBhai}get-category-language-data?category_id=`,
+  // https://root.winbhai.in/api/campaign_summary
+  // https://root.winbhai.in/api/campaign_analytics
+  // https://root.winbhai.in/api/campaign_commission_summary
+
+  affiliateDashboard: `${configModalWinBhai}campaign_summary`,
+  affiliateStatics: `${configModalWinBhai}campaign_analytics`,
+  affiliateWithdrawHome: `${configModalWinBhai}campaign_commission_summary`,
+
+  sponserImage: `${configModalWinBhai}getAllNotices`,
+  bannerImage: `${configModalWinBhai}slider_image_view`,
   createUserId: `${configModalWinBhai}otp-register`,
   register: `${configModalWinBhai}register`,
   login: `${configModalWinBhai}login`,

@@ -5,6 +5,7 @@ import Company2 from "../../../assets/Company/company2.png";
 import Company3 from "../../../assets/Company/company3.png";
 import Company4 from "../../../assets/Company/company4.png";
 import { useScroll } from "../../../Context/ScrollContext";
+import { useNavigate } from "react-router-dom";
 
 // ✅ Categories
 const categories = [
@@ -17,6 +18,7 @@ const categories = [
 export default function SlidingCompany() {
   const [active, setActive] = useState("");
    const { scrollToSection } = useScroll();
+   const navigate = useNavigate();
 
   return (
     <div className="relative w-full overflow-x-auto hide-scrollbar ">
@@ -26,7 +28,15 @@ export default function SlidingCompany() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => {setActive(cat.id);scrollToSection(cat.brandId)}}
+              onClick={() => {setActive(cat.id);
+                //  navigate("");scrollToSection(cat.brandId) 
+                 if (window.location.pathname === "/") {
+    // Already on home page → just scroll
+    scrollToSection(cat.brandId);
+  } else {
+    // Navigate to home page first → then scroll
+    navigate("/", { state: { scrollTo: cat.brandId } });
+  }}}
               className={`flex items-center justify-center w-[80px] xsm4:w-[85px] xsm3:w-[90px] xxs:w-[105px] h-[40px] lg2:w-[255px] lg2:h-[50px] rounded-[8px] border transition-all duration-200 px-4 py-2 cursor-pointer
                 ${
                   active === cat.id

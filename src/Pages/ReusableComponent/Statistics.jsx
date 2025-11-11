@@ -1,7 +1,43 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import apis from "../../utils/apis";
+import axios from "axios";
+import Loader from "../resuable_component/Loader/Loader";
+
 export default function Statistics() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+      };
+      const res = await axios.post(apis.affiliateStatics, payload);
+      // console.log("Statistics Data:", res?.data);
+      setStats(res?.data?.data);
+    } catch (error) {
+      console.error("Error fetching statistics data:", error);
+    }finally{
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="lg2:pr-4">
@@ -36,9 +72,8 @@ export default function Statistics() {
         </div>
 
         {/* Content */}
-        <div className="relative z-1 max-w-3xl  lg2:max-w-full mx-auto px-4 lg2:px-0 py-6 lg2:py-0 lg2:pr-4 ">
-          {/* Header Section */}
-          <div className="flex flex-col justify-between  mb-6 gap-2 lg2:bg-white lg2:rounded-b-2xl lg2:py-6 lg2:px-4">
+        <div className="relative z-1 max-w-3xl lg2:max-w-full mx-auto px-4 lg2:px-0 py-6 lg2:py-0 lg2:pr-4">
+          <div className="flex flex-col justify-between mb-6 gap-2 lg2:bg-white lg2:rounded-b-2xl lg2:py-6 lg2:px-4">
             <h2
               className="text-white lg2:hidden font-medium text-sm"
               style={{
@@ -48,18 +83,13 @@ export default function Statistics() {
               Statistics
             </h2>
             <div className="flex items-center gap-2">
-              {/* Dropdown */}
-              <select
-                className="px-3 py-1 rounded-md border border-gray-300 flex-1 bg-white appearance-gray focus:outline-none cursor-pointer
-"
-              >
+              <select className="px-3 py-1 rounded-md border border-gray-300 flex-1 bg-white appearance-gray focus:outline-none cursor-pointer ">
                 <option></option>
                 <option>All Time</option>
                 <option>Period</option>
                 <option>Today</option>
               </select>
 
-              {/* Download button */}
               <button className="bg-white p-2 rounded-md shadow">
                 <svg
                   width="16"
@@ -78,9 +108,8 @@ export default function Statistics() {
           </div>
 
           {/* Table */}
-          {/* Table Wrapper */}
           <div
-            className=" overflow-x-auto hide-scrollbar z-1 lg2:rounded-2xl "
+            className="overflow-x-auto hide-scrollbar z-1 lg2:rounded-2xl"
             style={{
               fontFamily: "Roboto",
               fontSize: "16px",
@@ -88,83 +117,110 @@ export default function Statistics() {
             }}
           >
             <table className="w-full min-w-max text-left border-collapse lg2:rounded-t-2xl lg2:text-center">
-              {/* Header */}
               <thead className="bg-red lg2:rounded-t-2xl text-white">
                 <tr>
                   <th className="py-2 px-2 border-r border-b border-lightBorder">
                     Date
                   </th>
-                  <th className="py-2 px-2  border-r border-b border-lightBorder">
+                  <th className="py-2 px-2 border-r border-b border-lightBorder">
                     Registration
                   </th>
-                  <th className="py-2 px-2  border-r border-b border-lightBorder">
+                  <th className="py-2 px-2 border-r border-b border-lightBorder">
                     First Deposit
                   </th>
                   <th className="py-2 px-2 border-b border-lightBorder">
                     Total Deposit
                   </th>
+                  <th className="py-2 px-2 border-b border-lightBorder">
+                    Total Withdrawal
+                  </th>
+                  <th className="py-2 px-2 border-b border-lightBorder">
+                    Total Loss
+                  </th>
+                  <th className="py-2 px-2 border-b border-lightBorder">
+                    Total Commission
+                  </th>
                 </tr>
               </thead>
 
-              {/* Body */}
               <tbody className="text-ssm font-medium text-center text-darkGray bg-white lg2:bg-lgGray">
+                {/* All Time Row */}
                 <tr>
                   <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
                     All Time
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    Period
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.registrations || 0}
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    9/10/2025
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.first_deposits || 0}
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    9/10/2025
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.total_deposit || 0}
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    9/10/2025
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.total_withdrawal || 0}
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.total_loss || 0}
+                  </td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.all_time?.total_commission || 0}
+                  </td>
                 </tr>
 
+                {/* This Campaign Row */}
                 <tr>
                   <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    9/10/2025
+                   Period
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                </tr>
-                <tr>
-                  <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
-                    9/10/2025
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.registrations || 0}
                   </td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
-                  <td className="py-2 px-2 border border-lightBorder">0</td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.first_deposits || 0}
+                  </td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.total_deposit || 0}
+                  </td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.total_withdrawal || 0}
+                  </td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.total_loss || 0}
+                  </td>
+                  <td className="py-2 px-2 border border-lightBorder">
+                    {stats?.this_campaign?.total_commission || 0}
+                  </td>
                 </tr>
+
+                {/* Daily Breakdown */}
+                {stats?.daily_breakdown?.length > 0 &&
+                  stats.daily_breakdown.map((day, idx) => (
+                    <tr key={idx}>
+                      <td className="py-2 px-2 border border-lightBorder text-start lg2:text-center">
+                        {day.date || "-"}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day.registrations || 0}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day.first_deposits || 0}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day.total_deposit || 0}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day?.total_withdrawal || 0}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day?.total_loss || 0}
+                      </td>
+                      <td className="py-2 px-2 border border-lightBorder">
+                        {day?.total_commission || 0}
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -173,4 +229,3 @@ export default function Statistics() {
     </>
   );
 }
-

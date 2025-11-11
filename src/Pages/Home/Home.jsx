@@ -636,7 +636,6 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   const games4 = [
     { id: 1, name: "AviaFly", image: "" },
     { id: 2, name: "Aviator", image: "" },
@@ -713,7 +712,6 @@ export default function Home() {
     },
   ];
 
-
   const userId = localStorage.getItem("userId");
 
   const allowed_games = [
@@ -732,7 +730,7 @@ export default function Home() {
     "46",
     "100",
     "78",
-    "59"
+    "59",
   ];
 
   const slotDetails = { brand_id: "1" };
@@ -740,7 +738,6 @@ export default function Home() {
   const [brandGames, setBrandGames] = useState([]);
   const [loading, setLoading] = useState(true);
 
- 
   const FIRST_TIME_LOAD_KEY = "first_time_load";
   const BRAND_DATA_PREFIX = "brand_data_";
   const BANNER_DATA_KEY = "banner_data";
@@ -1059,18 +1056,63 @@ export default function Home() {
 
   const sectionRefs = useRef({});
 
+  // useEffect(() => {
+  //   const container = document.getElementById("main-scroll-container-mobile");
+  //   if (container) {
+  //     console.log("✅ Mobile container exists:", {
+  //       height: container.offsetHeight,
+  //       scrollHeight: container.scrollHeight,
+  //       overflow: window.getComputedStyle(container).overflow,
+  //     });
+  //   } else {
+  //     console.error("❌ Mobile container NOT FOUND");
+  //   }
+  // }, []);
+
+  // In your HomePage component:
   useEffect(() => {
+    console.log("🏠 HomePage mounted");
+
+    // Check container
     const container = document.getElementById("main-scroll-container-mobile");
-    if (container) {
-      console.log("✅ Mobile container exists:", {
-        height: container.offsetHeight,
-        scrollHeight: container.scrollHeight,
-        overflow: window.getComputedStyle(container).overflow,
+    // if (container) {
+    //   console.log("✅ Mobile container exists:", {
+    //     height: container.offsetHeight,
+    //     scrollHeight: container.scrollHeight,
+    //     overflow: window.getComputedStyle(container).overflow,
+    //     display: window.getComputedStyle(container).display,
+    //   });
+    // } else {
+    //   console.error("❌ Mobile container NOT FOUND");
+    // }
+
+    // Check all brand sections after render
+    setTimeout(() => {
+      const sections = document.querySelectorAll('[id^="brand-"]');
+      console.log(`📊 Found ${sections.length} brand sections:`);
+      sections.forEach((section) => {
+        const id = section.id;
+        const rect = section.getBoundingClientRect();
+        const style = window.getComputedStyle(section);
+        // console.log(`  ${id}:`, {
+        //   height: rect.height,
+        //   display: style.display,
+        //   visibility: style.visibility,
+        //   hasContent: section.children.length,
+        // });
       });
-    } else {
-      console.error("❌ Mobile container NOT FOUND");
-    }
+    }, 1000);
   }, []);
+
+  // ALSO: Check your games data
+  // useEffect(() => {
+  //   console.log("🎮 Games data:", {
+  //     hotGames: hotGames?.length || 0,
+  //     trendingGames: trendingGames?.length || 0,
+  //     slotGames: slotGames?.length || 0,
+  //     brandGames: brandGames?.length || 0,
+  //   });
+  // }, [hotGames, trendingGames, slotGames, brandGames]);
 
   if (loading)
     return (
@@ -1143,11 +1185,54 @@ export default function Home() {
             onSeeAll={() => alert("See All clicked")}
           />
 
-          <div className="h-[195px] xsm:h-full w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
+          {/* <div className="h-[195px] xsm:h-full w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px] ">
             <span className="text-gray-400 text-sm font-medium">
-              {/* {game.name} */}
+              {game.name}
             </span>
-          </div>
+          </div> */}
+
+          {/* 🧩 SPONSOR SECTION */}
+          {loading ? (
+            <p className="text-center">Loading...</p>
+          ) : !sponser || sponser.length === 0 ? (
+            // 🟥 CASE 1: No image → placeholder box
+            <div className="h-[195px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">
+              <span className="text-gray-400 text-sm font-medium">
+                {/* No Sponsor Available */}
+              </span>
+            </div>
+          ) : sponser.length === 1 ? (
+            // 🟩 CASE 2: Single image → show static image
+            <div className="h-[195px] w-full flex items-center justify-center rounded-[12px]">
+              <img
+                src={sponser[0].image}
+                alt={sponser[0].title || "Sponsor"}
+                className="h-[195px] w-full object-fill rounded-[12px]"
+              />
+            </div>
+          ) : (
+            // 🟦 CASE 3: Multiple images → Swiper slider
+            <div className="h-[195px] w-full flex items-center justify-center rounded-[12px]">
+              <Swiper
+                modules={[Pagination, Autoplay]}
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 3000 }}
+                loop={true}
+                className="h-[195px] w-full rounded-[12px]"
+              >
+                {sponser.map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <img
+                      src={item.image}
+                      alt={item.title || `sponsor-${index}`}
+                      className="h-[395px] w-full object-fill rounded-[12px]"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
+
           <GameSection
             title="Slot Games "
             icon={
@@ -1172,11 +1257,6 @@ export default function Home() {
           {brandGames.length > 0 ? (
             isMobile &&
             brandGames.map(({ brand, games }) => {
-              if (!brand || !brand.brand_title) {
-                console.error("Invalid brand data", brand);
-                return null;
-              }
-
               return (
                 <GameSection
                   key={`mobile-${brand.brand_id}`} // ✅ Unique key with prefix
@@ -1227,7 +1307,6 @@ export default function Home() {
           />
         </div>
       </div>
-      
 
       {/* ------------------ Laptop / Desktop ------------------ */}
       <div className="hidden lg2:flex lg2:justify-center lg2:pt-0">
@@ -1258,7 +1337,6 @@ export default function Home() {
 
             <SlidingCompany />
 
-            
             {/* ------------------ Categories + Sections (Below Both) ------------------ */}
             <div className="hidden lg2:block w-[94%] lg2:w-[100%] py-6 lg2:py-0 space-y-4 lg2:justify-start">
               <GameSection
@@ -1316,7 +1394,7 @@ export default function Home() {
                 // 🟥 CASE 1: No image → placeholder box
                 <div className="h-[395px] w-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">
                   <span className="text-gray-400 text-sm font-medium">
-                    No Sponsor Available
+                    {/* No Sponsor Available */}
                   </span>
                 </div>
               ) : sponser.length === 1 ? (
@@ -1416,6 +1494,27 @@ export default function Home() {
               ) : (
                 <p>No brands available</p>
               )}
+
+              <TrendingGames
+                title="Casino Lobby"
+                icon={
+                  <svg
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.8319 22.4721C15.9579 21.8461 19.9999 19.5971 19.9999 13.7821C19.9999 8.49107 16.1269 4.96707 13.3419 3.34807C12.7229 2.98807 11.9999 3.46107 11.9999 4.17607V6.00407C11.9999 7.44607 11.3939 10.0781 9.70994 11.1731C8.84994 11.7321 7.91994 10.8951 7.81594 9.87507L7.72994 9.03707C7.62994 8.06307 6.63794 7.47207 5.85994 8.06607C4.46094 9.13107 2.99994 11.0011 2.99994 13.7811C2.99994 20.8921 8.28894 22.6711 10.9329 22.6711C11.0876 22.6711 11.2489 22.6661 11.4169 22.6561C10.1109 22.5451 7.99994 21.7351 7.99994 19.1151C7.99994 17.0651 9.49494 15.6801 10.6309 15.0051C10.9369 14.8251 11.2939 15.0601 11.2939 15.4151V16.0051C11.2939 16.4551 11.4689 17.1601 11.8839 17.6421C12.3539 18.1881 13.0429 17.6161 13.0979 16.8981C13.1159 16.6721 13.3439 16.5281 13.5399 16.6421C14.1809 17.0171 14.9999 17.8171 14.9999 19.1151C14.9999 21.1631 13.8709 22.1051 12.8319 22.4721Z"
+                      fill="#C10932"
+                    />
+                  </svg>
+                }
+                games={games4}
+                onSeeAll={() => alert("See All clicked")}
+              />
+
             </div>
           </main>
         </div>

@@ -257,6 +257,14 @@ function App() {
             }
           />
           <Route
+            path="/affilationDashboard/:id"
+            element={
+              <PrivateRoute>
+                <AffiliatePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/BankWithdraw"
             element={
               <PrivateRoute>
