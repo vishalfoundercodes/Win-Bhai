@@ -1182,6 +1182,7 @@ export default function Home() {
               </svg>
             }
             games={trendingGames}
+            brand={trendingDetails}
             onSeeAll={() => alert("See All clicked")}
           />
 
@@ -1250,6 +1251,7 @@ export default function Home() {
               </svg>
             }
             games={slotGames}
+            brand={slotDetails}
             onSeeAll={() => alert("See All clicked")}
           />
 
@@ -1514,7 +1516,6 @@ export default function Home() {
                 games={games4}
                 onSeeAll={() => alert("See All clicked")}
               />
-
             </div>
           </main>
         </div>

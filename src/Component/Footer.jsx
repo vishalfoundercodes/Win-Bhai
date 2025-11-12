@@ -25,13 +25,13 @@ export default function Footer() {
           className="flex flex-col items-center text-white text-sm"
           // onClick={() => setIsOpen(true)}
           onClick={() => {
-            // if (window.location.pathname !== "/") {
-            //   navigate("/"); // go to homepage first
-            //   setTimeout(() => scrollToSection("112"), 800); // scroll after render
-            // } else {
-            //   scrollToSection("112");
-            // }
-            navigate(`/game/SportsBook`);
+            if (window.location.pathname !== "/") {
+              navigate("/"); // go to homepage first
+              setTimeout(() => scrollToSection("112"), 800); // scroll after render
+            } else {
+              scrollToSection("112");
+            }
+            // navigate(`/game/SportsBook`);
           }}
         >
           {/* <CircleDot className="w-6 h-6" /> */}

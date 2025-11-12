@@ -54,6 +54,7 @@ import InvitationRules from "./Pages/PromotionAndEarn/InvitationRule";
 import RebateRatio from "./Pages/PromotionAndEarn/RebetRatio";
 import Commissiondetail from "./Pages/PromotionAndEarn/Commissiondetail";
 import AgentLine from "./Pages/PromotionAndEarn/AgentLine";
+import PlayGame from "./Pages/Games/ThirdPartyGamePlay";
 
 function App() {
 
@@ -75,6 +76,7 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/playgame" element={<PlayGame />} /> {/* 👈 new route */}
           <Route
             path="/game"
             element={
@@ -308,12 +310,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/ForgetUserName"
-            element={
-                <ForgetUserName />
-            }
-          />
+          <Route path="/ForgetUserName" element={<ForgetUserName />} />
           <Route
             path="/PendingBets"
             element={

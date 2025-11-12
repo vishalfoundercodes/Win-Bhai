@@ -482,39 +482,34 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
   //    console.log("games jilli:", games);
   //  },[]);
 
-  const handleGameOpen = async (id) => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      toast.error("Please login first.");
-      return; // stop further execution
-    }
-    try {
-      setloading(true);
-      const userId = localStorage.getItem("userId");
-      const payload = {
-        user_id: userId,
-        // amount: profileDetails?.wallet || 0,
-        amount: 10,
-        game_id: id,
-      };
-      console.log("payload", payload);
-      const res = await axios.post(apis.openGame, payload);
-      console.log("game launch:", res?.data);
-      if (res?.data?.status === 200) {
-        if (res?.data?.apiResponse?.data?.url) {
-          // window.open(res?.data?.apiResponse?.data?.url, "_blank");
-          window.location.href = res?.data?.apiResponse?.data?.url;
-        } else {
-          toast.error(res?.data?.apiResponse?.error);
-        }
+const handleGameOpen = async (id) => {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    toast.error("Please login first.");
+    return;
+  }
+
+  try {
+    setloading(true);
+    const payload = { user_id: userId, amount: 10, game_id: id };
+    const res = await axios.post(apis.openGame, payload);
+
+    if (res?.data?.status === 200) {
+      const url = res?.data?.apiResponse?.data?.url;
+      if (url) {
+        // ✅ Open in same tab (with header for desktop, direct for mobile)
+        navigate(`/playgame?url=${encodeURIComponent(url)}`);
+      } else {
+        toast.error("Game URL not found");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setloading(false);
     }
-  };
+  } catch (error) {
+    toast.error(error?.response?.data?.message || "Something went wrong");
+  } finally {
+    setloading(false);
+  }
+};
+
 
   if (loading)
     return (

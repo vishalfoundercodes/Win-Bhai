@@ -30,13 +30,20 @@ export default function SlidingCompany() {
               key={cat.id}
               onClick={() => {setActive(cat.id);
                 //  navigate("");scrollToSection(cat.brandId) 
-                 if (window.location.pathname === "/") {
-    // Already on home page → just scroll
-    scrollToSection(cat.brandId);
-  } else {
-    // Navigate to home page first → then scroll
-    navigate("/", { state: { scrollTo: cat.brandId } });
-  }}}
+  //                if (window.location.pathname === "/") {
+  //   // Already on home page → just scroll
+  //   scrollToSection(cat.brandId);
+  // } else {
+  //   // Navigate to home page first → then scroll
+  //   navigate("/", { state: { scrollTo: cat.brandId } });
+  // }
+       if (window.location.pathname !== "/") {
+         navigate("/"); // go to homepage first
+         setTimeout(() => scrollToSection(cat.brandId), 800); // scroll after render
+       } else {
+         scrollToSection(cat.brandId);
+       }
+}}
               className={`flex items-center justify-center w-[80px] xsm4:w-[85px] xsm3:w-[90px] xxs:w-[105px] h-[40px] lg2:w-[255px] lg2:h-[50px] rounded-[8px] border transition-all duration-200 px-4 py-2 cursor-pointer
                 ${
                   active === cat.id

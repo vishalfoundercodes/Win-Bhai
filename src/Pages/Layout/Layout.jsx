@@ -343,6 +343,7 @@ export default function Layout({ children }) {
     "/CryptoAdd",
     "/WinbhaiWallet",
     "/WhatsupWithdraw",
+    "/playgame",
   ];
 
   const hideHeaderPaths = [
