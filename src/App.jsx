@@ -103,6 +103,14 @@ function App() {
             }
           />
           <Route
+            path="/deposit/:couponCode"
+            element={
+              <PrivateRoute>
+                <Deposit />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/withdraw"
             element={
               <PrivateRoute>

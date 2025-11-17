@@ -83,7 +83,12 @@ const CreateCampaign = () => {
             </div>
             <div
               className=" border-2 border-black px-2 py-3 w-full rounded-[8px] text-center text-gray cursor-pointer"
-              onClick={() => setIsOpen(true)}
+              onClick={() => {  const account_type = localStorage.getItem("account_type");
+              if (account_type === "1") {
+                toast.warn("Please login with your real account.");
+                return;
+              }
+              setIsOpen(true)}}
             >
               <button className="cursor-pointer">Add New Affiliate</button>
             </div>

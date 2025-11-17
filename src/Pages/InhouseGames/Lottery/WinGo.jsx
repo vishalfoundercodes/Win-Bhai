@@ -35,6 +35,7 @@ import Header from '../../../Component/Header';
 import { useSocket } from "../../../shared/socket/SocketContext";
 import WingoRules from './WingoRules';
 import micphone from "../../../assets/assets/micphone.png"
+import { useProfile } from '../../../Context/ProfileContext';
 const profileApi = apis.profile
 const wingo_bet_api = apis.wingo_bet
 const wingo_my_history = apis.wingo_my_history
@@ -77,6 +78,8 @@ const WinGo = () => {
   const [selectedBtnIndex, setSelectedBtnIndex] = useState(1)
   const [timeLeft, setTimeLeft] = useState(0);
   const { timers, setEventName } = useSocket();
+
+  const { fetchProfile } = useProfile();
 
   useEffect(() => {
     setEventName("winbhai_wingo");
@@ -238,6 +241,7 @@ const WinGo = () => {
       const res = await axios.get(`${profileApi}${userId}`);
       if (res?.data?.success === 200) {
         setMyDetails(res?.data?.data)
+        fetchProfile();
       }
     } catch (err) {
       toast.error(err);
@@ -247,6 +251,7 @@ const WinGo = () => {
   useEffect(() => {
     if (userId) {
       profileDetails();
+      fetchProfile()
     }
   }, [userId]);
 
@@ -469,7 +474,7 @@ const WinGo = () => {
       <div className="h-screen overflow-scroll hide-scrollbar">
         <audio ref={audioRef} src={countdownone} preload="auto" />
         <div className=" h-full font-roboto">
-          <div className="bg-red2 h-[19rem] rounded-b-[55px] px-4 pt-2">
+          <div className="bg-red2 h-[19rem]  rounded-b-[55px] px-4 pt-2">
             {/* 1st div */}
             <div
               className="p-5 h-[9rem] text-white bg-[#4D4D4C] rounded-3xl "
@@ -486,7 +491,7 @@ const WinGo = () => {
                   <b className="text-xl"></b> &nbsp;
                   {myDetails?.wallet?.toFixed(2)}
                 </p>
-                <button onClick={profileDetails}>
+                <button onClick={()=>{profileDetails();fetchProfile()}}>
                   <HiArrowPathRoundedSquare size={20} className="text-gray " />
                 </button>
               </div>

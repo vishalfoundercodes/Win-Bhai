@@ -416,7 +416,12 @@ export default function Game() {
         toast.error("Please login first.");
         return; // stop further execution
       }
-      try {
+  const account_type = localStorage.getItem("account_type");
+  if (account_type === "1") {
+    toast.warn("Please login with your real account.");
+    return;
+  }     
+   try {
         setLoading(true);
         const userId = localStorage.getItem("userId");
         const payload = {
@@ -430,7 +435,14 @@ export default function Game() {
         console.log("game launch:", res?.data);
         if (res?.data?.status === 200) {
           if (res?.data?.apiResponse?.data?.url) {
-            window.location.href = res?.data?.apiResponse?.data?.url;
+            // window.location.href = res?.data?.apiResponse?.data?.url;
+                const url = res?.data?.apiResponse?.data?.url;
+                if (url) {
+                  // ✅ Open in same tab (with header for desktop, direct for mobile)
+                  navigate(`/playgame?url=${encodeURIComponent(url)}`);
+                } else {
+                  toast.error("Game URL not found");
+                }
 
           } else {
             toast.error(res?.data?.apiResponse?.error);

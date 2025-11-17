@@ -110,6 +110,11 @@ const defaultImages = [image1, image2, image3];
   
   const handleUsdtPayment=async()=>{
     try {
+        const account_type = localStorage.getItem("account_type");
+                       if (account_type === "1") {
+                         toast.warn("Please login with your real account.");
+                         return;
+                       }
       setLoader(true)
       const payload = {
         user_id: localStorage.getItem("userId"),
@@ -144,8 +149,8 @@ const defaultImages = [image1, image2, image3];
     }
   }, [selectedPayment]);
 
-  const cryptoMin=940
-  const cryptoMax=188000
+  const cryptoMin=10
+  const cryptoMax=1000000
   const manualMin=500
   const manualMax = 1000000
 
@@ -156,6 +161,11 @@ const defaultImages = [image1, image2, image3];
 
     const handleIndainPayment=async()=>{
       try {
+          const account_type = localStorage.getItem("account_type");
+                         if (account_type === "1") {
+                           toast.warn("Please login with your real account.");
+                           return;
+                         }
         setLoader(true)
         const payload={
           user_id:localStorage.getItem("userId"),
@@ -180,6 +190,11 @@ const defaultImages = [image1, image2, image3];
 
     const handleBankWithdraw=async()=>{
       try {
+          const account_type = localStorage.getItem("account_type");
+                         if (account_type === "1") {
+                           toast.warn("Please login with your real account.");
+                           return;
+                         }
          setLoader(true);
          const payload = {
            user_id: localStorage.getItem("userId"),
@@ -1024,7 +1039,7 @@ const defaultImages = [image1, image2, image3];
               </p>
             </div>
           )}
-          {selectedPayment !== "manual" && (
+          {selectedPayment !== "manual" && selectedPayment !=="crypto" && (
             <p className="text-ssm text-lightGray mt-1 font-semibold">
               Min {manualMin} - Max {manualMax}
             </p>
@@ -1051,7 +1066,7 @@ const defaultImages = [image1, image2, image3];
               cryptoAmounts.map((val, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setAmount(val)}
+                  onClick={() => setUsdtAmount(val)}
                   className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
                 >
                   +{val.toLocaleString()}

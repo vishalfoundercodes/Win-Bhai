@@ -345,6 +345,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const [loading, setloading] = useState(false);
+  const account_type=localStorage.getItem("account_type");
   // const sectionElement = useRef(null);
   //  const sectionBrandId =
   //    brand?.brand_id || title?.toLowerCase().replace(/\s+/g, "-");
@@ -485,7 +486,30 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
 const handleGameOpen = async (id) => {
   const userId = localStorage.getItem("userId");
   if (!userId) {
-    toast.error("Please login first.");
+    toast.warn("Please login first.");
+    return;
+  }
+  if (account_type==="1") {
+    // toast.warn("Please login with your real account.");
+      try {
+        setloading(true);
+        const payload = { user_id: userId, amount: 0, game_id: id };
+        const res = await axios.post(apis.openGame, payload);
+
+        if (res?.data?.status === 200) {
+          const url = res?.data?.apiResponse?.data?.url;
+          if (url) {
+            // ✅ Open in same tab (with header for desktop, direct for mobile)
+            navigate(`/playgame?url=${encodeURIComponent(url)}`);
+          } else {
+            toast.error("Game URL not found");
+          }
+        }
+      } catch (error) {
+        toast.error(error?.response?.data?.message || "Something went wrong");
+      } finally {
+        setloading(false);
+      }
     return;
   }
 

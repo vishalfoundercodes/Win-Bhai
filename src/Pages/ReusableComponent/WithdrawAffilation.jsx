@@ -5,6 +5,7 @@ import axios from 'axios';
 import apis from '../../utils/apis';
 import { details } from 'framer-motion/client';
 import Loader from '../resuable_component/Loader/Loader';
+import { toast } from 'react-toastify';
 export default function WithdrawAffilation() {
   const [datails,setDetails]=useState(null)
 
@@ -178,7 +179,11 @@ export default function WithdrawAffilation() {
                   <div className="flex w-full items-center justify-center">
                     <button
                       className="px-10 py-4 bg-red text-white rounded-[8px] flex gap-2 items-center justify-center text-sm shadow-md  lg2:items-center lg2:flex lg2:font-semibold lg2:rounded-md lg2:ml-auto  cursor-pointer"
-                      onClick={() => navigate("/WithdrawFunds")}
+                      onClick={() =>{   const account_type = localStorage.getItem("account_type");
+                      if (account_type === "1") {
+                        toast.warn("Please login with your real account.");
+                        return;
+                      }navigate("/WithdrawFunds")}}
                     >
                       <CreditCard className="text-white w-5 h-5" />
                       Withdraw Funds

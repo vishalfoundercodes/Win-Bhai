@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { AiTwotoneSound } from "react-icons/ai";
 import { IoToggleSharp, IoWallet } from "react-icons/io5";
 import { PiToggleLeftFill } from "react-icons/pi";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaUser } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import bg_one from "../../../assets/assets/aviator/bg_one.png";
@@ -22,6 +22,8 @@ import { socket } from "./AviatorSocket";
 import chakra from "../../../assets/assets/aviator/chakra.png";
 import { useNavigate } from "react-router-dom";
 import HowToPlayModal from "./HowTOPlay"
+import GameSlider from "../../Home/HomeComponents/GameSlider";
+import Sidebar from "../../Wallet/SideBar";
 
 const bgImages = [chakra, bg_one, bg_two, bg_three, bg_four, bg_five];
 function AviatorHeader({
@@ -40,7 +42,31 @@ function AviatorHeader({
   const [hotAirData, setHotAirData] = useState(null);
   const modalRef = useRef(null); // Ref for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
+    const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
+      const toggleLeftSidebar = () => {
+        setLeftSidebarOpen(!leftSidebarOpen);
+      };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+  // 🔹 Load stored sidebar state on mount
+  useEffect(() => {
+    const storedSidebar = localStorage.getItem("sidebar");
+    const storedLeftSidebar = localStorage.getItem("leftSidebar");
+
+    if (storedSidebar === "true") setSidebarOpen(true);
+    if (storedLeftSidebar === "true") setLeftSidebarOpen(true);
+  }, []);
+  useEffect(() => {
+    if (leftSidebarOpen) {
+      localStorage.setItem("sidebar", "true");
+    } else {
+      localStorage.removeItem("sidebar");
+    }
+  }, [leftSidebarOpen]);
 
   useEffect(() => {
     const handleSocket = (hotair) => {
@@ -144,15 +170,37 @@ function AviatorHeader({
   const im = localStorage.getItem("aviatorBg");
   return (
     <>
-      <header className="flex items-center bg-blackAviator2 text-blackAviatorText justify-between h-[3.22rem] w-full px-3">
+      <header className="flex items-center bg-red text-blackAviatorText justify-between h-[3.22rem] w-full px-3">
         <audio ref={audioRefCrash} src={crashmusic} preload="auto" />
         <audio ref={audioRef} src={backgroundMusic} preload="auto" />
-        <img
-          className="w-32 h-8 object-fill cursor-pointer"
-          src={usawinlogo}
-          alt="Logo"
-          onClick={()=>navigate("/")}
-        />
+
+        <div className="flex items-center gap-2">
+          <button
+            className="text-red text-sm bg-[#e0e0e0] rounded-full p-2 border border-inputBorder w-8 h-8 flex items-center justify-center lg2:hidden"
+            onClick={toggleLeftSidebar}
+          >
+            <svg
+              width="14"
+              height="12"
+              viewBox="0 0 18 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className=""
+            >
+              <path
+                d="M0 12V10H18V12H0ZM0 7V5H18V7H0ZM0 2V0H18V2H0Z"
+                fill="#C10932"
+              />
+            </svg>
+          </button>
+          <img
+            className="w-32 h-8 object-fill cursor-pointer"
+            src={usawinlogo}
+            alt="Logo"
+            onClick={() => navigate("/")}
+          />
+        </div>
+
         <div className="flex items-center gap-2 text-xsm relative">
           {/* <div
             className="flex bg-yellow rounded-full px-2 py-1 text-white cursor-pointer"
@@ -160,9 +208,16 @@ function AviatorHeader({
           >
             How to play?
           </div> */}
-          <div className="text-green font-bold">{myDetails?.data?.wallet} </div>
+          {/* <div className="text-green font-bold">{myDetails?.data?.wallet} </div> */}
+          <div
+            className="flex items-center bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] text-white px-1 py-2 rounded-full gap-1 cursor-pointer whitespace-nowrap"
+            onClick={toggleSidebar}
+          >
+            <span className="text-[13px]">₹ {myDetails?.data?.wallet}</span>
+            <FaUser className="text-ssm" />
+          </div>
           {/* Button to toggle modal */}
-          <div onClick={toggleModal} className="cursor-pointer">
+          <div onClick={toggleModal} className="cursor-pointer text-white">
             <FiAlignJustify size={20} />
           </div>
 
@@ -277,11 +332,24 @@ function AviatorHeader({
             </motion.div>
           )}
         </div>
-      <HowToPlayModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+        <HowToPlayModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </header>
+
+        <Sidebar
+              isOpen={sidebarOpen}
+              onClose={toggleSidebar}
+              profileDetails={myDetails?.data}
+              profileDetails2={myDetails?.data}
+            />
+
+      <GameSlider
+        isOpen={leftSidebarOpen}
+        onClose={toggleLeftSidebar}
+        profileDetails={myDetails?.data}
+      />
     </>
   );
 }

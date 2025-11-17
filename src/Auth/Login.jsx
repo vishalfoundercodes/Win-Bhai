@@ -80,6 +80,44 @@ export default function Login() {
           toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);
              localStorage.setItem("token", res?.data?.login_token);
+             localStorage.setItem("account_type", res?.data?.account_type);
+             fetchProfile()
+             navigate("/");
+        }
+        // Handle server response here, like redirecting on successful login
+      } catch (error) {
+        console.error("Login Error:", error?.response?.data?.message); // Handle any errors from the server
+        toast.error(error?.response?.data?.message);
+      }finally{
+        setLoading(false)
+      }
+    };
+    const handleDemoLogin = async (e) => {
+      e.preventDefault(); // Prevent the page reload on form submit
+
+  
+
+      // If validation passes, proceed with login
+      const payload = {
+        identity:
+          selectedOption === "Username" ? "Demo1111" : "Demo1111" ,
+        password:"11111111",
+        selectedOption,
+      };
+
+
+      console.log("demo Login Payload:", payload);
+
+      // Add your logic to handle login here, such as sending the data to the server
+      try {
+        setLoading(true);
+        const res = await axios.post(apis.login, payload);
+        console.log(res?.data); // Log the response from the server
+        if(res?.data?.status==="200" || res?.data?.status===200){
+          toast.success(res?.data?.message);
+             localStorage.setItem("userId", res?.data?.id);
+             localStorage.setItem("token", res?.data?.login_token);
+             localStorage.setItem("account_type", res?.data?.account_type);
              fetchProfile()
              navigate("/");
         }
@@ -501,6 +539,7 @@ export default function Login() {
               fontWeight: 200,
               fontSize: "13px",
             }}
+            onClick={handleDemoLogin}
           >
             Demo Login
           </button>

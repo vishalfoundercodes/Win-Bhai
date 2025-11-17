@@ -13,6 +13,11 @@ import { currency } from "../utils/keys";
 // import Login from "../Auth/Login"
 import { useNavigate } from "react-router-dom";
 import chickenGameimage from "../assets/chicken header image.png";
+import headerImage from "../../../../assets/Home/headerImage.png";
+import GameSlider from "../../../Home/HomeComponents/GameSlider";
+import { FaUser } from "react-icons/fa";
+import Sidebar from "../../../Wallet/SideBar";
+
 export default function GameSection({
   toggleSound,
   setToggleSound,
@@ -114,6 +119,33 @@ export default function GameSection({
 
   const [showModal, setShowModal] = useState(false);
   const [showModalLogin, setShowModalLogin] = useState(false);
+
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
+    const toggleLeftSidebar = () => {
+      setLeftSidebarOpen(!leftSidebarOpen);
+    };
+
+    const toggleSidebar = () => {
+      setSidebarOpen(!sidebarOpen);
+    };
+    // 🔹 Load stored sidebar state on mount
+    useEffect(() => {
+      const storedSidebar = localStorage.getItem("sidebar");
+      const storedLeftSidebar = localStorage.getItem("leftSidebar");
+
+      if (storedSidebar === "true") setSidebarOpen(true);
+      if (storedLeftSidebar === "true") setLeftSidebarOpen(true);
+    }, []);
+    useEffect(() => {
+      if (leftSidebarOpen) {
+        localStorage.setItem("sidebar", "true");
+      } else {
+        localStorage.removeItem("sidebar");
+      }
+    }, [leftSidebarOpen]);
   return (
     <>
       <div
@@ -121,7 +153,7 @@ export default function GameSection({
           }`}
       >
         {/* Header Section */}
-        <div className="flex items-center justify-between h-full px-2 sm:px-5 bg-[#3A3D50] text-white flex-nowrap overflow-x-auto overflow-hidden">
+        <div className="flex items-center justify-between h-full px-2 sm:px-5 bg-red text-white flex-nowrap overflow-x-auto overflow-hidden">
           {/* Title */}
           {/* <h1
             className="font-extrabold text-[1.4rem] md:text-[1.9rem] xl:text-[2.3rem] whitespace-nowrap cursor-pointer"
@@ -132,12 +164,47 @@ export default function GameSection({
             AD
           </h1> */}
 
-          <img
+          {/* <img
             src={chickenGameimage}
             alt=""
             onClick={() => navigate("/")}
             className="w-50 whitespace-nowrap cursor-pointer"
-          />
+          /> */}
+
+          <div>
+            {/* Left Section - Hamburger & Logo */}
+            <div className="flex items-center gap-2 justify-center">
+              <button
+                className="text-red text-sm bg-[#e0e0e0] rounded-full p-2 border border-inputBorder w-8 h-8 flex items-center justify-center lg2:hidden"
+                onClick={toggleLeftSidebar}
+              >
+                <svg
+                  width="14"
+                  height="12"
+                  viewBox="0 0 18 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className=""
+                >
+                  <path
+                    d="M0 12V10H18V12H0ZM0 7V5H18V7H0ZM0 2V0H18V2H0Z"
+                    fill="#C10932"
+                  />
+                </svg>
+              </button>
+
+              <div
+                className="font-bold text-sm md:text-md items-center justify-center cursor-pointer"
+                onClick={() => navigate("/")}
+              >
+                <img
+                  src={headerImage}
+                  alt="WINBHAI"
+                  className="w-24 xsm4:w-28 xsm3:w-32 xxs:w-40 -mt-1"
+                />
+              </div>
+            </div>
+          </div>
 
           {/* Info buttons */}
           <div className="flex items-center gap-2 sm:gap-4 text-sm justify-end">
@@ -149,15 +216,24 @@ export default function GameSection({
               <span className=" sm:inline hidden ml-1">How to play?</span>
             </button>
             {userid && (
-              <button
-                className="px-3 sm:px-5 py-1 flex items-center rounded bg-[#4F5163] hover:bg-grayBgHover  transition whitespace-nowrap"
-                // onClick={() => setIsModalOpen(true)}
+              // <button
+              //   className="px-3 sm:px-5 py-1 flex items-center rounded bg-[#4F5163] hover:bg-grayBgHover  transition whitespace-nowrap"
+              //   // onClick={() => setIsModalOpen(true)}
+              // >
+              //   <span className="mr-1 flex items-center justify-center w-4 h-4 text-[10px] bg-white rounded-full text-black">
+              //     {currency}
+              //   </span>
+              //   {profileData?.total_wallet}
+              // </button>
+              <div
+                className="flex items-center bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] text-white px-1 py-2 rounded-full gap-1 cursor-pointer whitespace-nowrap"
+                onClick={toggleSidebar}
               >
-                <span className="mr-1 flex items-center justify-center w-4 h-4 text-[10px] bg-white rounded-full text-black">
-                  {currency}
+                <span className="text-[13px]">
+                  ₹ {profileData?.total_wallet}
                 </span>
-                {profileData?.total_wallet}
-              </button>
+                <FaUser className="text-ssm" />
+              </div>
             )}
 
             {!userid && (
@@ -179,13 +255,13 @@ export default function GameSection({
 
             <button
               onClick={handleFullscreen}
-              className="bg-[#4F5163] hidden lg:block rounded p-2.5 whitespace-nowrap cursor-pointer"
+              className="bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] hidden lg:block rounded p-2.5 whitespace-nowrap cursor-pointer"
             >
               <SlSizeFullscreen className="hover:text-yellow-400" size={12} />
             </button>
             <button
               onClick={() => ToggleModalMenu()}
-              className="whitespace-nowrap cursor-pointer bg-[#4F5163] rounded"
+              className="whitespace-nowrap cursor-pointer bg-[linear-gradient(104.41deg,#4EB92B_4.93%,#235313_95.07%)] rounded"
             >
               <HiBars3 className="" size={25} />
             </button>
@@ -230,6 +306,19 @@ export default function GameSection({
         onClose={() => setShowModalLogin(false)}
         profileHandler={profileHandler}
       /> */}
+
+      <Sidebar
+        isOpen={sidebarOpen}
+        onClose={toggleSidebar}
+        profileDetails={profileData}
+        profileDetails2={profileData}
+      />
+
+      <GameSlider
+        isOpen={leftSidebarOpen}
+        onClose={toggleLeftSidebar}
+        profileDetails={profileData}
+      />
     </>
   );
 }

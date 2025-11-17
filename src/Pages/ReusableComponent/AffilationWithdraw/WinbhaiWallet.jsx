@@ -1,7 +1,34 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../../../Context/ProfileContext';
+import axios from 'axios';
+import apis from '../../../utils/apis';
+import { toast } from 'react-toastify';
 export default function WinbhaiWallet() {
   const navigate=useNavigate()
+  const {profileDetails}=useProfile()
+
+  const handleTransfer=async()=>{
+    try {
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+        amount: profileDetails?.available_commission_to_withdraw,
+      };
+      const res = await axios.post(apis.affiliation_wallet_add,payload);
+      console.log(res.data);
+      if (res.data.status === "success") {
+        alert("Amount transferred successfully to Winbhai Wallet");
+        navigate(-1);
+      } else {
+        toast.error("Transfer failed. Please try again.");
+      }
+    } catch (error) {
+      console.error(error)
+      toast.error(
+        error?.response?.data?.message || "An error occurred. Please try again."
+      );
+    }
+  }
   return (
     <div
       className="px-4  min-h-screen flex flex-col justify-between lg2:justify-normal"
@@ -36,7 +63,7 @@ export default function WinbhaiWallet() {
         <div className="bg-white rounded-[8px] lg2:rounded-t-[0px]  px-6 py-4 w-full text-center border border-red border-b-12">
           <div className="flex justify-center ">
             <div className="px-4 pt-4 pb-0 text-[30px] xsm3:text-[40px] font-medium">
-              <h1>576.129 USDT</h1>
+              <h1>{profileDetails?.available_commission_to_withdraw} INR</h1>
             </div>
           </div>
 
@@ -89,7 +116,10 @@ export default function WinbhaiWallet() {
         </div>
       </div>
 
-      <button className="w-full bg-red hover:bg-red text-white py-2 rounded-[8px] mb-16 lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer lg2:mt-3">
+      <button
+        className="w-full bg-red hover:bg-red text-white py-2 rounded-[8px] mb-16 lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer lg2:mt-3"
+        onClick={handleTransfer}
+      >
         Transfer
       </button>
     </div>

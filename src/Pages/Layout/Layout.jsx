@@ -354,7 +354,7 @@ export default function Layout({ children }) {
     "/Info",
     "/changePassword",
     "/downloadAPK",
-    "/lottery/wingo",
+    // "/lottery/wingo",
     "/needhelp",
   ];
 
@@ -404,7 +404,7 @@ export default function Layout({ children }) {
       // Hide loader after 2s *at least*
       const timer = setTimeout(() => {
         setIsLoading(false);
-      }, 1500);
+      }, 300);
 
       // Cleanup: if component unmounts or route changes again
       return () => {clearTimeout(timer);

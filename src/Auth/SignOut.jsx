@@ -61,9 +61,13 @@ const navigate=useNavigate()
           <button
             onClick={() => {
               onClose();
-              localStorage.clear();
+              localStorage.removeItem("first_time_load");
+              localStorage.removeItem("userId");
+              localStorage.removeItem("token");
+              localStorage.removeItem("account_type");
+              localStorage.removeItem("sidebar");
               navigate("/");
-              clearCache()
+              // clearCache()
               window.location.reload();
               // alert("Signed out!"); // yaha tumhara signout logic ayega
             }}

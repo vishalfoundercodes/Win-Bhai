@@ -3,7 +3,7 @@ import { ArrowRight, Clipboard } from "lucide-react";
 import { Upload } from "lucide-react";
 import phonePay from "../../assets/Wallet/phone pay.png";
 import googlePay from "../../assets/Wallet/google pay.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import apis from "../../utils/apis";
 import { toast } from "react-toastify";
@@ -15,10 +15,16 @@ export default function DepositPage() {
   const [amount, setAmount] = useState("");
   const [usdtAmount,setusdtAmout]=useState("")
   const {profileDetails}=useProfile()
-  
+  const {cupponCode}=useParams()
+    const location = useLocation();
+
+    const coupon = location.state?.coupon;
+
+    // console.log("Received Coupon:", coupon);
 const navigate = useNavigate()
   const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
     const [copied, setCopied] = useState("");
+    
 
     const copyToClipboard = (text, label) => {
       navigator.clipboard.writeText(text);
@@ -51,6 +57,11 @@ const navigate = useNavigate()
       },[])
       const handleBappaVentures=async()=>{
         try{
+            const account_type = localStorage.getItem("account_type");
+            if (account_type === "1") {
+              toast.warn("Please login with your real account.");
+              return;
+            }
           if(amount < minAmount){
             toast.warn(`Minimum amount ${minAmount}`)
             return
@@ -64,15 +75,16 @@ const navigate = useNavigate()
             user_id: localStorage.getItem("userId"),
             cash: amount,
             type: "1",
+            coupon_id: coupon?.id || "",
           };
           const res=await axios.post(apis.bappa_venture,payload)
           console.log(res)
           if (res?.data?.status === "SUCCESS"){
-             window.open(res?.data?.payment_link, "_blank");
+             window.open(res?.data?.payment_link, "_self");
              setAmount("")
           }
             if (res?.data?.status === 400) {
-              toast.error(res?.data?.error);
+              toast.error(res?.data?.error || res?.data?.message || "Payment failed");
             }
           setLoading(false)
         }catch(error){
@@ -83,6 +95,11 @@ const navigate = useNavigate()
       }
       const handlecrypto = async () => {
         try {
+            const account_type = localStorage.getItem("account_type");
+            if (account_type === "1") {
+              toast.warn("Please login with your real account.");
+              return;
+            }
           if (usdtAmount < cryptoMin) {
             toast.warn(`Minimum amount ${cryptoMin}`);
             return;
@@ -96,6 +113,7 @@ const navigate = useNavigate()
             user_id: localStorage.getItem("userId"),
             amount: usdtAmount,
             type: "0",
+            coupon_id: coupon?.id || "",
           };
           console.log(payload)
 
@@ -169,6 +187,11 @@ const navigate = useNavigate()
 
         const handleManualSubmit = async() => {
           try {
+              const account_type = localStorage.getItem("account_type");
+                 if (account_type === "1") {
+                   toast.warn("Please login with your real account.");
+                   return;
+                 }
             setLoading(true)
                  if (amount < minAmount) {
                    toast.warn(`Minimum amount ${minAmount}`);
@@ -186,15 +209,17 @@ const navigate = useNavigate()
                       toast.warn(`Upload your utr number`);
                       return;
                  }
+                
              const payload = {
                user_id: localStorage.getItem("userId"),
                cash: amount,
                //  transaction_id: utrNumber || "dummy_transaction_id", // you can replace this
                transaction_id: parseInt(utrNumber, 16),
                screenshot: file || "",
+               coupon_id:coupon?.id || "",
              };
 
-             console.log(payload);
+             console.log("payload with coupon",payload);
              const res = await axios.post(apis.manual_payin,payload);
              console.log(res?.data)
              if(res?.data?.status===200){
@@ -838,7 +863,7 @@ const navigate = useNavigate()
                 </span>
                 <div>
                   <p className="text-ssm lg2:text-sm font-medium text-green-700 lg2:text-black2 -mb-2 lg2:mb-0">
-                    5% extra on this deposit
+                    {coupon ? coupon.description : "No coupon applied"}
                   </p>
                   <button
                     className="text-xs lg2:text-ssm text-lightGray cursor-pointer"

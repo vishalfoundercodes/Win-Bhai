@@ -87,7 +87,7 @@ const [selectedPayment, setSelectedPayment] = useState(null);
                  phone_no: "",
                  otp: "",
                });
-               navigate("/withdraw");
+               navigate(-1);
           }
         } catch (error) {
           console.log(error)

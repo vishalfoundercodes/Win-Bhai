@@ -403,7 +403,12 @@ function PromotionHome() {
         <div className="px-5 lg2:px-4 text-[15px] mt-32 lg2:mt-2 pb-0 bg-[] w-full">
           <div className="flex w-full justify-center lg2:justify-end">
             <button
-              onClick={() => setCopyInvitation(true)}
+              onClick={() => {  const account_type = localStorage.getItem("account_type");
+              if (account_type === "1") {
+                toast.warn("Please login with your real account.");
+                return;
+              }
+              setCopyInvitation(true)}}
               className="w-full lg2:w-auto lg2:px-4 font-semibold py-1.5 rounded-[5px] bg-red text-white"
             >
               INVITATION LINK
@@ -411,7 +416,11 @@ function PromotionHome() {
           </div>
 
           <div
-            onClick={() => setCopyInvitationCode(true)}
+            onClick={() => {  const account_type = localStorage.getItem("account_type");
+            if (account_type === "1") {
+              toast.warn("Please login with your real account.");
+              return;
+            }setCopyInvitationCode(true)}}
             className="w-full cursor-pointer flex items-center justify-between mt-4 bg-white p-4 rounded-md"
           >
             <div className="flex w-full items-center gap-2 text-black whitespace-nowrap overflow-hidden">

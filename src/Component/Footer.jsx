@@ -27,9 +27,9 @@ export default function Footer() {
           onClick={() => {
             if (window.location.pathname !== "/") {
               navigate("/"); // go to homepage first
-              setTimeout(() => scrollToSection("112"), 800); // scroll after render
+              setTimeout(() => scrollToSection("46"), 800); // scroll after render
             } else {
-              scrollToSection("112");
+              scrollToSection("46");
             }
             // navigate(`/game/SportsBook`);
           }}

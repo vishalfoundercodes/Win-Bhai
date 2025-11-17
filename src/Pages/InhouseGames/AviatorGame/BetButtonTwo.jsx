@@ -48,8 +48,13 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
     try {
           const loginTokenFromLocalStorage =
             localStorage.getItem("token");
+          const account_type = localStorage.getItem("account_type");
           const response = await axios.get(`${apis.profile}${userId}`);
           const profileToken = response?.data?.data?.login_token;
+            if (account_type === "1") {
+              toast.warn("Please login with your real account.");
+              return;
+            }
           if (profileToken != loginTokenFromLocalStorage) {
             // setLoading(true);
             // console.log("wingo login token matches");

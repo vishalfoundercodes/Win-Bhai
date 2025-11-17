@@ -25,6 +25,9 @@ const apis = {
   affiliateDashboard: `${configModalWinBhai}campaign_summary`,
   affiliateStatics: `${configModalWinBhai}campaign_analytics`,
   affiliateWithdrawHome: `${configModalWinBhai}campaign_commission_summary`,
+  affiliateWithdraw: `${configModalWinBhai}affiliate_withdraw`,
+  affiliation_usdtwithdraw: `${configModalWinBhai}affiliation_usdtwithdraw`,
+  affiliation_wallet_add: `${configModalWinBhai}affiliation_wallet_add`,
 
   sponserImage: `${configModalWinBhai}getAllNotices`,
   bannerImage: `${configModalWinBhai}slider_image_view`,

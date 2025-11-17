@@ -13,6 +13,7 @@ import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useScroll } from "../../../Context/ScrollContext";
+import SignOutModal from "../../../Auth/SignOut";
 
   const Cricket = ({ active }) => (
     <svg
@@ -270,6 +271,7 @@ import { useScroll } from "../../../Context/ScrollContext";
 export default function GameSlider({ isOpen, onClose, profileDetails }) {
   const [selected, setSelected] = useState(null);
  const { scrollToSection } = useScroll();
+ const [openSignOutModal, setOpenSignOutModal] = useState(false);
   const navigate = useNavigate();
 
    const games = [
@@ -349,7 +351,6 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
         onClick={onClose}
         className="fixed inset-0 bg-black/50 backdrop-blur-sm"
       />
-
       {/* Sidebar */}
       <div
         className={`relative bg-white w-[70%] md:w-[50%] lg:w-[23%] h-full shadow-lg overflow-y-auto z-50 transition-transform duration-300 ${
@@ -368,11 +369,9 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
         <div className="flex items-center gap-3 px-4 py-3 border-b">
           <div className="w-8 h-8 flex items-center justify-center rounded-[6px] bg-[#A21518] text-white font-bold text-xsm p-4">
             {profileDetails?.username?.charAt(0)?.toUpperCase() || "U"}
-            
           </div>
           <span className="text-darkGray font-medium text-sm">
             {profileDetails?.username || "User"}
-           
           </span>
         </div>
 
@@ -380,7 +379,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
         <ul>
           {games.map((game) => {
             const IconComp = game.image;
-       
+
             return (
               <li
                 key={game.id}
@@ -390,10 +389,15 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
             ? "bg-[#FFE1E1] text-red" // active row background
             : "hover:bg-gray-100 text-darkGray" // default row background
         }`}
-               
                 onClick={() => {
+                  // 👉 Logout item par modal open
+                  if (game.name === "Logout") {
+                    setOpenSignOutModal(true);
+                    return; 
+                  }
                   setSelected(game.id);
                   navigate(game.route);
+
                   if (game.brandId) {
                     console.log(
                       "🔍 Searching for element:",
@@ -404,10 +408,10 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
                     );
                     console.log("📍 Found element:", element);
                     scrollToSection(game.brandId);
-                    onClose()
+                    onClose();
                   }
+                  onClose();
                 }}
-               
               >
                 {/* Keep same circle size always */}
                 <div
@@ -530,6 +534,11 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
           </div>
         </div>
       </div>
+      
+      <SignOutModal
+        isOpen={openSignOutModal}
+        onClose={() => setOpenSignOutModal(false)}
+      />
     </div>
   );
 }

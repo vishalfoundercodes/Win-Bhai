@@ -7,6 +7,7 @@ import howtoplayheader from "../../assets/assets/images/howtoplayheader.png";
 import Loader  from "./Loader/Loader";
 import apis from "../../utils/apis";
 import { useNavigate } from "react-router-dom";
+import { useProfile } from "../../Context/ProfileContext";
 function PreSalesModal({ onClose }) {
  
   return (
@@ -83,6 +84,7 @@ function LotteryBetModal({
   onClose,
   gameDetails,
 }) {
+  const { fetchProfile } = useProfile();
   const [balanceIndex, setBalanceIndex] = useState(0);
   const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
@@ -128,9 +130,15 @@ function LotteryBetModal({
   const wingoBetHandler = async () => {
     try{
     const loginTokenFromLocalStorage = localStorage.getItem("token");
+    const account_type = localStorage.getItem("account_type");
     const response = await axios.get(`${apis.profile}${userId}`);
     const profileToken = response?.data?.data?.login_token;
     
+      if (account_type === "1") {
+        toast.error("Please login with your real account.");
+        return;
+      }
+
     if (profileToken != loginTokenFromLocalStorage) {
       setLoading(true);
       console.log("wingo login token matches");
@@ -159,6 +167,7 @@ function LotteryBetModal({
           localStorage.setItem(`betStatus${gameDetails?.gameId}`, updatedValue);
           // setIsBetDone(res)
           profileDetails();
+          fetchProfile()
           myHistory();
           onClose();
           toast.success(res?.data?.message);
@@ -166,6 +175,7 @@ function LotteryBetModal({
         if (res?.data?.status === 400) {
           // setIsBetDone(res)
           profileDetails();
+          fetchProfile()
           myHistory();
           onClose();
           toast.warn(res?.data?.message);
@@ -196,12 +206,12 @@ if (loading) {
     return (
       <>
         <div
-          className="fixed inset-0 z-50 flex justify-center items-end bg-grayBg bg-opacity-50"
+          className="fixed inset-0 z-50 flex justify-center items-end bg-transparent bg-opacity-50"
           onClick={handleOverlayClick}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full xsm:w-[400px] min-h-screen  bg-black text-white shadow-lg backdrop-blur-sm"
+            className="w-full xsm:w-[400px] min-h-screen  bg-transparent text-white shadow-lg backdrop-blur-sm"
           >
             <div className="absolute bottom-0 w-full">
               <div

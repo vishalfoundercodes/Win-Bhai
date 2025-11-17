@@ -10,35 +10,23 @@ import image1 from "../../../assets/Account/image1.png";
 import image2 from "../../../assets/Account/image2.png";
 import image3 from "../../../assets/Account/image3.png";
 import { useNavigate } from "react-router-dom";
+import { useProfile } from "../../../Context/ProfileContext";
+import axios from "axios";
+import apis from "../../../utils/apis";
+import { toast } from "react-toastify";
 export default function BankWithdraw() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState("");
-  const cards = [
-    {
-      ifsc: "SBIN0030089",
-      account: "39227182111",
-      name: "Vikas Sharma",
-      image: image1,
-    },
-    {
-      ifsc: "HDFC875422",
-      account: "98765432100",
-      name: "Dummy User",
-      image: image2,
-    },
-    {
-      ifsc: "ICIC004421",
-      account: "123456789012",
-      name: "Rahul Singh",
-      image: image3,
-    },
-  ];
+
   const quickAmounts = [
     500, 2000, 5000, 10000, 20000, 30000, 50000, 70000, 100000,
   ];
 const options = ["Option 1"];
 const [active, setActive] = useState("Option 1");
        const [slidesPerView, setSlidesPerView] = useState(1.2);
+     const [selectedCardId, setSelectedCardId] = useState(null);
+      const [accounts, setAccounts] = useState([]);
+      const [loader,setLoader]=useState(false)
           useEffect(() => {
             const updateSlides = () => {
               if (window.innerWidth >= 1024) {
@@ -54,6 +42,94 @@ const [active, setActive] = useState("Option 1");
 
             return () => window.removeEventListener("resize", updateSlides);
           }, []);
+
+          const minUsdt=10
+          const maxUsdt=1000000
+
+              const handleSelectCard = (card) => {
+                setSelectedCardId(card.id); // store selected card ID
+                console.log("Selected Card ID:", card.id);
+              };
+
+                const handleUsdtPayment=async()=>{
+                  try {
+                      const account_type = localStorage.getItem("account_type");
+                                     if (account_type === "1") {
+                                       toast.warn("Please login with your real account.");
+                                       return;
+                                     }
+                    if (minUsdt>amount) {
+                      toast.warn(`Minimum withdraw amount is ${minUsdt} USDT`);
+                      return;
+                    }
+                    if (amount>maxUsdt) {
+                      toast.warn(`Maximum withdraw amount is ${maxUsdt} USDT`);
+                      return;
+                    }
+                      setLoader(true);
+                    const payload = {
+                      user_id: localStorage.getItem("userId"),
+                      usdt_wallet_address_id: selectedCardId,
+                      amount_inr:
+                        profileDetails?.withdraw_conversion_rate * amount,
+                      amount: amount,
+                      type: 0,
+                    };
+                    console.log(payload)
+                    const res = await axios.post(
+                      apis.affiliation_usdtwithdraw,
+                      payload
+                    );
+                    console.log(res)
+                    if(res?.data?.status===200){
+                     await fetchProfile();
+                      toast.success(res?.data?.message);
+                      setAmount("")
+                    }
+                  } catch (error) {
+                    console.log(error)
+                    toast.error(error?.response?.data?.message)
+                  }
+                  finally{
+                    setLoader(false)
+                  }
+                }
+          
+                     const {profileDetails, fetchProfile } = useProfile();
+                     useEffect(() => {
+                       console.log("Profile Details:", profileDetails);
+                     }, [profileDetails]);
+          
+                    const defaultImages = [image1, image2, image3];
+
+  const fetchusdtaccount = async () => {
+    try {
+      setLoader(true);
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+      };
+      const res = await axios.post(`${apis.view_usdt_wallet_address}`, payload);
+      console.log("account usdt", res?.data?.data);
+      setAccounts(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  const cards = accounts.map((acc, index) => ({
+    ifsc: acc.ifsc_code || acc.wallet_type,
+    account: acc.account_number || acc.wallet_address,
+    name: acc.name,
+    image: defaultImages[index % defaultImages.length], // rotate through images
+    id: acc.id,
+  }));
+
+     useEffect(()=>{
+                fetchusdtaccount();
+              },[])
+
   return (
     <div className="min-h-screen px-4 py-2 lg2:py-0 space-y-4">
       <div
@@ -92,13 +168,13 @@ const [active, setActive] = useState("Option 1");
             {option}
           </button>
         ))}
-        <container className="mb-2 ">
+        <div className="mb-2 mt-2">
           <Swiper
+            key={slidesPerView} // ✅ Force Swiper to re-init when slidesPerView changes
             modules={[Pagination]}
             spaceBetween={20}
             slidesPerView={slidesPerView}
             centeredSlides={false}
-            initialSlide={0}
             loop={false}
             grabCursor={true}
             touchEventsTarget="container"
@@ -107,20 +183,28 @@ const [active, setActive] = useState("Option 1");
           >
             {cards.map((card, idx) => (
               <SwiperSlide key={idx}>
-                <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
-                  {/* Background image */}
+                <div
+                  className={`relative w-full h-32 rounded-xl overflow-hidden shadow cursor-pointer transition-all duration-200 ${
+                    selectedCardId == card.id
+                      ? "border-2 border-blue-500"
+                      : "border border-transparent"
+                  }`}
+                  onClick={() => handleSelectCard(card)}
+                >
                   <img
                     src={card.image}
                     alt="Bank Card"
-                    className="w-full h-full object-cover rounded-xl"
+                    className={`w-full h-full object-cover lg2:object-fill rounded-xl ${
+                      selectedCardId == card.id
+                        ? "border-2 border-blue-500"
+                        : "border border-transparent"
+                    }`}
                   />
 
-                  {/* Overlay details */}
                   <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
-                    {/* Top row (IFSC + Buttons) */}
                     <div className="flex justify-between items-center mb-2">
-                      <p className="text-sm font-semibold text-gray-800 ml-10">
-                        {card.ifsc}
+                      <p className="text-sm font-semibold text-gray-800 ml-10 lg2:ml-0">
+                        {card.ifsc || card.wallet_type}
                       </p>
                       <div className="flex gap-2">
                         <button className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer">
@@ -129,7 +213,9 @@ const [active, setActive] = useState("Option 1");
                         <button
                           className="p-1 bg-white rounded shadow hover:bg-gray-100 cursor-pointer"
                           onClick={() =>
-                            navigate("/CryptoAdd", { state: { mode: "update" } })
+                            navigate("/CryptoAdd", {
+                              state: { mode: "update" },
+                            })
                           }
                         >
                           <Pencil className="w-4 h-4 text-gray-600" />
@@ -137,12 +223,10 @@ const [active, setActive] = useState("Option 1");
                       </div>
                     </div>
 
-                    {/* Account number */}
                     <p className="text-lg font-bold tracking-wide text-gray-900 mb-1 mx-auto">
-                      {card.account}
+                      {card.account || card.wallet_address}
                     </p>
 
-                    {/* Name */}
                     <p className="font-medium text-gray-800 text-right mr-4">
                       {card.name}
                     </p>
@@ -151,7 +235,7 @@ const [active, setActive] = useState("Option 1");
               </SwiperSlide>
             ))}
           </Swiper>
-        </container>
+        </div>
       </div>
 
       {/* add account */}
@@ -173,7 +257,7 @@ const [active, setActive] = useState("Option 1");
           Amount<span className="text-red-500">*</span>
         </h2>
         <div className="flex items-center gap-2 border rounded-[8px] border-grayBorder px-3 py-1">
-          <span className="text-gray-500">₹</span>
+          <span className="text-gray-500">₮</span>
           <input
             type="number"
             placeholder="Enter Amount"
@@ -181,11 +265,11 @@ const [active, setActive] = useState("Option 1");
             onChange={(e) => setAmount(e.target.value)}
             className="w-full outline-none text-gray-700 font-normal"
           />
-          <span className="text-black font-medium">INR</span>
+          <span className="text-black font-medium">USDT</span>
         </div>
 
         <p className="text-ssm text-lightGray mt-1 font-semibold">
-          Min 500 - Max 1000000
+          Min {minUsdt} - Max {maxUsdt}
         </p>
 
         {/* Quick Amount Buttons */}
@@ -205,11 +289,12 @@ const [active, setActive] = useState("Option 1");
       <div className="flex w-full items-center justify-center">
         <button
           type="submit"
-          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
+          className="w-full bg-red text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
           style={{
             fontFamily: "Roboto",
             fontSize: "13.5px",
           }}
+          onClick={handleUsdtPayment}
         >
           SUBMIT
         </button>

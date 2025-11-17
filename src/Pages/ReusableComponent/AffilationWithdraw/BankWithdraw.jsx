@@ -10,32 +10,41 @@ import image1 from "../../../assets/Account/image1.png";
 import image2 from "../../../assets/Account/image2.png";
 import image3 from "../../../assets/Account/image3.png";
 import { useNavigate } from 'react-router-dom';
+import { useProfile } from '../../../Context/ProfileContext';
+import apis from '../../../utils/apis';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 export default function BankWithdraw() {
+  // const {profileDetails}=useProfile()
       const navigate = useNavigate();
        const [amount, setAmount] = useState("");
-      const cards = [
-        {
-          ifsc: "SBIN0030089",
-          account: "39227182111",
-          name: "Vikas Sharma",
-          image: image1,
-        },
-        {
-          ifsc: "HDFC875422",
-          account: "98765432100529637538",
-          name: "Dummy User",
-          image: image2,
-        },
-        {
-          ifsc: "ICIC004421",
-          account: "123456789012",
-          name: "Rahul Singh",
-          image: image3,
-        },
-      ];
+       const [accounts, setAccounts] = useState([]);
+
+          const [selectedCardId, setSelectedCardId] = useState(null);
+             const [slidesPerView, setSlidesPerView] = useState(1.2);
+       const [loader,setLoader]=useState(false)
+      // const cards = [
+      //   {
+      //     ifsc: "SBIN0030089",
+      //     account: "39227182111",
+      //     name: "Vikas Sharma",
+      //     image: image1,
+      //   },
+      //   {
+      //     ifsc: "HDFC875422",
+      //     account: "98765432100529637538",
+      //     name: "Dummy User",
+      //     image: image2,
+      //   },
+      //   {
+      //     ifsc: "ICIC004421",
+      //     account: "123456789012",
+      //     name: "Rahul Singh",
+      //     image: image3,
+      //   },
+      // ];
         const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
-        
-          const [slidesPerView, setSlidesPerView] = useState(1.2);
           useEffect(() => {
             const updateSlides = () => {
               if (window.innerWidth >= 1024) {
@@ -51,6 +60,81 @@ export default function BankWithdraw() {
 
             return () => window.removeEventListener("resize", updateSlides);
           }, []);
+    const handleSelectCard = (card) => {
+      setSelectedCardId(card.id); // store selected card ID
+      console.log("Selected Card ID:", card.id);
+    };
+
+           const {profileDetails, fetchProfile } = useProfile();
+           useEffect(() => {
+             console.log("Profile Details:", profileDetails);
+           }, [profileDetails]);
+
+          const defaultImages = [image1, image2, image3];
+            const fetchaccount=async()=>{
+              try {
+                setLoader(true)
+                const userId=localStorage.getItem("userId")
+                const res = await axios.get(`${apis.account_view}${userId}`);
+                console.log("account",res?.data?.data)
+                setAccounts(res?.data?.data);
+              } catch (error) {
+                console.log(error)
+              }finally{
+                setLoader(false)
+              }
+            }
+         
+          
+            const cards = accounts.map((acc, index) => ({
+              ifsc: acc.ifsc_code || acc.wallet_type,
+              account: acc.account_number || acc.wallet_address,
+              name: acc.name,
+              image: defaultImages[index % defaultImages.length], // rotate through images
+              id:acc.id
+            }));
+
+
+    const handleBankWithdraw = async () => {
+      try {
+        const withdrawAmount =
+          profileDetails?.available_commission_to_withdraw || 0;
+        if(amount>=withdrawAmount){
+          toast.warn(`Your affilation withdraw amount is ${withdrawAmount}`);
+          return;
+        }
+        const account_type = localStorage.getItem("account_type");
+        if (account_type === "1") {
+          toast.warn("Please login with your real account.");
+          return;
+        }
+        setLoader(true);
+        const payload = {
+          user_id: localStorage.getItem("userId"),
+          amount: amount,
+          account_id: selectedCardId,
+          type: 1,
+        };
+        console.log("payload", payload);
+        const res = await axios.post(apis.affiliateWithdraw, payload);
+        if (res?.data?.status === 200) {
+          await fetchProfile();
+          toast.success(res?.data?.message);
+          setAmount("");
+          setUpiId("");
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error(error?.response?.data?.message);
+      } finally {
+        setLoader(false);
+      }
+    };
+
+
+            useEffect(()=>{
+              fetchaccount()
+            },[])
   return (
     <div className="min-h-screen px-4 py-2 lg2:py-0 space-y-4">
       <div
@@ -76,13 +160,13 @@ export default function BankWithdraw() {
         <div className="text-black2 rounded-[8px] text-sm font-medium lg2:mb-3">
           <p>Bank Withdrawal :</p>
         </div>
-        <container className="mb-2 ">
+        <div className="mb-2">
           <Swiper
+            key={slidesPerView} // ✅ reinitialize when slidesPerView changes
             modules={[Pagination]}
             spaceBetween={20}
             slidesPerView={slidesPerView}
             centeredSlides={false}
-            initialSlide={0}
             loop={false}
             grabCursor={true}
             touchEventsTarget="container"
@@ -91,19 +175,30 @@ export default function BankWithdraw() {
           >
             {cards.map((card, idx) => (
               <SwiperSlide key={idx}>
-                <div className="relative w-full h-32 rounded-xl overflow-hidden shadow">
+                <div
+                  className={`relative w-full h-32 rounded-xl overflow-hidden shadow cursor-pointer transition-all duration-200 ${
+                    selectedCardId == card.id
+                      ? "border-2 border-blue-500"
+                      : "border border-transparent"
+                  }`}
+                  onClick={() => handleSelectCard(card)}
+                >
                   {/* Background image */}
                   <img
                     src={card.image}
                     alt="Bank Card"
-                    className="w-full h-full object-cover rounded-xl"
+                    className={`w-full h-full object-cover rounded-xl ${
+                      selectedCardId == card.id
+                        ? "border-2 border-blue-500"
+                        : "border border-transparent"
+                    }`}
                   />
 
                   {/* Overlay details */}
                   <div className="absolute inset-0 flex flex-col py-2 px-6 justify-center">
                     {/* Top row (IFSC + Buttons) */}
                     <div className="flex justify-between items-center mb-2">
-                      <p className="text-sm font-semibold text-gray-800 ml-10">
+                      <p className="text-sm font-semibold text-gray-800 ml-10 lg2:ml-0">
                         {card.ifsc}
                       </p>
                       <div className="flex gap-2">
@@ -137,7 +232,7 @@ export default function BankWithdraw() {
               </SwiperSlide>
             ))}
           </Swiper>
-        </container>
+        </div>
       </div>
 
       {/* add account */}
@@ -191,11 +286,12 @@ export default function BankWithdraw() {
       <div className="flex w-full items-center justify-center">
         <button
           type="submit"
-          className="w-full bg-[#969696] text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
+          className="w-full bg-red text-white font-medium py-3 rounded-md lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer"
           style={{
             fontFamily: "Roboto",
             fontSize: "13.5px",
           }}
+          onClick={handleBankWithdraw}
         >
           SUBMIT
         </button>
