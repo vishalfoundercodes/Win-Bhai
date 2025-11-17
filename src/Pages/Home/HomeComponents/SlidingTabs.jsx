@@ -363,125 +363,311 @@ const Spribe = ({ active }) => (
 );
 
 // ✅ Categories
+// const categories = [
+//   { id: "home" || "sports" || "maincassino", label: "Home", type: "text" }, // no icon
+//   // { id: "sports", label: "Home", type: "text" },
+//   // { id: "maincassino", label: "Home", type: "text" },
+//   { id: "casino", label: "Casino", type: "custom", icon: Cassino },
+//   { id: "slot", label: "Slot Games", type: "custom", icon: SlotIcon },
+//   { id: "aviator", label: "Aviator", type: "custom", icon: AviatorIcon },
+//   {
+//     id: "ColorPrediction",
+//     label: "Color Prediction",
+//     type: "custom",
+//     icon: ColorPrediction,
+//   },
+//   {
+//     id: "PopularGames",
+//     label: "Popular Games",
+//     type: "custom",
+//     icon: PopularGames,
+//   },
+//   {
+//     id: "CrashGames",
+//     label: "Crash Games",
+//     type: "custom",
+//     icon: CrashGames,
+//   },
+//   {
+//     id: "Cricket",
+//     label: "Cricket",
+//     type: "custom",
+//     icon: Cricket,
+//   },
+//   {
+//     id: "Football",
+//     label: "Football",
+//     type: "custom",
+//     icon: Football,
+//   },
+//   {
+//     id: "Tennis",
+//     label: "Tennis",
+//     type: "custom",
+//     icon: Tennis,
+//   },
+//   {
+//     id: "Evolution",
+//     label: "Evolution",
+//     type: "custom",
+//     icon: Evolution,
+//   },
+//   {
+//     id: "TurboGames",
+//     label: "Turbo Games",
+//     type: "custom",
+//     icon: TurboGames,
+//   },
+//   {
+//     id: "SportsBook",
+//     label: "Sports Book",
+//     type: "custom",
+//     icon: SportsBook,
+//   },
+//   {
+//     id: "LivePrediction",
+//     label: "Live Prediction",
+//     type: "custom",
+//     icon: LivePrediction,
+//   },
+//   {
+//     id: "FishingGames",
+//     label: "Fishing Games",
+//     type: "custom",
+//     icon: FishingGames,
+//   },
+//   {
+//     id: "FunGames",
+//     label: "Fun Games",
+//     type: "custom",
+//     icon: FunGames,
+//   },
+//   {
+//     id: "Mines",
+//     label: "Mines",
+//     type: "custom",
+//     icon: Mines,
+//   },
+//   {
+//     id: "Plinko",
+//     label: "Plinko",
+//     type: "custom",
+//     icon: Plinko,
+//   },
+//   {
+//     id: "Jili",
+//     label: "Jili",
+//     type: "custom",
+//     icon: Jili,
+//   },
+//   {
+//     id: "Spribe",
+//     label: "Spribe",
+//     type: "custom",
+//     icon: Spribe,
+//   },
+//   {
+//     id: "Ezugi",
+//     label: "Ezugi",
+//     type: "custom",
+//     icon: Ezugi,
+//   },
+//   {
+//     id: "Mac88",
+//     label: "Mac88",
+//     type: "custom",
+//     icon: Mac88,
+//   },
+// ];
+
+
 const categories = [
-  { id: "home" || "sports" || "maincassino", label: "Home", type: "text" }, // no icon
-  // { id: "sports", label: "Home", type: "text" },
-  // { id: "maincassino", label: "Home", type: "text" },
-  { id: "casino", label: "Casino", type: "custom", icon: Cassino },
-  { id: "slot", label: "Slot Games", type: "custom", icon: SlotIcon },
-  { id: "aviator", label: "Aviator", type: "custom", icon: AviatorIcon },
+  { id: "home", label: "All", type: "text" },
+
+  { id: "recent", label: "Recent", type: "text" },
+
+  { id: "Mac88", label: "Mac88", type: "custom", icon: Mac88, cat_id: 2 },
   {
-    id: "ColorPrediction",
-    label: "Color Prediction",
+    id: "Macexcite",
+    label: "Macexcite",
     type: "custom",
-    icon: ColorPrediction,
+    icon: Mac88,
+    cat_id: 3,
   },
-  {
-    id: "PopularGames",
-    label: "Popular Games",
-    type: "custom",
-    icon: PopularGames,
-  },
-  {
-    id: "CrashGames",
-    label: "Crash Games",
-    type: "custom",
-    icon: CrashGames,
-  },
-  {
-    id: "Cricket",
-    label: "Cricket",
-    type: "custom",
-    icon: Cricket,
-  },
-  {
-    id: "Football",
-    label: "Football",
-    type: "custom",
-    icon: Football,
-  },
-  {
-    id: "Tennis",
-    label: "Tennis",
-    type: "custom",
-    icon: Tennis,
-  },
-  {
-    id: "Evolution",
-    label: "Evolution",
-    type: "custom",
-    icon: Evolution,
-  },
-  {
-    id: "TurboGames",
-    label: "Turbo Games",
-    type: "custom",
-    icon: TurboGames,
-  },
-  {
-    id: "SportsBook",
-    label: "Sports Book",
-    type: "custom",
-    icon: SportsBook,
-  },
+
   {
     id: "LivePrediction",
     label: "Live Prediction",
     type: "custom",
     icon: LivePrediction,
+    cat_id: 4,
   },
-  {
-    id: "FishingGames",
-    label: "Fishing Games",
-    type: "custom",
-    icon: FishingGames,
-  },
+
   {
     id: "FunGames",
     label: "Fun Games",
     type: "custom",
     icon: FunGames,
+    cat_id: 5,
   },
+
   {
-    id: "Mines",
-    label: "Mines",
+    id: "MacctiVirtuals",
+    label: "Macctti Virtuals",
     type: "custom",
-    icon: Mines,
+    icon: Cassino,
+    cat_id: 6,
   },
+
   {
-    id: "Plinko",
-    label: "Plinko",
+    id: "ColorChickenGames",
+    label: "Color & Chicken Games",
     type: "custom",
-    icon: Plinko,
+    icon: ColorPrediction,
+    cat_id: 7,
   },
+
+  { id: "Live88", label: "Live88", type: "custom", icon: Evolution, cat_id: 8 },
+
+  { id: "Spribe", label: "Spribe", type: "custom", icon: Spribe, cat_id: 9 },
+
   {
-    id: "Jili",
-    label: "Jili",
+    id: "Evolution",
+    label: "Evolution",
     type: "custom",
-    icon: Jili,
+    icon: Evolution,
+    cat_id: 10,
   },
+
+  { id: "Astar", label: "Astar", type: "custom", icon: SportsBook, cat_id: 11 },
+
   {
-    id: "Spribe",
-    label: "Spribe",
+    id: "InOut",
+    label: "In Out",
     type: "custom",
-    icon: Spribe,
+    icon: SportsBook,
+    cat_id: 12,
   },
+
+  { id: "Evogi", label: "Evogi", type: "custom", icon: CrashGames, cat_id: 13 },
+
+  { id: "Vivo", label: "Vivo", type: "custom", icon: Cassino, cat_id: 14 },
+
+  { id: "Jili", label: "JILI", type: "custom", icon: Jili, cat_id: 15 },
+
   {
-    id: "Ezugi",
-    label: "Ezugi",
+    id: "ArcStar",
+    label: "Arc Star",
     type: "custom",
-    icon: Ezugi,
+    icon: TurboGames,
+    cat_id: 16,
   },
+
   {
-    id: "Mac88",
-    label: "Mac88",
+    id: "BetSoft",
+    label: "Bet Soft",
     type: "custom",
-    icon: Mac88,
+    icon: SlotIcon,
+    cat_id: 17,
   },
+
+  {
+    id: "TurboGames",
+    label: "Turbo Games",
+    type: "custom",
+    icon: TurboGames,
+    cat_id: 18,
+  },
+
+  { id: "CQ9", label: "CQ9", type: "custom", icon: SlotIcon, cat_id: 19 },
+
+  { id: "JDB", label: "JDB", type: "custom", icon: SlotIcon, cat_id: 20 },
+
+  {
+    id: "PGSlot",
+    label: "PG Slot",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 21,
+  },
+
+  {
+    id: "MiniGames",
+    label: "Mini Games",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 22,
+  },
+
+  {
+    id: "SAGaming",
+    label: "SA Gaming",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 23,
+  },
+
+  {
+    id: "SmartSoft",
+    label: "Smart Soft",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 24,
+  },
+
+  {
+    id: "Playtech",
+    label: "Playtech",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 25,
+  },
+
+  {
+    id: "TrendingGames",
+    label: "Trending Games",
+    type: "custom",
+    icon: PopularGames,
+    cat_id: 26,
+  },
+
+  {
+    id: "CrashGames",
+    label: "Crash Games",
+    type: "custom",
+    icon: CrashGames,
+    cat_id: 27,
+  },
+
+  {
+    id: "SlotGames",
+    label: "Slot Games",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 28,
+  },
+
+  {
+    id: "FishingGames",
+    label: "Fishing Games",
+    type: "custom",
+    icon: FishingGames,
+    cat_id: 29,
+  },
+
+  { id: "Aura", label: "Aura", type: "custom", icon: SlotIcon, cat_id: 30 },
+
+  {
+    id: "AllGames",
+    label: "All Games",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 31},
 ];
 
 
-export default function SlidingTabs({ withHeader = false }) {
+
+export default function SlidingTabs({ withHeader = false, onTabChange }) {
   const [active, setActive] = useState("home");
   const naviagte = useNavigate();
   const { tabName } = useParams(); // works only on /game/:tabName
@@ -493,26 +679,25 @@ export default function SlidingTabs({ withHeader = false }) {
     if (location.pathname.startsWith("/game") && tabName) {
       setActive(tabName);
     }
-      if (tabName === "maincassino" || tabName === "sports") {
-        setActive("home"); // force home tab
-      }
+    if (tabName === "maincassino" || tabName === "sports") {
+      setActive("home"); // force home tab
+    }
   }, [tabName, location.pathname]);
 
-  const handleClick=(id)=>{
-setActive(id)
-if(id=="home"){
-naviagte("/")
-}
-else{
-naviagte(`/game/${id}`);
-}
-
-  }
+  const handleClick = (id) => {
+    setActive(id);
+    if (id == "home") {
+      naviagte("/");
+    } else {
+      naviagte(`/game/${id}`);
+    }
+  };
   return (
-    <div className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
-    style={{
-      fontFamily:"Roboto"
-    }}
+    <div
+      className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
+      style={{
+        fontFamily: "Roboto",
+      }}
     >
       <div className="flex gap-2 min-w-max">
         {categories.map((cat) => {
@@ -522,6 +707,7 @@ naviagte(`/game/${id}`);
               key={cat.id}
               onClick={() => {
                 handleClick(cat.id);
+                onTabChange(cat.cat_id);
               }}
               className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
                 transition-all duration-200 cursor-pointer

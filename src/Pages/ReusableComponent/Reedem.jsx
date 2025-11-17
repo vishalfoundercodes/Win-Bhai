@@ -1,10 +1,55 @@
-import React from "react";
+import React,{useState} from "react";
 import { Gift, ShieldCheck, Zap } from "lucide-react";
 import trustedGame from "../../assets/Company/trusted_game.gif";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
+import { useProfile } from "../../Context/ProfileContext";
+import { div } from "framer-motion/client";
+import Loader from "../resuable_component/Loader/Loader";
 
 export default function RedeemBonus() {
   const navigate=useNavigate()
+   const [coupon, setCoupon] = useState("");
+   const account_type = localStorage.getItem("account_type");
+   const {fetchProfile}=useProfile()
+   const [loader,setLoader]=useState(false)
+  const handleApplyCoupon = async() => {
+    // Logic to apply coupon code
+    try {
+      setLoader(true)
+      if(account_type==="1"){
+        toast.warn("Please login with your real account")
+        return;
+      }
+      const payload = {
+        userid: localStorage.getItem("userId"),
+        code: coupon,
+      };
+      
+      const res =await axios.post(`${apis.gift_cart_apply}`,payload)
+      console.log("Coupon applied successfully:", res.data);
+      toast.success(res?.data?.message)
+      navigate("/")
+      fetchProfile()
+    } catch (error) {
+      console.error("Error applying coupon:", error);
+      toast.error(error?.response?.data?.message)
+      fetchProfile()
+    }finally{
+      setLoader(false)
+    }
+  }
+
+
+  if (loader) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <>
       <div className="lg2:px-4">
@@ -44,9 +89,14 @@ export default function RedeemBonus() {
             <input
               type="text"
               placeholder="Enter Coupon Code"
+              value={coupon}
+              onChange={(e) => setCoupon(e.target.value)}
               className="w-full lg2:w-[220px] border border-[#C8102E] placeholder:text-[#C8102E] rounded-md px-3 py-2 text-sm focus:outline-none text-ssm"
             />
-            <button className="bg-[#C8102E] hover:bg-[#a60d25] text-white px-4 py-2 lg2:px-8 rounded-md text-ssm font-semibold">
+            <button
+              className="bg-[#C8102E] hover:bg-[#a60d25] text-white px-4 py-2 lg2:px-8 rounded-md text-ssm font-semibold cursor-pointer"
+              onClick={handleApplyCoupon}
+            >
               Apply
             </button>
           </div>
@@ -65,9 +115,14 @@ export default function RedeemBonus() {
               <input
                 type="text"
                 placeholder="Enter Coupon Code"
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
                 className="w-full border border-red placeholder:text-red rounded-md px-2 py-2 text-sm focus:outline-none text-ssm "
               />
-              <button className="w-full  bg-red hover:bg-red-600 text-white px-2 py-1 rounded-md text-ssm font-semibold flex-1">
+              <button
+                className="w-full  bg-red hover:bg-red-600 text-white px-2 py-1 rounded-md text-ssm font-semibold flex-1 cursor-pointer"
+                onClick={handleApplyCoupon}
+              >
                 APPLY
               </button>
             </div>

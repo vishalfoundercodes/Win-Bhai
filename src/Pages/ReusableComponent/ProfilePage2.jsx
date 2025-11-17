@@ -1,10 +1,48 @@
 import { Wallet, Megaphone, BarChart2, LogOut, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useProfile } from "../../Context/ProfileContext";
+import apis from "../../utils/apis";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { details } from "framer-motion/client";
+import Loader from "../resuable_component/Loader/Loader";
+
 export default function ProfilePage2() {
   const navigate = useNavigate();
   const { profileDetails, fetchProfile } = useProfile();
-  console.log("affilation profile:",profileDetails)
+  // console.log("affilation profile:",profileDetails)
+  const [loading,setLoading]=useState(false)
+  const [details,setDetails]=useState(null)
+
+     const fetchData = async () => {
+       try {
+         setLoading(true);
+         const payload = {
+           user_id: localStorage.getItem("userId"),
+         };
+         const res = await axios.post(apis.affiliateWithdrawHome, payload);
+         console.log(apis.affiliateWithdrawHome);
+         console.log("Affiliate Withdraw Home Data 11:", res.data.data);
+         setDetails(res.data.data);
+       } catch (error) {
+         console.error("Error fetching data:", error);
+       } finally {
+         setLoading(false);
+       }
+     };
+     useEffect(() => {
+       fetchData();
+     }, []);
+
+     
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+     
   return (
     <>
       <div
@@ -79,8 +117,8 @@ export default function ProfilePage2() {
             </svg>
 
             <div>
-              <p className="font-bold text-lg">0 $</p>
-              <p className="text-sm">Revshare : 50%</p>
+              <p className="font-bold text-lg">₹ {details?.total_commission} </p>
+              <p className="text-sm">Revshare : {details?.revenue}%</p>
             </div>
           </div>
 

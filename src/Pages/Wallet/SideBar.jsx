@@ -249,7 +249,7 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
             <div className="mx-4 mb-2 cursor-pointer">
               <button
                 className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 cursor-pointer"
-                onClick={() => navigate("/RedeemBonus")}
+                onClick={() =>{onClose(); navigate("/RedeemBonus")}}
               >
                 Claim Bonus
               </button>

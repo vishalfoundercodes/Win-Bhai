@@ -28,6 +28,8 @@ const apis = {
   affiliateWithdraw: `${configModalWinBhai}affiliate_withdraw`,
   affiliation_usdtwithdraw: `${configModalWinBhai}affiliation_usdtwithdraw`,
   affiliation_wallet_add: `${configModalWinBhai}affiliation_wallet_add`,
+  gift_cart_apply: `${configModalWinBhai}gift_cart_apply`,
+  subcategories_by_cat: `${configModalWinBhai}subcategories-by-cat`,
 
   sponserImage: `${configModalWinBhai}getAllNotices`,
   bannerImage: `${configModalWinBhai}slider_image_view`,

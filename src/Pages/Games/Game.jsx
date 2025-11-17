@@ -230,17 +230,6 @@ import apis from "../../utils/apis";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// localStorage keys (same as in your useEffect)
-const BRAND_DATA_PREFIX = "brand_data_";
-
-export default function Game() {
-  const { tabName } = useParams();
-  const [games, setGames] = useState([]);
-  const [category,setCategory]=useState([])
-  const [loading, setLoading] = useState(true);
-  const navigate=useNavigate()
-    const { profileDetails } = useProfile();
-
   // SVG Icons
   const Cassino = ({ active }) => (
     <svg
@@ -292,6 +281,20 @@ export default function Game() {
       />
     </svg>
   );
+// localStorage keys (same as in your useEffect)
+const BRAND_DATA_PREFIX = "brand_data_";
+
+export default function Game() {
+  const { tabName } = useParams();
+  const [games, setGames] = useState([]);
+  const [category,setCategory]=useState([])
+  const [loading, setLoading] = useState(true);
+  const [subCategories, setSubCategories] = useState([]);
+
+  const navigate=useNavigate()
+    const { profileDetails } = useProfile();
+
+
 
   // Map tabName to display text and brand_id
   const tabConfig = {
@@ -318,7 +321,7 @@ export default function Game() {
     Jili: { label: "Jili", brand_id: "49" },
     Spribe: { label: "Spribe", brand_id: "57" },
     Ezugi: { label: "Ezugi", brand_id: "78" },
-    Mac88: { label: "Mac88", brand_id: "" },
+    Mac88: { label: "Mac87", brand_id: "" },
   };
 
   // Categories for display
@@ -456,6 +459,28 @@ export default function Game() {
       }
     };
 
+
+    const getSubCategory = async (id) => {
+      try {
+        const payload = { cat_id:id };
+        const res = await axios.post(apis?.subcategories_by_cat, payload);
+        console.log("sub cate list: ", res?.data?.data);
+
+        setSubCategories(res.data?.data || []); // API से data set कर दिया
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const handleTabChange = (tab) => {
+      console.log("Selected Tab:", tab);
+
+      // if (tab?.cat_id) {
+        getSubCategory(tab);
+      // }
+    };
+
+
       if (loading)
         return (
           <div className="text-center py-6 text-gray-500 min-h-screen">
@@ -491,7 +516,8 @@ export default function Game() {
                 <IconComp active={false} className="w-6 h-6 text-gray-700" />
               )}
               <h2 className="text-xl font-semibold text-gray-700 -pt-1">
-                {selectedTab} Games
+                {/* {selectedTab} Games */}
+                {subCategories[0]?.cat_name} Games
               </h2>
             </div>
 
@@ -520,7 +546,7 @@ export default function Game() {
 
           {/* Tabs */}
           <div className="flex gap-2 mt-4">
-            <SlidingTabs withHeader={true} />
+            <SlidingTabs withHeader={true} onTabChange={handleTabChange} />
           </div>
 
           {/* Provider name */}
@@ -538,7 +564,7 @@ export default function Game() {
 
           {/* Sub games list */}
           <div className="py-2 px-4 lg2:px-0 lg2:pr-4 ">
-            <GamesOptions data={category} />
+            <GamesOptions data={category} data2={subCategories} />
           </div>
 
           {/* Games list - Dynamic from localStorage */}
@@ -553,7 +579,7 @@ export default function Game() {
                   <div
                     key={game.game_id || index}
                     className="aspect-[3/4] rounded-[8px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                    onClick={()=>handleGameOpen(game.gameID)}
+                    onClick={() => handleGameOpen(game.gameID)}
                   >
                     {game.game_img ? (
                       <img

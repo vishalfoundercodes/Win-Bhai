@@ -250,7 +250,7 @@ const DragonTiger = ({ active }) => (
   </svg>
 );
 
-export default function GamesOptions({ withHeader = false, data }) {
+export default function GamesOptions({ withHeader = false, data, data2 }) {
   // console.log("category data:", data);
 
   const [active, setActive] = useState("see all");
@@ -357,7 +357,7 @@ export default function GamesOptions({ withHeader = false, data }) {
   return (
     <div className="w-full overflow-x-auto hide-scrollbar px-0">
       <div className="flex gap-3 min-w-max">
-        {categories.map((cat) => {
+        {data2.map((cat) => {
           const IconComp = cat.icon;
           return (
             <button
@@ -374,13 +374,14 @@ export default function GamesOptions({ withHeader = false, data }) {
                 }`}
             >
               {/* Render icon only if exists */}
-              {cat.icon && <IconComp active={active === cat.id} />}
+              {/* {cat.icon && <IconComp active={active === cat.id} />} */}
+              <img src={cat.image} alt="" className="w-10 h-6"/>
 
               <span
                 className="text-center leading-tight mt-1 text-[12px] font-medium truncate w-full"
-                title={cat.label}
+                title={cat.sub_cat_name}
               >
-                {cat.label}
+                {cat.sub_cat_name}
               </span>
             </button>
           );
