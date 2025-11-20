@@ -31,6 +31,9 @@ const apis = {
   gift_cart_apply: `${configModalWinBhai}gift_cart_apply`,
   subcategories_by_cat: `${configModalWinBhai}subcategories-by-cat`,
 
+  // https://root.winbhai.in/api/get_casino_lobby
+  get_casino_lobby: `${configModalWinBhai}get_casino_lobby`,
+
   sponserImage: `${configModalWinBhai}getAllNotices`,
   bannerImage: `${configModalWinBhai}slider_image_view`,
   createUserId: `${configModalWinBhai}otp-register`,

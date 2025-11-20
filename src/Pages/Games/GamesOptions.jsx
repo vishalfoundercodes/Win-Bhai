@@ -250,7 +250,12 @@ const DragonTiger = ({ active }) => (
   </svg>
 );
 
-export default function GamesOptions({ withHeader = false, data, data2 }) {
+export default function GamesOptions({
+  withHeader = false,
+  data,
+  data2,
+  onSubCategorySelect,
+}) {
   // console.log("category data:", data);
 
   const [active, setActive] = useState("see all");
@@ -344,14 +349,17 @@ export default function GamesOptions({ withHeader = false, data, data2 }) {
     }
   }, [tabName, location.pathname]);
 
-  const handleClick = (id) => {
-    setActive(id);
+  const handleClick = (cat) => {
+    console.log("sub cat id:", cat);
+    // setActive(id);
     // Uncomment below if you want navigation
     // if (id === "see all") {
     //   navigate("/");
     // } else {
     //   navigate(`/game/${id}`);
     // }
+    setActive(cat.id); // UI active highlight
+    onSubCategorySelect(cat);
   };
 
   return (
@@ -362,20 +370,20 @@ export default function GamesOptions({ withHeader = false, data, data2 }) {
           return (
             <button
               key={cat.id}
-              onClick={() => handleClick(cat.id)}
+              onClick={() => handleClick(cat)}
               className={`flex flex-col items-center justify-center
                 w-[95px] h-[66px] px-2 py-1
                 rounded-[10px] border text-white
                 transition-all duration-200
                 ${
                   active === cat.id
-                    ? "bg-[#969696] border-[#969696]"
+                    ? "bg-red border-[#969696]"
                     : "bg-[#969696] border-gray-300"
                 }`}
             >
               {/* Render icon only if exists */}
               {/* {cat.icon && <IconComp active={active === cat.id} />} */}
-              <img src={cat.image} alt="" className="w-10 h-6"/>
+              <img src={cat.image} alt="" className="w-7 h-6" />
 
               <span
                 className="text-center leading-tight mt-1 text-[12px] font-medium truncate w-full"

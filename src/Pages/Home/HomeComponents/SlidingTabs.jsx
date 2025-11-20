@@ -482,14 +482,14 @@ const Spribe = ({ active }) => (
 
 
 const categories = [
-  { id: "home", label: "All", type: "text" },
+  { id: "all", label: "All", type: "text", cat_id: 1 },
 
   { id: "recent", label: "Recent", type: "text" },
 
   { id: "Mac88", label: "Mac88", type: "custom", icon: Mac88, cat_id: 2 },
   {
     id: "Macexcite",
-    label: "Macexcite",
+    label: "Mac Excite",
     type: "custom",
     icon: Mac88,
     cat_id: 3,
@@ -512,8 +512,8 @@ const categories = [
   },
 
   {
-    id: "MacctiVirtuals",
-    label: "Macctti Virtuals",
+    id: "Macc88 Virtuals",
+    label: "Macc88 Virtuals",
     type: "custom",
     icon: Cassino,
     cat_id: 6,
@@ -549,15 +549,15 @@ const categories = [
     cat_id: 12,
   },
 
-  { id: "Evogi", label: "Evogi", type: "custom", icon: CrashGames, cat_id: 13 },
+  { id: "Ezugi", label: "Ezugi", type: "custom", icon: CrashGames, cat_id: 13 },
 
   { id: "Vivo", label: "Vivo", type: "custom", icon: Cassino, cat_id: 14 },
 
   { id: "Jili", label: "JILI", type: "custom", icon: Jili, cat_id: 15 },
 
   {
-    id: "ArcStar",
-    label: "Arc Star",
+    id: "AeSexy",
+    label: "Ae Sexy",
     type: "custom",
     icon: TurboGames,
     cat_id: 16,
@@ -573,7 +573,7 @@ const categories = [
 
   {
     id: "TurboGames",
-    label: "Turbo Games",
+    label: "Turbo ",
     type: "custom",
     icon: TurboGames,
     cat_id: 18,
@@ -584,8 +584,8 @@ const categories = [
   { id: "JDB", label: "JDB", type: "custom", icon: SlotIcon, cat_id: 20 },
 
   {
-    id: "PGSlot",
-    label: "PG Slot",
+    id: "PGsGaming",
+    label: "PGs Gaming",
     type: "custom",
     icon: SlotIcon,
     cat_id: 21,
@@ -628,7 +628,7 @@ const categories = [
     label: "Trending Games",
     type: "custom",
     icon: PopularGames,
-    cat_id: 26,
+    cat_id: 27,
   },
 
   {
@@ -636,7 +636,7 @@ const categories = [
     label: "Crash Games",
     type: "custom",
     icon: CrashGames,
-    cat_id: 27,
+    cat_id: 28,
   },
 
   {
@@ -644,7 +644,7 @@ const categories = [
     label: "Slot Games",
     type: "custom",
     icon: SlotIcon,
-    cat_id: 28,
+    cat_id: 29,
   },
 
   {
@@ -652,20 +652,19 @@ const categories = [
     label: "Fishing Games",
     type: "custom",
     icon: FishingGames,
-    cat_id: 29,
+    cat_id: 30,
   },
 
-  { id: "Aura", label: "Aura", type: "custom", icon: SlotIcon, cat_id: 30 },
+  { id: "Aura", label: "Aura", type: "custom", icon: SlotIcon, cat_id: 31 },
 
   {
     id: "AllGames",
     label: "All Games",
     type: "custom",
     icon: SlotIcon,
-    cat_id: 31},
+    cat_id: 26,
+  },
 ];
-
-
 
 export default function SlidingTabs({ withHeader = false, onTabChange }) {
   const [active, setActive] = useState("home");
@@ -684,13 +683,23 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
     }
   }, [tabName, location.pathname]);
 
-  const handleClick = (id) => {
-    setActive(id);
-    if (id == "home") {
-      naviagte("/");
-    } else {
-      naviagte(`/game/${id}`);
-    }
+  const handleClick = (cat) => {
+    setActive(cat.id);
+    // if (cat.id == "home") {
+    //   naviagte("/");
+    // } else {
+      // naviagte(`/game/${cat.id}`);
+    const safeCat = {
+      id: cat.id,
+      cat_id: cat.cat_id,
+      label: cat.label,
+      type: cat.type,
+    };
+
+    naviagte(`/game/${cat.id}`, {
+      state: { selectedCategory: safeCat },
+    });
+    // }
   };
   return (
     <div
@@ -706,19 +715,22 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
             <button
               key={cat.id}
               onClick={() => {
-                handleClick(cat.id);
+                console.log("cat", cat);
+                handleClick(cat);
                 onTabChange(cat.cat_id);
               }}
               className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
                 transition-all duration-200 cursor-pointer
                 ${
-                  active === cat.id
+                  active == cat.id || active == cat.cat_id
                     ? "bg-[#c8102e] text-white border-[#c8102e]"
                     : "bg-white text-darkGray  border-darkGray"
                 }`}
             >
               {/* ✅ Render icon only if exists */}
-              {cat.icon && <IconComp active={active === cat.id} />}
+              {cat.icon && (
+                <IconComp active={active === cat.id || active == cat.cat_id} />
+              )}
               <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal ">
                 {cat.label}
               </span>

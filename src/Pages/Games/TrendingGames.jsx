@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  console.log("cassino lobby:",games)
 
   const scrollRow = (rowId, direction) => {
     const container = document.getElementById(rowId);
@@ -47,9 +48,11 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
         <div
           key={game.id || index}
           className={`min-w-[80px] xsm3:min-w-[105px] lg2:w-[150px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
-          onClick={() => {
-            if (!game.empty) navigate(game.route || "#");
-          }}
+          // onClick={() => {
+          //   if(game.cat_name){navigate(`/game/${game.cat_id}`)}
+          //   if (!game.empty){ navigate(game.route || "#")};
+
+          // }}
         >
           {!game.empty ? (
             game.image ? (
@@ -57,6 +60,12 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
                 src={game.image}
                 alt={game.name}
                 className="w-[350px] h-[76px] lg2:h-[116px]  object-cover lg2:object-fill rounded-[8px]"
+                onClick={() => {
+            if(game.cat_name){return (
+              console.log("cate name:", game),
+              navigate(`/game/${game.cat_id}`)
+            );}
+            if(game.route){return navigate(game.route || "#");}}}
               />
             ) : (
               <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">
