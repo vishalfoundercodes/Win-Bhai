@@ -9,6 +9,7 @@ import apis from "../../utils/apis";
 import { toast } from "react-toastify";
 import Loader from "../resuable_component/Loader/Loader"
 import { useProfile } from "../../Context/ProfileContext";
+import { div } from "framer-motion/client";
 export default function DepositPage() {
   const [loading, setLoading]=useState(false)
   const [selectedPayment, setSelectedPayment] = useState(1);
@@ -372,8 +373,8 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>
-                            copyToClipboard(option.account_number, "Account")
+                          onClick={() =>{
+                            copyToClipboard(option.account_number, "Account"), toast.success("Account copied")}
                           }
                           className="text-gray-500 hover:text-red-600"
                         >
@@ -412,8 +413,8 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>
-                            copyToClipboard(option.ifsc_code, "IFSC")
+                          onClick={() =>{
+                            copyToClipboard(option.ifsc_code, "IFSC"), toast.success("IFSC copied")}
                           }
                           className="text-gray-500 hover:text-red-600"
                         >
@@ -454,8 +455,13 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>
-                            copyToClipboard(option.account_name, "Account Name")
+                          onClick={
+                            (() =>{
+                              copyToClipboard(
+                                option.account_name,
+                                "Account Name"
+                              ),
+                            toast.success("Account Name copied")})
                           }
                           className="text-gray-500 hover:text-red-600"
                         >
@@ -496,9 +502,13 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>
-                            copyToClipboard(option.account_type, "Account Type")
-                          }
+                          onClick={() => {
+                            copyToClipboard(
+                              option.account_type,
+                              "Account Type"
+                            ),
+                              toast.success("Account type copied");
+                          }}
                           className="text-gray-500 hover:text-red-600"
                         >
                           <svg
@@ -527,23 +537,21 @@ const navigate = useNavigate()
                     )}
 
                     {/* Wallet Address */}
-                    {option.wallet_address && (
+                    {option.upi_addresss && (
                       <div className="flex justify-between items-center">
                         <div className="flex flex-col">
                           <span className="font-medium text-ssm">
-                            Wallet Address
+                            Upi Address
                           </span>
                           <span className="text-gray-700 font-medium">
-                            {option.wallet_address}
+                            {option.upi_address}
                           </span>
                         </div>
                         <button
-                          onClick={() =>
-                            copyToClipboard(
-                              option.wallet_address,
-                              "Wallet Address"
-                            )
-                          }
+                          onClick={() => {
+                            copyToClipboard(option.upi_address, "Upi Address"),
+                              toast.success("UPI address copied");
+                          }}
                           className="text-gray-500 hover:text-red-600"
                         >
                           <svg
@@ -573,12 +581,56 @@ const navigate = useNavigate()
 
                     {/* QR Code */}
                     {option.option_name !== "Option 1" && option.qr_code && (
-                      <div className="flex flex-col items-center mt-2">
-                        <img
-                          src={option.qr_code}
-                          alt="QR Code"
-                          className="w-40 h-40"
-                        />
+                      <div>
+                        <div className="flex flex-col items-center mt-2">
+                          <img
+                            src={option.qr_code}
+                            alt="QR Code"
+                            className="w-40 h-40"
+                          />
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div className="flex flex-col">
+                            <span className="font-medium text-ssm">
+                              Upi Address
+                            </span>
+                            <span className="text-gray-700 font-medium">
+                              {option.upi_address}
+                            </span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              copyToClipboard(
+                                option.upi_address,
+                                "Upi Address"
+                              );
+                              toast.success("UPI address copied");
+                            }}
+                            className="text-gray-500 hover:text-red-600"
+                          >
+                            <svg
+                              width="22"
+                              height="22"
+                              viewBox="0 0 22 22"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M5.5 5.216V2.906C5.50013 2.53306 5.64838 2.17544 5.91213 1.91178C6.17589 1.64812 6.53356 1.5 6.9065 1.5H19.0935C19.4665 1.5 19.8243 1.64818 20.088 1.91195C20.3518 2.17572 20.5 2.53347 20.5 2.9065V15.094C20.4999 15.4669 20.3517 15.8244 20.088 16.088C19.8244 16.3517 19.4669 16.4999 19.094 16.5H16.758"
+                                stroke="#C10932"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M15.094 5.5H2.9055C2.53265 5.50027 2.17515 5.64857 1.9116 5.91231C1.64805 6.17605 1.5 6.53365 1.5 6.9065V19.0935C1.5 19.4665 1.64818 19.8243 1.91195 20.088C2.17572 20.3518 2.53347 20.5 2.9065 20.5H15.094C15.4669 20.4999 15.8244 20.3517 16.088 20.088C16.3517 19.8244 16.4999 19.4669 16.5 19.094V6.9055C16.4997 6.53273 16.3515 6.17532 16.0879 5.91178C15.8242 5.64824 15.4668 5.50013 15.094 5.5Z"
+                                stroke="#C10932"
+                                stroke-width="2"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
