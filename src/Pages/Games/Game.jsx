@@ -111,7 +111,7 @@ export default function Game() {
     Jili: { label: "Jili", brand_id: "49" },
     jili: { label: "Jili", brand_id: "49" },
     Spribe: { label: "Spribe", brand_id: "57" },
-    spribe: { label: "Spribe", brand_id: "57" },
+    spribe: { label: "spribe", brand_id: "57" },
     Astar: { label: "Spribe", brand_id: "82" },
     astar: { label: "Spribe", brand_id: "82" },
     InOut: { label: "Spribe", brand_id: "112" },
@@ -247,6 +247,7 @@ export default function Game() {
             `📦 Loaded ${brandGames.length} games for brand ${brandId}`
           );
 
+          console.log(`games brand :`,brandGames)
           // Filter based on specific requirements
           let filteredGames = brandGames;
           let filteredCategory = brandGames;
@@ -269,11 +270,11 @@ export default function Game() {
           }
 
           // For brand 57 - only CasinoTable
-          if (brandId === "57") {
-            filteredGames = brandGames.filter(
-              (game) => game.category === "CasinoTable"
-            );
-          }
+          // if (brandId === "57") {
+          //   filteredGames = brandGames.filter(
+          //     (game) => game.category === "CasinoTable"
+          //   );
+          // }
 
           // For brand 52 - only chess
           if (brandId === "52") {
@@ -282,6 +283,7 @@ export default function Game() {
             );
           }
           console.log("end fetch data ....");
+          console.log("all games",filterGames)
           setGames(filteredGames);
           setCategory(filteredCategory);
         } else {
@@ -415,61 +417,6 @@ export default function Game() {
     filterGames(sub, selectedCategory);
   };
 
-  // const filterGames = (sub, category) => {
-  //   if (!sub) return;
-  //   console.log("category:", category);
-    
-
-  //   const brandStorageKey = `${BRAND_DATA_PREFIX}${brandId}`;
-  //   const storedData = localStorage.getItem(brandStorageKey);
-
-  //   if (!storedData) {
-  //     setGames([]);
-  //     return;
-  //   }
-
-  //   const { games: brandGames } = JSON.parse(storedData);
-
-  //   let filteredGames = brandGames;
-
-  //   // Brand-specific filters
-  //   if (brandId === "49") {
-  //     filteredGames = filteredGames.filter((game) => game.category !== "slot");
-  //   }
-
-  //   if (brandId === "57") {
-  //     filteredGames = filteredGames.filter(
-  //       (game) => game.category === "CasinoTable"
-  //     );
-  //   }
-
-  //   if (brandId === "52") {
-  //     filteredGames = filteredGames.filter((game) => game.category === "chess");
-  //   }
-
-  //   // 🔥 SUB CATEGORY FILTER
-  //   const subName = sub.sub_cat_name?.toLowerCase();
-
-  //   // 🟢 If sub category is "All" → return everything (after brand filter)
-  //   if (subName === "all") {
-  //     console.log("Filtered Games (ALL):", filteredGames);
-  //     setGames(filteredGames);
-  //     return;
-  //   }
-
-  //   // Normal filtering
-  //   const wordList = subName.split(" ");
-
-  //   filteredGames = filteredGames.filter((game) => {
-  //     const name1 = game.game_name?.toLowerCase() || "";
-  //     const name2 = game.gameNameEn?.toLowerCase() || "";
-
-  //     return wordList.some((w) => name1.includes(w) || name2.includes(w));
-  //   });
-
-  //   console.log("Filtered Games:", filteredGames);
-  //   setGames(filteredGames);
-  // };
 
   const filterGames = (sub, category) => {
     if (!sub) return;
@@ -489,7 +436,10 @@ export default function Game() {
       const filteredGames = allGames.filter((game) => {
         const name1 = game.game_name?.toLowerCase() || "";
         const name2 = game.gameNameEn?.toLowerCase() || "";
-        return wordList.some((w) => name1.includes(w) || name2.includes(w));
+        const name3 = game.category?.toLowerCase() || "";
+        return wordList.some(
+          (w) => name1.includes(w) || name2.includes(w) || name3.includes(w)
+        );
       });
 
       setGames(filteredGames);
@@ -522,11 +472,11 @@ export default function Game() {
       filteredGames = filteredGames.filter((game) => game.category !== "slot");
     }
 
-    if (brandId === "57") {
-      filteredGames = filteredGames.filter(
-        (game) => game.category === "CasinoTable"
-      );
-    }
+    // if (brandId === "57") {
+    //   filteredGames = filteredGames.filter(
+    //     (game) => game.category === "CasinoTable"
+    //   );
+    // }
 
     if (brandId === "52") {
       filteredGames = filteredGames.filter((game) => game.category === "chess");
@@ -544,7 +494,10 @@ export default function Game() {
     filteredGames = filteredGames.filter((game) => {
       const name1 = game.game_name?.toLowerCase() || "";
       const name2 = game.gameNameEn?.toLowerCase() || "";
-      return wordList.some((w) => name1.includes(w) || name2.includes(w));
+      const name3 = game.category?.toLowerCase() || "";
+      return wordList.some(
+        (w) => name1.includes(w) || name2.includes(w) || name3.includes(w)
+      );
     });
 
     console.log("Filtered Games:", filteredGames);

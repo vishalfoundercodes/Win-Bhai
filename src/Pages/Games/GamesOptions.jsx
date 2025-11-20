@@ -257,8 +257,9 @@ export default function GamesOptions({
   onSubCategorySelect,
 }) {
   // console.log("category data:", data);
+  
 
-  const [active, setActive] = useState("see all");
+  const [active, setActive] = useState(1);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const { tabName } = useParams();
@@ -306,6 +307,16 @@ export default function GamesOptions({
     }
   }, [data]);
 
+
+
+  useEffect(() => {
+    if (data2 && data2.length > 0) {
+      setActive(data2[0].id);
+      onSubCategorySelect(data2[0]);
+    }
+  }, [data2]);
+
+
   // Format category label (capitalize first letter, handle special cases)
   const formatCategoryLabel = (category) => {
     if (!category) return "Unknown";
@@ -351,13 +362,6 @@ export default function GamesOptions({
 
   const handleClick = (cat) => {
     console.log("sub cat id:", cat);
-    // setActive(id);
-    // Uncomment below if you want navigation
-    // if (id === "see all") {
-    //   navigate("/");
-    // } else {
-    //   navigate(`/game/${id}`);
-    // }
     setActive(cat.id); // UI active highlight
     onSubCategorySelect(cat);
   };

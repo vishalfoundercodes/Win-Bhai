@@ -656,14 +656,6 @@ const categories = [
   },
 
   { id: "Aura", label: "Aura", type: "custom", icon: SlotIcon, cat_id: 31 },
-
-  {
-    id: "AllGames",
-    label: "All Games",
-    type: "custom",
-    icon: SlotIcon,
-    cat_id: 26,
-  },
 ];
 
 export default function SlidingTabs({ withHeader = false, onTabChange }) {
