@@ -82,6 +82,7 @@ export default function Game() {
   const tabConfig = {
     home: { label: "Home", brand_id: null },
     all: { label: "All Games", brand_id: "all" },
+    All: { label: "All Games", brand_id: "all" },
     sports: { label: "Sports", brand_id: "78" },
     maincassino: { label: "Cassino", brand_id: "78" },
     casino: { label: "Casino", brand_id: "78" },
@@ -263,11 +264,11 @@ export default function Game() {
           }
 
           // For brand 49 - exclude slot category
-          if (brandId === "49") {
-            filteredGames = brandGames.filter(
-              (game) => game.category !== "slot"
-            );
-          }
+          // if (brandId === "49") {
+          //   filteredGames = brandGames.filter(
+          //     (game) => game.category !== "slot"
+          //   );
+          // }
 
           // For brand 57 - only CasinoTable
           // if (brandId === "57") {
@@ -374,7 +375,7 @@ export default function Game() {
       const res = await axios.post(apis?.subcategories_by_cat, payload);
       console.log("sub cate list: ", res?.data?.data);
 
-      setSubCategories(res.data?.data || []); // API से data set कर दिया
+      setSubCategories(res.data?.data || []); 
     } catch (error) {
       console.error(error);
     }
@@ -415,6 +416,8 @@ export default function Game() {
     setSelectedSubCategory(sub); // {sub_cat_name: "Casino", id:214, ...}
     // filterGames(sub);
     filterGames(sub, selectedCategory);
+    // filterGames(sub, selectedCategory || passedCategoryFromTabs);
+
   };
 
 
@@ -468,9 +471,9 @@ export default function Game() {
     }
 
     // Brand-specific filters
-    if (brandId === "49") {
-      filteredGames = filteredGames.filter((game) => game.category !== "slot");
-    }
+    // if (brandId === "49") {
+    //   filteredGames = filteredGames.filter((game) => game.category !== "slot");
+    // }
 
     // if (brandId === "57") {
     //   filteredGames = filteredGames.filter(
