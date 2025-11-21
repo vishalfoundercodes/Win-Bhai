@@ -59,7 +59,7 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
               <img
                 src={game.image}
                 alt={game.name}
-                className="w-[350px] h-[76px] lg2:h-[116px]  object-cover lg2:object-fill rounded-[8px]"
+                className="w-[350px] h-[76px] lg2:h-[116px]  object-fill lg2:object-fill rounded-[8px]"
                 onClick={() => {
             if(game.cat_name){return (
               console.log("cate name:", game),

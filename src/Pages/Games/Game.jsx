@@ -81,8 +81,8 @@ export default function Game() {
   // Map tabName to display text and brand_id
   const tabConfig = {
     home: { label: "Home", brand_id: null },
-    all: { label: "All Games", brand_id: "all" },
-    All: { label: "All Games", brand_id: "all" },
+    all: { label: "all", brand_id: "all" },
+    All: { label: "All", brand_id: "all" },
     sports: { label: "Sports", brand_id: "78" },
     maincassino: { label: "Cassino", brand_id: "78" },
     casino: { label: "Casino", brand_id: "78" },
@@ -104,6 +104,7 @@ export default function Game() {
     sportsbook: { label: "Sports Book", brand_id: "68" },
     LivePrediction: { label: "Live Prediction", brand_id: "69" },
     FishingGames: { label: "Fishing", brand_id: "70" },
+    fishing: { label: "Fishing", brand_id: "49" },
     FunGames: { label: "Fun", brand_id: "49" },
     fungames: { label: "Fun", brand_id: "49" },
     ColorChickenGames: { label: "Color & Chicken", brand_id: "112" },
