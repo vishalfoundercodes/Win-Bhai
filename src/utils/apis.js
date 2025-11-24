@@ -111,6 +111,9 @@ const apis = {
   //wallet
   pay_modes: `${configModalWinBhai}pay_modes`,
   // https://root.winbhai.in/api/crypto
+  // https://root.winbhai.in/api/game_subcat_sliders
+
+  game_subcat_sliders: `${configModalWinBhai}game_subcat_sliders`,
   crypto: `${configModalWinBhai}crypto`,
   bappa_venture: `${configModalWinBhai}bappa_venture`,
   create_campaign: `${configModalWinBhai}campaign_create`,

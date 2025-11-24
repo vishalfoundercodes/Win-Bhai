@@ -54,7 +54,16 @@ export default function Footer() {
         {/* Casino */}
         <div
           className="flex flex-col items-center text-white text-sm"
-          onClick={() => navigate("/game/all")}
+          onClick={() =>
+            navigate("/game/all", {
+              state: {
+                selectedCategory: {
+                  id:"all",
+                  cat_id:1,
+                },
+              },
+            })
+          }
         >
           {/* <Dice5 className="w-6 h-6" /> */}
           <svg

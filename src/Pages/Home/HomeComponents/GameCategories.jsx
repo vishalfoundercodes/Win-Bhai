@@ -27,45 +27,144 @@ import BG from "../../../assets/JPEG/Background+Shadow.jpg";
 import { useScroll } from "../../../Context/ScrollContext";
 import { useNavigate } from "react-router-dom";
 const categories = [
-  { name: "Card games", icon: "🎮", image: BG, brandId: "78", id: "casino" },
+  {
+    name: "Card games",
+    icon: "🎮",
+    image: BG,
+    brandId: "78",
+    id: "Ezugi",
+    cat_id: 13,
+  },
   {
     name: "Crash Games",
     icon: "🎮",
     image: BG1,
     brandId: "104",
     id: "CrashGames",
+    cat_id: 28,
   },
-  { name: "Evolution", icon: "🎮", image: BG2, brandId: "58", id: "Evolution" },
-  { name: "Mac88", icon: "🎮", image: BG3, id: "Mac88" },
-  { name: "Live Cassino", icon: "🎮", image: BG4, brandId: "78", id: "casino" },
-  { name: "Fishing games", icon: "🎮", image: BG5, id: "FishingGames" },
+  {
+    name: "Evolution",
+    icon: "🎮",
+    image: BG2,
+    brandId: "58",
+    id: "Evolution",
+    cat_id: 10,
+  },
+  { name: "Mac88", icon: "🎮", image: BG3, id: "Mac88", cat_id: 6 },
+  {
+    name: "Live Cassino",
+    icon: "🎮",
+    image: BG4,
+    brandId: "78",
+    id: "Ezugi",
+    cat_id: 13,
+  },
+  {
+    name: "Fishing games",
+    icon: "🎮",
+    image: BG5,
+    id: "FishingGames",
+    cat_id: 30,
+  },
   { name: "Mines", icon: "🎮", image: BG6, brandId: "104", id: "Mines" },
-  { name: "Jilli", icon: "🎮", image: BG7, brandId: "49", id: "Jili" },
-  { name: "Ezugi", icon: "🎮", image: BG8, brandId: "78", id: "Ezugi" },
-  { name: "PG Games", icon: "🎮", image: BG9, brandId: "123" },
-  { name: "Aura", icon: "🎮", image: BG10 },
-  { name: "Cassino", icon: "🎮", image: BG11, brandId: "78", id: "casino" },
+  {
+    name: "Jilli",
+    icon: "🎮",
+    image: BG7,
+    brandId: "49",
+    id: "Jili",
+    cat_id: 15,
+  },
+  {
+    name: "Ezugi",
+    icon: "🎮",
+    image: BG8,
+    brandId: "78",
+    id: "Ezugi",
+    cat_id: 13,
+  },
+  {
+    name: "PG Games",
+    icon: "🎮",
+    image: BG9,
+    brandId: "123",
+    id: "PGsGaming",
+    cat_id: 21,
+  },
+  {
+    name: "Aura",
+    icon: "🎮",
+    image: BG10,
+    id: "Aura",
+    cat_id: 31,
+  },
+  {
+    name: "Cassino",
+    icon: "🎮",
+    image: BG11,
+    brandId: "78",
+    id: "Ezugi",
+    cat_id: 13,
+  },
   {
     name: "Turbo Games",
     icon: "🎮",
     image: BG12,
     brandId: "100",
     id: "TurboGames",
+    cat_id: 18,
   },
   {
     name: "Color Prediction",
     icon: "🎮",
     image: BG13,
     brandId: "2",
-    id: "ColorPrediction",
+    id: "ColorChickenGames",
+    cat_id: 7,
   },
   { name: "Sport book ", icon: "🎮", image: BG14, id: "SportsBook" },
-  { name: "Slot Games", icon: "🎮", image: BG15, brandId: "1", id: "slot" },
-  { name: "Fun Games", icon: "🎮", image: BG16, brandId: "49", id: "FunGames" },
+  {
+    name: "Slot Games",
+    icon: "🎮",
+    image: BG15,
+    brandId: "1",
+    id: "SlotGames",
+    cat_id: 29,
+  },
+  {
+    name: "Fun Games",
+    icon: "🎮",
+    image: BG16,
+    brandId: "49",
+    id: "FunGames",
+    cat_id: 5,
+  },
   { name: "Plinko", icon: "🎮", image: BG17, brandId: "57", id: "Plinko" },
-  { name: "Spribe", icon: "🎮", image: BG18, brandId: "57", id: "Spribe" },
-  { name: "Inout", icon: "🎮", image: BG19, brandId: "112" },
-  { name: "MiniGames", icon: "🎮", image: BG20, brandId: "104", id: "Mines" },
+  {
+    name: "Spribe",
+    icon: "🎮",
+    image: BG18,
+    brandId: "57",
+    id: "Spribe",
+    cat_id: 9,
+  },
+  {
+    name: "Inout",
+    icon: "🎮",
+    image: BG19,
+    brandId: "112",
+    id: "InOut",
+    cat_id: 12,
+  },
+  {
+    name: "MiniGames",
+    icon: "🎮",
+    image: BG20,
+    brandId: "104",
+    id: "MiniGames",
+    cat_id: 22,
+  },
   // { name: "Live Casinos", icon: "👑", image: cardGames },
   // { name: "Evolution", icon: "🍃", image: crashGames },
   // { name: "Card Games", icon: "🃏", image: evolution },
@@ -106,14 +205,33 @@ const brandGames = [
 export default function GameCategories() {
   const { scrollToSection } = useScroll();
   const navigate = useNavigate();
-    const handleClick=(id)=>{
-// setActive(id)
-if(id=="home"){
-navigate("/");
-}
-else{
-navigate(`/game/${id}`);
-}}
+//     const handleClick=(id)=>{
+// // setActive(id)
+// if(id=="home"){
+// navigate("/");
+// }
+// else{
+// navigate(`/game/${id}`);
+// }}
+const handleClick = (cat) => {
+  const { id, cat_id, name, brandId } = cat;
+
+  if (id === "home") {
+    navigate("/", { state: { cat_id } });
+  } else {
+    navigate(`/game/${id}`, {
+      state: {
+        selectedCategory: {
+          id,
+          cat_id,
+          name,
+          brandId,
+        },
+      },
+    });
+  }
+};
+
   // 2 rows banane ke liye split karenge
   const firstRow = categories.filter((_, i) => i % 2 === 0);
   const secondRow = categories.filter((_, i) => i % 2 !== 0);
@@ -125,7 +243,7 @@ navigate(`/game/${id}`);
           key={i}
           onClick={() => {
             // scrollToSection(cat.brandId)
-            handleClick(cat.id)
+            handleClick(cat)
           }}
           className="relative rounded-[5px] overflow-hidden shadow-lg h-8 w-38 xsm4:w-40 xsm3:w-42 xxs:w-48  flex-shrink-0 cursor-pointer"
         >

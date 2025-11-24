@@ -74,6 +74,9 @@ export default function Game() {
   const [loading, setLoading] = useState(true);
   const [subCategories, setSubCategories] = useState([]);
     const [isAllCategory, setIsAllCategory] = useState(false); 
+    const [sponserImage,setSponserImage]=useState([])
+    const [originalGames, setOriginalGames] = useState([]);
+
 
   const navigate = useNavigate();
   const { profileDetails } = useProfile();
@@ -147,8 +150,8 @@ export default function Game() {
     { id: "aviator", label: "Aviator", type: "custom", icon: AviatorIcon },
   ];
 
-  console.log("tab name:", tabName);
-  console.log("cat name:", subCategories[0]?.cat_name);
+  // console.log("tab name:", tabName);
+  // console.log("cat name:", subCategories[0]?.cat_name);
   // Get current tab config
   const currentTab =
     tabConfig[subCategories[0]?.cat_name] ||
@@ -156,6 +159,7 @@ export default function Game() {
     tabConfig.home;
   const selectedTab = currentTab.label;
   const brandId = currentTab?.brand_id;
+
 
   // Find selected category for icon
   const selected =
@@ -206,6 +210,18 @@ export default function Game() {
     return allGames;
   };
 
+  //sponser image api
+  const sponnserImage=async()=>{
+    try {
+      const res = await axios.get(apis.game_subcat_sliders);
+      console.log("sponser image on game page:",res?.data?.data)
+       setSponserImage(res?.data?.data);
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
   // Load games from localStorage based on brand_id
   useEffect(() => {
     const loadGamesFromLocalStorage = () => {
@@ -218,6 +234,7 @@ export default function Game() {
         console.log("📦 Loading ALL GAMES from localStorage");
         const allGames = loadAllGames();
         setGames(allGames);
+        setOriginalGames(allGames);
         setCategory(allGames);
         setIsAllCategory(true);
         setLoading(false);
@@ -245,11 +262,11 @@ export default function Game() {
         );
         if (storedData) {
           const { games: brandGames } = JSON.parse(storedData);
-          console.log(
-            `📦 Loaded ${brandGames.length} games for brand ${brandId}`
-          );
+          // console.log(
+          //   `📦 Loaded ${brandGames.length} games for brand ${brandId}`
+          // );
 
-          console.log(`games brand :`,brandGames)
+          // console.log(`games brand :`,brandGames)
           // Filter based on specific requirements
           let filteredGames = brandGames;
           let filteredCategory = brandGames;
@@ -287,9 +304,10 @@ export default function Game() {
           console.log("end fetch data ....");
           console.log("all games",filterGames)
           setGames(filteredGames);
+          setOriginalGames(filteredGames);
           setCategory(filteredCategory);
         } else {
-          console.log(`⚠️ No data found for brand ${brandId} in localStorage`);
+          console.error(`⚠️ No data found for brand ${brandId} in localStorage`);
           setGames([]);
           setCategory([]);
         }
@@ -346,7 +364,7 @@ export default function Game() {
       };
       console.log("payload", payload);
       const res = await axios.post(apis.openGame, payload);
-      console.log("game launch:", res?.data);
+      // console.log("game launch:", res?.data);
       if (res?.data?.status === 200) {
         if (res?.data?.apiResponse?.data?.url) {
           // window.location.href = res?.data?.apiResponse?.data?.url;
@@ -383,7 +401,7 @@ export default function Game() {
   };
 
   const handleTabChange = (tab) => {
-    console.log("Selected Tab:", tab);
+    // console.log("Selected Tab:", tab);
     setSelectedCategory(tab);
     // if (tab?.cat_id) {
     getSubCategory(tab);
@@ -393,32 +411,61 @@ export default function Game() {
 
   useEffect(() => {
     const passedCategory = location.state?.selectedCategory;
-    console.log("Received Category from Tabs:", passedCategory);
+    // console.log("Received Category from Tabs:", passedCategory);
     // getSubCategory(passedCategory.id);
-    console.log("tabname", tabName);
-    console.log("tabname id", tabConfig[tabName]);
+    // console.log("tabname", tabName);
+    // console.log("tabname id", tabConfig[tabName]);
     getSubCategory(passedCategory?.cat_id || tabName);
     // 🔥 NEW: Check if passed category is "All"
     if (passedCategory?.cat_id === 1 || passedCategory?.id === "all") {
       setIsAllCategory(true);
       const allGames = loadAllGames();
       setGames(allGames);
+      setOriginalGames(allGames);
       setCategory(allGames);
     } else {
       getSubCategory(passedCategory?.cat_id || tabName);
     }
+    sponnserImage()
   }, []);
 
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleSubCategorySelect = (sub) => {
-    console.log("Selected Subcategory:", sub);
+    // console.log("Selected Subcategory:", sub);
     setSelectedSubCategory(sub); // {sub_cat_name: "Casino", id:214, ...}
     // filterGames(sub);
     filterGames(sub, selectedCategory);
     // filterGames(sub, selectedCategory || passedCategoryFromTabs);
 
+  };
+
+  const handleSearch = (text) => {
+    const search = text.toLowerCase();
+
+    if (!search) {
+      // if input empty → show all or filtered category games
+      setGames(originalGames);
+      return;
+    }
+
+    const filtered = originalGames.filter((g) => {
+      const name1 = g.game_name?.toLowerCase() || "";
+      const name2 = g.gameNameEn?.toLowerCase() || "";
+      const eventName = g.eventName?.toLowerCase() || ""; // NEW FIELD
+      const name3 = g.category?.toLowerCase() || "";
+
+      return (
+        name1.includes(search) ||
+        name2.includes(search) ||
+        name3.includes(search) ||
+        eventName.includes(search) 
+        
+      );
+    });
+
+    setGames(filtered);
   };
 
 
@@ -433,6 +480,7 @@ export default function Game() {
 
       if (subName === "all") {
         setGames(allGames);
+        setOriginalGames(allGames);
         return;
       }
 
@@ -445,7 +493,7 @@ export default function Game() {
           (w) => name1.includes(w) || name2.includes(w) || name3.includes(w)
         );
       });
-
+setOriginalGames(filteredGames);
       setGames(filteredGames);
       return;
     }
@@ -491,6 +539,7 @@ export default function Game() {
     if (subName === "all") {
       console.log("Filtered Games (ALL):", filteredGames);
       setGames(filteredGames);
+      setOriginalGames(filteredGames);
       return;
     }
 
@@ -506,6 +555,7 @@ export default function Game() {
 
     console.log("Filtered Games:", filteredGames);
     setGames(filteredGames);
+    setOriginalGames(filteredGames);
   };
 
   if (loading)
@@ -566,6 +616,7 @@ export default function Game() {
               <input
                 type="text"
                 placeholder="Search games"
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 rounded-md border border-grayBorder bg-white focus:outline-none focus:ring-2 focus:ring-grayBorder"
               />
             </div>
@@ -585,8 +636,39 @@ export default function Game() {
           </div>
 
           {/* Sponser */}
-          <div className="px-4 py-2 lg2:px-0 lg2:pr-4 ">
+          {/* <div className="px-4 py-2 lg2:px-0 lg2:pr-4 ">
             <img src={sponser} alt="" className="w-full h-full rounded-xl" />
+          </div> */}
+          <div className="px-4 py-2 lg2:px-0 lg2:pr-4 ">
+            {sponserImage?.length === 1 ? (
+              // 🟢 ONLY ONE IMAGE → STATIC UI
+              <img
+                src={sponserImage[0]?.image}
+                alt=""
+                className="w-full h-full rounded-xl"
+              />
+            ) : sponserImage?.length > 1 ? (
+              // 🟡 MULTIPLE IMAGES → SLIDER
+              <div className="w-full overflow-hidden relative rounded-xl">
+                <div
+                  className="flex transition-transform duration-500"
+                  style={{
+                    width: `${sponserImage.length * 100}%`,
+                    transform: `translateX(-${
+                      currentIndex * (100 / sponserImage.length)
+                    }%)`,
+                  }}
+                >
+                  {sponserImage.map((item, i) => (
+                    <img
+                      key={i}
+                      src={item.image}
+                      className="w-full h-full rounded-xl object-cover"
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
 
           {/* Sub games list */}

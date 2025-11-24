@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, useRef } from "react";
 import { FaDice, FaRocket } from "react-icons/fa";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 // Custom SVG component so we can control its color with props
@@ -484,7 +484,7 @@ const Spribe = ({ active }) => (
 const categories = [
   { id: "all", label: "All", type: "text", cat_id: 1 },
 
-  { id: "recent", label: "Recent", type: "text" },
+  // { id: "recent", label: "Recent", type: "text" },
 
   { id: "Mac88", label: "Mac88", type: "custom", icon: Mac88, cat_id: 2 },
   {
@@ -665,10 +665,53 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
   const location = useLocation();
   // If on game page, highlight based on URL param
   // const activeTab = location.pathname.startsWith("/game") ? tabName : null;
+    const scrollRef = useRef(null);
+    const tabRefs = useRef({});
+
+    // const scrollToTab = (id) => {
+    //   const tab = tabRefs.current[id];
+    //   const scroll = scrollRef.current;
+
+    //   if (tab && scroll) {
+    //     scroll.scrollTo({
+    //       left: tab.offsetLeft - 10,
+    //       behavior: "smooth",
+    //     });
+    //   }
+    // };
   // 🔹 Sync "active" with URL param if available
+  
+    const scrollToTab = (id) => {
+      const tab = tabRefs.current[id];
+      const scroll = scrollRef.current;
+
+      if (tab && scroll) {
+        const scrollWidth = scroll.clientWidth; // visible width of scroll container
+        const tabWidth = tab.clientWidth; // width of the selected tab
+        const tabLeft = tab.offsetLeft; // position of tab from left
+        const isDesktop = window.innerWidth >= 1024;
+
+        let scrollPosition;
+
+        if (isDesktop) {
+          // 🖥️ Desktop → CENTER the tab
+          scrollPosition = tabLeft - scrollWidth / 2 + tabWidth / 2;
+        } else {
+          // 📱 Mobile → put tab at LEFT
+          scrollPosition = tabLeft - 10;
+        }
+
+        scroll.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+      }
+    };
+
   useEffect(() => {
     if (location.pathname.startsWith("/game") && tabName) {
       setActive(tabName);
+      scrollToTab(tabName);
     }
     if (tabName === "maincassino" || tabName === "sports") {
       setActive("home"); // force home tab
@@ -677,6 +720,7 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
 
   const handleClick = (cat) => {
     setActive(cat.id);
+    scrollToTab(cat.id);
     // if (cat.id == "home") {
     //   naviagte("/");
     // } else {
@@ -695,6 +739,7 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
   };
   return (
     <div
+      ref={scrollRef}
       className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
       style={{
         fontFamily: "Roboto",
@@ -706,6 +751,7 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
           return (
             <button
               key={cat.id}
+              ref={(el) => (tabRefs.current[cat.id] = el)}
               onClick={() => {
                 console.log("cat", cat);
                 handleClick(cat);
