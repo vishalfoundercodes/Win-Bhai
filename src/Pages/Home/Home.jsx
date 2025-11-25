@@ -572,7 +572,7 @@ export default function Home() {
 
       <div className="md:px-24 lg:hidden">
         <div className=" px-2">
-          <GameHeader />
+          <GameHeader2 />
         </div>
 
         <div className="md:hidden mb-3">

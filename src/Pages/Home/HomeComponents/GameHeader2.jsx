@@ -103,7 +103,7 @@ const GameHeader2 = () => {
             <img
               src={item.image}
               alt={`banner-${index}`}
-              className="rounded-[8px] lg2:w-[100%] h-[195px] xsm:h-full w-full lg2:h-[500px] object-cover"
+              className="rounded-[8px] lg2:w-[100%] h-[195px] xsm:h-full w-full lg2:h-[500px] object-fill"
             />
           </SwiperSlide>
         ))}

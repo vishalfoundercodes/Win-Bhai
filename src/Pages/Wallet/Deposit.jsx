@@ -24,6 +24,7 @@ export default function DepositPage() {
     // console.log("Received Coupon:", coupon);
 const navigate = useNavigate()
   const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
+  const quickUsdtAmounts = [10,50, 100, 200, 300, 500];
     const [copied, setCopied] = useState("");
     
 
@@ -373,9 +374,10 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>{
-                            copyToClipboard(option.account_number, "Account"), toast.success("Account copied")}
-                          }
+                          onClick={() => {
+                            copyToClipboard(option.account_number, "Account"),
+                              toast.success("Account copied");
+                          }}
                           className="text-gray-500 hover:text-red-600"
                         >
                           <svg
@@ -413,9 +415,10 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={() =>{
-                            copyToClipboard(option.ifsc_code, "IFSC"), toast.success("IFSC copied")}
-                          }
+                          onClick={() => {
+                            copyToClipboard(option.ifsc_code, "IFSC"),
+                              toast.success("IFSC copied");
+                          }}
                           className="text-gray-500 hover:text-red-600"
                         >
                           <svg
@@ -455,14 +458,13 @@ const navigate = useNavigate()
                           </span>
                         </div>
                         <button
-                          onClick={
-                            (() =>{
-                              copyToClipboard(
-                                option.account_name,
-                                "Account Name"
-                              ),
-                            toast.success("Account Name copied")})
-                          }
+                          onClick={() => {
+                            copyToClipboard(
+                              option.account_name,
+                              "Account Name"
+                            ),
+                              toast.success("Account Name copied");
+                          }}
                           className="text-gray-500 hover:text-red-600"
                         >
                           <svg
@@ -782,7 +784,7 @@ const navigate = useNavigate()
 
             {/* Quick Amount Buttons */}
             <div className="grid grid-cols-3 gap-2 mt-3">
-              {quickAmounts.map((val, idx) => (
+              {quickUsdtAmounts.map((val, idx) => (
                 <button
                   key={idx}
                   onClick={() => setusdtAmout(val)}
