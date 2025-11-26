@@ -124,7 +124,10 @@ export default function ForgotPassword() {
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 
-        <div className="absolute top-2 right-4 text-gray-400 hover:text-black cursor-pointer text-xl font-bold">
+        <div
+          className="absolute top-2 right-4 text-gray-400 hover:text-black cursor-pointer text-xl font-bold"
+          onClick={() => navigate("/login")}
+        >
           ×
         </div>
 
@@ -213,7 +216,7 @@ export default function ForgotPassword() {
               <div className="relative w-full">
                 {/* Input Field */}
                 <input
-                 disabled={!buttonDisabled}
+                  disabled={!buttonDisabled}
                   type="text"
                   placeholder="Phone Number"
                   className="w-full pl-2 pr-20 py-2 border-2 border-gray-300 rounded-xl text-[16px] font-medium focus:outline-none bg-inputBoxBg text-inputText"
@@ -232,13 +235,13 @@ export default function ForgotPassword() {
                 <button
                   type="button"
                   className="absolute top-1/2 right-1.5 -translate-y-1/2 bg-buttonRed text-white px-3 py-2 text-[10px] rounded hover:bg-red-600 cursor-pointer"
-                   onClick={() => {
-                                    if (phoneNumber.length === 10) {
-                                      sendOtp(phoneNumber);
-                                    } else {
-                                      toast.error("Enter the 10 digit number");
-                                    }
-                                  }}
+                  onClick={() => {
+                    if (phoneNumber.length === 10) {
+                      sendOtp(phoneNumber);
+                    } else {
+                      toast.error("Enter the 10 digit number");
+                    }
+                  }}
                 >
                   Get OTP
                 </button>
@@ -260,7 +263,7 @@ export default function ForgotPassword() {
                 if (value.length <= 4) {
                   setOtp(value);
                 }
-                 if(value.length===4){
+                if (value.length === 4) {
                   handleVerify(value);
                 }
               }}
@@ -275,7 +278,7 @@ export default function ForgotPassword() {
             </label>
             <div className="relative">
               <input
-               disabled={buttonDisabled}
+                disabled={buttonDisabled}
                 type={showNewPassword ? "text" : "password"}
                 placeholder="New Password"
                 className="w-full px-4 py-2 border rounded-xl text-sm bg-inputBoxBg text-inputText border-inputBorder focus:outline-none"
@@ -343,7 +346,7 @@ export default function ForgotPassword() {
             </label>
             <div className="relative">
               <input
-               disabled={buttonDisabled}
+                disabled={buttonDisabled}
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="Confirm Password"
                 className="w-full px-4 py-2 border rounded-xl text-sm bg-inputBoxBg text-inputText border-inputBorder focus:outline-none"

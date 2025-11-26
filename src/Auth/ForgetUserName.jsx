@@ -113,7 +113,10 @@ export default function ForgetUserName() {
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 
-        <div className="absolute top-2 right-4 text-gray-400 hover:text-black cursor-pointer text-xl font-bold">
+        <div
+          className="absolute top-2 right-4 text-gray-400 hover:text-black cursor-pointer text-xl font-bold"
+          onClick={() => navigate("/login")}
+        >
           ×
         </div>
 
@@ -250,7 +253,7 @@ export default function ForgetUserName() {
                 if (value.length <= 4) {
                   setOtp(value);
                 }
-                if(value.length===4){
+                if (value.length === 4) {
                   handleVerify(value);
                 }
               }}
