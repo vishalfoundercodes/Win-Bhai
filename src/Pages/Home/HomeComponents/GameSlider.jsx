@@ -11,9 +11,11 @@ import sidebarImage8 from "../../../assets/GameIcons/live cassino.png";
 import sidebarImage9 from "../../../assets/GameIcons/aviator.png";
 import sidebarImage10 from "../../../assets/GameIcons/slotGames.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useScroll } from "../../../Context/ScrollContext";
 import SignOutModal from "../../../Auth/SignOut";
+import axios from "axios";
+import apis from "../../../utils/apis";
 
   const Cricket = ({ active }) => (
     <svg
@@ -274,6 +276,23 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
  const [openSignOutModal, setOpenSignOutModal] = useState(false);
   const navigate = useNavigate();
 
+    const [contact, setContact] = useState(null);
+    const fetchData = async () => {
+      try {
+        const payload = {
+          type: "social",
+        };
+        const res = await axios.post(apis.contact_info, payload);
+        console.log("contact: ", res?.data);
+        setContact(res?.data?.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    useEffect(() => {
+      fetchData();
+    }, []);
+
    const games = [
      { id: 1, name: "Cricket", image: Cricket, brandId: "46", route: "" },
      { id: 2, name: "Aviator", image: aviator, route: "", brandId: "2" },
@@ -393,7 +412,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
                   // 👉 Logout item par modal open
                   if (game.name === "Logout") {
                     setOpenSignOutModal(true);
-                    return; 
+                    return;
                   }
                   setSelected(game.id);
                   navigate(game.route);
@@ -446,7 +465,16 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
             Contact with us :
           </p>
           <div className="flex flex-col gap-2">
-            <button className="flex items-center rounded-2xl overflow-hidden shadow border-b border-green-700">
+            <button
+              className="flex items-center rounded-2xl overflow-hidden shadow border-b border-green-700"
+              onClick={() => {
+                if (contact?.whatsapp_link) {
+                  window.open(contact.whatsapp_link, "_self");
+                } else {
+                  console.log("No whatsapp_link link found");
+                }
+              }}
+            >
               {/* Left Icon Section with Gradient */}
               <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-5 flex items-center justify-center">
                 <svg
@@ -472,7 +500,16 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
               </div>
             </button>
 
-            <button className="flex items-center rounded-2xl overflow-hidden shadow border-b border-sky-900">
+            <button
+              className="flex items-center rounded-2xl overflow-hidden shadow border-b border-sky-900"
+              onClick={() => {
+                if (contact?.telegram_link) {
+                  window.open(contact.telegram_link, "_self");
+                } else {
+                  console.log("No Telegram link found");
+                }
+              }}
+            >
               {/* Left side with gradient + icon */}
               <div className="bg-[linear-gradient(134.66deg,#4286F6_0.29%,#274E90_99.71%)] p-5 flex items-center justify-center">
                 <span>
@@ -505,7 +542,16 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
               </div>
             </button>
 
-            <button className="flex items-center rounded-2xl overflow-hidden shadow border-b border-pink-700">
+            <button
+              className="flex items-center rounded-2xl overflow-hidden shadow border-b border-pink-700"
+              onClick={() => {
+                if (contact?.instagram_link) {
+                  window.open(contact.instagram_link, "_self");
+                } else {
+                  console.log("No instagram_link link found");
+                }
+              }}
+            >
               {/* Left side with Instagram gradient + icon */}
               <div className="bg-[linear-gradient(211.64deg,#515BD4_7.32%,#8034B0_37.69%,#DD2A7B_63.13%,#F48529_77.91%,#FDDA76_90.22%)] p-5 flex items-center justify-center">
                 <span>
@@ -534,7 +580,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
           </div>
         </div>
       </div>
-      
+
       <SignOutModal
         isOpen={openSignOutModal}
         onClose={() => setOpenSignOutModal(false)}

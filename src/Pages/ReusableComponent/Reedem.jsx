@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Gift, ShieldCheck, Zap } from "lucide-react";
 import trustedGame from "../../assets/Company/trusted_game.gif";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +15,19 @@ export default function RedeemBonus() {
    const account_type = localStorage.getItem("account_type");
    const {fetchProfile}=useProfile()
    const [loader,setLoader]=useState(false)
+   const [history, setHistory] = useState([]);
+
+
+   const handleGetHistory=async()=>{
+    try {
+      const userId=localStorage.getItem("userId")
+      const res = await axios.get(`${apis.gift_redeem_list}${userId}`);
+      console.log("history:",res?.data)
+      setHistory(res?.data?.data)
+    } catch (error) {
+      console.log("error",error)
+    }
+   }
   const handleApplyCoupon = async() => {
     // Logic to apply coupon code
     try {
@@ -23,15 +36,29 @@ export default function RedeemBonus() {
         toast.warn("Please login with your real account")
         return;
       }
+
+      if(!coupon){
+        toast.warn("Enter the coupon")
+        return
+      }
+      
+
       const payload = {
-        userid: localStorage.getItem("userId"),
-        code: coupon,
+        user_id: localStorage.getItem("userId"),
+        coupon_code: coupon,
       };
       
-      const res =await axios.post(`${apis.gift_cart_apply}`,payload)
+      const res = await axios.post(`${apis.bonus_info}`, payload);
       console.log("Coupon applied successfully:", res.data);
-      toast.success(res?.data?.message)
-      navigate("/")
+      // toast.success(res?.data?.message)
+      if(res?.data?.status===400){
+        toast.error(res?.data?.message);
+        return
+      }
+      handleGetHistory()
+      navigate("/Bonus", {state:{
+        data:res.data
+      }});
       fetchProfile()
     } catch (error) {
       console.error("Error applying coupon:", error);
@@ -41,6 +68,8 @@ export default function RedeemBonus() {
       setLoader(false)
     }
   }
+
+  useEffect(()=>{handleGetHistory()},[])
 
 
   if (loader) {
@@ -56,7 +85,7 @@ export default function RedeemBonus() {
         <div className="lg2:flex lg2:gap-4 mb-4 lg2:mt-0 hidden">
           <div
             className="hidden lg2:flex gap-2 cursor-pointer"
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
           >
             <svg
               width="44"
@@ -264,7 +293,7 @@ export default function RedeemBonus() {
           </div>
 
           {/* Recent Activity */}
-          <div className="w-full max-w-m bg-white rounded-xl shadow mt-4 p-4">
+          {/* <div className="w-full max-w-m bg-white rounded-xl shadow mt-4 p-4">
             <h4 className="text-black text-sm font-bold">Recent Activity</h4>
 
             <div className="mt-3 space-y-3 text-sm">
@@ -317,27 +346,7 @@ export default function RedeemBonus() {
               </div>
 
               <div className="flex justify-between items-center">
-                {/* <div>
-              <p className="text-black font-medium">Game Win</p>
-              <p className="text-xs text-gray-500">2 days ago, 9:15 AM</p>
-            </div> */}
                 <div className="flex gap-2">
-                  {/* <div className="bg-amber-300 rounded-full p-2">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M7.99859 1.32781C6.86397 1.32781 5.9261 1.42774 5.20424 1.5494L5.12107 1.56368C4.49417 1.66857 3.97279 1.75609 3.565 2.25761C3.30431 2.57974 3.21928 2.92795 3.20003 3.31588L2.89465 3.41768C2.60728 3.51326 2.35465 3.59768 2.15541 3.69078C1.93941 3.79133 1.74141 3.92043 1.58996 4.13085C1.43852 4.34126 1.37831 4.56968 1.351 4.80616C1.32617 5.02526 1.32617 5.2903 1.32617 5.59381V5.68381C1.32617 5.93333 1.32617 6.15368 1.34479 6.33802C1.36465 6.53726 1.40872 6.73154 1.51859 6.91899C1.62969 7.10706 1.77741 7.23988 1.94252 7.35409C2.09459 7.45961 2.287 7.56699 2.50548 7.68802L4.1441 8.59857C4.47928 9.25712 4.93921 9.8443 5.57169 10.2682C6.12224 10.6382 6.78328 10.8703 7.56597 10.9317C7.54491 10.9867 7.53377 11.0449 7.53307 11.1037V12.1899H6.64548C6.39436 12.1899 6.151 12.2769 5.95681 12.4361C5.76262 12.5954 5.6296 12.8169 5.58038 13.0632L5.44445 13.7416H4.27445C4.15099 13.7416 4.03258 13.7907 3.94528 13.878C3.85798 13.9653 3.80893 14.0837 3.80893 14.2071C3.80893 14.3306 3.85798 14.449 3.94528 14.5363C4.03258 14.6236 4.15099 14.6726 4.27445 14.6726H11.7227C11.8462 14.6726 11.9646 14.6236 12.0519 14.5363C12.1392 14.449 12.1882 14.3306 12.1882 14.2071C12.1882 14.0837 12.1392 13.9653 12.0519 13.878C11.9646 13.7907 11.8462 13.7416 11.7227 13.7416H10.5527L10.4168 13.0632C10.3676 12.8169 10.2346 12.5954 10.0404 12.4361C9.84617 12.2769 9.60281 12.1899 9.35169 12.1899H8.4641V11.1037C8.46341 11.0449 8.45227 10.9867 8.43121 10.9317C9.2139 10.8697 9.87493 10.6382 10.4255 10.2688C11.0586 9.8443 11.5179 9.25712 11.8531 8.59857L13.4917 7.68802C13.7102 7.56699 13.9026 7.45961 14.0547 7.35409C14.2191 7.23988 14.3675 7.10706 14.478 6.91961C14.5884 6.73154 14.6331 6.53726 14.6524 6.33802C14.671 6.15368 14.671 5.93333 14.671 5.68381V5.59381C14.671 5.29092 14.671 5.02526 14.6462 4.80616C14.6189 4.56968 14.5593 4.34064 14.4072 4.13085C14.2558 3.92043 14.0578 3.79133 13.8424 3.69016C13.6419 3.59706 13.3899 3.51326 13.1025 3.41768L12.7971 3.31588C12.7785 2.92733 12.6935 2.57974 12.4322 2.25761C12.025 1.75547 11.5036 1.66795 10.8767 1.56368L10.7929 1.5494C9.86931 1.39763 8.93459 1.32351 7.99859 1.32781ZM9.60307 13.7416L9.50376 13.2457C9.49673 13.2105 9.47774 13.1789 9.45002 13.1561C9.42229 13.1334 9.38755 13.1209 9.35169 13.1209H6.64548C6.60962 13.1209 6.57488 13.1334 6.54716 13.1561C6.51943 13.1789 6.50044 13.2105 6.49341 13.2457L6.3941 13.7416H9.60307ZM3.21183 4.29347L3.22052 4.29037C3.26521 5.23381 3.37134 6.27657 3.637 7.25106L2.97534 6.88423C2.7339 6.74954 2.58245 6.66512 2.47321 6.5894C2.37265 6.51926 2.33976 6.47768 2.32176 6.44664C2.30314 6.41561 2.28328 6.36719 2.27086 6.24554C2.25803 6.05175 2.25348 5.85751 2.25721 5.66333V5.61802C2.25721 5.28347 2.25783 5.07181 2.27583 4.91168C2.29321 4.76395 2.32052 4.70871 2.34534 4.67519C2.36955 4.64106 2.413 4.59761 2.54769 4.53492C2.69417 4.46664 2.89528 4.39961 3.21183 4.29347ZM12.7767 4.28974C12.7326 5.23319 12.6258 6.27595 12.3608 7.25043L13.0218 6.88361C13.2633 6.74892 13.4147 6.6645 13.524 6.58878C13.6245 6.51864 13.6574 6.47706 13.6754 6.44602C13.694 6.41499 13.7139 6.36657 13.7263 6.24492C13.7393 6.11209 13.74 5.93892 13.74 5.66271V5.6174C13.74 5.28285 13.7393 5.07119 13.7213 4.91106C13.704 4.76333 13.6767 4.70809 13.6518 4.67457C13.6276 4.64043 13.5842 4.59699 13.4495 4.5343C13.303 4.46602 13.1019 4.39837 12.7853 4.29223L12.7767 4.28974ZM5.35941 2.4674C6.2318 2.32459 7.11459 2.25483 7.99859 2.25885C9.07859 2.25885 9.96431 2.35381 10.6378 2.4674C11.3869 2.59402 11.544 2.64119 11.7097 2.84478C11.8723 3.04464 11.8878 3.23457 11.8543 4.07561C11.7984 5.47712 11.6135 6.99037 11.0412 8.14112C10.7582 8.70844 10.3882 9.17271 9.90721 9.49547C9.42865 9.81637 8.81107 10.0175 7.99859 10.0175C7.1861 10.0175 6.56914 9.81637 6.09059 9.49547C5.60893 9.17271 5.239 8.70843 4.95659 8.1405C4.38369 6.99037 4.19934 5.47775 4.14348 4.07499C4.10997 3.23457 4.12486 3.04464 4.2881 2.84478C4.45321 2.64119 4.61024 2.59402 5.35941 2.4674Z"
-                    fill="#C10932"
-                  />
-                </svg>
-              </div> */}
                   <div className="bg-[#FEE7EC] rounded-full p-2">
                     <svg
                       width="24"
@@ -361,6 +370,79 @@ export default function RedeemBonus() {
                 </div>
                 <p className="text-red font-semibold">+ ₹250</p>
               </div>
+            </div>
+          </div> */}
+          <div className="w-full max-w-m bg-white rounded-xl shadow mt-4 p-4">
+            <h4 className="text-black text-sm font-bold">Recent Activity</h4>
+
+            <div className="mt-3 space-y-3 text-sm">
+              {history.length === 0 && (
+                <p className="text-gray-400 text-center py-4">
+                  No Activity Found
+                </p>
+              )}
+
+              {history.map((item, index) => {
+                const isDeposit = item.amount > 0;
+                const date = new Date(item.datetime).toLocaleString();
+
+                return (
+                  <div
+                    key={index}
+                    className="flex justify-between items-center"
+                  >
+                    <div className="flex gap-2">
+                      <div
+                        className={`rounded-full p-2 ${
+                          isDeposit ? "bg-[#D4F5DB]" : "bg-[#FEE7EC]"
+                        }`}
+                      >
+                        {isDeposit ? (
+                          // green plus icon
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 10 10"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M5 0.5C5.42828 0.5 5.77586 0.847586 5.77586 1.27586V4.22414H8.72414C8.92991 4.22414 9.12725 4.30588 9.27276 4.45138C9.41826 4.59689 9.5 4.79423 9.5 5C9.5 5.20577 9.41826 5.40312 9.27276 5.54862C9.12725 5.69412 8.92991 5.77586 8.72414 5.77586H5.77586V8.72414C5.77586 8.92991 5.69412 9.12725 5.54862 9.27276C5.40312 9.41826 5.20577 9.5 5 9.5C4.79423 9.5 4.59689 9.41826 4.45138 9.27276C4.30588 9.12725 4.22414 8.92991 4.22414 8.72414V5.77586H1.27586C1.07009 5.77586 0.872747 5.69412 0.727245 5.54862C0.581742 5.40312 0.5 5.20577 0.5 5C0.5 4.79423 0.581742 4.59689 0.727245 4.45138C0.872747 4.30588 1.07009 4.22414 1.27586 4.22414H4.22414V1.27586C4.22414 0.847586 4.57172 0.5 5 0.5Z"
+                              fill="#4EB92B"
+                            />
+                          </svg>
+                        ) : (
+                          // red minus icon
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path fill="#D9534F" d="M3 8h10v1H3z" />
+                          </svg>
+                        )}
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="text-black font-medium">
+                          {isDeposit ? item.gift_code : "Redeem"}
+                        </p>
+                        <p className="text-xs text-gray-500">{date}</p>
+                      </div>
+                    </div>
+
+                    <p
+                      className={`font-semibold ${
+                        isDeposit ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {isDeposit ? `+ ₹${item.amount}` : `- ₹${item.amount}`}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

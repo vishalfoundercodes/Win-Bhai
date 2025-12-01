@@ -1,10 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Gift, Download, Calendar } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
+import { useProfile } from "../../Context/ProfileContext";
 
 export default function Bonus() {
+  const navigate=useNavigate()
+ const location = useLocation();
+ const [data,setData]=useState(null)
+  const {fetchProfile}=useProfile()
+ const passedData = location.state?.data;
+
+ console.log(passedData);
+      // const payload = {
+      //   userid: localStorage.getItem("userId"),
+      //   code: coupon,
+      // };
+      
+      // const res =await axios.post(`${apis.gift_cart_apply}`,payload)
+      // console.log("Coupon applied successfully:", res.data);
+      // toast.success(res?.data?.message)
+      // handleGetHistory()
+      // navigate("/")
+      // fetchProfile()
+
+      useEffect(()=>{
+         const passedData = location.state?.data?.data;
+
+         console.log(passedData);
+        setData(passedData);
+      },[])
+
+      const handlleCoupon=async()=>{
+        try{
+          const payload = {
+            userid: localStorage.getItem("userId"),
+            code: data?.coupon?.coupon_code,
+          };
+          console.log(payload)
+          const res = await axios.post(`${apis.gift_cart_apply}`, payload);
+          console.log("Coupon applied successfully:", res.data);
+          if(res?.data?.status==200){
+            toast.success(res?.data?.message);
+              navigate("/");
+          }
+     
+          fetchProfile()
+        }catch(error){
+          console.error(error)
+          toast.error(error?.response?.data?.message)
+        }
+      }
+
   return (
-    <div className="min-h-screen bg-gray-100 flex justify-center p-4">
+    <div className="min-h-screen bg-gray-100 lg2:bg-transparent flex justify-center p-4 lg2:p-0 lg2:px-4">
       <div className="w-full max-w-m">
+        <div
+          className="hidden lg2:block mb-2 cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 44 44"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="44" height="44" rx="8" fill="#C10932" />
+            <path
+              d="M28 31.202L26.2153 33L16.4945 23.2009C16.3378 23.0439 16.2134 22.8572 16.1285 22.6515C16.0437 22.4459 16 22.2253 16 22.0025C16 21.7798 16.0437 21.5592 16.1285 21.3536C16.2134 21.1479 16.3378 20.9612 16.4945 20.8042L26.2153 11L27.9983 12.798L18.8746 22L28 31.202Z"
+              fill="white"
+            />
+          </svg>
+        </div>
         {/* Main Card */}
         <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center">
           {/* Header */};
@@ -35,7 +105,9 @@ export default function Bonus() {
               <p className="text-ssm font-semibold text-gray-500">
                 Loss Amount
               </p>
-              <p className="text-xl font-bold text-gray-800">₹ 1,250</p>
+              <p className="text-xl font-bold text-gray-800">
+                ₹ {data?.last_7_days_loss}
+              </p>
             </div>
             {/* <Download className="text-blue-500" size={24} /> */}
             <div className="bg-[#C8E9FF] rounded-full p-2">
@@ -59,7 +131,9 @@ export default function Bonus() {
           <div className="w-full mt-4 p-4 bg-red-100 rounded-[15px] border border-red flex justify-between items-center">
             <div>
               <p className="text-ssm font-semibold text-red">Bonus Amount</p>
-              <p className="text-xl font-bold text-red">₹ 1,250</p>
+              <p className="text-xl font-bold text-red">
+                ₹ {data?.coupon?.bonus_amount}
+              </p>
               <p className="text-xs text-gray-600">10% of your losses</p>
             </div>
             {/* <Gift className="text-red-500" size={24} /> */}
@@ -85,7 +159,8 @@ export default function Bonus() {
                 Expires on
               </p>
               <p className="text-lg font-bold bg-gradient-to-b from-[#61B229] to-[#294C12] bg-clip-text text-transparent">
-                Dec 31, 2024
+                {/* Dec 31, 2024 */}
+                {data?.coupon?.expire_date}
               </p>
             </div>
             {/* <Calendar className="text-green-600" size={24} /> */}
@@ -245,7 +320,10 @@ export default function Bonus() {
         </div>
 
         {/* Claim Button */}
-        <button className="w-full mt-5 bg-red hover:bg-red-700 text-white py-3 rounded-[8px] font-semibold flex justify-center items-center gap-2">
+        <button
+          className="w-full mt-5 bg-red hover:bg-red-700 text-white py-3 rounded-[8px] font-semibold flex justify-center items-center gap-2"
+          onClick={handlleCoupon}
+        >
           {/* <Gift size={18} /> */}
           <svg
             width="20"

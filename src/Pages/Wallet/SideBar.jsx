@@ -15,11 +15,31 @@ import {
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import SignOutModal from "../../Auth/SignOut";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import apis from "../../utils/apis";
 
 export default function Sidebar({ isOpen, onClose, profileDetails, profileDetails2 }) {
   const navigate = useNavigate();
   const [openSignOutModal, setOpenSignOutModal] = useState(false);
+
+  
+      const [contact, setContact] = useState(null);
+      const fetchData = async () => {
+        try {
+          const payload = {
+            type: "contact",
+          };
+          const res = await axios.post(apis.contact_info, payload);
+          console.log("contact: ", res?.data);
+          setContact(res?.data?.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      useEffect(() => {
+        fetchData();
+      }, []);
   return (
     <div
       className={`fixed inset-0 z-50 flex justify-end transition-all duration-300 ${
@@ -139,13 +159,23 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
                 <p className="text-xs text-darkGray font-medium uppercase">
                   Free Cash
                 </p>
-                <p className="font-bold">₹ 0.00</p>
+                <p className="font-bold">
+                  ₹{" "}
+                  {profileDetails?.free_cash ||
+                    profileDetails2?.free_cash ||
+                    "0"}
+                </p>
               </div>
               <div className="border rounded-[10px] p-2  border-grayBorder bg-grayBg cursor-pointer">
                 <p className="text-xs text-darkGray font-medium">
                   Net Exposure
                 </p>
-                <p className="text-red font-bold">₹ 0.00</p>
+                <p className="text-red font-bold">
+                  ₹{" "}
+                  {profileDetails?.net_exposure ||
+                    profileDetails2?.net_exposure ||
+                    "0"}
+                </p>
               </div>
             </div>
 
@@ -249,7 +279,10 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
             <div className="mx-4 mb-2 cursor-pointer">
               <button
                 className="w-full bg-red text-white py-2 rounded-[5px] font-semibold px-4 cursor-pointer"
-                onClick={() =>{onClose(); navigate("/RedeemBonus")}}
+                onClick={() => {
+                  onClose();
+                  navigate("/RedeemBonus");
+                }}
               >
                 Claim Bonus
               </button>
@@ -654,7 +687,16 @@ export default function Sidebar({ isOpen, onClose, profileDetails, profileDetail
 
           {/* Contact Us */}
           <div className="p-4">
-            <button className="w-full bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)] text-white py-10 rounded-lg font-medium flex flex-col items-center justify-center gap-2 text-2xl">
+            <button
+              className="w-full bg-[linear-gradient(272.44deg,#C10932_0.86%,#5B0418_99.14%)] text-white py-10 rounded-lg font-medium flex flex-col items-center justify-center gap-2 text-2xl cursor-pointer"
+              onClick={() => {
+                if (contact?.mobile_number) {
+                  window.open(contact.mobile_number, "_self");
+                } else {
+                  console.log("No mobile_number link found");
+                }
+              }}
+            >
               Contact Us
               <svg
                 width="48"

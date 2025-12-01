@@ -7,23 +7,29 @@ import Loader from "../resuable_component/Loader/Loader"
 export default function CouponPage() {
   const navigate = useNavigate();
   const [data, setData] = useState(null); // This will store the API response
+  const [search, setSearch] = useState("");
 
-  // Fetch coupons data from the API
   const fetchData = async () => {
     try {
-      // console.log("Fetching coupons data...", apis.coupon_show);
       const res = await axios.get(apis.coupon_show);
-      console.log("couppon",res?.data?.data); // Log the data for debugging
-      setData(res?.data?.data); // Set the response data to the state
+      setData(res?.data?.data);
     } catch (error) {
-      console.log(error); // Handle any errors
+      console.log(error);
     }
   };
 
-  // Call fetchData when the component is mounted
   useEffect(() => {
     fetchData();
   }, []);
+
+  const filteredCoupons = data?.filter((item) => {
+    const text = search.toLowerCase();
+    return (
+      item.title.toLowerCase().includes(text) ||
+      item.code?.toLowerCase().includes(text) ||
+      item.description.toLowerCase().includes(text)
+    );
+  });
 
   return (
     <div className="h-screen w-full bg-[#E7E7E7] flex flex-col px-4 py-2 lg2:py-0">
@@ -65,6 +71,7 @@ export default function CouponPage() {
             <input
               type="text"
               placeholder="Enter Coupon Code"
+              onChange={(e) => setSearch(e.target.value)}
               className="w-full lg2:w-[220px] border border-[#C8102E] placeholder:text-[#C8102E] rounded-md px-3 py-2 text-sm focus:outline-none text-ssm"
             />
             <button className="bg-[#C8102E] hover:bg-[#a60d25] text-white px-4 py-2 lg2:px-8 rounded-md text-ssm font-semibold">
@@ -82,12 +89,12 @@ export default function CouponPage() {
         }}
       >
         {/* Check if data is loaded */}
-        {data ? (
-          data.map((coupon) => (
+        {filteredCoupons ? (
+          filteredCoupons.map((coupon) => (
             <div key={coupon.id} className="text-center">
               {/* Top header with side cuts */}
               <div className="relative bg-red-700 text-white py-5 rounded-t-2xl border-none">
-                <h3 className="text-[27px] xsm3:text-[32px] font-bold">
+                <h3 className="text-[24px] xsm3:text-[26px] font-bold">
                   {coupon.title}
                 </h3>
 

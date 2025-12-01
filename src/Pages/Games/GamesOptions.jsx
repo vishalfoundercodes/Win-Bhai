@@ -378,7 +378,7 @@ export default function GamesOptions({
               className={`flex flex-col items-center justify-center
                 w-[95px] h-[66px] px-2 py-1
                 rounded-[10px] border text-white
-                transition-all duration-200
+                transition-all duration-200 cursor-pointer
                 ${
                   active === cat.id
                     ? "bg-red border-[#969696]"

@@ -120,6 +120,14 @@ const apis = {
   campaign_list: `${configModalWinBhai}campaign_list`,
   get_manual_details: `${configModalWinBhai}get-qr-codes`,
   manual_payin: `${configModalWinBhai}manual_payin`,
+
+  // https://root.winbhai.in/public/api/gift_redeem_list?userid=40
+  gift_redeem_list: `${configModalWinBhai}gift_redeem_list?userid=`,
+  // https://root.winbhai.in/api/bonus_info
+  bonus_info: `${configModalWinBhai}bonus_info`,
+  contact_info: `${configModalWinBhai}contact_info`,
+  // https://root.winbhai.in/api/contact_info
+
 };
 
 export default apis

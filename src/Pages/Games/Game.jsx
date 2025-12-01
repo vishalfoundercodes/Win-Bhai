@@ -138,6 +138,11 @@ export default function Game() {
     ezugi: { label: "Ezugi", brand_id: "78" },
     Mac88: { label: "Mac87", brand_id: "" },
     mac88: { label: "Mac87", brand_id: "" },
+    Bgaming: { label: "Bgaming", brand_id: "65" },
+    PragmaticPlay: { label: "PragmaticPlay", brand_id: "53" },
+    MicroGaming: { label: "MicroGaming", brand_id: "" },
+    T1: { label: "T1", brand_id: "80" },
+    TADAGaming: { label: "TADAGaming", brand_id: "51" },
   };
 
   // Categories for display

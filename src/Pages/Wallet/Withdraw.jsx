@@ -32,7 +32,7 @@ export default function Withdraw() {
   const navigate = useNavigate()
 const [active, setActive] = useState("Option 1");
   const quickAmounts = [500, 1000, 5000, 10000,25000, 50000];
-  const cryptoAmounts = [500, 2000, 5000, 10000,20000, 30000, 50000, 70000, 100000];
+  const cryptoAmounts = [10, 50, 100, 200, 300, 500];
   const [copied, setCopied] = useState("");
 
   const copyToClipboard = (text, label) => {
@@ -1057,7 +1057,7 @@ const defaultImages = [image1, image2, image3];
                 <button
                   key={idx}
                   onClick={() => setAmount(val)}
-                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700 cursor-pointer"
                 >
                   +{val.toLocaleString()}
                 </button>
@@ -1067,7 +1067,7 @@ const defaultImages = [image1, image2, image3];
                 <button
                   key={idx}
                   onClick={() => setUsdtAmount(val)}
-                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700"
+                  className="bg-red text-white rounded-[8px] py-2 font-semibold hover:bg-red-700 cursor-pointer"
                 >
                   +{val.toLocaleString()}
                 </button>

@@ -172,6 +172,11 @@ export default function Home() {
     "100",
     "78",
     "59",
+    "51",
+    "80",
+    "53",
+    "88",
+    "65"
   ];
 
   const slotDetails = { brand_id: "1" };

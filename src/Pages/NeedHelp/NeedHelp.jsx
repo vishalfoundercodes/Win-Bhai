@@ -28,7 +28,10 @@ export default function HelpPage() {
     <div className="min-h-screen bg-gray-100 lg2:bg-transparent px-4 py-8 flex flex-col items-center lg2:items-start lg2:py-0  hide-scrollbar">
       {/* Title */}
       <div className="lg2:flex lg2:gap-4 ">
-        <div className="hidden lg2:block cursor-pointer" onClick={()=>navigate(-1)}>
+        <div
+          className="hidden lg2:block cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
           <svg
             width="44"
             height="44"
@@ -86,7 +89,16 @@ export default function HelpPage() {
       {dataSection &&
         dataSection.map((item) => (
           <div key={item.id} className="w-full mt-4 hide-scrollbar">
-            <button className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between">
+            <button
+              className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between"
+              onClick={() => {
+                if (item?.link) {
+                  window.open(item.link, "_self");
+                } else {
+                  console.log("No  link found");
+                }
+              }}
+            >
               <div className="flex items-center gap-4">
                 <div className=" rounded-[15px]">
                   <img

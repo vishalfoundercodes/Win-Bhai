@@ -248,7 +248,7 @@ const Header = ({ profileDetails2}) => {
             {/* Right Section - Deposit Button & User Balance */}
             <div className="flex items-start gap-3 lg2:justify-end">
               {/* Mobile Deposit Button - More spacing from search icon */}
-              <div className="items-center bg-white rounded-full p-2 text-[#525252] w-8 h-8  justify-center hidden lg2:block lg2:flex">
+              {/* <div className="items-center bg-white rounded-full p-2 text-[#525252] w-8 h-8  justify-center hidden lg2:block lg2:flex">
                 <button onClick={() => setSearchOpen(!searchOpen)}>
                   <svg
                     width="15"
@@ -263,7 +263,7 @@ const Header = ({ profileDetails2}) => {
                     />
                   </svg>
                 </button>
-              </div>
+              </div> */}
               <button
                 className="bg-white text-red text-xs font-medium px-3 py-2 rounded-full md:hidden whitespace-nowrap"
                 onClick={() => navigate("/deposit")}

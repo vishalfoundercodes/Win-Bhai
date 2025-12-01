@@ -134,7 +134,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
               // Fixed width for collapsed state
               expanded 
                 ? "min-w-[85px] h-[115px] xsm3:min-w-[100px] lg2:w-[150px] xsm3:h-[125px] lg2:h-[150px]"
-                : "w-[80px] h-[115px] xsm3:w-[100px] xsm3:h-[150px] lg2:w-[135px] lg2:h-[150px]"
+                : "w-[80px] h-[115px] xsm3:w-[100px] xsm3:h-[110px] lg2:w-[135px] lg2:h-[150px]"
             }
           `}
           onClick={() => {
@@ -291,7 +291,7 @@ const handleGameOpen = async (id) => {
       <div
         className={`transition-all duration-500 ease-in-out ${
           expanded
-            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
+            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
             : ""
         }`}
       >
@@ -300,7 +300,7 @@ const handleGameOpen = async (id) => {
           filteredGames.map((game) => (
             <div
               key={game.id}
-              className="min-w-[85px] h-[115px] xsm3:min-w-[100px] lg2:w-[150px] xsm3:h-[125px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
+              className="min-w-[85px] h-[100px] xsm3:min-w-[100px] lg2:w-[135px] xsm3:h-[100px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
               onClick={() => {
                 navigate(game.route || "#");
                 handleGameOpen(game.gameID);
@@ -310,7 +310,7 @@ const handleGameOpen = async (id) => {
                 <img
                   src={game.image || game.imgUrl || game.game_img}
                   alt={game.name}
-                  className="w-full h-full object-cover lg2:object-fill rounded-[8px] "
+                  className="w-full h-full object-cover lg2:object-cover rounded-[8px] "
                 />
               ) : (
                 <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]" />

@@ -7,6 +7,6 @@ export const toastOnce = (message, options = {}) => {
   if (!toastDisplayed) {
     toastDisplayed = true;
     toast.warning(message, options);
-    setTimeout(() => (toastDisplayed = false), 2000); // reset after 2s
+    setTimeout(() => (toastDisplayed = false), 1000); // reset after 2s
   }
 };

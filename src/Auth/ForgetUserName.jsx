@@ -138,7 +138,7 @@ export default function ForgetUserName() {
               </label>
               <div
                 onClick={() => setIsOpen(!isOpen)}
-                className=" border-2 border-gray-300 rounded-xl px-1 py-2 flex items-center justify-between cursor-pointer bg-inputBoxBg cursor-pointer"
+                className=" border-2 border-gray-300 rounded-xl px-1 py-2 flex items-center justify-between  bg-inputBoxBg cursor-pointer"
               >
                 <span className="text-black font-medium bg-inputBoxBg">
                   {selected.code}
@@ -165,7 +165,7 @@ export default function ForgetUserName() {
                   {countries.map((country, idx) => (
                     <div
                       key={idx}
-                      className={`flex items-center justify-between px-4 py-3 cursor-pointer  rounded-[6px] cursor-pointer
+                      className={`flex items-center justify-between px-4 py-3  rounded-[6px] cursor-pointer
           hover:bg-gray-100 ${
             selected.code === country.code ? "bg-red-100" : ""
           }`}

@@ -723,7 +723,7 @@ const navigate = useNavigate()
         )}
 
         {/* Amount Section */}
-        {selectedPayment !== 3 && (
+        {(selectedPayment == 1 || selectedPayment == 2) && (
           <div className="rounded-[8px] shadow p-4 lg2:px-6 bg-white">
             <h2 className="text-black font-semibold mb-3">
               Amount<span className="text-red-500">*</span>
@@ -878,7 +878,7 @@ const navigate = useNavigate()
         )}
 
         {/* Offers Section */}
-        {selectedPayment !== 3 && (
+        {selectedPayment !== 3 && selectedPayment !== 4 && (
           <div className="rounded-[8px] shadow p-4 bg-white">
             <h2 className="text-lightGray font-semibold mb-0 text-ssm uppercase lg2:tracking-[0.04em]">
               Available Offers
@@ -999,9 +999,49 @@ const navigate = useNavigate()
         )}
         {/* </div> */}
 
-        {selectedPayment === 2 && (
+        {selectedPayment === 4 && (
+          <div>
+            <div className="bg-red lg2:rounded-t-[8px] p-2 px-4 hidden lg:block">
+              <h2 className="text-white text-sm font-semibold">
+                Deposit Through WhatsApp
+              </h2>
+            </div>
+            {/* <div className="bg-white flex  justify-center rounded-b-2xl p-8">
+              <div className="flex flex-col"> */}
+            <div className="bg-white flex justify-center items-center rounded-t-[8px] lg2:rounded-t-none rounded-b-[8px] p-8">
+              <div className="flex flex-col items-center text-center gap-4">
+                <svg
+                  width="84"
+                  height="84"
+                  viewBox="0 0 84 84"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M41.6667 0C64.6792 0 83.3334 18.6542 83.3334 41.6667C83.3334 64.6792 64.6792 83.3333 41.6667 83.3333C34.3032 83.346 27.0692 81.3973 20.7084 77.6875L0.0167311 83.3333L5.65006 62.6333C1.93739 56.2705 -0.0128401 49.0334 6.36195e-05 41.6667C6.36195e-05 18.6542 18.6542 0 41.6667 0ZM27.4667 22.0833L26.6334 22.1167C26.0946 22.1538 25.5682 22.2953 25.0834 22.5333C24.6316 22.7896 24.2191 23.1096 23.8584 23.4833C23.3584 23.9542 23.0751 24.3625 22.7709 24.7583C21.2297 26.7621 20.4 29.2221 20.4126 31.75C20.4209 33.7917 20.9542 35.7792 21.7876 37.6375C23.4917 41.3958 26.2959 45.375 29.9959 49.0625C30.8876 49.95 31.7626 50.8417 32.7042 51.6708C37.3019 55.7183 42.7804 58.6374 48.7042 60.1958L51.0709 60.5583C51.8417 60.6 52.6126 60.5417 53.3876 60.5042C54.6008 60.4402 55.7854 60.1117 56.8584 59.5417C57.4036 59.2598 57.9361 58.9539 58.4542 58.625C58.4542 58.625 58.6306 58.5056 58.9751 58.25C59.5376 57.8333 59.8834 57.5375 60.3501 57.05C60.7001 56.6889 60.9917 56.2694 61.2251 55.7917C61.5501 55.1125 61.8751 53.8167 62.0084 52.7375C62.1084 51.9125 62.0792 51.4625 62.0667 51.1833C62.0501 50.7375 61.6792 50.275 61.2751 50.0792L58.8501 48.9917C58.8501 48.9917 55.2251 47.4125 53.0084 46.4042C52.7764 46.3032 52.5279 46.2453 52.2751 46.2333C51.9899 46.2035 51.7018 46.2353 51.43 46.3266C51.1583 46.4179 50.9093 46.5666 50.7001 46.7625C50.6792 46.7542 50.4001 46.9917 47.3876 50.6417C47.2147 50.874 46.9765 51.0496 46.7034 51.1461C46.4303 51.2425 46.1347 51.2555 45.8542 51.1833C45.5827 51.111 45.3167 51.0191 45.0584 50.9083C44.5417 50.6917 44.3626 50.6083 44.0084 50.4583C41.6162 49.4163 39.4019 48.0062 37.4459 46.2792C36.9209 45.8208 36.4334 45.3208 35.9334 44.8375C34.2943 43.2675 32.8657 41.4916 31.6834 39.5542L31.4376 39.1583C31.2637 38.8908 31.1211 38.6042 31.0126 38.3042C30.8542 37.6917 31.2667 37.2 31.2667 37.2C31.2667 37.2 32.2792 36.0917 32.7501 35.4917C33.2084 34.9083 33.5959 34.3417 33.8459 33.9375C34.3376 33.1458 34.4917 32.3333 34.2334 31.7042C33.0667 28.8542 31.8612 26.0194 30.6167 23.2C30.3709 22.6417 29.6417 22.2417 28.9792 22.1625C28.7542 22.1347 28.5292 22.1125 28.3042 22.0958C27.7448 22.0637 27.1838 22.0693 26.6251 22.1125L27.4667 22.0833Z"
+                    fill="#1E883A"
+                  />
+                </svg>
+                <p className="text-gray-500 font-semibold text-sm">
+                  For any queries related to deposit WhatsApp us now{" "}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* chat on whatsup */}
+        {(selectedPayment === 2 || selectedPayment === 4) && (
           <div className="w-full  mt-4 hide-scrollbar">
-            <button className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between">
+            <button
+              className="w-full bg-white rounded-xl shadow p-4 flex items-center justify-between"
+              onClick={() => {
+                if (profileDetails?.whatsapp_deposit_number) {
+                  window.open(profileDetails?.whatsapp_deposit_number, "_self");
+                } else {
+                  console.log("No whatsapp_link link found");
+                }
+              }}
+            >
               <div className="flex items-center gap-4">
                 <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
                   <svg

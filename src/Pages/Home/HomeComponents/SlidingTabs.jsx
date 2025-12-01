@@ -656,6 +656,41 @@ const categories = [
   },
 
   { id: "Aura", label: "Aura", type: "custom", icon: SlotIcon, cat_id: 31 },
+  {
+    id: "Bgaming",
+    label: "Bgaming",
+    type: "custom",
+    icon: TurboGames,
+    cat_id: 32,
+  },
+  {
+    id: "PragmaticPlay",
+    label: "Pragmatic Play",
+    type: "custom",
+    icon: PopularGames,
+    cat_id: 33,
+  },
+  {
+    id: "MicroGaming",
+    label: "Micro Gaming",
+    type: "custom",
+    icon: SportsBook,
+    cat_id: 36,
+  },
+  {
+    id: "T1",
+    label: "T1",
+    type: "custom",
+    icon: SlotIcon,
+    cat_id: 34,
+  },
+  {
+    id: "TADAGaming",
+    label: "Tada gaming",
+    type: "custom",
+    icon: FishingGames,
+    cat_id: 35,
+  },
 ];
 
 export default function SlidingTabs({ withHeader = false, onTabChange }) {
