@@ -89,11 +89,11 @@ const apis = {
   avatarUpdate_request: `${configModalWinBhai}update_avatar?user_id=`,
   gameRule_request: `${configModalWinBhai}getGameRules`,
   deposit_history: `${configModalWinBhai}deposit_history?user_id=`,
-  withdraw_history: `${configModalWinBhai}withdrawHistory?user_id=`,
   download_apk: `${configModalApk}chickenroad.apk`,
   banner_image: `${configModalWinBhai}getBanners`,
   bet_value: `${configModalWinBhai}bet_values`,
-
+  // https://root.winbhai.in/public/api/admin_notifications?user_id=1
+  notification: `${configModalWinBhai}admin_notifications?user_id=`,
   //jilli  game apis
   // all_game_list: `${configModalWinBhai}getJilliGames`,
   // https://root.winbhai.in/api/get_brands
@@ -127,7 +127,6 @@ const apis = {
   bonus_info: `${configModalWinBhai}bonus_info`,
   contact_info: `${configModalWinBhai}contact_info`,
   // https://root.winbhai.in/api/contact_info
-
 };
 
 export default apis

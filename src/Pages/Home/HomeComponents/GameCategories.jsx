@@ -56,9 +56,9 @@ const categories = [
     name: "Live Cassino",
     icon: "🎮",
     image: BG4,
-    brandId: "78",
-    id: "Ezugi",
-    cat_id: 13,
+    brandId: "58",
+    id: "Evolution",
+    cat_id: 10,
   },
   {
     name: "Fishing games",

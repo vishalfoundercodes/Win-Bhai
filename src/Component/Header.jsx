@@ -8,12 +8,15 @@ import { useNavigate } from "react-router-dom";
 import headerImage from "../assets/Home/headerImage.png";
 import {useProfile}  from "../Context/ProfileContext";
 import ActionButtons from "../Pages/Home/HomeComponents/ActionButtons";
+import axios from "axios";
+import apis from "../utils/apis";
 const Header = ({ profileDetails2}) => {
   const { profileDetails, fetchProfile } = useProfile();
   const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
+    const [apiNotifications, setApiNotifications] = useState(null);
   const userId = localStorage.getItem("userId");
     const isWingoPath = location.pathname === "/lottery/wingo";
   const toggleSidebar = () => {
@@ -23,6 +26,18 @@ const Header = ({ profileDetails2}) => {
     setLeftSidebarOpen(!leftSidebarOpen);
   };
   // console.log("profileDetails in header:", profileDetails);
+
+  const fetchNotification = async () => {
+    try {
+      const res = await axios.get(`${apis.notification}${userId}`);
+      console.log("res:", res?.data);
+      const notificationCount = res?.data?.data?.length;
+      console.log("notification count:",notificationCount)
+      setApiNotifications(res?.data?.data?.length);
+    } catch (error) {
+      console.error("error", error);
+    }
+  };
 
   // 🔹 Load stored sidebar state on mount
   useEffect(() => {
@@ -37,6 +52,7 @@ const Header = ({ profileDetails2}) => {
   useEffect(() => {
     if (sidebarOpen) {
       localStorage.setItem("sidebar", "true");
+      fetchNotification()
     } else {
       localStorage.removeItem("sidebar");
     }
@@ -314,6 +330,7 @@ const Header = ({ profileDetails2}) => {
         onClose={toggleSidebar}
         profileDetails={profileDetails}
         profileDetails2={profileDetails2}
+        apiNotifications={apiNotifications}
       />
       <GameSlider
         isOpen={leftSidebarOpen}

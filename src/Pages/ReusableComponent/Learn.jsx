@@ -146,36 +146,80 @@ export default function Learn() {
     fetchData(selectedCategoryId, selectedLanguageId);
   }, [category, language]);
 
+// const VideoCard = ({ item, isPlaying, onPlay }) => {
+//   return (
+//     <div className="lg2:bg-white rounded-lg overflow-hidden">
+//       <div className="relative">
+//         {!isPlaying ? (
+//           <>
+//             <img
+//               src={item.image_url}
+//               alt={item.title}
+//               className="w-full h-full object-fill"
+//             />
+//             <button
+//               onClick={onPlay}
+//               className="absolute inset-0 flex items-center justify-center cursor-pointer"
+//             >
+//               <img
+//                 src="https://img.icons8.com/ios-filled/50/ffffff/play--v1.png"
+//                 alt="play"
+//                 className="w-12 h-12 opacity-90"
+//               />
+//             </button>
+//           </>
+//         ) : (
+//           <iframe
+//             src={item.video_url}
+//             // src="https://cdn.pixabay.com/video/2015/10/27/1192-143842659_large.mp4"
+//             className="w-full h-full aspect-video"
+//             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//             allowFullScreen
+//           />
+//         )}
+//       </div>
+//       <div className="py-3">
+//         <h3 className="text-base font-semibold text-gray-800 truncate">
+//           {item.title}
+//         </h3>
+//         <p className="text-sm text-gray-500 mt-1 truncate">
+//           {item.description}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
 const VideoCard = ({ item, isPlaying, onPlay }) => {
   return (
     <div className="lg2:bg-white rounded-lg overflow-hidden">
-      <div className="relative">
-        {!isPlaying ? (
-          <>
-            <img
-              src={item.image_url}
-              alt={item.title}
-              className="w-full h-full object-fill"
-            />
-            <button
-              onClick={onPlay}
-              className="absolute inset-0 flex items-center justify-center cursor-pointer"
-            >
-              <img
-                src="https://img.icons8.com/ios-filled/50/ffffff/play--v1.png"
-                alt="play"
-                className="w-12 h-12 opacity-90"
-              />
-            </button>
-          </>
-        ) : (
+      <div className="relative w-full">
+        <img
+          src={item.image_url}
+          alt={item.title}
+          className={`w-full h-auto object-cover ${
+            isPlaying ? "invisible" : "visible"
+          }`}
+        />
+        {isPlaying && (
           <iframe
             src={item.video_url}
-            // src="https://cdn.pixabay.com/video/2015/10/27/1192-143842659_large.mp4"
-            className="w-full h-full aspect-video"
+            className="absolute top-0 left-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
+        )}
+        {!isPlaying && (
+          <button
+            onClick={onPlay}
+            className="absolute inset-0 flex items-center justify-center cursor-pointer"
+          >
+            <img
+              src="https://img.icons8.com/ios-filled/50/ffffff/play--v1.png"
+              alt="play"
+              className="w-12 h-12 opacity-90"
+            />
+          </button>
         )}
       </div>
       <div className="py-3">
@@ -340,50 +384,14 @@ const VideoCard = ({ item, isPlaying, onPlay }) => {
       </div>
 
       {/* Content Cards */}
-      {/* <div className="mt-6 grid grid-cols-2 sm:grid-cols-2 lg2:grid-cols-6 gap-4 w-full max-w-[700px] lg2:max-w-full lg2:bg-white lg2:p-4 lg2:rounded-2xl">
-        {learnData.map((item, idx) => (
-          <div key={idx} className="lg2:bg-white rounded-lg  overflow-hidden">
-            <div className="relative">
-              <img
-                src={item.image_url}
-                alt={item.title}
-                className="w-full h-full object-fill"
-              />
-              <button
-                onClick={() => window.open(item.video_url, "_blank")}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <img
-                  src="https://img.icons8.com/ios-filled/50/ffffff/play--v1.png"
-                  alt="play"
-                  className="w-12 h-12 opacity-90"
-                />
-              </button>
-            </div>
-            <div className="py-3">
-              <h3 className="text-base font-semibold text-gray-800 truncate">
-                {item.title}
-              </h3>
-              <p className="text-sm text-gray-500 mt-1 truncate">
-                {item.description}
-              </p>
-            </div>
-          </div>
-        ))}
-
-        {learnData.length === 0 && (
-          <p className="text-gray-500 text-center col-span-2">
-            No videos found for this selection.
-          </p>
-        )}
-      </div> */}
-      <div className="mt-6 grid grid-cols-2 sm:grid-cols-2 lg2:grid-cols-6 gap-4 w-full max-w-[700px] lg2:max-w-full lg2:bg-white lg2:p-4 lg2:rounded-2xl">
+      <div className="mt-6 grid grid-cols-2 sm:grid-cols-2 lg2:grid-cols-6 gap-4 w-full max-w-[700px] h-full lg2:max-w-full lg2:bg-white lg2:p-4 lg2:rounded-2xl">
         {learnData.map((item, idx) => (
           <VideoCard
             key={idx}
             item={item}
             isPlaying={playingIndex === idx}
             onPlay={() => setPlayingIndex(idx)}
+            className="w-full h-full"
           />
         ))}
 

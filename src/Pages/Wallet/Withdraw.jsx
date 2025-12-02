@@ -149,10 +149,10 @@ const defaultImages = [image1, image2, image3];
     }
   }, [selectedPayment]);
 
-  const cryptoMin=10
-  const cryptoMax=1000000
-  const manualMin=500
-  const manualMax = 1000000
+  const cryptoMin = profileDetails?.crypto_min_withdraw;
+  const cryptoMax = profileDetails?.crypto_max_withdraw;
+  const manualMin = profileDetails?.minimum_withdraw;
+  const manualMax = profileDetails?.maximum_withdraw;
 
     const handleSelectCard = (card) => {
       setSelectedCardId(card.id); // store selected card ID
@@ -1039,7 +1039,7 @@ const defaultImages = [image1, image2, image3];
               </p>
             </div>
           )}
-          {selectedPayment !== "manual" && selectedPayment !=="crypto" && (
+          {selectedPayment !== "manual" && selectedPayment !== "crypto" && (
             <p className="text-ssm text-lightGray mt-1 font-semibold">
               Min {manualMin} - Max {manualMax}
             </p>
@@ -1135,7 +1135,7 @@ const defaultImages = [image1, image2, image3];
               // type="submit"
               onClick={handleBankWithdraw}
               className={`w-full bg-[#969696] text-white font-medium py-3 rounded-md ${
-                amount >= manualMin && amount <= manualMax
+                Number(amount) >= manualMin && Number(amount) <= manualMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
               } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
@@ -1176,7 +1176,7 @@ const defaultImages = [image1, image2, image3];
               // type="submit"
               onClick={handleIndainPayment}
               className={`w-full  text-white font-medium py-3 rounded-md ${
-                amount >= 100 && amount <= cryptoMax
+                Number(amount) >= cryptoMin && Number(amount) <= cryptoMax
                   ? "bg-red hover:bg-red-600"
                   : "bg-lightGray cursor-not-allowed"
               } lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}

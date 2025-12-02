@@ -136,6 +136,7 @@ export default function Game() {
     Playtech: { label: "Playtech", brand_id: "72" },
     playTech: { label: "Playtech", brand_id: "72" },
     ezugi: { label: "Ezugi", brand_id: "78" },
+    Ezugi: { label: "Ezugi", brand_id: "78" },
     Mac88: { label: "Mac87", brand_id: "" },
     mac88: { label: "Mac87", brand_id: "" },
     Bgaming: { label: "Bgaming", brand_id: "65" },
@@ -143,6 +144,7 @@ export default function Game() {
     MicroGaming: { label: "MicroGaming", brand_id: "" },
     T1: { label: "T1", brand_id: "80" },
     TADAGaming: { label: "TADAGaming", brand_id: "51" },
+    AeSexy: { label: "Ae Sexy", brand_id: "88" },
   };
 
   // Categories for display

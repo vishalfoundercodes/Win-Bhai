@@ -121,7 +121,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
       } hide-scrollbar ${
         expanded
           ? "" // No specific class for expanded state, items will flow naturally
-          : "flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px] "
+          : "flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px] "
       }`}
     >
       {items.map((game) => (
@@ -291,7 +291,7 @@ const handleGameOpen = async (id) => {
       <div
         className={`transition-all duration-500 ease-in-out ${
           expanded
-            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
+            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-3 xsm3:gap-3 pr-2 max-h-[2000px] overflow-y-auto"
             : ""
         }`}
       >
@@ -300,7 +300,7 @@ const handleGameOpen = async (id) => {
           filteredGames.map((game) => (
             <div
               key={game.id}
-              className="min-w-[85px] h-[100px] xsm3:min-w-[100px] lg2:w-[135px] xsm3:h-[100px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
+              className="min-w-[85px] h-[120px] xsm3:min-w-[100px] lg2:w-[135px] xsm3:h-[110px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
               onClick={() => {
                 navigate(game.route || "#");
                 handleGameOpen(game.gameID);

@@ -4,6 +4,7 @@ export default function AccountStatementTable({ data }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    console.log("data:",data)
     const totalPages = Math.ceil(data.length / rowsPerPage);
 
     const paginatedData = data.slice(

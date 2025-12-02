@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apis from "../../utils/apis";
 export default function NotificationsPage() {
   const [activeTab, setActiveTab] = useState("All");
+  const [apiNotifications, setApiNotifications] = useState([]);
+
   const navigate=useNavigate()
   const tabs = ["All", "Promo", "Sports", "Casino", "Account"];
 
@@ -57,7 +61,31 @@ export default function NotificationsPage() {
      
     },
   ];
+const userId = localStorage.getItem("userId");
+  const fetchNotification=async()=>{
+    try {
+      const res = await axios.get(`${apis.notification}${userId}`);
+      console.log("res:",res?.data)
+      
+    const formatted = res?.data?.data?.map((item) => ({
+      id: item.id,
+      title: item.purpose || "Notification",
+      tag: item.purpose?.toLowerCase() || "alert",
+      desc: item.content,
+      time: item.created_at,
+      action: "View",
+      btnColor: "bg-red-600",
+      border: item.is_read === 0 ? "yes" : "no",
+    }));
 
+    setApiNotifications(formatted);
+    } catch (error) {
+      console.error("error",error)
+    }
+  }
+  useEffect(()=>{
+fetchNotification()
+  },[])
   return (
     <div className="min-h-screen bg-gray-100 lg2:bg-transparent flex flex-col ">
       <div className="lg2:flex lg2:gap-4 mb-4 lg2:px-3 hidden">
@@ -86,7 +114,7 @@ export default function NotificationsPage() {
         </div>
       </div>
       {/* Tabs */}
-      <div className="w-full bg-white lg2:bg-transparent  pt-2">
+      {/* <div className="w-full bg-white lg2:bg-transparent  pt-2">
         <div className="flex gap-3 mb-3 pl-3 ">
           {tabs.map((tab) => (
             <button
@@ -103,17 +131,17 @@ export default function NotificationsPage() {
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Unread Notification Bar */}
       <div className="w-full max-w-m items-center p-4">
-        <div className="bg-[#FEE7EC] border border-red text-red text-ssm px-6 py-2 rounded-[8px] mb-3">
+        {/* <div className="bg-[#FEE7EC] border border-red text-red text-ssm px-6 py-2 rounded-[8px] mb-3">
           You have 4 unread notifications
-        </div>
+        </div> */}
 
         {/* Notifications List */}
         <div className="space-y-3">
-          {notifications.map((n) => (
+          {apiNotifications.map((n) => (
             <div
               key={n.id}
               className={`bg-white rounded-xl shadow overflow-hidden border-l-4 ${
@@ -138,11 +166,11 @@ export default function NotificationsPage() {
                   <div className="px-4 py-2 text-xs text-gray-500 text-left font-medium">
                     {n.time}
                   </div>
-                  <button
+                  {/* <button
                     className={`px-4 py-2 text-xs font-semibold rounded-md text-white bg-red`}
                   >
                     {n.action}
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

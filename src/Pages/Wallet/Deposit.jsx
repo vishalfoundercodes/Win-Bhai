@@ -11,239 +11,315 @@ import Loader from "../resuable_component/Loader/Loader"
 import { useProfile } from "../../Context/ProfileContext";
 import { div } from "framer-motion/client";
 export default function DepositPage() {
-  const [loading, setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState(1);
   const [amount, setAmount] = useState("");
-  const [usdtAmount,setusdtAmout]=useState("")
-  const {profileDetails}=useProfile()
-  const {cupponCode}=useParams()
-    const location = useLocation();
+  const [usdtAmount, setusdtAmout] = useState("");
+  const { profileDetails } = useProfile();
+  const { cupponCode } = useParams();
+  const location = useLocation();
 
-    const coupon = location.state?.coupon;
+  const coupon = location.state?.coupon;
 
-    // console.log("Received Coupon:", coupon);
-const navigate = useNavigate()
+  // console.log("Received Coupon:", coupon);
+  const navigate = useNavigate();
   const quickAmounts = [500, 1000, 5000, 10000, 25000, 50000];
-  const quickUsdtAmounts = [10,50, 100, 200, 300, 500];
-    const [copied, setCopied] = useState("");
-    
+  const quickUsdtAmounts = [10, 50, 100, 200, 300, 500];
+  const [copied, setCopied] = useState("");
 
-    const copyToClipboard = (text, label) => {
-      navigator.clipboard.writeText(text);
-      setCopied(label);
-      setTimeout(() => setCopied(""), 2000);
-    };
+  const copyToClipboard = (text, label) => {
+    navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(""), 2000);
+  };
   const [active, setActive] = useState("Option 1");
 
   const options = ["Option 1", "Option 2", "Option 3"];
-    const Crypto = [ "USDT BEP20"];
-      const [language, setLanguage] = useState("USDT BEP20");
-      const [openDropdown, setOpenDropdown] = useState(null); //
+  const Crypto = ["USDT BEP20"];
+  const [language, setLanguage] = useState("USDT BEP20");
+  const [openDropdown, setOpenDropdown] = useState(null); //
 
-      const [paymentOptions,setPaymentOptons]=useState([])
-      const paymentOption=async()=>{
-        try{
-          setLoading(true)
-          const res = await axios.get(apis.pay_modes);
-          setPaymentOptons(res?.data?.data);
-          console.log(res?.data?.data);
-        }catch(error){
-          console.log(error)
-        }finally{
-          setLoading(false)
-        }
+  const [paymentOptions, setPaymentOptons] = useState([]);
+  const paymentOption = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(apis.pay_modes);
+      setPaymentOptons(res?.data?.data);
+      console.log(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    paymentOption();
+  }, []);
+
+  const handleBappaVentures = async () => {
+    try {
+      const account_type = localStorage.getItem("account_type");
+      if (account_type === "1") {
+        toast.warn("Please login with your real account.");
+        return;
       }
-      useEffect(()=>{
-        paymentOption()
-        
-      },[])
-      const handleBappaVentures=async()=>{
-        try{
-            const account_type = localStorage.getItem("account_type");
-            if (account_type === "1") {
-              toast.warn("Please login with your real account.");
-              return;
-            }
-          if(amount < minAmount){
-            toast.warn(`Minimum amount ${minAmount}`)
-            return
-          }
-          if (amount > maxAmount){
-            toast.warn(`Maximum amount ${maxAmount}`)
-            return
-          } 
-          setLoading(true);
-          const payload = {
-            user_id: localStorage.getItem("userId"),
-            cash: amount,
-            type: "1",
-            coupon_id: coupon?.id || "",
-          };
-          const res=await axios.post(apis.bappa_venture,payload)
-          console.log(res)
-          if (res?.data?.status === "SUCCESS"){
-             window.open(res?.data?.payment_link, "_self");
-             setAmount("")
-          }
-            if (res?.data?.status === 400) {
-              toast.error(res?.data?.error || res?.data?.message || "Payment failed");
-            }
-          setLoading(false)
-        }catch(error){
-          console.log(error)
-        }finally{
-          setLoading(false)
-        }
+
+      // Convert amount to number for comparison
+      const numAmount = Number(amount);
+
+      console.log("Amount:", numAmount, "Min:", minAmount, "Max:", maxAmount);
+
+      if (numAmount < minAmount) {
+        toast.warn(`Minimum amount ${minAmount}`);
+        return;
       }
-      const handlecrypto = async () => {
-        try {
-            const account_type = localStorage.getItem("account_type");
-            if (account_type === "1") {
-              toast.warn("Please login with your real account.");
-              return;
-            }
-          if (usdtAmount < cryptoMin) {
-            toast.warn(`Minimum amount ${cryptoMin}`);
-            return;
-          }
-          if (usdtAmount > cryptoMax) {
-            toast.warn(`Maximum amount ${cryptoMax}`);
-            return;
-          }
-          setLoading(true);
-          const payload = {
-            user_id: localStorage.getItem("userId"),
-            amount: usdtAmount,
-            type: "0",
-            coupon_id: coupon?.id || "",
-          };
-          console.log(payload)
 
-          const res = await axios.post(apis.crypto, payload);
-          console.log(res);
-          if (res?.data?.status === 400) {
-            toast.error(res?.data?.error || res?.data?.message);
-          }
-          else if(res?.data?.status===200){
-            toast.success(res?.data?.message)
-            if(res?.data?.data?.status_url){
-              // window.open(
-              //   res.data.data.status_url,
-              //   "_blank",
-              //   "noopener,noreferrer"
-              // );
-              window.location.href = res.data.data.status_url;
+      if (numAmount > maxAmount) {
+        toast.warn(`Maximum amount ${maxAmount}`);
+        return;
+      }
 
-            }
-          }
-          setLoading(false);
-        } catch (error) {
-          console.log(error);
-          if(error?.response?.data?.status===400){
-            toast.error(error?.response?.data?.message);
-          }
-        } finally {
-          setLoading(false);
-        }
+      setLoading(true);
+
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+        cash: numAmount, // Use converted number
+        type: "1",
+        coupon_id: coupon?.id || "",
       };
 
-      const [manualData,setManualData]=useState(null)
-      const handleManual=async()=>{
-        try{
-          setLoading(true)
-          const res=await axios.get(apis.get_manual_details)
-          console.log("manual",res?.data?.data)
-          setManualData(res?.data?.data);
-        }catch(error){
-          console.log(error)
-        }finally{
-          setLoading(false)
+      console.log("Bappa Ventures Payload:", payload);
+
+      const res = await axios.post(apis.bappa_venture, payload);
+      console.log("Bappa Ventures Response:", res);
+
+      if (res?.data?.status === "SUCCESS") {
+        window.open(res?.data?.payment_link, "_self");
+        setAmount("");
+      } else if (res?.data?.status === 400) {
+        toast.error(res?.data?.error || res?.data?.message || "Payment failed");
+      }
+    } catch (error) {
+      console.error("Bappa Ventures Error:", error);
+      toast.error(
+        error?.response?.data?.message || "Payment failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlecrypto = async () => {
+    try {
+      const account_type = localStorage.getItem("account_type");
+      if (account_type === "1") {
+        toast.warn("Please login with your real account.");
+        return;
+      }
+      if (Number(usdtAmount) < cryptoMin) {
+        toast.warn(`Minimum amount ${cryptoMin}`);
+        return;
+      }
+      if (Number(usdtAmount) > cryptoMax) {
+        toast.warn(`Maximum amount ${cryptoMax}`);
+        return;
+      }
+      setLoading(true);
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+        amount: usdtAmount,
+        type: "0",
+        coupon_id: coupon?.id || "",
+      };
+      console.log(payload);
+
+      const res = await axios.post(apis.crypto, payload);
+      console.log(res);
+      if (res?.data?.status === 400) {
+        toast.error(res?.data?.error || res?.data?.message);
+      } else if (res?.data?.status === 200) {
+        toast.success(res?.data?.message);
+        if (res?.data?.data?.status_url) {
+          // window.open(
+          //   res.data.data.status_url,
+          //   "_blank",
+          //   "noopener,noreferrer"
+          // );
+          window.location.href = res.data.data.status_url;
         }
       }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      if (error?.response?.data?.status === 400) {
+        toast.error(error?.response?.data?.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-     const cryptoMin = 10;
-     const cryptoMax = 1880000;
-      const minAmount = 100;
-      const maxAmount = 100000;
+  const [manualData, setManualData] = useState(null);
+  const handleManual = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(apis.get_manual_details);
+      console.log("manual", res?.data?.data);
+      setManualData(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const [file, setFile] = useState(null);
-        const [utrNumber, setUtrNumber] = useState("");
- const [fileName, setFileName] = useState("");
-        // Convert file to base64
-        const handleFileChange = (e) => {
-          const selectedFile = e.target.files[0];
-          if (!selectedFile) return;
+  const cryptoMin = profileDetails?.crypto_min_deposit;
+  const cryptoMax = profileDetails?.crypto_mxn_deposit;
+  const minAmount = profileDetails?.minimum_withdraw;
+  const maxAmount = profileDetails?.maximum_deposit;
 
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setFile(reader.result); // base64 string
-          };
-          reader.readAsDataURL(selectedFile);
-              const file = e.target.files[0];
-              if (file) {
-                console.log("File selected:", file.name);
-                setFileName(file.name);
-              }
+  const [file, setFile] = useState(null);
+  const [utrNumber, setUtrNumber] = useState("");
+  const [fileName, setFileName] = useState("");
+  // Convert file to base64
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
-        };
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFile(reader.result); // base64 string
+    };
+    reader.readAsDataURL(selectedFile);
+    const file = e.target.files[0];
+    if (file) {
+      console.log("File selected:", file.name);
+      setFileName(file.name);
+    }
+  };
 
-        const handleManualSubmit = async() => {
-          try {
-              const account_type = localStorage.getItem("account_type");
-                 if (account_type === "1") {
-                   toast.warn("Please login with your real account.");
-                   return;
-                 }
-            setLoading(true)
-                 if (amount < minAmount) {
-                   toast.warn(`Minimum amount ${minAmount}`);
-                   return;
-                 }
-                 if (amount > maxAmount) {
-                   toast.warn(`Maximum amount ${maxAmount}`);
-                   return;
-                 } 
-                 if(!file){
-                    toast.warn(`Upload your payment slip`);
-                    return;
-                 }
-                 if(!utrNumber){
-                      toast.warn(`Upload your utr number`);
-                      return;
-                 }
-                
-             const payload = {
-               user_id: localStorage.getItem("userId"),
-               cash: amount,
-               //  transaction_id: utrNumber || "dummy_transaction_id", // you can replace this
-               transaction_id: parseInt(utrNumber, 16),
-               screenshot: file || "",
-               coupon_id:coupon?.id || "",
-             };
+  // const handleManualSubmit = async() => {
+  //   try {
+  //     console.log("amount in deposit:",amount)
+  //       const account_type = localStorage.getItem("account_type");
+  //          if (account_type === "1") {
+  //            toast.warn("Please login with your real account.");
+  //            return;
+  //          }
+  //     setLoading(true)
+  //          if (amount < minAmount) {
+  //            toast.warn(`Minimum amount ${minAmount}`);
+  //            return;
+  //          }
+  //          if (amount > maxAmount) {
+  //           console.log("amount in deposit:", amount);
+  //            toast.warn(` amount ${amount}`);
+  //            toast.warn(`Maximum amount ${maxAmount}`);
+  //            return;
+  //          }
+  //          if(!file){
+  //             toast.warn(`Upload your payment slip`);
+  //             return;
+  //          }
+  //          if(!utrNumber){
+  //               toast.warn(`Upload your utr number`);
+  //               return;
+  //          }
 
-             console.log("payload with coupon",payload);
-             const res = await axios.post(apis.manual_payin,payload);
-             console.log(res?.data)
-             if(res?.data?.status===200){
-              toast.success(res?.data?.message);
-              setUtrNumber("")
-              setFileName("")
-              setAmount("")
-             }
-          } catch (error) {
-            console.log(error)
-          }finally{
-            setLoading(false)
-          }
-         };
+  //      const payload = {
+  //        user_id: localStorage.getItem("userId"),
+  //        cash: amount,
+  //        //  transaction_id: utrNumber || "dummy_transaction_id", // you can replace this
+  //        transaction_id: parseInt(utrNumber, 16),
+  //        screenshot: file || "",
+  //        coupon_id:coupon?.id || "",
+  //      };
 
-         if (loading) {
-           return (
-             <div className="min-h-screen flex items-center justify-center">
-               <Loader />
-             </div>
-           );
-         }
+  //      console.log("payload with coupon",payload);
+  //      const res = await axios.post(apis.manual_payin,payload);
+  //      console.log(res?.data)
+  //      if(res?.data?.status===200){
+  //       toast.success(res?.data?.message);
+  //       setUtrNumber("")
+  //       setFileName("")
+  //       setAmount("")
+  //      }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }finally{
+  //     setLoading(false)
+  //   }
+  //  };
+  const handleManualSubmit = async () => {
+    try {
+      console.log("amount in deposit:", amount);
+      console.log("amount type:", typeof amount);
+      console.log("minAmount:", minAmount, "type:", typeof minAmount);
+      console.log("maxAmount:", maxAmount, "type:", typeof maxAmount);
+
+      const account_type = localStorage.getItem("account_type");
+      if (account_type === "1") {
+        toast.warn("Please login with your real account.");
+        return;
+      }
+
+      setLoading(true);
+
+      // Convert amount to number for comparison
+      const numAmount = Number(amount);
+
+      if (numAmount < minAmount) {
+        toast.warn(`Minimum amount ${minAmount}`);
+        return;
+      }
+
+      if (numAmount > maxAmount) {
+        toast.warn(`Maximum amount ${maxAmount}`);
+        return;
+      }
+
+      if (!file) {
+        toast.warn(`Upload your payment slip`);
+        return;
+      }
+
+      if (!utrNumber) {
+        toast.warn(`Upload your utr number`);
+        return;
+      }
+
+      const payload = {
+        user_id: localStorage.getItem("userId"),
+        cash: numAmount, // Use the converted number
+        transaction_id: parseInt(utrNumber, 16),
+        screenshot: file || "",
+        coupon_id: coupon?.id || "",
+      };
+
+      console.log("payload with coupon", payload);
+      const res = await axios.post(apis.manual_payin, payload);
+      console.log(res?.data);
+
+      if (res?.data?.status === 200) {
+        toast.success(res?.data?.message);
+        setUtrNumber("");
+        setFileName("");
+        setAmount("");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen  flex justify-center items-start py-6 px-1 lg2:py-0 ">
       <div className="w-full px-3 space-y-2">
@@ -956,7 +1032,7 @@ const navigate = useNavigate()
           <button
             type="submit"
             className={`w-full  text-white text-ssm font-medium py-3 rounded-md text-center ${
-              amount >= minAmount && amount <= maxAmount
+              Number(amount) >= minAmount && Number(amount) <= maxAmount
                 ? "bg-red hover:bg-red-600"
                 : "bg-lightGray cursor-not-allowed"
             }    lg2:w-[160px] lg2:py-2 lg2:text-[13px] lg2:font-semibold lg2:rounded-md lg2:ml-auto lg2:block cursor-pointer`}
@@ -987,7 +1063,7 @@ const navigate = useNavigate()
             onClick={handleBappaVentures}
             className={`w-full text-white text-ssm font-medium py-3 rounded-md text-center transition-colors duration-300
     ${
-      amount >= minAmount && amount <= maxAmount
+      Number(amount) >= minAmount && Number(amount) <= maxAmount
         ? "bg-red hover:bg-red-600"
         : "bg-lightGray cursor-not-allowed"
     }
