@@ -58,7 +58,7 @@ import { useScroll } from "../../Context/ScrollContext";
 
 
 export default function Home() {
-  const { profileDetails, setprofileDetails } = useProfile();
+  const { profileDetails, setprofileDetails, fetchProfile } = useProfile();
   const [allGames, setAllGames] = useState([]);
   const [slotGames, setSlotGames] = useState([]);
   const [hotGames, setHotGames] = useState([]);
@@ -555,6 +555,7 @@ export default function Home() {
         // });
       });
     }, 1000);
+    fetchProfile()
   }, []);
 
 

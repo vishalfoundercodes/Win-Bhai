@@ -809,6 +809,7 @@ export default function DepositPage() {
               <input
                 type="number"
                 placeholder="Enter Amount"
+                min="0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full outline-none text-gray-700 font-normal"
@@ -844,6 +845,7 @@ export default function DepositPage() {
               <input
                 type="number"
                 placeholder="Enter Amount"
+                min="0"
                 value={usdtAmount}
                 onChange={(e) => setusdtAmout(e.target.value)}
                 className="w-full outline-none text-gray-700 font-normal"
@@ -946,6 +948,7 @@ export default function DepositPage() {
               <input
                 type="number"
                 placeholder="Enter UTR Number"
+                min="0"
                 onChange={(e) => setUtrNumber(e.target.value)}
                 className="w-full border  border-dashed rounded-[8px] border-darkGray px-3 py-2 text-ssm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
               />

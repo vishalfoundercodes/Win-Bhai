@@ -67,7 +67,7 @@ export default function Statistics() {
       <div className="relative min-h-screen">
         {/* Split Background */}
         <div className="absolute inset-0 lg2:hidden">
-          <div className="h-1/2 bg-[#c8102e]"></div>
+          <div className="h-1/2 bg-red"></div>
           <div className="h-1/2 bg-gray-100"></div>
         </div>
 

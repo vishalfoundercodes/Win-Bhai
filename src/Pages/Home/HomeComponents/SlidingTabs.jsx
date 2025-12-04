@@ -796,7 +796,7 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
                 transition-all duration-200 cursor-pointer
                 ${
                   active == cat.id || active == cat.cat_id
-                    ? "bg-[#c8102e] text-white border-[#c8102e]"
+                    ? "bg-red text-white border-red"
                     : "bg-white text-darkGray  border-darkGray"
                 }`}
             >

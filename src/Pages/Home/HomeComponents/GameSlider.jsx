@@ -312,7 +312,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
        brandId: "2",
      },
      { id: 6, name: "Football", image: Football, route: "", brandId: "46" },
-     { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "" },
+     { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "46" },
      { id: 8, name: "Slot Games", image: SlotGames, route: "", brandId: "1" },
      { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
      { id: 10, name: "Profile", image: Profile, route: "/Info" },

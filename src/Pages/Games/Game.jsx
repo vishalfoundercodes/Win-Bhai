@@ -606,7 +606,7 @@ setOriginalGames(filteredGames);
             </div>
 
             {/* Search Bar */}
-            <div className="relative w-full px-4 lg2:px-0 lg2:pr-4  lg2:w-[50%]">
+            <div className="relative w-full px-4 lg2:px-2 lg2:pr-4  lg2:w-[50%]">
               <svg
                 className="absolute left-6 top-1/2 -translate-y-1/2"
                 width="16"

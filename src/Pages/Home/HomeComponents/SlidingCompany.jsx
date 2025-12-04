@@ -64,7 +64,7 @@ export default function SlidingCompany() {
       {/* ✅ Fixed Search Button */}
       {/* <button
         className="absolute right-0 top-0 bottom-0 my-auto flex items-center justify-center w-[40px] h-[40px] 
-        bg-[#c8102e] text-white border border-[#c8102e] rounded-l-[25px] shrink-0 lg2:hidden"
+        bg-red text-white border border-red rounded-l-[25px] shrink-0 lg2:hidden"
       >
         <FaSearch className="text-lg" />
       </button> */}

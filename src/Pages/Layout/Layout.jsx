@@ -363,6 +363,7 @@ export default function Layout({ children }) {
     "/login",
     "/forgetPassword",
     "/ForgetUserName",
+    // "/playgame",
   ];
 
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);
@@ -564,17 +565,6 @@ export default function Layout({ children }) {
                 }`}
                 style={{ height: "100vh" }} // Add this
               >
-                {/* <div className="lg2:hidden">
-                {!shouldHideHeader &&
-                  (shouldShowHeader2 ? (
-                    <Header2 className="sticky top-0 z-50" />
-                  ) : (
-                    <Header
-                      className="sticky top-0 z-50"
-                      profileDetails2={profileDetails2}
-                    />
-                  ))}
-              </div> */}
                 {!shouldHideHeader && (
                   <>
                     {/* Desktop header */}
@@ -596,29 +586,7 @@ export default function Layout({ children }) {
                     </div>
                   </>
                 )}
-                {/* <div className="hidden lg2:block">
-                <Header
-                  className="sticky top-0 z-50"
-                  profileDetails2={profileDetails2}
-                />
-              </div> */}
-                {/* {!hideLayout && (
-                  <div className="lg2:flex gap-16 px-12 py-6 hidden ">
-                    <div className="w-[20%]">
-                      <div>
-                        <GameSlider2
-                          profileDetails={profileDetails2}
-                          
-                        />
-                      </div>
-                    </div>
-                    <div className="w-[80%]">
-                      {isLoading && <Loader />}
-                      {children}
-                    </div>
-                  </div>
-                )} */}
-
+        
                 <div className="hidden lg2:block">
                   {!hideLayout && (
                     <div className="lg2:flex gap-16 px-12 py-6 hidden hide-scrollbar">

@@ -120,10 +120,10 @@ export default function RedeemBonus() {
               placeholder="Enter Coupon Code"
               value={coupon}
               onChange={(e) => setCoupon(e.target.value)}
-              className="w-full lg2:w-[220px] border border-[#C8102E] placeholder:text-[#C8102E] rounded-md px-3 py-2 text-sm focus:outline-none text-ssm"
+              className="w-full lg2:w-[220px] border border-red placeholder:text-red rounded-md px-3 py-2 text-sm focus:outline-none text-ssm"
             />
             <button
-              className="bg-[#C8102E] hover:bg-[#a60d25] text-white px-4 py-2 lg2:px-8 rounded-md text-ssm font-semibold cursor-pointer"
+              className="bg-red hover:bg-[#a60d25] text-white px-4 py-2 lg2:px-8 rounded-md text-ssm font-semibold cursor-pointer"
               onClick={handleApplyCoupon}
             >
               Apply

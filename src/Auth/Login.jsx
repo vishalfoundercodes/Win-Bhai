@@ -75,7 +75,7 @@ export default function Login() {
       try {
         setLoading(true);
         const res = await axios.post(apis.login, payload);
-        // console.log(res); // Log the response from the server
+        console.log(res); // Log the response from the server
         if(res?.data?.status==="200" || res?.data?.status===200){
           toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);
@@ -112,7 +112,7 @@ export default function Login() {
       try {
         setLoading(true);
         const res = await axios.post(apis.login, payload);
-        console.log(res?.data); // Log the response from the server
+        console.log("login",res); // Log the response from the server
         if(res?.data?.status==="200" || res?.data?.status===200){
           toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);

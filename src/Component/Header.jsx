@@ -69,7 +69,7 @@ const Header = ({ profileDetails2}) => {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 bg-[#c8102e] text-white px-3 py-2 flex items-center justify-between md:px-16 sm:px-28  3xl:px-60 ${
+        className={`sticky top-0 z-50 bg-red text-white px-3 py-2 flex items-center justify-between md:px-16 sm:px-28  3xl:px-60 ${
           isWingoPath ? "lg2:px-3" : "lg2:px-16"
         }`}
       >

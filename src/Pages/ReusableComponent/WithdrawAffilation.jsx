@@ -120,7 +120,7 @@ export default function WithdrawAffilation() {
       >
         {/* Split Background */}
         <div className="absolute inset-0 lg2:hidden">
-          <div className="h-[32.5%] bg-[#c8102e]"></div>
+          <div className="h-[32.5%] bg-red"></div>
           <div className="h-[67.5%] bg-grayBg"></div>
         </div>
 

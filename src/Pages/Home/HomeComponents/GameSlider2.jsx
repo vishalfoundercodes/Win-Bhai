@@ -315,7 +315,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
       brandId: "2",
     },
     { id: 6, name: "Football", image: Football, route: "", brandId: "46" },
-    { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "" },
+    { id: 7, name: "Tennis", image: Tennis, route: "", brandId: "46" },
     { id: 8, name: "Slot Games", image: SlotGames, route: "", brandId: "1" },
     { id: 9, name: "Affiliate", image: Affiliate, route: "/affilation" },
     { id: 10, name: "Profile", image: Profile, route: "/Info" },
@@ -324,7 +324,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
       id: 12,
       name: "Club Info",
       image: ClubInfo,
-      route: "",
+      route: "/learn",
     },
     {
       id: 13,
@@ -402,7 +402,9 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
           }`}
         >
           {/* User Info */}
-          <div className="flex items-center gap-3 px-4 py-3 border-b justify-between">
+          <div className="flex items-center gap-3 px-4 py-3 border-b justify-between cursor-pointer"
+          onClick={()=>navigate("/")}
+          >
             <div className="flex gap-3 items-center ">
               <div className="w-8 h-8 flex items-center justify-center rounded-[6px] bg-[#A21518] text-white font-bold text-xsm p-4">
                 {profileDetails?.username?.charAt(0)?.toUpperCase() || "U"}

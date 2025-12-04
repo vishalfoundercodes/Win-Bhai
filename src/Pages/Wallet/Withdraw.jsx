@@ -1013,6 +1013,7 @@ const defaultImages = [image1, image2, image3];
               <input
                 type="number"
                 placeholder="Enter Amount"
+                min="0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full outline-none text-gray-700 font-normal"
@@ -1027,6 +1028,7 @@ const defaultImages = [image1, image2, image3];
                 <input
                   type="number"
                   placeholder="Enter Amount"
+                  min="0"
                   value={usdtAmount}
                   onChange={(e) => setUsdtAmount(e.target.value)}
                   className="w-full outline-none text-gray-700 font-normal"

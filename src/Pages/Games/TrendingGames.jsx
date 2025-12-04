@@ -30,29 +30,27 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
   }
 
   // First 6 items
-  const firstRowGames = paddedGames.slice(0, 6);
+  const firstRowGames = paddedGames.slice(0, 9);
   // Next 6 items
-  const secondRowGames = paddedGames.slice(6, 12);
+  const secondRowGames = paddedGames.slice(9, 30);
 
   // ✅ Move this OUTSIDE the return
   const renderRow = (rowId, gameList) => (
     <div
       id={rowId}
-      className={`transition-all duration-500 ease-in-out mt-4 hide-scrollbar ${
+      className={`transition-all duration-500 ease-in-out mt-4 hide-scrollbar 
+        ${
         expanded
-          ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 max-h-[2000px] overflow-y-auto"
+          ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-4 lg2:gap-12 max-h-[2000px] overflow-y-auto"
           : "flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px]"
-      }`}
+      }
+      
+      `}
     >
       {gameList.map((game, index) => (
         <div
           key={game.id || index}
           className={`min-w-[80px] xsm3:min-w-[105px] lg2:w-[150px] min-h-[76px] rounded-[12px] overflow-hidden cursor-pointer`}
-          // onClick={() => {
-          //   if(game.cat_name){navigate(`/game/${game.cat_id}`)}
-          //   if (!game.empty){ navigate(game.route || "#")};
-
-          // }}
         >
           {!game.empty ? (
             game.image ? (
@@ -103,9 +101,15 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-red font-medium text-ssm"
+            className="text-red font-medium text-ssm cursor-pointer lg2:hidden"
           >
             {expanded ? "See Less" : "See All"}
+          </button>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="hidden text-red font-medium text-ssm cursor-pointer lg2:block"
+          >
+            {expanded ? "See All" : "See Less"}
           </button>
 
           {!expanded && (
