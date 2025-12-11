@@ -263,7 +263,7 @@ const defaultImages = [image1, image2, image3];
           </svg>
         </div>
         <div className="bg-black2 text-white rounded-[8px] p-2 text-ssm font-medium">
-          <p>Cashable Amount: 0</p>
+          <p>Cashable Amount: {profileDetails?.cashable_amount || 0}</p>
         </div>
         {/* Payment Options */}
         <div className=" px-4 py-4 bg-white  rounded-[8px] shadow">
@@ -1097,7 +1097,7 @@ const defaultImages = [image1, image2, image3];
         {selectedPayment === "manual" && (
           <p className="text-red-600 text-ssm">
             Reminder: A maximum of 5 withdrawals are allowed per day, With no
-            withdrawals permitted below ₹200.
+            withdrawals permitted below ₹{profileDetails?.minimum_withdraw || 0}.
           </p>
         )}
         {/* Chat on WhatsApp */}

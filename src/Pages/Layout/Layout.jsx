@@ -363,7 +363,7 @@ export default function Layout({ children }) {
     "/login",
     "/forgetPassword",
     "/ForgetUserName",
-    // "/playgame",
+    "/playgame",
   ];
 
   const shouldHideFooter = hideFooterPaths.includes(location.pathname);

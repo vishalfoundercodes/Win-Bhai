@@ -26,7 +26,7 @@ export default function BetHistory() {
         user_id: localStorage.getItem("userId"),
       };
       const res = await axios.post(apis.betHistory_winbhai, payload);
-      console.log(res.data);
+      console.log("bet history:",res.data);
       // Save response data
       setBetHistory(res.data.data);
       setloading(false);
@@ -84,6 +84,7 @@ export default function BetHistory() {
     const aviator = betHistory?.aviator_bets || [];
     const chicken = betHistory?.chicken_bets || [];
     const bets = betHistory?.bets || [];
+    const jili_bets = betHistory?.jili_bets || [];
 
     const filterByDate = (arr) =>
       arr.filter((row) => {
@@ -108,12 +109,14 @@ export default function BetHistory() {
       aviator_bets: [...filterByDate(aviator)],
       chicken_bets: [...filterByDate(chicken)],
       bets: [...filterByDate(bets)],
+      jili_bets: [...filterByDate(jili_bets)],
     };
 
     console.log("✅ Filtered Result:", {
       aviator: filtered.aviator_bets.length,
       chicken: filtered.chicken_bets.length,
       bets: filtered.bets.length,
+      jili_bets: filtered.jili_bets.length,
     });
 
     setFilteredData(filtered);

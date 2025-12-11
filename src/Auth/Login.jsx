@@ -77,7 +77,7 @@ export default function Login() {
         const res = await axios.post(apis.login, payload);
         console.log(res); // Log the response from the server
         if(res?.data?.status==="200" || res?.data?.status===200){
-          toast.success(res?.data?.message);
+          // toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);
              localStorage.setItem("token", res?.data?.login_token);
              localStorage.setItem("account_type", res?.data?.account_type);
@@ -154,7 +154,7 @@ export default function Login() {
       {/* Form Container */}
       <div className="relative z-10 w-80 sm:w-96 max-w-[448px] bg-white rounded-xl shadow-lg p-6 pt-6 xxs:pt-12 sm:pt-14">
         {/* Logo */}
-        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md p-0">
+        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-md p-0">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 

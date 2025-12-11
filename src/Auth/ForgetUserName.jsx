@@ -109,7 +109,7 @@ export default function ForgetUserName() {
       <div className="absolute inset-0 bg-black/40 z-0" />
 
       <div className="relative z-10 w-80 sm:w-96 max-w-[448px] bg-white rounded-2xl shadow-lg px-6 py-4 pt-3">
-        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md">
+        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-md">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 

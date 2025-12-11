@@ -330,7 +330,7 @@ export default function Game() {
     loadGamesFromLocalStorage();
   }, [tabName, brandId]);
 
-  const handleGameOpen = async (id) => {
+  const handleGameOpen = async (id,name) => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       toast.error("Please login first.");
@@ -341,7 +341,13 @@ export default function Game() {
      // toast.warn("Please login with your real account.");
      try {
        setLoading(true);
-       const payload = { user_id: userId, amount: 0, game_id: id };
+       const payload = {
+         user_id: userId,
+         amount: 0,
+         game_id: id,
+         game_name: name,
+       };
+       console.log("payload:",payload)
        const res = await axios.post(apis.openGame, payload);
 
        if (res?.data?.status === 200) {
@@ -368,6 +374,7 @@ export default function Game() {
         amount: profileDetails?.wallet || 0,
         // amount: 10,
         game_id: id,
+        game_name: name,
       };
       console.log("payload", payload);
       const res = await axios.post(apis.openGame, payload);
@@ -699,7 +706,7 @@ setOriginalGames(filteredGames);
                   <div
                     key={game.game_id || index}
                     className="aspect-[3/4] rounded-[8px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                    onClick={() => handleGameOpen(game.gameID)}
+                    onClick={() =>{console.log("game name:",game), handleGameOpen(game.gameID, game.game_name)}}
                   >
                     {game.game_img ? (
                       <img

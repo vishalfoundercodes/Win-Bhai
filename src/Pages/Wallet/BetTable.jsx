@@ -12,7 +12,8 @@ useEffect(()=>{
     const aviator = data.aviator_bets || [];
     const chicken = data.chicken_bets || [];
     const bets = data.bets || [];
-    return [...aviator, ...bets, ...chicken];
+    const jili_bets = data.jili_bets || [];
+    return [...aviator, ...bets, ...chicken, ...jili_bets];
   }, [data]);
   // const [currentPage, setCurrentPage] = useState(1);
   // const [rowsPerPage, setRowsPerPage] = useState(10);

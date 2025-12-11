@@ -138,8 +138,9 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
             }
           `}
           onClick={() => {
+            console.log("game name:",game);
             navigate(game.route || "#");
-            handleGameOpen(game.gameID);
+            handleGameOpen(game.gameID, game.game_name);
           }}
         >
           {game.image || game.imgUrl || game.game_img ? (
@@ -162,7 +163,7 @@ const GameSection = ({ title, games, icon, brand,  sectionRef, gamesDetails }) =
   //    console.log("games jilli:", games);
   //  },[]);
 
-const handleGameOpen = async (id) => {
+const handleGameOpen = async (id,name) => {
   const userId = localStorage.getItem("userId");
   if (!userId) {
     toast.warn("Please login first.");
@@ -172,7 +173,8 @@ const handleGameOpen = async (id) => {
     // toast.warn("Please login with your real account.");
       try {
         setloading(true);
-        const payload = { user_id: userId, amount: 0, game_id: id };
+        const payload = { user_id: userId, amount: 0, game_id: id ,game_name:name};
+         console.log("payload:", payload);
         const res = await axios.post(apis.openGame, payload);
 
         if (res?.data?.status === 200) {
@@ -194,7 +196,13 @@ const handleGameOpen = async (id) => {
 
   try {
     setloading(true);
-    const payload = { user_id: userId, amount: 10, game_id: id };
+    const payload = {
+      user_id: userId,
+      amount: profileDetails?.wallet || 0,
+      game_id: id,
+      game_name: name,
+    };
+     console.log("payload:", payload);
     const res = await axios.post(apis.openGame, payload);
 
     if (res?.data?.status === 200) {
@@ -302,8 +310,10 @@ const handleGameOpen = async (id) => {
               key={game.id}
               className="min-w-[85px] h-[120px] xsm3:min-w-[100px] lg2:w-[135px] xsm3:h-[110px] lg2:h-[150px] rounded-[12px]  cursor-pointer"
               onClick={() => {
+                console.log("game name:", game);
                 navigate(game.route || "#");
-                handleGameOpen(game.gameID);
+                handleGameOpen(game.gameID, game.game_name);
+                
               }}
             >
               {game.image || game.imgUrl || game.game_img ? (

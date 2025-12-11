@@ -30,9 +30,23 @@ export default function ProfilePage2() {
          setLoading(false);
        }
      };
-     useEffect(() => {
-       fetchData();
-     }, []);
+        const [contact, setContact] = useState(null);
+        // const fetchContact = async () => {
+        //   try {
+        //     const payload = {
+        //       type: "social",
+        //     };
+        //     const res = await axios.post(apis.contact_info, payload);
+        //     console.log("contact: ", res?.data);
+        //     setContact(res?.data?.data);
+        //   } catch (error) {
+        //     console.error(error);
+        //   }
+        // };
+        useEffect(() => {
+          fetchData();
+          // fetchContact()
+        }, []);
 
      
   if (loading) {
@@ -117,7 +131,9 @@ export default function ProfilePage2() {
             </svg>
 
             <div>
-              <p className="font-bold text-lg">₹ {details?.total_commission} </p>
+              <p className="font-bold text-lg">
+                ₹ {details?.total_commission}{" "}
+              </p>
               <p className="text-sm">Revshare : {details?.revenue}%</p>
             </div>
           </div>
@@ -247,7 +263,16 @@ export default function ProfilePage2() {
 
         {/* Chat on WhatsApp */}
         <div className="w-full  mt-4 hide-scrollbar">
-          <button className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between">
+          <button
+            className="w-full bg-white rounded-xl shadow p-8 flex items-center justify-between"
+            onClick={() => {
+              if (profileDetails?.chat_on_whatsapp) {
+                window.open(profileDetails.chat_on_whatsapp, "_self");
+              } else {
+                console.log("No whatsapp_link link found");
+              }
+            }}
+          >
             <div className="flex items-center gap-4">
               <div className="bg-[linear-gradient(134.08deg,#18B95E_0.78%,#235313_99.22%)] p-4 rounded-[15px]">
                 <svg

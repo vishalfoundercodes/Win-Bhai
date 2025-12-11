@@ -149,7 +149,7 @@ useEffect(() => {
       {/* Form Container */}
       <div className="relative z-10 w-80 xxs:w-96 max-w-[448px]  bg-white rounded-xl shadow-lg px-4 py-1 xxs:p-6 sm:pt-0 md:mt-10 mt-10 mb-4  md:mb-10">
         {/* Logo */}
-        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-red3 rounded-full shadow-md p-0">
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white rounded-full shadow-md p-0">
           <img src={logo} alt="Logo" className="h-16 w-16 object-contain" />
         </div>
 
