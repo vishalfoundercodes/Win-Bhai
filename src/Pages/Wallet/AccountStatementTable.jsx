@@ -39,7 +39,7 @@ export default function AccountStatementTable({ data }) {
             </tr>
           </thead>
           <tbody>
-            {data?.map((row, idx) => (
+            {paginatedData?.map((row, idx) => (
               <tr
                 key={idx}
                 className="text-ssm border-b border-gray-200 bg-gray-50 lg2:bg-lgGray"

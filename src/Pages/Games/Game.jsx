@@ -343,18 +343,22 @@ export default function Game() {
        setLoading(true);
        const payload = {
          user_id: userId,
-         amount: 0,
+         amount: 50,
          game_id: id,
          game_name: name,
        };
        console.log("payload:",payload)
+             console.log("response from game api:", apis.openGame);
        const res = await axios.post(apis.openGame, payload);
-
+    console.log("game launch:", res?.data);
        if (res?.data?.status === 200) {
-         const url = res?.data?.apiResponse?.data?.url;
+         const url = res?.data?.launchUrl;
          if (url) {
            // ✅ Open in same tab (with header for desktop, direct for mobile)
            navigate(`/playgame?url=${encodeURIComponent(url)}`);
+          //  navigate(`/playgame`,{state:{url:url}});
+          // window.location.href = res?.data?.apiResponse?.data?.url;
+
          } else {
            toast.error("Game URL not found");
          }
@@ -378,11 +382,12 @@ export default function Game() {
       };
       console.log("payload", payload);
       const res = await axios.post(apis.openGame, payload);
-      // console.log("game launch:", res?.data);
+      console.log("response from game api:", apis.openGame);
+      console.log("game launch:", res?.data);
       if (res?.data?.status === 200) {
-        if (res?.data?.apiResponse?.data?.url) {
+        if ( res?.data?.launchUrl) {
           // window.location.href = res?.data?.apiResponse?.data?.url;
-          const url = res?.data?.apiResponse?.data?.url;
+          const url = res?.data?.launchUrl;;
           if (url) {
             // ✅ Open in same tab (with header for desktop, direct for mobile)
             navigate(`/playgame?url=${encodeURIComponent(url)}`);
@@ -485,7 +490,7 @@ export default function Game() {
 
   const filterGames = (sub, category) => {
     if (!sub) return;
-    console.log("category:", category);
+    // console.log("category:", category);
 
     // 🔥 NEW: If "All" category, filter from all games
     if (isAllCategory) {
@@ -551,7 +556,7 @@ setOriginalGames(filteredGames);
     const subName = sub.sub_cat_name?.toLowerCase();
 
     if (subName === "all") {
-      console.log("Filtered Games (ALL):", filteredGames);
+      // console.log("Filtered Games (ALL):", filteredGames);
       setGames(filteredGames);
       setOriginalGames(filteredGames);
       return;

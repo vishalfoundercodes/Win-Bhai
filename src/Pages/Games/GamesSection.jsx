@@ -178,7 +178,7 @@ const handleGameOpen = async (id,name) => {
         const res = await axios.post(apis.openGame, payload);
 
         if (res?.data?.status === 200) {
-          const url = res?.data?.apiResponse?.data?.url;
+          const url = res?.data?.launchUrl;;
           if (url) {
             // ✅ Open in same tab (with header for desktop, direct for mobile)
             navigate(`/playgame?url=${encodeURIComponent(url)}`);
@@ -206,7 +206,7 @@ const handleGameOpen = async (id,name) => {
     const res = await axios.post(apis.openGame, payload);
 
     if (res?.data?.status === 200) {
-      const url = res?.data?.apiResponse?.data?.url;
+      const url = res?.data?.launchUrl;;
       if (url) {
         // ✅ Open in same tab (with header for desktop, direct for mobile)
         navigate(`/playgame?url=${encodeURIComponent(url)}`);

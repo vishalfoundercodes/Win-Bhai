@@ -239,17 +239,20 @@
 
 // export default PlayGame;
 
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Header from "../../Component/Header";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const PlayGame = () => {
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const gameUrl = searchParams.get("url");
+  // const gameUrl = location.state?.url;
   const navigate = useNavigate();
   const [isFullscreen, setIsFullscreen] = useState(false);
-    const location = useLocation();
+    const loadCountRef = useRef(0);
+
     const htmlContent = location.state?.html;
 
   // Handle browser back button
@@ -345,6 +348,15 @@ const PlayGame = () => {
           style={{
             display: "block",
             touchAction: "auto",
+          }}
+          onLoad={() => {
+            loadCountRef.current += 1;
+            console.log(
+              "IFRAME HIT COUNT:",
+              loadCountRef.current,
+              "URL:",
+              gameUrl
+            );
           }}
         />
       </div>
