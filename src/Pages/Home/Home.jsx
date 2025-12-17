@@ -570,14 +570,14 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center bg-grayBg overflow-auto">
       {/* ------------------ Mobile + Tablet ------------------ */}
-      <div className="xsm:hidden pt-2 pb-2">
+      <div className="lg2:hidden pt-2 pb-2">
         <div>{userId && <ActionButtons />}</div>
 
         <SlidingTabs />
       </div>
 
-      <div className="md:px-24 lg:hidden">
-        <div className=" px-2">
+      <div className="md:px-0 lg2:hidden pt-2">
+        <div className=" px-2 ">
           <GameHeader2 />
         </div>
 
@@ -585,7 +585,8 @@ export default function Home() {
           <GameCategories />
         </div>
         <div className="hidden md:block lg:hidden">
-          <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} />
+          {/* <GameCategory2 bgColor="bg-[#00BFFF]" games={games2} /> */}
+          <GameCategories />
         </div>
         <div className="flex px-3">
           <SlidingCompany />
@@ -650,11 +651,11 @@ export default function Home() {
             </div>
           ) : sponser.length === 1 ? (
             // 🟩 CASE 2: Single image → show static image
-            <div className="h-[195px] w-full flex items-center justify-center rounded-[12px]">
+            <div className="h-[195px] md:h-[400px] w-full flex items-center justify-center rounded-[12px]">
               <img
                 src={sponser[0].image}
                 alt={sponser[0].title || "Sponsor"}
-                className="h-[195px] w-full object-fill rounded-[12px]"
+                className="h-[195px] md:h-[400px] w-full object-fill rounded-[12px]"
               />
             </div>
           ) : (

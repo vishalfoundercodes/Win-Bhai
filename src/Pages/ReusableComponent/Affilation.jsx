@@ -14,6 +14,9 @@ export default function AffiliatePage() {
   const options = ["For all time", "Month", "Week", "Today"];
   const [details, setDetalis]=useState(null)
   const [loading, setLoading]=useState(false)
+  const [campaigns, setCampaigns] = useState([]);
+  const [showCampaignDropdown, setShowCampaignDropdown] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
 
 
   const handleSelect = (option) => {
@@ -21,26 +24,73 @@ export default function AffiliatePage() {
     setOpen(false);
   };
 
-  const data=async()=>{
-    try {
-      setLoading(true)
-      console.log("id:",id)
-      const payload = {
-        campaign_id: id,
-      };
-      const res = await axios.post(`${apis.affiliateDashboard}`,payload);
-      // console.log("Affiliate Data:", res?.data);
-      setDetalis(res?.data?.data || null)
-    } catch (error) {
-      console.log(error)
-    }finally{
-      setLoading(false)
-    }
-  }
+  const handleCampaignSelect = (campaign) => {
+    setSelectedCampaign(campaign);
+    setShowCampaignDropdown(false);
 
-  useEffect(()=>{
-    data()
-  },[])
+    // optional: campaign select hote hi details API call
+    dataById(campaign.id);
+  };
+
+
+  // const data=async()=>{
+  //   try {
+  //     setLoading(true)
+  //     console.log("id:",id)
+  //     const payload = {
+  //       campaign_id: id,
+  //     };
+  //     const res = await axios.post(`${apis.affiliateDashboard}`,payload);
+  //     console.log("Affiliate Data:", res?.data);
+  //     setDetalis(res?.data?.data || null)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }finally{
+  //     setLoading(false)
+  //   }
+  // }
+
+const dataById = async (campaignId) => {
+  try {
+    setLoading(true);
+    const payload = { campaign_id: campaignId || id };
+    const res = await axios.post(apis.affiliateDashboard, payload);
+    setDetalis(res?.data?.data || null);
+    console.log("Affiliate Data by ID:", res?.data);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  const fetchCampaign = async () => {
+    try {
+      setLoading(true);
+      const userId = localStorage.getItem("userId");
+      const payload = {
+        user_id: userId,
+      };
+      const res = await axios.post(apis.campaign_list, payload);
+      console.log(res?.data?.data)
+      setCampaigns(res?.data?.data || []);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+useEffect(() => {
+  fetchCampaign(); // ✅ hamesha campaigns load karo (dropdown ke liye)
+
+  if (id) {
+    dataById(id); // ✅ params se aaye ho to details bhi lao
+  }
+}, [id]);
+
+
 
   if(loading){
     return <div className="min-h-screen flex items-center justify-center">
@@ -82,9 +132,37 @@ export default function AffiliatePage() {
                     {details?.Campaign_Name?.[0]?.toUpperCase() || "?"}
                   </span>
                 </div>
-                <span className="text-gray-800 font-medium">
+                {/* <span className="text-gray-800 font-medium">
                   {details?.Campaign_Name || "User"}
-                </span>
+                </span> */}
+                <div className="relative">
+                  <span
+                    className="text-gray-800 font-medium cursor-pointer flex items-center gap-1"
+                    onClick={() =>
+                      setShowCampaignDropdown(!showCampaignDropdown)
+                    }
+                  >
+                    {selectedCampaign?.campaign_name ||
+                      details?.Campaign_Name ||
+                      "Select Campaign"}
+                    <ChevronDown className="w-4 h-4" />
+                  </span>
+
+                  {/* Dropdown */}
+                  {showCampaignDropdown && campaigns.length > 0 && (
+                    <div className="absolute top-full mt-2 w-48 bg-white shadow-lg rounded-md z-30">
+                      {campaigns.map((item) => (
+                        <div
+                          key={item.id}
+                          onClick={() => handleCampaignSelect(item)}
+                          className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                        >
+                          {item.campaign_name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Right arrow */}
@@ -209,7 +287,7 @@ export default function AffiliatePage() {
 
           {/* Income Section */}
           <div className="p-4 bg-gradient-to-l from-[#C10932] to-[#5B0418] text-white text-center font-semibold rounded-b-2xl">
-            Income: ₹ 0
+            Income: ₹ {details?.Your_Commission || "0"}
           </div>
 
           {/* Filters Section */}

@@ -36,7 +36,7 @@ export default function Sidebar({
         type: "contact",
       };
       const res = await axios.post(apis.contact_info, payload);
-      console.log("contact: ", res?.data);
+      // console.log("contact: ", res?.data);
       setContact(res?.data?.data);
     } catch (error) {
       console.error(error);
@@ -154,7 +154,7 @@ export default function Sidebar({
             <div className="w-full mb-2 border-b border-grayBorder"></div>
             {/* <div className="w-full mb-2 border-b border-grayBorder"></div> */}
             <div className="border border-grayBorder mx-4 bg-grayBg rounded-[10px] p-2 text-center mb-2  justify-items-start cursor-pointer">
-              <p className="text-xs font-medium text-darkGray">Total Balance</p>
+              <p className="text-xs font-medium text-darkGray">Real Balance</p>
               <p className="text-green-600 font-bold">
                 ₹ {profileDetails?.wallet || profileDetails2?.wallet || "0"}
               </p>

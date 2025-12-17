@@ -375,7 +375,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
             type: "social",
           };
           const res = await axios.post(apis.contact_info, payload);
-          console.log("contact: ", res?.data);
+          // console.log("contact: ", res?.data);
           setContact(res?.data?.data);
         } catch (error) {
           console.error(error);
@@ -465,7 +465,7 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
                   onClick={() => {
                     setSelected(game.id);
                     if (game.id == 14) {
-                      console.log("Logout");
+                      // console.log("Logout");
                       setOpenSignOutModal(true);
                       return;
                     }
@@ -474,9 +474,9 @@ export default function GameSlider2({ profileDetails, onCategoryClick }) {
                       const element = document.getElementById(
                         `brand-${game.brandId}`
                       );
-                      console.log("📍 Found element:", element);
+                      // console.log("📍 Found element:", element);
                       scrollToSection(game.brandId);
-                      console.log("Clicked brand:", game.brandId);
+                      // console.log("Clicked brand:", game.brandId);
                     }
                   }}
                 >

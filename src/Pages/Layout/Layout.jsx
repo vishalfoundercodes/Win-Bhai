@@ -671,7 +671,7 @@ export default function Layout({ children }) {
                     <div className="md:hidden">
                       <Footer />
                     </div>
-                    <div className="hidden md:block lg:hidden">
+                    <div className="hidden  lg:hidden">
                       <Footer2 />
                     </div>
                   </div>

@@ -21,7 +21,9 @@ const apis = {
   // https://root.winbhai.in/api/campaign_summary
   // https://root.winbhai.in/api/campaign_analytics
   // https://root.winbhai.in/api/campaign_commission_summary
-
+  // https://root.winbhai.in/api/campaign-analytics/download?user_id=48
+  campaign_click: `${configModalWinBhai}campaign_click`,
+  statics_download: `${configModalWinBhai}campaign-analytics/download?user_id=`,
   affiliateDashboard: `${configModalWinBhai}campaign_summary`,
   affiliateStatics: `${configModalWinBhai}campaign_analytics`,
   affiliateWithdrawHome: `${configModalWinBhai}campaign_commission_summary`,

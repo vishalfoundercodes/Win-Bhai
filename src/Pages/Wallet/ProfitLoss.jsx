@@ -39,7 +39,7 @@ export default function ProfitLoss() {
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("Casino Vivo");
+  const [selected, setSelected] = useState("All");
 
   const options = [
     "All",

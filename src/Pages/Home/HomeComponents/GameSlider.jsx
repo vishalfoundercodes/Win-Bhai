@@ -283,7 +283,7 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
           type: "social",
         };
         const res = await axios.post(apis.contact_info, payload);
-        console.log("contact: ", res?.data);
+        // console.log("contact: ", res?.data);
         setContact(res?.data?.data);
       } catch (error) {
         console.error(error);
@@ -418,14 +418,14 @@ export default function GameSlider({ isOpen, onClose, profileDetails }) {
                   navigate(game.route);
 
                   if (game.brandId) {
-                    console.log(
-                      "🔍 Searching for element:",
-                      `brand-${game.brandId}`
-                    );
+                    // console.log(
+                    //   "🔍 Searching for element:",
+                    //   `brand-${game.brandId}`
+                    // );
                     const element = document.getElementById(
                       `brand-${game.brandId}`
                     );
-                    console.log("📍 Found element:", element);
+                    // console.log("📍 Found element:", element);
                     scrollToSection(game.brandId);
                     onClose();
                   }

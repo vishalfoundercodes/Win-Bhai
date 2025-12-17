@@ -7,6 +7,7 @@ export default function ProfitLossTable({ payload }) {
   const [loading, setLoading] = useState(false);
   const [summary, setSummary] = useState(null);
   const [data, setData] = useState([]);
+  const [gameHistory, setGameHistory] = useState([]); 
 
   const fetchTable = async () => {
     try {
@@ -37,6 +38,10 @@ export default function ProfitLossTable({ payload }) {
         ];
         setData(rows);
       }
+      // ✅ game_history directly set
+      setGameHistory(d.game_history || []);
+    
+
     } catch (error) {
       console.error("Error fetching table:", error);
     } finally {
@@ -62,69 +67,20 @@ export default function ProfitLossTable({ payload }) {
     summary?.grand_total?.total_win - summary?.grand_total?.total_bet || 0;
   const pageDiff = grandDiff;
 
+    const gameHistoryRows = gameHistory.map((g) => {
+      const diff = g.total_win - g.total_bet;
+
+      return {
+        event: g.game_name,
+        total: formatDiff(diff), // + / - format
+        info: `Bet: ${g.total_bet} | Win: ${g.total_win}`,
+      };
+    });
+
   if (loading) {
     return <Loader />;
   }
   return (
-    // <div className="flex w-full">
-    //   <div className="w-full justify-between">
-    //     {/* Header Row */}
-    //     <div className="bg-white p-2  text-ssm font-Inter font-semibold">
-    //       {/* Header Row */}
-    //       <div className="flex justify-between items-center text-gray-700 py-1 px-3 bg-[#F3F4F6]">
-    //         <div className="w-2/3">EVENT</div>
-    //         <div className="w-1/3 flex justify-between">
-    //           <div className="text-center w-1/2">TOTAL</div>
-    //           <div className="text-center w-1/2">INFO</div>
-    //         </div>
-    //       </div>
-
-    //       {/* Totals */}
-    //       <div className="flex justify-between items-center p-3 ">
-    //         <div className="w-2/3">Grand Total</div>
-    //         <div className="w-1/3 flex justify-between">
-    //           <div className="text-center w-1/2 text-red">-377</div>
-    //           <div className="text-center w-1/2"></div>
-    //         </div>
-    //       </div>
-    //       <div className="flex justify-between items-center p-3 ">
-    //         <div className="w-2/3">Page Total</div>
-    //         <div className="w-1/3 flex justify-between">
-    //           <div className="text-center w-1/2 text-green">-377</div>
-    //           <div className="text-center w-1/2"></div>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     {/* Event Rows */}
-    //     {/* Event Rows */}
-    //     {data.map((row, i) => (
-    //       <div
-    //         key={i}
-    //         className="flex justify-between items-center p-3 text-ssm font-Inter last:border-0"
-    //       >
-    //         {/* Event Name */}
-    //         <div className="w-2/3 text-gray-800">{row.event}</div>
-
-    //         {/* TOTAL + INFO aligned together */}
-    //         <div className="w-1/3 flex justify-between">
-    //           <div
-    //             className={`text-center w-1/2 ${
-    //               row.total.startsWith("+")
-    //                 ? "text-green-600 font-semibold"
-    //                 : row.total.startsWith("-")
-    //                 ? "text-red-600 font-semibold"
-    //                 : "text-gray-600"
-    //             }`}
-    //           >
-    //             {row.total}
-    //           </div>
-    //           <div className="text-center w-1/2 text-gray-600">{row.info}</div>
-    //         </div>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
     <div className="flex w-full">
       <div className="w-full justify-between">
         {/* Header Row */}
@@ -172,7 +128,7 @@ export default function ProfitLossTable({ payload }) {
         </div>
 
         {/* Event Rows */}
-        {data.map((row, i) => (
+        {/* {data.map((row, i) => (
           <div
             key={i}
             className="flex justify-between items-center p-3 text-ssm font-Inter last:border-0"
@@ -191,9 +147,31 @@ export default function ProfitLossTable({ payload }) {
               >
                 {row.total}
               </div>
-              <div className="text-center w-1/2 text-gray-600">
-                {/* {row.info} */}-
+              <div className="text-center w-1/2 text-gray-600">-</div>
+            </div>
+          </div>
+        ))} */}
+        {gameHistoryRows.map((row, i) => (
+          <div
+            key={i}
+            className="flex justify-between items-center p-3 text-ssm font-Inter  last:border-0"
+          >
+            <div className="w-2/3 text-gray-800">{row.event}</div>
+
+            <div className="w-1/3 flex justify-between">
+              <div
+                className={`text-center w-1/2 ${
+                  row.total.startsWith("+")
+                    ? "text-green-600 font-semibold"
+                    : row.total.startsWith("-")
+                    ? "text-red-600 font-semibold"
+                    : "text-gray-600"
+                }`}
+              >
+                {row.total}
               </div>
+
+              <div className="text-center w-1/2 text-gray-600">-</div>
             </div>
           </div>
         ))}

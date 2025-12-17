@@ -6,10 +6,11 @@ import apis from '../../utils/apis';
 import { details } from 'framer-motion/client';
 import Loader from '../resuable_component/Loader/Loader';
 import { toast } from 'react-toastify';
+import { useProfile } from '../../Context/ProfileContext';
 export default function WithdrawAffilation() {
   const [datails,setDetails]=useState(null)
 
-
+const { profileDetails } = useProfile();
   const [loading,setLoading]=useState(false)
     const navigate=useNavigate()
       const offers = [
@@ -70,7 +71,7 @@ export default function WithdrawAffilation() {
             user_id: localStorage.getItem("userId"),
           }
           const res = await axios.post(apis.affiliateWithdrawHome, payload);
-          // console.log("Affiliate Withdraw Home Data:", res.data);
+          console.log("Affiliate Withdraw Home Data 11:", res.data.data);
           setDetails(res.data.data);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -152,7 +153,7 @@ export default function WithdrawAffilation() {
                       </h3>
                     </div>
                     <p className="text-2xl font-bold text-gray-900 mt-3">
-                      ₹{details?.total_commission || 0}
+                      ₹{datails?.total_commission || 0}
                     </p>
                     <p className="text-ssm text-gray-500">Lifetime earnings</p>
                   </div>
@@ -168,7 +169,7 @@ export default function WithdrawAffilation() {
                       </h3>
                     </div>
                     <p className="text-2xl font-bold text-red mt-3">
-                      ₹{details?.available_to_withdraw || 0}
+                      ₹{datails?.available_to_withdraw || 0}
                     </p>
                     <p className="text-ssm text-gray-500">
                       Ready for withdrawal
@@ -179,11 +180,29 @@ export default function WithdrawAffilation() {
                   <div className="flex w-full items-center justify-center">
                     <button
                       className="px-10 py-4 bg-red text-white rounded-[8px] flex gap-2 items-center justify-center text-sm shadow-md  lg2:items-center lg2:flex lg2:font-semibold lg2:rounded-md lg2:ml-auto  cursor-pointer"
-                      onClick={() =>{   const account_type = localStorage.getItem("account_type");
-                      if (account_type === "1") {
-                        toast.warn("Please login with your real account.");
-                        return;
-                      }navigate("/WithdrawFunds")}}
+                      onClick={() => {
+                        const account_type =
+                          localStorage.getItem("account_type");
+                        if (account_type === "1") {
+                          toast.warn("Please login with your real account.");
+                          return;
+                        }
+                        if (
+                          Number(datails?.available_to_withdraw) <
+                          Number(profileDetails?.affilation_withdraw_min)
+                        ){
+                          console.log(
+                            "amount",
+                            profileDetails?.affilation_withdraw_min
+                          );
+                          toast.warn(
+                            `Minimum withdraw amount:${
+                            profileDetails?.affilation_withdraw_min}`
+                          );
+                          return
+                        }
+                          navigate("/WithdrawFunds");
+                      }}
                     >
                       <CreditCard className="text-white w-5 h-5" />
                       Withdraw Funds

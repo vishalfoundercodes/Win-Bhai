@@ -693,73 +693,245 @@ const categories = [
   },
 ];
 
+// export default function SlidingTabs({ withHeader = false, onTabChange }) {
+//   const [active, setActive] = useState("home");
+//   const naviagte = useNavigate();
+//   const { tabName } = useParams(); // works only on /game/:tabName
+//   const location = useLocation();
+//   // If on game page, highlight based on URL param
+//   // const activeTab = location.pathname.startsWith("/game") ? tabName : null;
+//   const scrollRef = useRef(null);
+//   const tabRefs = useRef({});
+
+//   // const scrollToTab = (id) => {
+//   //   const tab = tabRefs.current[id];
+//   //   const scroll = scrollRef.current;
+
+//   //   if (tab && scroll) {
+//   //     scroll.scrollTo({
+//   //       left: tab.offsetLeft - 10,
+//   //       behavior: "smooth",
+//   //     });
+//   //   }
+//   // };
+//   // 🔹 Sync "active" with URL param if available
+
+//   const scrollToTab = (id) => {
+//     const tab = tabRefs.current[id];
+//     const scroll = scrollRef.current;
+
+//     if (tab && scroll) {
+//       const scrollWidth = scroll.clientWidth; // visible width of scroll container
+//       const tabWidth = tab.clientWidth; // width of the selected tab
+//       const tabLeft = tab.offsetLeft; // position of tab from left
+//       const isDesktop = window.innerWidth >= 1024;
+
+//       let scrollPosition;
+
+//       if (isDesktop) {
+//         // 🖥️ Desktop → CENTER the tab
+//         scrollPosition = tabLeft - scrollWidth / 2 + tabWidth / 2;
+//       } else {
+//         // 📱 Mobile → put tab at LEFT
+//         scrollPosition = tabLeft - 10;
+//       }
+
+//       scroll.scrollTo({
+//         left: scrollPosition,
+//         behavior: "smooth",
+//       });
+//     }
+//   };
+//   const findCategoryById = (catId) => {
+//     return categories.find((cat) => cat.cat_id == catId || cat.id == catId);
+//   };
+//   if (targetCategory) {
+//     setActive(targetCategory.id); // ← "slots", not 12
+//     scrollToTab(targetCategory.id);
+//   }
+
+//   // useEffect(() => {
+//   //   if (location.pathname.startsWith("/game") && tabName) {
+//   //     setActive(tabName);
+//   //     scrollToTab(tabName);
+//   //   }
+//   //   if (tabName === "maincassino" || tabName === "sports") {
+//   //     setActive("home"); // force home tab
+//   //   }
+//   // }, [tabName, location.pathname]);
+
+//   useEffect(() => {
+//     // ✅ Check for passed state first
+//     const passedCategory = location.state?.selectedCategory;
+
+//     if (passedCategory) {
+//       const categoryId = passedCategory.id || passedCategory.cat_id;
+//       setActive(categoryId);
+//       scrollToTab(categoryId);
+//     }
+//     // Then check URL param
+//     else if (location.pathname.startsWith("/game") && tabName) {
+//       setActive(tabName);
+//       scrollToTab(tabName);
+//     }
+
+//     // Handle special cases
+//     if (tabName === "maincassino" || tabName === "sports") {
+//       setActive("home");
+//       scrollToTab("home");
+//     }
+//   }, [tabName, location.pathname, location.state]); // ✅ Add location.state dependency
+//   // SlidingTabs me add karo temporarily
+//   useEffect(() => {
+//     console.log("🔍 Debug Info:", {
+//       active,
+//       tabName,
+//       pathname: location.pathname,
+//       state: location.state,
+//     });
+//   }, [active, tabName, location.pathname, location.state]);
+
+//   const handleClick = (cat) => {
+//     setActive(cat.id);
+//     scrollToTab(cat.id);
+//     // if (cat.id == "home") {
+//     //   naviagte("/");
+//     // } else {
+//     // naviagte(`/game/${cat.id}`);
+//     const safeCat = {
+//       id: cat.id,
+//       cat_id: cat.cat_id,
+//       label: cat.label,
+//       type: cat.type,
+//     };
+
+//     naviagte(`/game/${cat.id}`, {
+//       state: { selectedCategory: safeCat },
+//     });
+//     // }
+//   };
+//   return (
+//     <div
+//       ref={scrollRef}
+//       className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
+//       style={{
+//         fontFamily: "Roboto",
+//       }}
+//     >
+//       <div className="flex gap-2 min-w-max">
+//         {categories.map((cat) => {
+//           const IconComp = cat.icon;
+//           return (
+//             <button
+//               key={cat.id}
+//               ref={(el) => (tabRefs.current[cat.id] = el)}
+//               onClick={() => {
+//                 console.log("cat", cat);
+//                 handleClick(cat);
+//                 onTabChange(cat.cat_id);
+//               }}
+//               className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
+//                 transition-all duration-200 cursor-pointer
+//                 ${
+//                   active == cat.id || active == cat.cat_id
+//                     ? "bg-red text-white border-red"
+//                     : "bg-white text-darkGray  border-darkGray"
+//                 }`}
+//             >
+//               {/* ✅ Render icon only if exists */}
+//               {cat.icon && (
+//                 <IconComp active={active === cat.id || active == cat.cat_id} />
+//               )}
+//               <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal ">
+//                 {cat.label}
+//               </span>
+//             </button>
+//           );
+//         })}
+//       </div>
+//     </div>
+//   );
+// }
+
 export default function SlidingTabs({ withHeader = false, onTabChange }) {
   const [active, setActive] = useState("home");
-  const naviagte = useNavigate();
-  const { tabName } = useParams(); // works only on /game/:tabName
+  const navigate = useNavigate();
+  const { tabName } = useParams();
   const location = useLocation();
-  // If on game page, highlight based on URL param
-  // const activeTab = location.pathname.startsWith("/game") ? tabName : null;
-    const scrollRef = useRef(null);
-    const tabRefs = useRef({});
+  const scrollRef = useRef(null);
+  const tabRefs = useRef({});
 
-    // const scrollToTab = (id) => {
-    //   const tab = tabRefs.current[id];
-    //   const scroll = scrollRef.current;
+  // ✅ Helper function: cat_id se id dhundo
+  const findCategoryById = (catId) => {
+    return categories.find((cat) => cat.cat_id == catId || cat.id == catId);
+  };
 
-    //   if (tab && scroll) {
-    //     scroll.scrollTo({
-    //       left: tab.offsetLeft - 10,
-    //       behavior: "smooth",
-    //     });
-    //   }
-    // };
-  // 🔹 Sync "active" with URL param if available
-  
-    const scrollToTab = (id) => {
-      const tab = tabRefs.current[id];
-      const scroll = scrollRef.current;
+  const scrollToTab = (id) => {
+    const tab = tabRefs.current[id];
+    const scroll = scrollRef.current;
 
-      if (tab && scroll) {
-        const scrollWidth = scroll.clientWidth; // visible width of scroll container
-        const tabWidth = tab.clientWidth; // width of the selected tab
-        const tabLeft = tab.offsetLeft; // position of tab from left
-        const isDesktop = window.innerWidth >= 1024;
+    if (tab && scroll) {
+      const scrollWidth = scroll.clientWidth;
+      const tabWidth = tab.clientWidth;
+      const tabLeft = tab.offsetLeft;
+      const isDesktop = window.innerWidth >= 1024;
 
-        let scrollPosition;
-
-        if (isDesktop) {
-          // 🖥️ Desktop → CENTER the tab
-          scrollPosition = tabLeft - scrollWidth / 2 + tabWidth / 2;
-        } else {
-          // 📱 Mobile → put tab at LEFT
-          scrollPosition = tabLeft - 10;
-        }
-
-        scroll.scrollTo({
-          left: scrollPosition,
-          behavior: "smooth",
-        });
+      let scrollPosition;
+      if (isDesktop) {
+        scrollPosition = tabLeft - scrollWidth / 2 + tabWidth / 2;
+      } else {
+        scrollPosition = tabLeft - 10;
       }
-    };
+
+      scroll.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   useEffect(() => {
-    if (location.pathname.startsWith("/game") && tabName) {
-      setActive(tabName);
-      scrollToTab(tabName);
+    const passedCategory = location.state?.selectedCategory;
+    let targetCategory = null;
+
+    // ✅ Priority 1: location.state se category find karo
+    if (passedCategory) {
+      const catId = passedCategory.cat_id || passedCategory.id;
+      targetCategory = findCategoryById(catId);
     }
+    // ✅ Priority 2: URL param se find karo
+    else if (tabName) {
+      targetCategory = findCategoryById(tabName);
+    }
+
+    // ✅ Set active aur scroll
+    if (targetCategory) {
+      console.log("✅ Found category:", targetCategory);
+      setActive(targetCategory.id); // ← ye "slots", "casino" jaise names
+      scrollToTab(targetCategory.id);
+    }
+
+    // Special cases
     if (tabName === "maincassino" || tabName === "sports") {
-      setActive("home"); // force home tab
+      setActive("home");
+      scrollToTab("home");
     }
-  }, [tabName, location.pathname]);
+  }, [tabName, location.pathname, location.state]);
+
+  // Debug
+  useEffect(() => {
+    console.log("🔍 Debug Info:", {
+      active,
+      tabName,
+      state: location.state,
+      foundCategory: findCategoryById(tabName),
+    });
+  }, [active, tabName, location.state]);
 
   const handleClick = (cat) => {
     setActive(cat.id);
     scrollToTab(cat.id);
-    // if (cat.id == "home") {
-    //   naviagte("/");
-    // } else {
-      // naviagte(`/game/${cat.id}`);
+
     const safeCat = {
       id: cat.id,
       cat_id: cat.cat_id,
@@ -767,18 +939,16 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
       type: cat.type,
     };
 
-    naviagte(`/game/${cat.id}`, {
+    navigate(`/game/${cat.id}`, {
       state: { selectedCategory: safeCat },
     });
-    // }
   };
+
   return (
     <div
       ref={scrollRef}
       className="w-full overflow-x-auto hide-scrollbar px-4 lg2:mr-4"
-      style={{
-        fontFamily: "Roboto",
-      }}
+      style={{ fontFamily: "Roboto" }}
     >
       <div className="flex gap-2 min-w-max">
         {categories.map((cat) => {
@@ -795,16 +965,13 @@ export default function SlidingTabs({ withHeader = false, onTabChange }) {
               className={`flex items-center gap-0 px-2 py-1 rounded-[8px] border
                 transition-all duration-200 cursor-pointer
                 ${
-                  active == cat.id || active == cat.cat_id
+                  active === cat.id
                     ? "bg-red text-white border-red"
-                    : "bg-white text-darkGray  border-darkGray"
+                    : "bg-white text-darkGray border-darkGray"
                 }`}
             >
-              {/* ✅ Render icon only if exists */}
-              {cat.icon && (
-                <IconComp active={active === cat.id || active == cat.cat_id} />
-              )}
-              <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal ">
+              {cat.icon && <IconComp active={active === cat.id} />}
+              <span className="whitespace-nowrap text-[12px] xxs:text-[14px] font-normal">
                 {cat.label}
               </span>
             </button>

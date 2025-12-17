@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect, useRef, useState} from "react";
 import signupbg from "../assets/Images/signup-bg.jpg";
 import logo from "../assets/logo-winbhai.png";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -125,12 +125,46 @@ export default function SignUp() {
           };
 const location = useLocation(); // ✅ for reading URL query params
 
+// useEffect(async() => {
+//   const queryParams = new URLSearchParams(location.search);
+//   const campaignParam = queryParams.get("campaign"); // get value after ?campaign=
+//   if (campaignParam) {
+//     setCampaignCode(campaignParam); // ✅ auto-fill the field
+//   }
+//   try {
+//     const payload={
+//       campaign_id:campaignParam
+//     }
+//     const res=await axios.post(apis.campaign_click,payload)
+//     console.log("res",res)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }, [location.search]);
+const apiCalledRef = useRef(false);
+
 useEffect(() => {
+  if (apiCalledRef.current) return; // 🛑 already called
+  apiCalledRef.current = true;
+
   const queryParams = new URLSearchParams(location.search);
-  const campaignParam = queryParams.get("campaign"); // get value after ?campaign=
+  const campaignParam = queryParams.get("campaign");
+
   if (campaignParam) {
-    setCampaignCode(campaignParam); // ✅ auto-fill the field
+    setCampaignCode(campaignParam);
   }
+
+  const sendClick = async () => {
+    try {
+      const payload = { campaign_id: campaignParam };
+      const res = await axios.post(apis.campaign_click, payload);
+      console.log("res", res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (campaignParam) sendClick();
 }, [location.search]);
   return (
     <div

@@ -30,9 +30,9 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
   }
 
   // First 6 items
-  const firstRowGames = paddedGames.slice(0, 9);
+  const firstRowGames = paddedGames.slice(0, 30);
   // Next 6 items
-  const secondRowGames = paddedGames.slice(9, 30);
+  const secondRowGames = paddedGames.slice(31, 60);
 
   // ✅ Move this OUTSIDE the return
   const renderRow = (rowId, gameList) => (
@@ -40,10 +40,10 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
       id={rowId}
       className={`transition-all duration-500 ease-in-out mt-4 hide-scrollbar 
         ${
-        expanded
-          ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-4 lg2:gap-12 max-h-[2000px] overflow-y-auto"
-          : "flex gap-4 overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px]"
-      }
+          expanded
+            ? "grid grid-cols-3  md:grid-cols-4 lg2:grid-cols-6 gap-4 lg2:gap-12 max-h-[2000px] overflow-y-auto"
+            : "flex gap-4  overflow-x-auto scrollbar-hide scroll-smooth hide-scrollbar max-h-[180px]"
+        }
       
       `}
     >
@@ -58,12 +58,33 @@ const TrendingGames = ({ title, games, icon, brand,  sectionRef }) => {
                 src={game.image}
                 alt={game.name}
                 className="w-[350px] h-[76px] lg2:h-[116px]  object-fill lg2:object-fill rounded-[8px]"
+                //     onClick={() => {
+                // if(game.cat_name){return (
+                //   console.log("cate name:", game),
+                //   navigate(`/game/${game.cat_id}`,)
+                // );}
+                // if(game.route){return navigate(game.route || "#");}}}
+
                 onClick={() => {
-            if(game.cat_name){return (
-              console.log("cate name:", game),
-              navigate(`/game/${game.cat_id}`)
-            );}
-            if(game.route){return navigate(game.route || "#");}}}
+                  if (game.cat_name) {
+                    console.log("game:", game);
+                    // ✅ Pass complete category info
+                    navigate(`/game/${game.cat_id}`, {
+                      state: {
+                        selectedCategory: {
+                          id: game.cat_id,
+                          cat_id: game.cat_id,
+                          label: game.cat_name,
+                          type: "category",
+                        },
+                      },
+                    });
+                    return;
+                  }
+                  if (game.route) {
+                    navigate(game.route || "#");
+                  }
+                }}
               />
             ) : (
               <div className="w-full h-full bg-[#D9D9D9] flex items-center justify-center rounded-[12px]">

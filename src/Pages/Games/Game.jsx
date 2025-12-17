@@ -73,10 +73,9 @@ export default function Game() {
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [subCategories, setSubCategories] = useState([]);
-    const [isAllCategory, setIsAllCategory] = useState(false); 
-    const [sponserImage,setSponserImage]=useState([])
-    const [originalGames, setOriginalGames] = useState([]);
-
+  const [isAllCategory, setIsAllCategory] = useState(false);
+  const [sponserImage, setSponserImage] = useState([]);
+  const [originalGames, setOriginalGames] = useState([]);
 
   const navigate = useNavigate();
   const { profileDetails } = useProfile();
@@ -167,7 +166,6 @@ export default function Game() {
   const selectedTab = currentTab.label;
   const brandId = currentTab?.brand_id;
 
-
   // Find selected category for icon
   const selected =
     categories.find(
@@ -218,23 +216,20 @@ export default function Game() {
   };
 
   //sponser image api
-  const sponnserImage=async()=>{
+  const sponnserImage = async () => {
     try {
       const res = await axios.get(apis.game_subcat_sliders);
-      console.log("sponser image on game page:",res?.data?.data)
-       setSponserImage(res?.data?.data);
+      console.log("sponser image on game page:", res?.data?.data);
+      setSponserImage(res?.data?.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
-
+  };
 
   // Load games from localStorage based on brand_id
   useEffect(() => {
     const loadGamesFromLocalStorage = () => {
       setLoading(true);
-
-   
 
       // 🔥 NEW: Check if "All" category is selected
       if (brandId === "all" || tabName?.toLowerCase() === "all") {
@@ -249,13 +244,13 @@ export default function Game() {
       }
       setIsAllCategory(false);
 
-         if (!brandId) {
-           // If no brand_id, show empty or default
-           setGames([]);
-           setCategory([]);
-           setLoading(false);
-           return;
-         }
+      if (!brandId) {
+        // If no brand_id, show empty or default
+        setGames([]);
+        setCategory([]);
+        setLoading(false);
+        return;
+      }
 
       try {
         const brandStorageKey = `${BRAND_DATA_PREFIX}${brandId}`;
@@ -309,12 +304,14 @@ export default function Game() {
             );
           }
           console.log("end fetch data ....");
-          console.log("all games",filterGames)
+          console.log("all games", filterGames);
           setGames(filteredGames);
           setOriginalGames(filteredGames);
           setCategory(filteredCategory);
         } else {
-          console.error(`⚠️ No data found for brand ${brandId} in localStorage`);
+          console.error(
+            `⚠️ No data found for brand ${brandId} in localStorage`
+          );
           setGames([]);
           setCategory([]);
         }
@@ -330,46 +327,45 @@ export default function Game() {
     loadGamesFromLocalStorage();
   }, [tabName, brandId]);
 
-  const handleGameOpen = async (id,name) => {
+  const handleGameOpen = async (id, name) => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
       toast.error("Please login first.");
       return; // stop further execution
     }
     const account_type = localStorage.getItem("account_type");
-   if (account_type === "1") {
-     // toast.warn("Please login with your real account.");
-     try {
-       setLoading(true);
-       const payload = {
-         user_id: userId,
-         amount: 50,
-         game_id: id,
-         game_name: name,
-       };
-       console.log("payload:",payload)
-             console.log("response from game api:", apis.openGame);
-       const res = await axios.post(apis.openGame, payload);
-    console.log("game launch:", res?.data);
-       if (res?.data?.status === 200) {
-         const url = res?.data?.launchUrl;
-         if (url) {
-           // ✅ Open in same tab (with header for desktop, direct for mobile)
-           navigate(`/playgame?url=${encodeURIComponent(url)}`);
-          //  navigate(`/playgame`,{state:{url:url}});
-          // window.location.href = res?.data?.apiResponse?.data?.url;
-
-         } else {
-           toast.error("Game URL not found");
-         }
-       }
-     } catch (error) {
-       toast.error(error?.response?.data?.message || "Something went wrong");
-     } finally {
-       setLoading(false);
-     }
-     return;
-   }
+    if (account_type === "1") {
+      // toast.warn("Please login with your real account.");
+      try {
+        setLoading(true);
+        const payload = {
+          user_id: userId,
+          amount: 50,
+          game_id: id,
+          game_name: name,
+        };
+        console.log("payload:", payload);
+        console.log("response from game api:", apis.openGame);
+        const res = await axios.post(apis.openGame, payload);
+        console.log("game launch:", res?.data);
+        if (res?.data?.status === 200) {
+          const url = res?.data?.launchUrl;
+          if (url) {
+            // ✅ Open in same tab (with header for desktop, direct for mobile)
+            navigate(`/playgame?url=${encodeURIComponent(url)}`);
+            //  navigate(`/playgame`,{state:{url:url}});
+            // window.location.href = res?.data?.apiResponse?.data?.url;
+          } else {
+            toast.error("Game URL not found");
+          }
+        }
+      } catch (error) {
+        toast.error(error?.response?.data?.message || "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
     try {
       setLoading(true);
       const userId = localStorage.getItem("userId");
@@ -385,9 +381,9 @@ export default function Game() {
       console.log("response from game api:", apis.openGame);
       console.log("game launch:", res?.data);
       if (res?.data?.status === 200) {
-        if ( res?.data?.launchUrl) {
+        if (res?.data?.launchUrl) {
           // window.location.href = res?.data?.apiResponse?.data?.url;
-          const url = res?.data?.launchUrl;;
+          const url = res?.data?.launchUrl;
           if (url) {
             // ✅ Open in same tab (with header for desktop, direct for mobile)
             navigate(`/playgame?url=${encodeURIComponent(url)}`);
@@ -413,7 +409,7 @@ export default function Game() {
       const res = await axios.post(apis?.subcategories_by_cat, payload);
       console.log("sub cate list: ", res?.data?.data);
 
-      setSubCategories(res.data?.data || []); 
+      setSubCategories(res.data?.data || []);
     } catch (error) {
       console.error(error);
     }
@@ -445,8 +441,26 @@ export default function Game() {
     } else {
       getSubCategory(passedCategory?.cat_id || tabName);
     }
-    sponnserImage()
+    sponnserImage();
   }, []);
+
+  useEffect(() => {
+    const passedCategory = location.state?.selectedCategory;
+
+    if (passedCategory?.cat_id === 1 || passedCategory?.id === "all") {
+      setIsAllCategory(true);
+      const allGames = loadAllGames();
+      setGames(allGames);
+      setOriginalGames(allGames);
+      setCategory(allGames);
+    } else {
+      const categoryId =
+        passedCategory?.cat_id || passedCategory?.id || tabName;
+      getSubCategory(categoryId);
+    }
+
+    sponnserImage();
+  }, [location.state, tabName]); // ✅ Add dependencies
 
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -457,7 +471,6 @@ export default function Game() {
     // filterGames(sub);
     filterGames(sub, selectedCategory);
     // filterGames(sub, selectedCategory || passedCategoryFromTabs);
-
   };
 
   const handleSearch = (text) => {
@@ -479,14 +492,12 @@ export default function Game() {
         name1.includes(search) ||
         name2.includes(search) ||
         name3.includes(search) ||
-        eventName.includes(search) 
-        
+        eventName.includes(search)
       );
     });
 
     setGames(filtered);
   };
-
 
   const filterGames = (sub, category) => {
     if (!sub) return;
@@ -512,7 +523,7 @@ export default function Game() {
           (w) => name1.includes(w) || name2.includes(w) || name3.includes(w)
         );
       });
-setOriginalGames(filteredGames);
+      setOriginalGames(filteredGames);
       setGames(filteredGames);
       return;
     }
@@ -711,7 +722,10 @@ setOriginalGames(filteredGames);
                   <div
                     key={game.game_id || index}
                     className="aspect-[3/4] rounded-[8px] overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-                    onClick={() =>{console.log("game name:",game), handleGameOpen(game.gameID, game.game_name)}}
+                    onClick={() => {
+                      console.log("game name:", game),
+                        handleGameOpen(game.gameID, game.game_name);
+                    }}
                   >
                     {game.game_img ? (
                       <img

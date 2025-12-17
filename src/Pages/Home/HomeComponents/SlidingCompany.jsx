@@ -19,6 +19,10 @@ import Turbo_Games from "../../../assets/Company/Turbo_Games.png";
 import live88 from "../../../assets/Company/live88.png";
 import Spribe from "../../../assets/Company/Spribe.png";
 import smart_soft from "../../../assets/Company/smart_soft.png";
+import BGaming from "../../../assets/Company/BGaming.png";
+import PragmaticPlay from "../../../assets/Company/Pragmatic-play.png";
+import TADA from "../../../assets/Company/TADA.png";
+import t1Logo from "../../../assets/Company/t1-logo.png";
 import { useScroll } from "../../../Context/ScrollContext";
 import { useNavigate } from "react-router-dom";
 
@@ -143,6 +147,35 @@ const categories = [
     icon: Evolution_Electronic,
     name: "Aviator",
     brandId: "",
+  },
+  {
+    id: "aviator2",
+    type: "custom",
+    icon: t1Logo,
+    name: "Aviator",
+    brandId: "80",
+  },
+
+  {
+    id: "aviator2",
+    type: "custom",
+    icon: PragmaticPlay,
+    name: "Aviator",
+    brandId: "53",
+  },
+  {
+    id: "aviator2",
+    type: "custom",
+    icon: TADA,
+    name: "Aviator",
+    brandId: "51",
+  },
+  {
+    id: "aviator2",
+    type: "custom",
+    icon: BGaming,
+    name: "Aviator",
+    brandId: "65",
   },
 ];
 

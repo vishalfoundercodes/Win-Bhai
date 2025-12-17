@@ -299,7 +299,7 @@ const handleGameOpen = async (id,name) => {
       <div
         className={`transition-all duration-500 ease-in-out ${
           expanded
-            ? "grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg2:grid-cols-6 gap-3 xsm3:gap-3 pr-2 max-h-[2000px] overflow-y-auto"
+            ? "grid grid-cols-3  md:grid-cols-6 lg2:grid-cols-6 gap-3 xsm3:gap-3 pr-2 max-h-[2000px] overflow-y-auto"
             : ""
         }`}
       >

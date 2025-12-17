@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ProfileProvider } from './Context/ProfileContext.jsx';
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <Provider store={store}>
       <SocketProvider>
         <ToastContainer />
@@ -19,5 +19,5 @@ createRoot(document.getElementById("root")).render(
         </ProfileProvider>
       </SocketProvider>
     </Provider>
-  </StrictMode>
+  
 );

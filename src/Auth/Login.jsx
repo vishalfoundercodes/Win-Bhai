@@ -114,7 +114,7 @@ export default function Login() {
         const res = await axios.post(apis.login, payload);
         console.log("login",res); // Log the response from the server
         if(res?.data?.status==="200" || res?.data?.status===200){
-          toast.success(res?.data?.message);
+          // toast.success(res?.data?.message);
              localStorage.setItem("userId", res?.data?.id);
              localStorage.setItem("token", res?.data?.login_token);
              localStorage.setItem("account_type", res?.data?.account_type);

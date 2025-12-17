@@ -96,7 +96,7 @@ const GameHeader2 = () => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         loop={true}
-        className="rounded-[8px] lg2:w-[100%] h-[195px] xsm:h-full w-full lg2:h-[500px]"
+        className="rounded-[8px] lg2:w-[100%] h-[195px] xsm:h-full w-full md:h-[400px] lg2:h-[500px]"
       >
         {banners.map((item, index) => (
           <SwiperSlide key={index}>
