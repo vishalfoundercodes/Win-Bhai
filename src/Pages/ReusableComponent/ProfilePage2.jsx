@@ -134,7 +134,7 @@ export default function ProfilePage2() {
               <p className="font-bold text-lg">
                 ₹ {details?.total_commission}{" "}
               </p>
-              <p className="text-sm">Revshare : {details?.revenue}%</p>
+              <p className="text-sm">Revshare : {details?.fake_revenue}%</p>
             </div>
           </div>
 

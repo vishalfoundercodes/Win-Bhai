@@ -135,12 +135,12 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  touch-action: pan-y;
+  /* touch-action: pan-y; */
   overflow-x: hidden;
 }
 
 #root {
-  overscroll-behavior: contain; /* prevents bounce but allows scroll inside */
+  overscroll-behavior: auto; /* prevents bounce but allows scroll inside */
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

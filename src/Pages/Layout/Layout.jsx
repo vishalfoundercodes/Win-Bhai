@@ -555,8 +555,10 @@ export default function Layout({ children }) {
             />
           ) : (
             <div
-              className={`min-h-screen w-full ${
-                isWingoPath ? "flex justify-center bg-grayBg" : "bg-grayBg"
+              className={` w-full ${
+                isWingoPath
+                  ? "min-h-[110vh] flex justify-center bg-grayBg"
+                  : "min-h-[104vh] bg-grayBg"
               }`}
             >
               <div
@@ -586,7 +588,7 @@ export default function Layout({ children }) {
                     </div>
                   </>
                 )}
-        
+
                 <div className="hidden lg2:block">
                   {!hideLayout && (
                     <div className="lg2:flex gap-16 px-12 py-6 hidden hide-scrollbar">

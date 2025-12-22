@@ -104,7 +104,7 @@ function AviatorHome() {
               <p> Round ID:{hotAirData?.period}</p>
               <p></p>
             </div>
-            <div className="mt-0 bg-blackAviator2 rounded-2xl h-full">
+            <div className="mt-0  rounded-2xl h-full">
               <AviatorFlight
                 changeBg={changeBg}
                 setChangeBg={setChangeBg}

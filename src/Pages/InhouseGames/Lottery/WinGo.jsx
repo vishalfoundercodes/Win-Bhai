@@ -471,7 +471,7 @@ const WinGo = () => {
         isAudioOn={isAudioOn}
         setIsAudioOn={setIsAudioOn}
       /> */}
-      <div className="h-screen overflow-scroll hide-scrollbar">
+      <div className="h-screen overflow-scroll hide-scrollbar bg-black2">
         <audio ref={audioRef} src={countdownone} preload="auto" />
         <div className=" h-full font-roboto">
           <div className="bg-red2 h-[19rem]  rounded-b-[55px] px-4 pt-2">

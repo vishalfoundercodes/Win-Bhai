@@ -168,7 +168,7 @@ function AllBets({ setTotalBetValue }) {
                                 <div className="w-14">
 
                                     {data.isWinner && (
-                                        <p className="text-xsm bg-black px-2 py-0.5 rounded-full">
+                                        <p className="text-sm bg-black px-2 py-0.5 rounded-full">
                                             {data.timer}x
                                         </p>
                                     )}

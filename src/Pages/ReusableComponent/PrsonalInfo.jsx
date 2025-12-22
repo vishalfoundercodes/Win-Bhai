@@ -1,7 +1,77 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
+import { useProfile } from "../../Context/ProfileContext";
+import axios from "axios";
+import apis from "../../utils/apis";
+import { toast } from "react-toastify";
 export default function PersonalInfo() {
   const navigate=useNavigate()
+  const [formData, setFormData] = useState({
+    username: "",
+    mobile: "",
+    fullname:"",
+    email:"",
+    address:"",
+    city:"",
+    pincode:""
+  });
+const { profileDetails, fetchProfile } = useProfile();
+   useEffect(()=>{
+    fetchProfile()
+   },[])
+   useEffect(() => {
+     if (profileDetails) {
+       setFormData({
+         username: profileDetails.username || "",
+         mobile: profileDetails.mobile || "",
+         address: profileDetails.address || "",
+         city: profileDetails.address || "",
+         fullname: profileDetails.name || "",
+         pincode: profileDetails.pincode || "",
+         email: profileDetails.email || "",
+       });
+     }
+   }, [profileDetails]);
+   const handleSubmit=async(e)=>{
+    try{
+      e.preventDefault()
+      console.log("user name:",formData.username)
+      console.log("full name:",formData.fullname)
+      console.log("mobile:",formData.mobile)
+      console.log("city:",formData.city)
+      console.log("address:",formData.address)
+      console.log("pincode:",formData.pincode)
+      console.log("email:",formData.email)
+      const payload = {
+        // username: ,
+        // mobile: "",
+        id:localStorage.getItem("userId"),
+        name: formData.fullname,
+        email: formData.email,
+        address: formData.address,
+        city: formData.city,
+        pincode: formData.pincode,
+      };
+      const res = await axios.post(apis.updateProfile, payload);
+      console.log("update profile:",res?.data)
+      if(res?.data?.status==200){
+        toast.success(res?.data?.message)
+        setFormData({
+          username: "",
+          mobile: "",
+          fullname: "",
+          email: "",
+          address: "",
+          city: "",
+          pincode: "",
+        });
+        fetchProfile()
+      }
+      
+    }catch(error){
+      console.log(error)
+    }
+   }
   return (
     <div className="p-4 lg2:p-0 lg2:px-4 min-h-screen ">
       <div className="lg2:flex lg2:gap-4 mb-4 lg2:mt-0 hidden">
@@ -27,7 +97,7 @@ export default function PersonalInfo() {
       <div className="bg-red lg2:rounded-t-2xl p-2 px-4 hidden lg:block">
         <h2 className="text-white text-sm font-semibold">Personal Info</h2>
       </div>
-      <form className="space-y-4 bg-white p-6 rounded-b-2xl rounded-t-2xl lg2:rounded-t-none">
+      <form className="space-y-4 bg-white p-6 rounded-b-2xl rounded-t-2xl lg2:rounded-t-none" onSubmit={handleSubmit}>
         {/* User Name */}
         <div>
           <label className="block text-ssm font-semibold text-red mb-1">
@@ -36,7 +106,11 @@ export default function PersonalInfo() {
           <input
             type="text"
             placeholder="Enter name"
-            defaultValue="Vikas"
+            value={formData.username}
+            readOnly
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorder"
           />
         </div>
@@ -50,6 +124,10 @@ export default function PersonalInfo() {
             type="text"
             placeholder="Enter full name"
             defaultValue="Vikas Sharma"
+            value={formData.fullname}
+            onChange={(e) =>
+              setFormData({ ...formData, fullname: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm font-semibold text-grayBorder focus:outline-none border border-grayBorder"
           />
         </div>
@@ -62,6 +140,10 @@ export default function PersonalInfo() {
           <input
             type="email"
             placeholder="Enter email address"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorder"
           />
         </div>
@@ -74,7 +156,11 @@ export default function PersonalInfo() {
           <input
             type="text"
             placeholder="Enter your phone number"
-            defaultValue="098764321"
+            readOnly
+            value={formData.mobile}
+            onChange={(e) =>
+              setFormData({ ...formData, mobile: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorder"
           />
         </div>
@@ -87,6 +173,10 @@ export default function PersonalInfo() {
           <input
             type="text"
             placeholder="Enter address"
+            value={formData.address}
+            onChange={(e) =>
+              setFormData({ ...formData, address: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorder"
           />
         </div>
@@ -99,6 +189,8 @@ export default function PersonalInfo() {
           <input
             type="text"
             placeholder="Enter city"
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorders"
           />
         </div>
@@ -109,8 +201,12 @@ export default function PersonalInfo() {
             Pin Code
           </label>
           <input
-            type="text"
+            type="Number"
             placeholder="Enter pin code"
+            value={formData.pincode}
+            onChange={(e) =>
+              setFormData({ ...formData, pincode: e.target.value })
+            }
             className="w-full rounded-md bg-gray-100 px-3 py-2 text-ssm focus:outline-none border border-grayBorder font-semibold text-grayBorder"
           />
         </div>
@@ -134,6 +230,7 @@ export default function PersonalInfo() {
           <button
             type="button"
             className="border border-darkGray rounded-md py-2 text-ssm font-medium text-darkGray w-full lg2:w-auto px-6"
+            onClick={()=>navigate("/")}
           >
             Confirm
           </button>
