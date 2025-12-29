@@ -97,7 +97,7 @@ export default function Bonus() {
             Congratulations!
           </h2>
           <p className="text-sm text-gray-500 text-center">
-            You are eligible for the Lossback Bonus
+            {data?.coupon?.description}
           </p>
           {/* Loss Amount */}
           <div className="w-full mt-5 p-4 bg-[#E7E7E780] rounded-[15px] flex justify-between items-center">
@@ -106,7 +106,7 @@ export default function Bonus() {
                 Loss Amount
               </p>
               <p className="text-xl font-bold text-gray-800">
-                ₹ {data?.last_7_days_loss}
+                ₹ {data?.last_7_days_loss || "-"}
               </p>
             </div>
             {/* <Download className="text-blue-500" size={24} /> */}
@@ -134,7 +134,9 @@ export default function Bonus() {
               <p className="text-xl font-bold text-red">
                 ₹ {data?.coupon?.bonus_amount}
               </p>
-              <p className="text-xs text-gray-600">10% of your losses</p>
+              <p className="text-xs text-gray-600">
+                {data?.coupon?.title}
+              </p>
             </div>
             {/* <Gift className="text-red-500" size={24} /> */}
             <div className="bg-[#FCBBC9] rounded-full p-2">
