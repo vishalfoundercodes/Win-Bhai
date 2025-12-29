@@ -104,6 +104,7 @@ const GameHeader2 = () => {
               src={item.image}
               alt={`banner-${index}`}
               className="rounded-[8px] lg2:w-[100%] h-[195px] xsm:h-full w-full lg2:h-[500px] object-fill"
+              onClick={()=>{if(item.link!=null){window.open(item.link,"_blank")}}}
             />
           </SwiperSlide>
         ))}

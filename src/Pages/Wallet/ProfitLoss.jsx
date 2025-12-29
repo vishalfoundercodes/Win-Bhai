@@ -43,18 +43,7 @@ export default function ProfitLoss() {
 
   const options = [
     "All",
-    "Cricket",
-    "Football",
-    "Tennis",
-    "Horse Racing",
-    "Greyhound Racing",
-    "Kabaddi",
-    "Binary",
-    "Politics",
-    "Live Casino",
-    "Int Casino",
-    "Casino Vivo",
-    "iCasino",
+
   ];
 
   const handleSelect = (option) => {

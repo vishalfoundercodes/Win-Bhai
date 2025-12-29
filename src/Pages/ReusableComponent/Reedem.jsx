@@ -56,6 +56,7 @@ export default function RedeemBonus() {
         return
       }
       handleGetHistory()
+      console.log("bonus data:",res.data)
       navigate("/Bonus", {state:{
         data:res.data
       }});

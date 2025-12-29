@@ -51,7 +51,6 @@ const apis = {
   customer_service: `${configModalWinBhai}customer_service`,
   profit_loss: `${configModalWinBhai}betSummaryProfit_loss`,
   // --------------
-
   withdraw_history: `${configModalWinBhai}withdraw_history?user_id=`,
   download_apk: `${configModalApk}chickenroad.apk`,
   bet_value: `${configModalWinBhai}bet_values`,
@@ -65,6 +64,7 @@ const apis = {
   promotionData: `${configModalWinBhai}agency-promotion-data-`,
   subordinateData: `${configModalWinBhai}subordinate-data`,
   tier: `${configModalWinBhai}tier`,
+  signup_contact: `${configModalWinBhai}signup-contact-support`,
 
   // https://root.winbhai.in/api/jilliGame
 

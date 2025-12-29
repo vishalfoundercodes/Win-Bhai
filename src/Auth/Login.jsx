@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import signupbg from "../assets/Images/signup-bg.jpg";
 import logo from "../assets/logo-winbhai.png";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ export default function Login() {
     const [showUserName, setShowUserName] = useState(false);
      const [isOpen, setIsOpen] = useState(false);
      const [selected, setSelected] = useState("Username");
+       const [contact, setContact]=useState("")
 
      const options = ["Username", " Phone No."];
         const [countryCode, setCountryCode] = useState("+91");
@@ -129,6 +130,19 @@ export default function Login() {
         setLoading(false)
       }
     };
+
+const signup_contact = async () => {
+  try {
+    const res = await axios.get(apis.signup_contact);
+    console.log("res:contact", res?.data);
+    setContact(res?.data?.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+useEffect(() => {
+  signup_contact();
+}, []);
 
    if (loading)
      return (
@@ -568,6 +582,7 @@ export default function Login() {
             type="button"
             className="w-full flex items-center justify-center gap-2 border border-green-500 text-green-600 py-2 rounded-md hover:bg-green-50 text-sm font-medium transition cursor-pointer"
             style={{ fontFamily: "Roboto, sans-serif" }}
+            onClick={() => window.open(contact, "_self")}
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
               <path d="M20.52 3.48C18.36 1.3 15.27 0 12 0 5.37 0 0 5.37 0 12c0 2.4.67 4.64 1.84 6.56L0 24l5.65-1.79A11.93 11.93 0 0012 24c6.63 0 12-5.37 12-12 0-3.27-1.3-6.36-3.48-8.52zM12 22c-2.05 0-4.01-.61-5.69-1.73l-.41-.27-3.35 1.06 1.06-3.35-.27-.41A9.942 9.942 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10z" />
